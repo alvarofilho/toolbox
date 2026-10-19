@@ -8,7 +8,7 @@ export const CATEGORIES = [
 	},
 	{
 		id: 'converters',
-		name: text('Codificação e conversores', 'Encoding & converters', undefined, 'categories'),
+		name: text('Conversores', 'Converters', 'Conversores', 'categories'),
 		icon: 'arrows',
 	},
 	{
