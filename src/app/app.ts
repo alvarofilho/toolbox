@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { PreferencesService } from '@app/core/services/preferences';
+import { SeoService } from '@app/core/services/seo';
 import { CATEGORIES, TOOLS } from '@app/features/tools/catalog/tools';
 import { Icon } from '@app/shared/components/icon';
 import { CommandPalette } from '@app/features/tools/catalog/command-palette/command-palette';
@@ -44,6 +45,7 @@ export class App {
 	private lastPath = '';
 
 	constructor() {
+		inject(SeoService);
 		effect((onCleanup) => {
 			if (this.menuOpen()) {
 				const previous = this.document.body.style.overflow;

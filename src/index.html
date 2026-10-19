@@ -1,12 +1,55 @@
 <!doctype html>
 <html lang="pt-BR" data-theme="light">
 	<head>
+		<script>
+			(() => {
+				let theme =
+					typeof window.matchMedia === 'function' &&
+					window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light';
+				try {
+					const preferences = JSON.parse(localStorage.getItem('toolbox.preferences.v1') ?? 'null');
+					if (preferences?.themeMode === 'light' || preferences?.themeMode === 'dark') {
+						theme = preferences.themeMode;
+					} else if (preferences?.theme === 'dark') {
+						theme = 'dark';
+					}
+				} catch {
+					// Browser storage can be unavailable; the system preference is still usable.
+				}
+				document.documentElement.dataset.theme = theme;
+			})();
+		</script>
 		<meta charset="utf-8" />
-		<title>Toolbox</title>
+		<title>Ferramentas online para desenvolvedores | Toolbox</title>
 		<meta
 			name="description"
-			content="Ferramentas gratuitas para desenvolvedores. JSON, Base64, UUID, CPF e muito mais. Tudo no navegador, sem enviar seus dados."
+			content="Ferramentas online gratuitas para desenvolvedores, QA e profissionais de TI. Formate JSON, converta dados e gere documentos com processamento local no navegador."
 		/>
+		<meta name="robots" content="index, follow, max-image-preview:large" />
+		<link rel="canonical" href="https://toolbox.alvaro.dev.br/" />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Toolbox" />
+		<meta property="og:locale" content="pt_BR" />
+		<meta property="og:title" content="Ferramentas online para desenvolvedores | Toolbox" />
+		<meta
+			property="og:description"
+			content="Ferramentas online gratuitas para desenvolvedores, QA e profissionais de TI. Formate JSON, converta dados e gere documentos com processamento local no navegador."
+		/>
+		<meta property="og:url" content="https://toolbox.alvaro.dev.br/" />
+		<meta property="og:image" content="https://toolbox.alvaro.dev.br/og-image.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:type" content="image/png" />
+		<meta property="og:image:alt" content="Toolbox, ferramentas online para desenvolvedores" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Ferramentas online para desenvolvedores | Toolbox" />
+		<meta
+			name="twitter:description"
+			content="Ferramentas online gratuitas para desenvolvedores, QA e profissionais de TI. Formate JSON, converta dados e gere documentos com processamento local no navegador."
+		/>
+		<meta name="twitter:image" content="https://toolbox.alvaro.dev.br/og-image.png" />
 		<base href="/" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="favicon.svg" />
