@@ -1,107 +1,106 @@
-# toolbox.
+# Toolbox
 
-Uma bancada de ferramentas gratuita e open source para desenvolvedores, QA e profissionais de TI. Sem conta, backend, SSR, analytics ou envio das entradas. O processamento acontece no navegador.
+[Português (Brasil)](README.pt-BR.md)
 
-## Começar
+A free, open-source collection of browser-based tools for developers, QA, and IT professionals. No account, backend, SSR, analytics, or input uploads: processing happens in your browser.
 
-Requer Node **24.22.0** (`.node-version`), pnpm **12.14.0** (`packageManager`) e Vite+ (`vp`). Com `vp` global já instalado:
+## Getting started
 
-```sh
-vp install
-vp run start
-```
-
-Sem o CLI global, use `pnpm install --frozen-lockfile` e `pnpm exec vp run start`. A aplicação abre em `http://localhost:4200`. O desenvolvimento e o build usam o Angular CLI; `vp dev` e `vp build` não substituem os scripts Angular deste projeto.
+Requires Node.js **24.22.0** (`.node-version`) and pnpm **12.14.0** (`packageManager`). Install dependencies and start the Angular development server:
 
 ```sh
-vp check                         # formato, lint e tipos
-vp check --fix                    # corrigir formatação
-vp test                          # 101 testes de processamento (Vitest via Vite+)
-vp run test --watch=false         # 6 testes de integração Angular (Vitest)
-vp run build                     # Angular CLI, produção
+pnpm install
+pnpm start
 ```
 
-O build estático fica em `dist/cloudflare/browser`. A configuração mantém `strict` e `strictTemplates` habilitados. A integração contínua executa instalação congelada, checks, as duas suítes e build em pushes para `main` e Pull Requests.
+The app opens at `http://localhost:4200`. Development, tests, and production builds use the Angular CLI.
 
-A produção desabilita apenas a inserção de CSS crítico (`optimization.styles.inlineCritical: false`): o carregador inline gerado pelo Angular seria bloqueado por `script-src 'self'`. Scripts e CSS continuam minificados. Mantenha essa opção alinhada à CSP em `public/_headers`.
+```sh
+pnpm start                         # ng serve
+pnpm run lint                      # ng lint, TypeScript, and Angular templates
+pnpm run lint:fix                  # apply available ESLint fixes
+pnpm run format                    # format with Prettier
+pnpm run format:check              # check formatting
+pnpm run test --watch=false        # ng test, unit and integration tests
+pnpm run build                     # ng build, production
+```
 
-Os headers usam `Cache-Control: public, max-age=0, must-revalidate, no-transform` para preservar os arquivos publicados e impedir injeção automática de scripts pelo proxy Cloudflare, incluindo Rocket Loader e Web Analytics. O navegador revalida os recursos com o servidor; não habilite otimizações que reescrevam o HTML desta aplicação.
+The static build is written to `dist/cloudflare/browser`. Both TypeScript `strict` mode and Angular `strictTemplates` are enabled. CI checks formatting, lint, tests, and the production build on pushes to `main` and pull requests.
 
-`deployUrl: "/"` mantém os caminhos de scripts, estilos e preloads ancorados na raiz. Isso evita que os Early Hints do Cloudflare resolvam um chunk relativo dentro de `/tools/` ao abrir uma ferramenta diretamente.
+Production disables only critical CSS inlining (`optimization.styles.inlineCritical: false`): Angular's generated inline loader would be blocked by `script-src 'self'`. Scripts and styles remain minified. Keep this setting aligned with the CSP in `public/_headers`.
 
-## MVP funcional
+The response headers set `Cache-Control: public, max-age=0, must-revalidate, no-transform` to preserve published assets and prevent Cloudflare proxy features such as Rocket Loader and Web Analytics from injecting scripts. Browsers revalidate assets with the server. Do not enable HTML rewriting optimizations for this app.
 
-| Área                    | Ferramentas                                                 |
-| ----------------------- | ----------------------------------------------------------- |
-| JSON e dados            | Formatter/Validator, Minifier, Diff estrutural, JSON ↔ YAML |
-| Codificação             | Base64 UTF-8, URL component encode/decode, Unix Timestamp   |
-| Geradores               | UUID v4/v7, senhas, tokens com Web Crypto                   |
-| Segurança               | JWT Decoder/claims, SHA-256/SHA-512                         |
-| Desenvolvimento e texto | Regex Tester, Text Diff por linhas, Case Converter          |
-| Brasil                  | CPF, CNPJ numérico/alfanumérico, pessoas sintéticas         |
+`deployUrl: "/"` keeps scripts, styles, and preload paths rooted at the site origin. This prevents Cloudflare Early Hints from resolving a relative chunk inside `/tools/` when a user opens a tool directly.
 
-As 18 ferramentas possuem rotas e módulos carregados sob demanda. O catálogo, a pesquisa por nomes/categorias/palavras-chave, os favoritos, os recentes, o tema e o idioma PT/EN compartilham um registro central. `Ctrl/Cmd + K` foca a pesquisa global. `Escape` fecha a navegação móvel. As páginas incluem exemplos quando úteis, limpar, copiar, exportar, erros e estados vazios.
+## Tool catalog
 
-Pessoas: selecione quantidade (1–1.000), campos, UF e intervalo de idade (18–100), com exportação JSON, CSV ou SQL INSERT. E-mails usam `example.com`. Os telefones são sintéticos com DDD 11; a UF é um parâmetro independente. Os registros incluem `synthetic: true`.
+The catalog includes independent tools across data generation, JSON and data, converters, security, development and APIs, databases and .NET, Brazilian documents, networking, text and files, and CSS/frontend. See the [implemented catalog and each tool's limitations](docs/CATALOG.md) for details. Features that used to be available only inside other tools also have their own pages.
 
-## Arquitetura
+The original tools remain available:
+
+| Area                 | Tools                                                       |
+| -------------------- | ----------------------------------------------------------- |
+| JSON and data        | Formatter/Validator, Minifier, structural Diff, JSON ↔ YAML |
+| Encoding             | UTF-8 Base64, URL component encode/decode, Unix Timestamp   |
+| Generators           | UUID v4/v7, passwords, tokens using Web Crypto              |
+| Security             | JWT Decoder/claims, SHA-256/SHA-512                         |
+| Development and text | Regex Tester, line-based Text Diff, Case Converter          |
+| Brazil               | Numeric/alphanumeric CPF and CNPJ, synthetic people         |
+
+Each tool has its own route and is lazy-loaded. The catalog, search by name/category/keyword, favorites, recent tools, theme, and PT/EN language share a central registry. `Ctrl/Cmd + K` focuses global search. `Escape` closes mobile navigation. Tool pages include examples where useful, clear, copy, export, error, and empty states. The workbench also accepts local files, downloads binary results, and shows isolated previews in a sandbox.
+
+For generated people, choose 1–1,000 records, fields, state, and an age range of 18–100; export as JSON, CSV, or SQL INSERT. Emails use `example.com`. Phone numbers are synthetic and use area code 11; the selected state is an independent parameter. Records include `synthetic: true`.
+
+## Architecture
 
 ```text
 src/app/
-  core/models/        contratos de ferramentas e campos
-  core/registry/      catálogo declarativo, categorias e pesquisa
-  core/services/      Signals e preferências locais validadas
-  shared/components/  SVGs, cards e bancada de entrada/resultado
-  shared/utils/       algoritmos puros e testes
-  features/home/      início, catálogo, categorias, favoritos e recentes
-  features/tools/     um módulo por ferramenta, controles e regex Worker
-  app.*               shell responsivo, configuração e rotas
+  core/models/        tool and field contracts
+  core/registry/      declarative catalog, categories, and search
+  core/services/      Signals and validated local preferences
+  shared/components/  SVG icons, cards, and input/result workbench
+  shared/utils/       pure algorithms and tests
+  features/home/      home, catalog, categories, favorites, and recents
+  features/tools/     one module per tool, controls, and regex Worker
+  app.*               responsive shell, configuration, and routes
 ```
 
-Para adicionar uma ferramenta, crie um `*.tool.ts` exportando `definition: ToolDefinition`, registre seus metadados em `core/registry/tools.ts` e seu import dinâmico em `TOOL_LOADERS` (`app.routes.ts`). A definição descreve os controles e a função de processamento; a bancada compartilhada fornece formulário, estados e exportação. Adicione vetores e casos inválidos em `*.test.ts`; use `*.spec.ts` para integração Angular. Não adicione cards disponíveis sem uma implementação funcional.
+To add a tool, create a `*.tool.ts` file exporting `definition: ToolDefinition`, register its metadata in `core/registry/tools.ts`, and add its dynamic import to `TOOL_LOADERS` in `app.routes.ts`. A definition describes its controls and processing function; the shared workbench provides the form, states, and export behavior. Add vectors and invalid cases in `*.test.ts`; use `*.spec.ts` for Angular integration tests. Do not add available cards without a working implementation.
 
-Angular 22 standalone, OnPush, Signals, lazy loading, Tailwind CSS 4 e DaisyUI 5. Fontes Manrope/IBM Plex são hospedadas pelo próprio build. Apenas `yaml` e `diff` foram adicionados para formatos e comparação; criptografia usa as APIs nativas.
+New tools are described in `core/registry/extended-tools.ts`, implemented under `features/tools/extended/`, and dynamically imported through `extended/loaders.ts`. The metadata catalog does not import heavy parsers or processors. Kubernetes schemas are local and loaded on demand.
 
-## Privacidade e limites
+The app uses Angular 22 standalone components, OnPush, Signals, lazy loading, Tailwind CSS 4, and DaisyUI 5. Manrope and IBM Plex fonts are bundled locally. Parsers, data formats, images, and PDFs use dedicated libraries; cryptographic operations use Web Crypto.
 
-`localStorage` guarda somente `toolbox.preferences.v1`: tema, idioma, IDs favoritos e até oito ferramentas recentes. Os valores são validados na leitura. Se o armazenamento estiver bloqueado, o app continua na sessão e informa que não poderá persistir as preferências. Entradas, resultados, senhas, tokens e documentos não são persistidos. Exportar ou copiar exige uma ação explícita.
+## Privacy and limits
 
-Limites: 100.000 caracteres por campo, 200.000 no total, resultado de até 1 MB de caracteres e geradores limitados a 1.000 registros. Regex roda em Web Worker encerrado após 500 ms, limitado a 1.000 resultados e padrões de 1.000 caracteres. Diffs têm limite de tempo/complexidade. YAML limita expansão de aliases e rejeita chaves duplicadas e estruturas recursivas. Não há `eval` ou renderização do HTML informado.
+`localStorage` stores only `toolbox.preferences.v1`: theme, language, favorite IDs, and up to eight recent tool IDs. Values are validated when read. If storage is blocked, the app continues for the current session and explains that preferences cannot be saved. Inputs, results, passwords, tokens, and documents are not stored. Exporting or copying requires an explicit user action.
 
-JWT é **decodificado**, sem verificar assinatura ou autenticidade. Datas dos claims são informativas. Hash não é criptografia reversível. CPF/CNPJ validam a estrutura e os dígitos; não consultam cadastros nem comprovam existência. Toda geração brasileira destina-se a testes. O vetor alfanumérico `12.ABC.345/01DE-35` segue o [manual da Receita Federal](https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj/manual-dv-cnpj.pdf).
+Limits: 100,000 characters per field, 200,000 characters total, output up to 1 MB of text, and generators capped at 1,000 records. Regex runs in a Web Worker terminated after 500 ms, with up to 1,000 results and patterns up to 1,000 characters. Diffs have time and complexity limits. YAML limits alias expansion and rejects duplicate keys and recursive structures. User-provided HTML is never evaluated or rendered directly.
+
+JWTs are **decoded**, not signature-verified or authenticated; claim dates are informational. Hashing is not reversible encryption. CPF/CNPJ checks validate structure and check digits; they do not query registries or prove that a record exists. Brazilian data generation is intended for testing. The alphanumeric CNPJ vector `12.ABC.345/01DE-35` follows the [Federal Revenue Service manual](https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj/manual-dv-cnpj.pdf).
 
 ## Cloudflare Pages
 
-O ambiente de produção usa o projeto Pages `toolbox` e o domínio **[toolbox.alvaro.dev.br](https://toolbox.alvaro.dev.br)**. O projeto está integrado ao GitHub, com publicação automática da branch `main` e previews habilitados. DNS e certificado do domínio são gerenciados pelo Cloudflare. Credenciais do Wrangler ficam fora do repositório.
+Production uses the Cloudflare Pages project `toolbox` and the domain **[toolbox.alvaro.dev.br](https://toolbox.alvaro.dev.br)**. The project is connected to GitHub and automatically publishes `main`; preview deployments are enabled. Cloudflare manages DNS and the domain certificate. Wrangler credentials stay outside this repository.
 
-Configuração do projeto `toolbox`, conectado a `alvarofilho/toolbox` no Cloudflare Pages:
+Cloudflare Pages project configuration for `toolbox`, connected to `alvarofilho/toolbox`:
 
-| Configuração       | Valor                     |
-| ------------------ | ------------------------- |
-| Branch de produção | `main`                    |
-| Diretório raiz     | `/`                       |
-| Build              | `pnpm exec vp run build`  |
-| Diretório de saída | `dist/cloudflare/browser` |
-| `NODE_VERSION`     | `24.22.0`                 |
-| `PNPM_VERSION`     | `12.14.0`                 |
+| Setting           | Value                     |
+| ----------------- | ------------------------- |
+| Production branch | `main`                    |
+| Root directory    | `/`                       |
+| Build command     | `pnpm run build`          |
+| Output directory  | `dist/cloudflare/browser` |
+| `NODE_VERSION`    | `24.22.0`                 |
+| `PNPM_VERSION`    | `12.14.0`                 |
 
-O Pages instala as dependências antes do build. Não é necessário configurar SSR, Functions ou credenciais no frontend. `public/_redirects` fornece fallback para o Angular Router; `_headers` aplica CSP, proteção contra framing e permissões restritas. Após publicar, valide acesso direto e atualização em `/tools/json-formatter` e `/tools/regex`, além de copiar, exportar e executar regex sob CSP.
+Pages installs dependencies before building. The frontend does not require SSR, Functions, or credentials. `public/_redirects` provides Angular Router fallback; `_headers` applies CSP, framing protection, and restricted permissions. After publishing, check direct access and reload at `/tools/json-formatter` and `/tools/regex`, along with copy, export, and regex execution under the CSP.
 
-Associe `toolbox.alvaro.dev.br` em **Custom domains**, conclua o DNS indicado pelo Cloudflare e aguarde HTTPS ativo. Ative previews de Pull Requests no projeto Pages quando desejar. Um projeto Pages integrado ao Git atende os deploys automáticos da `main`; o workflow deste repositório faz a validação.
+Add `toolbox.alvaro.dev.br` under **Custom domains**, complete the DNS setup Cloudflare provides, and wait for HTTPS to become active. Enable pull request previews in the Pages project as needed. A Git-connected Pages project handles automatic deploys from `main`; this repository's workflow runs validation.
 
-Referências: [Angular no Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-angular-site/), [versões do ambiente de build](https://developers.cloudflare.com/pages/configuration/build-image/) e [rotas SPA](https://developers.cloudflare.com/pages/configuration/serving-pages/).
+References: [Angular on Pages](https://developers.cloudflare.com/pages/framework-guides/deploy-an-angular-site/), [build environment versions](https://developers.cloudflare.com/pages/configuration/build-image/), and [SPA routes](https://developers.cloudflare.com/pages/configuration/serving-pages/).
 
-## Validação desta entrega
+## License
 
-- 101 testes de algoritmos/conversores/validadores e 6 integrações Angular.
-- Smoke test no navegador das 18 ferramentas, incluindo geração e exemplos reais.
-- Regex patológica interrompida por timeout sem bloquear a interface; execução seguinte recuperada.
-- Revisão visual em desktop (1440 px), tablet (768 px) e mobile (390 px), temas claro/escuro e PT/EN.
-- Build de produção e verificação de formatação/lint/tipos.
-- Após cada publicação, conferir o status do deploy, HTTPS público e navegação direta no domínio próprio.
-
-Fases 2 e 3 ficam fora deste MVP. O funcionamento offline completo/PWA não está implementado; o processamento local não significa que o primeiro carregamento dispensa internet.
-
-## Licença
-
-MIT. Consulte [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).

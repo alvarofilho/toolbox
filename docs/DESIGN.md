@@ -117,7 +117,7 @@ components:
 
 Uma bancada organizada, clara e técnica: papel suave, ferramentas reconhecíveis e espaço para trabalhar. A navegação permanece disponível em telas amplas; pesquisa, catálogo e área de entrada/resultado compartilham a mesma linguagem. A personalidade aprovada combina tons de papel, verde escuro, tipografia técnica e um modo escuro equivalente. Fontes são locais.
 
-Este documento atualiza a direção aprovada com o que foi construído em `src/styles.css`, `src/legibility.css`, `src/app/features/home/home.css`, no shell e nos componentes compartilhados. O contrato permanece: reconhecer a finalidade no primeiro viewport, encontrar ferramentas por nome ou palavra-chave e executar, copiar ou exportar sem cadastro. A composição específica da home não é uma obrigação para toda tela. Os valores preliminares de tinta, verde ativo e largura do seed foram resolvidos pelos tokens e medidas atuais abaixo.
+Este documento atualiza a direção aprovada com o que foi construído em `src/styles.scss`, `src/legibility.scss`, `src/app/app.scss`, `src/app/features/home/home.scss` e `src/app/shared/components/tool-card.scss`, além do shell e dos componentes compartilhados. O contrato permanece: reconhecer a finalidade no primeiro viewport, encontrar ferramentas por nome ou palavra-chave e executar, copiar ou exportar sem cadastro. A composição específica da home não é uma obrigação para toda tela. Os valores preliminares de tinta, verde ativo e largura do seed foram resolvidos pelos tokens e medidas atuais abaixo.
 
 **Key Characteristics:**
 
@@ -160,7 +160,7 @@ A marca e os títulos têm desenho geométrico firme, enquanto a interface mant�
 - **Display:** título da home com escala fluida, peso forte e entrelinha compacta. Usa 46px até 1100px e 42px até 600px. Durante a pesquisa, recolhe para 32px (30px no móvel) sem remover o campo nem perder foco.
 - **Headline:** seções do catálogo; páginas de listagem usam título maior (30px, reduzido para 26px e 25px).
 - **Title:** nomes dos cards; cabeçalhos dos painéis usam 14px. Títulos de ferramenta usam `clamp(24px, 2.5vw, 32px)`, com 25px no móvel.
-- **Body / Label:** descrições, navegação e campos usam a escala final de legibilidade, normalmente 13px. A regra em `src/legibility.css` prevalece sobre valores anteriores da folha global.
+- **Body / Label:** descrições, navegação e campos usam a escala final de legibilidade, normalmente 13px. As regras em `src/legibility.scss` complementam os estilos globais de `src/styles.scss`.
 - **Code:** entradas e resultados usam a escala monoespaçada do frontmatter, com quebra de linhas longas no resultado. A demonstração da home tem tratamento compacto próprio.
 
 **The Data Type Rule.** Reserve a fonte monoespaçada para conteúdo técnico e preserve a fonte de interface em controles e explicações.
@@ -206,7 +206,7 @@ Filtros de categoria são links com contorno, ícone opcional e cantos de navega
 
 ### Cards / Containers
 
-Na home, os essenciais usam uma variante compacta de 90px, com nome, ícone, categoria e favorito independente. O catálogo completo conserva os cards com descrições; seus rodapés identificam a categoria e a seta indica navegação. A assinatura da home é um exemplo de transformação JSON, com entrada compacta, resultado formatado e acesso à ferramenta real. O exemplo é identificado explicitamente, usa código selecionável e não simula um editor. Durante a busca, o destaque recolhe e os filtros de categoria cedem espaço aos resultados. Esses estilos ficam em `home.css` e `tool-card.css`, encapsulados nos componentes.
+Na home, os essenciais usam uma variante compacta de 90px, com nome, ícone, categoria e favorito independente. O catálogo completo conserva os cards com descrições; seus rodapés identificam a categoria e a seta indica navegação. A assinatura da home é um exemplo de transformação JSON, com entrada compacta, resultado formatado e acesso à ferramenta real. O exemplo é identificado explicitamente, usa código selecionável e não simula um editor. Durante a busca, o destaque recolhe e os filtros de categoria cedem espaço aos resultados. Esses estilos ficam em `src/app/features/home/home.scss` e `src/app/shared/components/tool-card.scss`, encapsulados nos componentes.
 
 Cards do catálogo usam superfície, borda fina e raio de superfície. O link cobre o conteúdo principal; o favorito é um botão independente, fora do link. A estrela padrão usa texto secundário; a selecionada recebe acento, fundo tonal e preenchimento. O estado também é exposto por `aria-pressed`.
 
