@@ -1,12 +1,21 @@
-import { translationKey } from '@app/core/models/translation-key';
+import { translationKey, type TranslationNamespace } from '@app/core/models/translation-key';
+
 export type Locale = 'pt' | 'en' | 'es';
+
 export type Localized = Readonly<Record<'pt' | 'en', string> & { es?: string; key: string }>;
-export const text = (pt: string, en: string, es = en): Localized => ({
+
+export const text = (
+	pt: string,
+	en: string,
+	es = en,
+	namespace: TranslationNamespace = 'common',
+): Localized => ({
 	pt,
 	en,
 	es,
-	key: translationKey(en),
+	key: translationKey(en, namespace),
 });
+
 export interface ToolControl {
 	readonly key: string;
 	readonly label: Localized;
@@ -22,12 +31,16 @@ export interface ToolControl {
 	readonly placeholder?: Localized;
 	readonly when?: { readonly key: string; readonly values: readonly string[] };
 }
+
 export type ToolValues = Readonly<Record<string, string>>;
+
 export type ToolFiles = Readonly<Record<string, readonly File[]>>;
+
 export interface ToolArtifact {
 	readonly blob: Blob;
 	readonly filename: string;
 }
+
 export interface ToolResult {
 	readonly output: string;
 	readonly filename?: string;
@@ -36,6 +49,7 @@ export interface ToolResult {
 	readonly artifacts?: readonly ToolArtifact[];
 	readonly preview?: string;
 }
+
 export interface ToolDefinition {
 	readonly id: string;
 	readonly controls: readonly ToolControl[];
@@ -45,6 +59,7 @@ export interface ToolDefinition {
 	readonly execution?: 'automatic' | 'manual';
 	readonly run: (values: ToolValues, files?: ToolFiles) => ToolResult | Promise<ToolResult>;
 }
+
 export interface ToolInfo {
 	readonly id: string;
 	readonly name: Localized;
@@ -56,6 +71,7 @@ export interface ToolInfo {
 	readonly isNew?: boolean;
 	readonly popular?: boolean;
 }
+
 export function field(values: ToolValues, key: string): string {
 	return values[key] ?? '';
 }

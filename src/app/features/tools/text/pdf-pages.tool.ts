@@ -9,24 +9,45 @@ export const definition = tool(
 	'pdf-pages',
 	[
 		file('application/pdf', true),
-		select('mode', 'Operação', 'Operation', [
-			['merge', 'Unir PDFs', 'Merge PDFs'],
-			['extract', 'Extrair páginas', 'Extract pages'],
-			['split', 'Separar páginas em arquivos', 'Split pages into files'],
-			['reorder', 'Reordenar páginas', 'Reorder pages'],
-			['delete', 'Excluir páginas', 'Delete pages'],
-			['rotate', 'Girar páginas', 'Rotate pages'],
-		]),
+		select(
+			'mode',
+			'Operação',
+			'Operation',
+			[
+				['merge', 'Unir PDFs', 'Merge PDFs'],
+				['extract', 'Extrair páginas', 'Extract pages'],
+				['split', 'Separar páginas em arquivos', 'Split pages into files'],
+				['reorder', 'Reordenar páginas', 'Reorder pages'],
+				['delete', 'Excluir páginas', 'Delete pages'],
+				['rotate', 'Girar páginas', 'Rotate pages'],
+			],
+			undefined,
+			'tools.pdf-pages',
+		),
 		{
-			...input('pages', 'Páginas: 1,3-5 (vazio = todas)', 'Pages: 1,3-5 (empty = all)', '', 'text'),
+			...input(
+				'pages',
+				'Páginas: 1,3-5 (vazio = todas)',
+				'Pages: 1,3-5 (empty = all)',
+				'',
+				'text',
+				'tools.pdf-pages',
+			),
 			when: { key: 'mode', values: ['extract', 'split', 'reorder', 'delete', 'rotate'] },
 		},
 		{
-			...select('rotation', 'Rotação', 'Rotation', [
-				['90', '90° no sentido horário', '90° clockwise'],
-				['180', '180°', '180°'],
-				['270', '90° no sentido anti-horário', '90° counterclockwise'],
-			]),
+			...select(
+				'rotation',
+				'Rotação',
+				'Rotation',
+				[
+					['90', '90° no sentido horário', '90° clockwise'],
+					['180', '180°', '180°'],
+					['270', '90° no sentido anti-horário', '90° counterclockwise'],
+				],
+				undefined,
+				'tools.pdf-pages',
+			),
 			when: { key: 'mode', values: ['rotate'] },
 		},
 	],
@@ -122,5 +143,7 @@ export const definition = tool(
 	text(
 		'Unir segue a ordem dos arquivos. Extrair e reordenar seguem a ordem informada (ex.: 3,1-2). Excluir remove as páginas informadas; girar aplica a rotação às páginas informadas. Vazio = todas. PDFs criptografados são rejeitados; assinaturas digitais não são preservadas.',
 		'Merge follows file selection order. Extract and reorder follow the entered order (e.g. 3,1-2). Delete removes the entered pages; rotate applies to the entered pages. Empty = all. Encrypted PDFs are rejected; digital signatures are not preserved.',
+		undefined,
+		'tools.pdf-pages',
 	),
 );

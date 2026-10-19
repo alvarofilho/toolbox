@@ -4,14 +4,23 @@ import { input } from '@app/features/tools/_shared/controls';
 export const definition: ToolDefinition = {
 	id: 'regex',
 	controls: [
-		input('pattern', 'Expressão (sem delimitadores / /)', 'Pattern (without / /)', '', 'text'),
-		input('flags', 'Flags', 'Flags', 'g', 'text'),
-		input('input', 'Texto de teste', 'Test text'),
+		input(
+			'pattern',
+			'Expressão (sem delimitadores / /)',
+			'Pattern (without / /)',
+			'',
+			'text',
+			'tools.regex',
+		),
+		input('flags', 'Flags', 'Flags', 'g', 'text', 'tools.regex'),
+		input('input', 'Texto de teste', 'Test text', undefined, undefined, 'tools.regex'),
 	],
-	action: text('Testar expressão', 'Test expression'),
+	action: text('Testar expressão', 'Test expression', undefined, 'tools.regex'),
 	hint: text(
 		'Execução isolada com limite de 500 ms, 1.000 resultados e 100.000 caracteres.',
 		'Isolated execution, limited to 500 ms, 1,000 matches and 100,000 characters.',
+		undefined,
+		'tools.regex',
 	),
 	example: { pattern: '[A-Z][a-z]+', flags: 'g', input: 'Ana e Bruno usam Toolbox.' },
 	run: (v) =>

@@ -10,10 +10,17 @@ export const definition = tool(
 	'log-parser',
 	[
 		source,
-		select('format', 'Formato', 'Format', [
-			['json', 'JSON Lines', 'JSON Lines'],
-			['combined', 'Apache/Nginx combined', 'Apache/Nginx combined'],
-		]),
+		select(
+			'format',
+			'Formato',
+			'Format',
+			[
+				['json', 'JSON Lines', 'JSON Lines'],
+				['combined', 'Apache/Nginx combined', 'Apache/Nginx combined'],
+			],
+			undefined,
+			'tools.log-parser',
+		),
 	],
 	(v) => {
 		const lines = field(v, 'input').split(/\r?\n/).filter(Boolean);

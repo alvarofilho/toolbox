@@ -6,10 +6,17 @@ export const definition: ToolDefinition = {
 	id: 'base64',
 	controls: [
 		source,
-		select('mode', 'Operação', 'Operation', [
-			['encode', 'Codificar', 'Encode'],
-			['decode', 'Decodificar', 'Decode'],
-		]),
+		select(
+			'mode',
+			'Operação',
+			'Operation',
+			[
+				['encode', 'Codificar', 'Encode'],
+				['decode', 'Decodificar', 'Decode'],
+			],
+			undefined,
+			'tools.base64',
+		),
 	],
 	action: transform,
 	example: { input: 'Olá, mundo! 🌎', mode: 'encode' },

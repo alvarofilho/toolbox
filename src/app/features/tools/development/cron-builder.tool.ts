@@ -16,10 +16,18 @@ export const definition = tool(
 				['Minute', 'Hour', 'Day of month', 'Month', 'Weekday'][i],
 				i === 0 ? '*/15' : '*',
 				'text',
+				'tools.cron-builder',
 			),
 		),
-		input('zone', 'Fuso IANA', 'IANA timezone', 'America/Sao_Paulo', 'text'),
-		input('start', 'A partir de (ISO)', 'Starting at (ISO)', '2026-01-01T00:00:00Z', 'text'),
+		input('zone', 'Fuso IANA', 'IANA timezone', 'America/Sao_Paulo', 'text', 'tools.cron-builder'),
+		input(
+			'start',
+			'A partir de (ISO)',
+			'Starting at (ISO)',
+			'2026-01-01T00:00:00Z',
+			'text',
+			'tools.cron-builder',
+		),
 	],
 	(v) =>
 		result(

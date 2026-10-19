@@ -28,5 +28,7 @@ export const definition = tool(
 	text(
 		'Validação estrutural e conversão local. Não confirma beneficiário, cobrança ou pagamento.',
 		'Local structural validation and conversion. Does not confirm beneficiary, debt or payment.',
+		undefined,
+		'tools.boleto',
 	),
 );

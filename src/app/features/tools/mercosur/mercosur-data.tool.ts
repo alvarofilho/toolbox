@@ -14,25 +14,46 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 
 import { sqlInsert } from '@app/features/tools/json/data-utils';
 
-const countryControl = select('country', 'País', 'Country', [
-	['AR', 'Argentina', 'Argentina'],
-	['BO', 'Bolívia', 'Bolivia'],
-	['BR', 'Brasil', 'Brazil'],
-	['PY', 'Paraguai', 'Paraguay'],
-	['UY', 'Uruguai', 'Uruguay'],
-	['VE', 'Venezuela (suspensa)', 'Venezuela (suspended)'],
-]);
+const countryControl = select(
+	'country',
+	'País',
+	'Country',
+	[
+		['AR', 'Argentina', 'Argentina'],
+		['BO', 'Bolívia', 'Bolivia'],
+		['BR', 'Brasil', 'Brazil'],
+		['PY', 'Paraguai', 'Paraguay'],
+		['UY', 'Uruguai', 'Uruguay'],
+		['VE', 'Venezuela (suspensa)', 'Venezuela (suspended)'],
+	],
+	undefined,
+	'tools.mercosur-data',
+);
 
-const kindControl = select('kind', 'Tipo de dados', 'Data type', [
-	['person', 'Pessoa', 'Person'],
-	['company', 'Empresa', 'Company'],
-]);
+const kindControl = select(
+	'kind',
+	'Tipo de dados',
+	'Data type',
+	[
+		['person', 'Pessoa', 'Person'],
+		['company', 'Empresa', 'Company'],
+	],
+	undefined,
+	'tools.mercosur-data',
+);
 
-const formatControl = select('format', 'Formato de saída', 'Output format', [
-	['json', 'JSON', 'JSON'],
-	['csv', 'CSV', 'CSV'],
-	['sql', 'SQL INSERT', 'SQL INSERT'],
-]);
+const formatControl = select(
+	'format',
+	'Formato de saída',
+	'Output format',
+	[
+		['json', 'JSON', 'JSON'],
+		['csv', 'CSV', 'CSV'],
+		['sql', 'SQL INSERT', 'SQL INSERT'],
+	],
+	undefined,
+	'tools.mercosur-data',
+);
 
 const profiles = {
 	AR: {
@@ -176,7 +197,12 @@ function documentFor(
 
 export const definition = tool(
 	'mercosur-data',
-	[number('count', 'Quantidade', 'Count', 5, 1, 1000), countryControl, kindControl, formatControl],
+	[
+		number('count', 'Quantidade', 'Count', 5, 1, 1000, undefined, 'tools.mercosur-data'),
+		countryControl,
+		kindControl,
+		formatControl,
+	],
 	(values) => {
 		const code = field(values, 'country');
 		const kind = field(values, 'kind');
@@ -233,5 +259,7 @@ export const definition = tool(
 	text(
 		'Gera dados fictícios para testes. Formatos estrangeiros sem regra de dígito verificador implementada são identificados como "formato sintético". Nenhum número comprova cadastro ou existência real. A Venezuela está incluída como Estado Parte suspenso.',
 		'Generates fictional test data. Foreign formats without an implemented check-digit rule are marked as synthetic format only. No number proves registration or real existence. Venezuela is included as a suspended State Party.',
+		undefined,
+		'tools.mercosur-data',
 	),
 );

@@ -15,6 +15,7 @@ export const definition = tool(
 			'HTTP code (empty to list all)',
 			'200',
 			'text',
+			'tools.http-status',
 		),
 	],
 	(v) => {

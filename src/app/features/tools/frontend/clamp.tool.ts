@@ -29,10 +29,26 @@ export function clampCss(
 export const definition = tool(
 	'clamp',
 	[
-		size('min', 'Tamanho mínimo (px)', 'Minimum size (px)', 16),
-		size('max', 'Tamanho máximo (px)', 'Maximum size (px)', 32),
-		size('minWidth', 'Viewport mínimo (px)', 'Minimum viewport (px)', 320, 1, 5000),
-		size('maxWidth', 'Viewport máximo (px)', 'Maximum viewport (px)', 1440, 1, 5000),
+		size(
+			'min',
+			'Tamanho mínimo (px)',
+			'Minimum size (px)',
+			16,
+			undefined,
+			undefined,
+			'tools.clamp',
+		),
+		size(
+			'max',
+			'Tamanho máximo (px)',
+			'Maximum size (px)',
+			32,
+			undefined,
+			undefined,
+			'tools.clamp',
+		),
+		size('minWidth', 'Viewport mínimo (px)', 'Minimum viewport (px)', 320, 1, 5000, 'tools.clamp'),
+		size('maxWidth', 'Viewport máximo (px)', 'Maximum viewport (px)', 1440, 1, 5000, 'tools.clamp'),
 	],
 	(v) => {
 		const css = clampCss(

@@ -27,6 +27,6 @@ export class ToolCard {
 		const category = CATEGORIES.find((c) => c.id === this.tool().category);
 		return category
 			? this.transloco.translate(category.name.key, {}, this.translationState().locale)
-			: this.transloco.translate('messages.tool_d1a15ae7', {}, this.translationState().locale);
+			: this.transloco.translate('common.tool', {}, this.translationState().locale);
 	});
 }

@@ -7,21 +7,42 @@ import { field } from '@app/core/models/tool';
 export const definition = tool(
 	'connection-string',
 	[
-		select('provider', 'Provedor', 'Provider', [
-			['sqlserver', 'SQL Server / ADO.NET', 'SQL Server / ADO.NET'],
-			['postgresql', 'PostgreSQL / Npgsql', 'PostgreSQL / Npgsql'],
-			['mysql', 'MySQL / MySqlConnector', 'MySQL / MySqlConnector'],
-			['sqlite', 'SQLite / Microsoft.Data.Sqlite', 'SQLite / Microsoft.Data.Sqlite'],
-		]),
-		input('host', 'Servidor', 'Host', 'localhost', 'text'),
-		input('port', 'Porta (opcional)', 'Port (optional)', '', 'text'),
-		input('database', 'Banco ou caminho SQLite', 'Database or SQLite path', 'app', 'text'),
-		input('user', 'Usuário', 'User', 'app', 'text'),
-		input('password', 'Senha', 'Password', '', 'password'),
-		select('tls', 'TLS', 'TLS', [
-			['true', 'Exigir TLS', 'Require TLS'],
-			['false', 'Desabilitado', 'Disabled'],
-		]),
+		select(
+			'provider',
+			'Provedor',
+			'Provider',
+			[
+				['sqlserver', 'SQL Server / ADO.NET', 'SQL Server / ADO.NET'],
+				['postgresql', 'PostgreSQL / Npgsql', 'PostgreSQL / Npgsql'],
+				['mysql', 'MySQL / MySqlConnector', 'MySQL / MySqlConnector'],
+				['sqlite', 'SQLite / Microsoft.Data.Sqlite', 'SQLite / Microsoft.Data.Sqlite'],
+			],
+			undefined,
+			'tools.connection-string',
+		),
+		input('host', 'Servidor', 'Host', 'localhost', 'text', 'tools.connection-string'),
+		input('port', 'Porta (opcional)', 'Port (optional)', '', 'text', 'tools.connection-string'),
+		input(
+			'database',
+			'Banco ou caminho SQLite',
+			'Database or SQLite path',
+			'app',
+			'text',
+			'tools.connection-string',
+		),
+		input('user', 'Usuário', 'User', 'app', 'text', 'tools.connection-string'),
+		input('password', 'Senha', 'Password', '', 'password', 'tools.connection-string'),
+		select(
+			'tls',
+			'TLS',
+			'TLS',
+			[
+				['true', 'Exigir TLS', 'Require TLS'],
+				['false', 'Desabilitado', 'Disabled'],
+			],
+			undefined,
+			'tools.connection-string',
+		),
 	],
 	(v) => {
 		const q = (s: string) => `"${s.replace(/"/g, '""')}"`;

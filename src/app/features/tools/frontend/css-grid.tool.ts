@@ -9,10 +9,10 @@ import { size } from '@app/features/tools/frontend/controls';
 export const definition = tool(
 	'css-grid',
 	[
-		size('columns', 'Colunas', 'Columns', 3, 1, 12),
-		size('rows', 'Linhas', 'Rows', 2, 1, 12),
-		size('gap', 'Espaçamento (px)', 'Gap (px)', 16, 0, 100),
-		size('height', 'Altura das linhas (px)', 'Row height (px)', 80, 20, 300),
+		size('columns', 'Colunas', 'Columns', 3, 1, 12, 'tools.css-grid'),
+		size('rows', 'Linhas', 'Rows', 2, 1, 12, 'tools.css-grid'),
+		size('gap', 'Espaçamento (px)', 'Gap (px)', 16, 0, 100, 'tools.css-grid'),
+		size('height', 'Altura das linhas (px)', 'Row height (px)', 80, 20, 300, 'tools.css-grid'),
 	],
 	(v) => {
 		const columns = Number(field(v, 'columns')),

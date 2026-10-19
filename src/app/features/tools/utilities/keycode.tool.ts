@@ -7,8 +7,15 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'keycode',
 	[
-		input('key', 'Tecla (event.key)', 'Key (event.key)', 'Enter', 'text'),
-		input('code', 'Código físico (event.code)', 'Physical code (event.code)', 'Enter', 'text'),
+		input('key', 'Tecla (event.key)', 'Key (event.key)', 'Enter', 'text', 'tools.keycode'),
+		input(
+			'code',
+			'Código físico (event.code)',
+			'Physical code (event.code)',
+			'Enter',
+			'text',
+			'tools.keycode',
+		),
 	],
 	(v) => {
 		const key = field(v, 'key');

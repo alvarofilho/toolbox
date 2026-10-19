@@ -14,13 +14,20 @@ export const definition = tool(
 	'pem-jwk',
 	[
 		source,
-		select('algorithm', 'Algoritmo JOSE', 'JOSE algorithm', [
-			['RS256', 'RS256', 'RS256'],
-			['PS256', 'PS256', 'PS256'],
-			['ES256', 'ES256', 'ES256'],
-			['ES384', 'ES384', 'ES384'],
-			['EdDSA', 'EdDSA', 'EdDSA'],
-		]),
+		select(
+			'algorithm',
+			'Algoritmo JOSE',
+			'JOSE algorithm',
+			[
+				['RS256', 'RS256', 'RS256'],
+				['PS256', 'PS256', 'PS256'],
+				['ES256', 'ES256', 'ES256'],
+				['ES384', 'ES384', 'ES384'],
+				['EdDSA', 'EdDSA', 'EdDSA'],
+			],
+			undefined,
+			'tools.pem-jwk',
+		),
 	],
 	async (v) => {
 		const pem = field(v, 'input'),
@@ -44,5 +51,7 @@ export const definition = tool(
 	text(
 		'Chaves privadas exportadas contêm material secreto. O processamento fica no navegador.',
 		'Exported private keys contain secret material. Processing stays in the browser.',
+		undefined,
+		'tools.pem-jwk',
 	),
 );

@@ -15,12 +15,26 @@ export const definition = tool(
 	[
 		source,
 		secret,
-		select('provider', 'Formato', 'Format', [
-			['github', 'GitHub SHA-256', 'GitHub SHA-256'],
-			['stripe', 'Stripe v1', 'Stripe v1'],
-			['raw', 'HMAC SHA-256', 'HMAC SHA-256'],
-		]),
-		input('timestamp', 'Timestamp Unix (Stripe)', 'Unix timestamp (Stripe)', '1767225600', 'text'),
+		select(
+			'provider',
+			'Formato',
+			'Format',
+			[
+				['github', 'GitHub SHA-256', 'GitHub SHA-256'],
+				['stripe', 'Stripe v1', 'Stripe v1'],
+				['raw', 'HMAC SHA-256', 'HMAC SHA-256'],
+			],
+			undefined,
+			'tools.webhook-signature',
+		),
+		input(
+			'timestamp',
+			'Timestamp Unix (Stripe)',
+			'Unix timestamp (Stripe)',
+			'1767225600',
+			'text',
+			'tools.webhook-signature',
+		),
 	],
 	async (v) => {
 		const provider = field(v, 'provider'),

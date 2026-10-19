@@ -5,11 +5,18 @@ import { select, number, generate } from '@app/features/tools/_shared/controls';
 export const definition: ToolDefinition = {
 	id: 'uuid',
 	controls: [
-		select('version', 'Versão', 'Version', [
-			['4', 'UUID v4 · aleatório', 'UUID v4 · random'],
-			['7', 'UUID v7 · ordenado por tempo', 'UUID v7 · time ordered'],
-		]),
-		number('count', 'Quantidade', 'Count', 1, 1, 1000),
+		select(
+			'version',
+			'Versão',
+			'Version',
+			[
+				['4', 'UUID v4 · aleatório', 'UUID v4 · random'],
+				['7', 'UUID v7 · ordenado por tempo', 'UUID v7 · time ordered'],
+			],
+			undefined,
+			'tools.uuid',
+		),
+		number('count', 'Quantidade', 'Count', 1, 1, 1000, undefined, 'tools.uuid'),
 	],
 	action: generate,
 	run: (v) => ({

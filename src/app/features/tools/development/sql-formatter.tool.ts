@@ -6,13 +6,20 @@ import { source, select } from '@app/features/tools/_shared/controls';
 
 import { field } from '@app/core/models/tool';
 
-const sqlDialect = select('dialect', 'Dialeto', 'Dialect', [
-	['sql', 'SQL', 'SQL'],
-	['postgresql', 'PostgreSQL', 'PostgreSQL'],
-	['mysql', 'MySQL', 'MySQL'],
-	['transactsql', 'SQL Server', 'SQL Server'],
-	['sqlite', 'SQLite', 'SQLite'],
-]);
+const sqlDialect = select(
+	'dialect',
+	'Dialeto',
+	'Dialect',
+	[
+		['sql', 'SQL', 'SQL'],
+		['postgresql', 'PostgreSQL', 'PostgreSQL'],
+		['mysql', 'MySQL', 'MySQL'],
+		['transactsql', 'SQL Server', 'SQL Server'],
+		['sqlite', 'SQLite', 'SQLite'],
+	],
+	undefined,
+	'tools.sql-formatter',
+);
 
 export const definition = tool(
 	'sql-formatter',

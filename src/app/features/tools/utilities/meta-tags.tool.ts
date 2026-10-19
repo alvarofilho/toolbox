@@ -14,10 +14,10 @@ const escapeHtml = (value: string) =>
 export const definition = tool(
 	'meta-tags',
 	[
-		input('title', 'Título', 'Title', 'Minha página', 'text'),
-		input('description', 'Descrição', 'Description', '', 'text'),
-		input('url', 'URL canônica', 'Canonical URL', '', 'text'),
-		input('image', 'Imagem de compartilhamento', 'Share image', '', 'text'),
+		input('title', 'Título', 'Title', 'Minha página', 'text', 'tools.meta-tags'),
+		input('description', 'Descrição', 'Description', '', 'text', 'tools.meta-tags'),
+		input('url', 'URL canônica', 'Canonical URL', '', 'text', 'tools.meta-tags'),
+		input('image', 'Imagem de compartilhamento', 'Share image', '', 'text', 'tools.meta-tags'),
 	],
 	(v) => {
 		const title = escapeHtml(field(v, 'title'));

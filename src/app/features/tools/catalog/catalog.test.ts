@@ -7,6 +7,21 @@ import en from '@app/i18n/en.json';
 import es from '@app/i18n/es.json';
 import type { Localized } from '@app/core/models/tool';
 
+function isTranslationObject(value: unknown): value is Readonly<Record<string, unknown>> {
+	return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function translationAt(dictionary: Readonly<Record<string, unknown>>, key: string): unknown {
+	let value: unknown = dictionary;
+	for (const part of key.split('.')) {
+		if (!isTranslationObject(value)) {
+			return undefined;
+		}
+		value = value[part];
+	}
+	return value;
+}
+
 async function loadDefinition(id: string) {
 	const tool = TOOLS.find((tool) => tool.id === id);
 	if (!tool) {
@@ -25,6 +40,13 @@ async function run(id: string, values: Record<string, string> = {}) {
 describe('tool catalog', () => {
 	it('translates every published tool, control, option and action in all supported languages', async () => {
 		const dictionaries: readonly Readonly<Record<string, unknown>>[] = [pt, en, es];
+		for (const category of CATEGORIES) {
+			for (const dictionary of dictionaries) {
+				expect(translationAt(dictionary, category.name.key), category.id).toEqual(
+					expect.any(String),
+				);
+			}
+		}
 		for (const info of TOOLS) {
 			const definition = presentDefinition(await info.loadDefinition(), info);
 			const localized: Localized[] = [info.name, info.description, definition.action];
@@ -40,7 +62,9 @@ describe('tool catalog', () => {
 			}
 			for (const value of localized) {
 				for (const dictionary of dictionaries) {
-					expect(dictionary[value.key], `${info.id}: ${value.key}`).toEqual(expect.any(String));
+					expect(translationAt(dictionary, value.key), `${info.id}: ${value.key}`).toEqual(
+						expect.any(String),
+					);
 				}
 			}
 		}

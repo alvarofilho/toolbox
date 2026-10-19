@@ -100,5 +100,7 @@ export const definition = tool(
 	text(
 		'AES-256-GCM autenticado com salt e IV aleatórios; PBKDF2-SHA256 (310.000 iterações). Guarde a senha separadamente.',
 		'Authenticated AES-256-GCM with random salt and IV; PBKDF2-SHA256 (310,000 iterations). Keep the password separately.',
+		undefined,
+		'tools.aes',
 	),
 );

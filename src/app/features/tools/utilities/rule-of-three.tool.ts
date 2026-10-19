@@ -7,9 +7,9 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'rule-of-three',
 	[
-		number('a', 'A', 'A', 2, -1_000_000_000, 1_000_000_000, 'any'),
-		number('b', 'B', 'B', 4, -1_000_000_000, 1_000_000_000, 'any'),
-		number('c', 'C', 'C', 3, -1_000_000_000, 1_000_000_000, 'any'),
+		number('a', 'A', 'A', 2, -1_000_000_000, 1_000_000_000, 'any', 'tools.rule-of-three'),
+		number('b', 'B', 'B', 4, -1_000_000_000, 1_000_000_000, 'any', 'tools.rule-of-three'),
+		number('c', 'C', 'C', 3, -1_000_000_000, 1_000_000_000, 'any', 'tools.rule-of-three'),
 	],
 	(v) => {
 		const a = Number(field(v, 'a'));

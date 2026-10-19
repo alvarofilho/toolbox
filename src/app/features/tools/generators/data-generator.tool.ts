@@ -24,7 +24,18 @@ import { format } from '@app/features/tools/generators/record-generation';
 
 export const definition = tool(
 	'data-generator',
-	[input('input', 'Campos e tipos (JSON)', 'Fields and types (JSON)'), count, format],
+	[
+		input(
+			'input',
+			'Campos e tipos (JSON)',
+			'Fields and types (JSON)',
+			undefined,
+			undefined,
+			'tools.data-generator',
+		),
+		count,
+		format,
+	],
 	(v) => {
 		const fields = object(json(field(v, 'input')));
 		if (Object.keys(fields).length > 50) {

@@ -30,5 +30,7 @@ export const definition = tool(
 	text(
 		'Diff estrutural com operações adicionadas/removidas. Não comprova compatibilidade entre versões.',
 		'Structural diff with added/removed operations. Does not establish version compatibility.',
+		undefined,
+		'tools.openapi-diff',
 	),
 );

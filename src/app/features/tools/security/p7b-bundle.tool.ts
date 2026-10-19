@@ -51,5 +51,7 @@ export const definition = tool(
 	text(
 		'Cria um pacote SignedData sem assinatura, contendo os certificados fornecidos. Não cria uma assinatura digital.',
 		'Creates an unsigned SignedData bundle containing the supplied certificates. It does not create a digital signature.',
+		undefined,
+		'tools.p7b-bundle',
 	),
 );

@@ -9,9 +9,27 @@ import { randomInt } from '@app/features/tools/_shared/random';
 export const definition = tool(
 	'random-number',
 	[
-		number('min', 'Mínimo', 'Minimum', 1, -1_000_000_000, 1_000_000_000),
-		number('max', 'Máximo', 'Maximum', 100, -1_000_000_000, 1_000_000_000),
-		number('count', 'Quantidade', 'Count', 1, 1, 1000),
+		number(
+			'min',
+			'Mínimo',
+			'Minimum',
+			1,
+			-1_000_000_000,
+			1_000_000_000,
+			undefined,
+			'tools.random-number',
+		),
+		number(
+			'max',
+			'Máximo',
+			'Maximum',
+			100,
+			-1_000_000_000,
+			1_000_000_000,
+			undefined,
+			'tools.random-number',
+		),
+		number('count', 'Quantidade', 'Count', 1, 1, 1000, undefined, 'tools.random-number'),
 	],
 	(v) => {
 		const min = Number(field(v, 'min'));

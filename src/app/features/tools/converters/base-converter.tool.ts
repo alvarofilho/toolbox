@@ -18,6 +18,7 @@ export const definition = tool(
 				['16', '16', '16'],
 			],
 			'10',
+			'tools.base-converter',
 		),
 	],
 	(v) => {

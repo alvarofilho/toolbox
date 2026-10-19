@@ -10,11 +10,18 @@ export const definition = tool(
 	'csv-cleaner',
 	[
 		source,
-		select('delimiter', 'Delimitador de saída', 'Output delimiter', [
-			[',', 'Vírgula', 'Comma'],
-			[';', 'Ponto e vírgula', 'Semicolon'],
-			['\t', 'Tab', 'Tab'],
-		]),
+		select(
+			'delimiter',
+			'Delimitador de saída',
+			'Output delimiter',
+			[
+				[',', 'Vírgula', 'Comma'],
+				[';', 'Ponto e vírgula', 'Semicolon'],
+				['\t', 'Tab', 'Tab'],
+			],
+			undefined,
+			'tools.csv-cleaner',
+		),
 	],
 	(v) => {
 		const parsed = Papa.parse<string[]>(field(v, 'input'), { skipEmptyLines: 'greedy' });

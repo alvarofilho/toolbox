@@ -21,6 +21,8 @@ export const definition = tool(
 				s,
 				s,
 			]),
+			undefined,
+			'tools.document-mask',
 		),
 		mode(['format', 'strip']),
 	],

@@ -54,16 +54,30 @@ export const definition = tool(
 	'toml-converter',
 	[
 		source,
-		select('from', 'Converter de', 'Convert from', [
-			['json', 'JSON', 'JSON'],
-			['yaml', 'YAML', 'YAML'],
-			['toml', 'TOML', 'TOML'],
-		]),
-		select('to', 'Converter para', 'Convert to', [
-			['toml', 'TOML', 'TOML'],
-			['json', 'JSON', 'JSON'],
-			['yaml', 'YAML', 'YAML'],
-		]),
+		select(
+			'from',
+			'Converter de',
+			'Convert from',
+			[
+				['json', 'JSON', 'JSON'],
+				['yaml', 'YAML', 'YAML'],
+				['toml', 'TOML', 'TOML'],
+			],
+			undefined,
+			'tools.toml-converter',
+		),
+		select(
+			'to',
+			'Converter para',
+			'Convert to',
+			[
+				['toml', 'TOML', 'TOML'],
+				['json', 'JSON', 'JSON'],
+				['yaml', 'YAML', 'YAML'],
+			],
+			undefined,
+			'tools.toml-converter',
+		),
 	],
 	(v) => {
 		const inputText = field(v, 'input');

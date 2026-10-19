@@ -11,9 +11,9 @@ import { color } from '@app/features/tools/frontend/colors';
 export const definition = tool(
 	'gradient',
 	[
-		colorInput('start', 'Cor inicial', 'Start color', '#176b46'),
-		colorInput('end', 'Cor final', 'End color', '#e6c66b'),
-		size('angle', 'Ângulo (graus)', 'Angle (degrees)', 135, 0, 360),
+		colorInput('start', 'Cor inicial', 'Start color', '#176b46', 'tools.gradient'),
+		colorInput('end', 'Cor final', 'End color', '#e6c66b', 'tools.gradient'),
+		size('angle', 'Ângulo (graus)', 'Angle (degrees)', 135, 0, 360, 'tools.gradient'),
 	],
 	(v) => {
 		const css = `linear-gradient(${Number(field(v, 'angle'))}deg, ${color(field(v, 'start'))}, ${color(field(v, 'end'))})`;

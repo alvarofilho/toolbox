@@ -7,12 +7,19 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'api-proxy',
 	[
-		input('target', 'URL da API', 'API URL', 'https://api.example.com', 'text'),
-		input('path', 'Prefixo local', 'Local prefix', '/api', 'text'),
-		select('format', 'Formato', 'Format', [
-			['vite', 'Vite config', 'Vite config'],
-			['nginx', 'Nginx', 'Nginx'],
-		]),
+		input('target', 'URL da API', 'API URL', 'https://api.example.com', 'text', 'tools.api-proxy'),
+		input('path', 'Prefixo local', 'Local prefix', '/api', 'text', 'tools.api-proxy'),
+		select(
+			'format',
+			'Formato',
+			'Format',
+			[
+				['vite', 'Vite config', 'Vite config'],
+				['nginx', 'Nginx', 'Nginx'],
+			],
+			undefined,
+			'tools.api-proxy',
+		),
 	],
 	(v) => {
 		let target: URL;
@@ -40,5 +47,7 @@ export const definition = tool(
 	text(
 		'Gera configuração para você hospedar. O navegador não consegue agir como proxy de rede sem um servidor.',
 		'Generates configuration for you to host. A browser cannot act as a network proxy without a server.',
+		undefined,
+		'tools.api-proxy',
 	),
 );

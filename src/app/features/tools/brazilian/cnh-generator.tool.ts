@@ -12,7 +12,7 @@ import { generateByValidation } from '@app/features/tools/brazilian/test-numbers
 
 export const definition = tool(
 	'cnh-generator',
-	[number('count', 'Quantidade', 'Count', 5, 1, 100)],
+	[number('count', 'Quantidade', 'Count', 5, 1, 100, undefined, 'tools.cnh-generator')],
 	(v) => {
 		const count = boundedNumber(field(v, 'count'), 1, 100);
 		return result(

@@ -14,5 +14,7 @@ export const definition = tool(
 	text(
 		'Conversão raster via navegador; animação e metadados não são preservados. JPEG usa fundo branco para transparência.',
 		'Browser raster conversion; animation and metadata are not preserved. JPEG uses a white background for transparency.',
+		undefined,
+		'tools.image-converter',
 	),
 );

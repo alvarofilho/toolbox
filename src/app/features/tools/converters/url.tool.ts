@@ -5,10 +5,17 @@ export const definition: ToolDefinition = {
 	id: 'url',
 	controls: [
 		source,
-		select('mode', 'Operação', 'Operation', [
-			['encode', 'Codificar componente', 'Encode component'],
-			['decode', 'Decodificar componente', 'Decode component'],
-		]),
+		select(
+			'mode',
+			'Operação',
+			'Operation',
+			[
+				['encode', 'Codificar componente', 'Encode component'],
+				['decode', 'Decodificar componente', 'Decode component'],
+			],
+			undefined,
+			'tools.url',
+		),
 	],
 	action: transform,
 	example: { input: 'Olá mundo?x=1&y=2', mode: 'encode' },

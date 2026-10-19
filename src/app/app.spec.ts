@@ -9,6 +9,8 @@ import { PreferencesService, readPreferences } from '@app/core/services/preferen
 import { TOOLS } from '@app/features/tools/catalog/tools';
 import { firstValueFrom } from 'rxjs';
 
+const originalMatchMediaDescriptor = Object.getOwnPropertyDescriptor(window, 'matchMedia');
+
 // jsdom does not implement the native dialog top layer. Browser QA covers focus trapping.
 function mockDialog(element: HTMLElement): HTMLDialogElement {
 	const dialog = element.querySelector('dialog');
@@ -32,6 +34,13 @@ describe('platform integration', () => {
 			imports: [App],
 			providers: [provideRouter(routes, withComponentInputBinding()), ...provideToolboxTransloco()],
 		});
+	});
+	afterEach(() => {
+		if (originalMatchMediaDescriptor) {
+			Object.defineProperty(window, 'matchMedia', originalMatchMediaDescriptor);
+		} else {
+			Reflect.deleteProperty(window, 'matchMedia');
+		}
 	});
 	it('switches directly to the language selected in the header', async () => {
 		const fixture = TestBed.createComponent(App);
@@ -284,13 +293,44 @@ describe('platform integration', () => {
 		await harness.fixture.whenStable();
 		expect(harness.routeNativeElement?.textContent).toContain('No favorites yet');
 	});
+	it('follows the system theme until the user chooses a theme manually', async () => {
+		let systemPrefersDark = true;
+		const mediaQuery = new EventTarget() as unknown as MediaQueryList;
+		Object.defineProperty(mediaQuery, 'matches', { get: () => systemPrefersDark });
+		Object.defineProperty(mediaQuery, 'media', { value: '(prefers-color-scheme: dark)' });
+		Object.defineProperty(window, 'matchMedia', {
+			configurable: true,
+			value: () => mediaQuery,
+		});
+		localStorage.setItem('toolbox.preferences.v1', JSON.stringify({ themeMode: 'system' }));
+
+		const prefs = TestBed.inject(PreferencesService);
+		expect(prefs.theme()).toBe('dark');
+		systemPrefersDark = false;
+		const systemChange = Object.assign(new Event('change'), { matches: false });
+		mediaQuery.dispatchEvent(systemChange);
+		expect(prefs.theme()).toBe('light');
+
+		prefs.toggleTheme();
+		expect(prefs.theme()).toBe('dark');
+		expect(prefs.themeMode()).toBe('dark');
+		systemPrefersDark = true;
+		mediaQuery.dispatchEvent(new Event('change'));
+		expect(prefs.theme()).toBe('dark');
+	});
 	it('handles corrupt preferences and rejects unknown IDs', () => {
 		expect(readPreferences('{broken').favorites).toEqual([]);
 		expect(
 			readPreferences(
 				JSON.stringify({ favorites: ['cpf', 'cpf', 'unknown', 3], recent: 'bad', theme: 'oops' }),
 			),
-		).toEqual({ locale: 'pt', theme: 'light', favorites: ['cpf'], recent: [] });
+		).toEqual({
+			locale: 'pt',
+			theme: 'light',
+			themeMode: 'system',
+			favorites: ['cpf'],
+			recent: [],
+		});
 	});
 	it('preserves more than eighteen favorites when preferences are reopened', () => {
 		const ids = TOOLS.slice(0, 30).map((tool) => tool.id);

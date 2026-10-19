@@ -10,12 +10,19 @@ export const definition = tool(
 	'date',
 	[
 		source,
-		select('from', 'Formato de entrada', 'Input format', [
-			['iso', 'ISO 8601', 'ISO 8601'],
-			['br', 'DD/MM/YYYY', 'DD/MM/YYYY'],
-			['us', 'MM/DD/YYYY', 'MM/DD/YYYY'],
-			['unix', 'Unix seconds', 'Unix seconds'],
-		]),
+		select(
+			'from',
+			'Formato de entrada',
+			'Input format',
+			[
+				['iso', 'ISO 8601', 'ISO 8601'],
+				['br', 'DD/MM/YYYY', 'DD/MM/YYYY'],
+				['us', 'MM/DD/YYYY', 'MM/DD/YYYY'],
+				['unix', 'Unix seconds', 'Unix seconds'],
+			],
+			undefined,
+			'tools.date',
+		),
 	],
 	(v) => {
 		let date: Temporal.PlainDate;

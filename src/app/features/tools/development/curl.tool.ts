@@ -9,20 +9,24 @@ const quote = (s: string) => `'${s.replace(/'/g, `'"'"'`)}'`;
 export const definition = tool(
 	'curl',
 	[
-		input('url', 'URL', 'URL', 'https://example.com/api', 'text'),
+		input('url', 'URL', 'URL', 'https://example.com/api', 'text', 'tools.curl'),
 		select(
 			'method',
 			'Método',
 			'Method',
 			['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'].map((m) => [m, m, m]),
+			undefined,
+			'tools.curl',
 		),
 		input(
 			'headers',
 			'Headers (um por linha)',
 			'Headers (one per line)',
 			'Accept: application/json',
+			undefined,
+			'tools.curl',
 		),
-		input('body', 'Corpo', 'Body'),
+		input('body', 'Corpo', 'Body', undefined, undefined, 'tools.curl'),
 	],
 	(v) => {
 		const url = new URL(field(v, 'url'));

@@ -6,16 +6,25 @@ export const definition: ToolDefinition = {
 	id: 'sha',
 	controls: [
 		source,
-		select('algorithm', 'Algoritmo', 'Algorithm', [
-			['SHA-256', 'SHA-256', 'SHA-256'],
-			['SHA-512', 'SHA-512', 'SHA-512'],
-		]),
+		select(
+			'algorithm',
+			'Algoritmo',
+			'Algorithm',
+			[
+				['SHA-256', 'SHA-256', 'SHA-256'],
+				['SHA-512', 'SHA-512', 'SHA-512'],
+			],
+			undefined,
+			'tools.sha',
+		),
 	],
-	action: text('Calcular hash', 'Calculate hash'),
+	action: text('Calcular hash', 'Calculate hash', undefined, 'tools.sha'),
 	example: { input: 'abc', algorithm: 'SHA-256' },
 	hint: text(
 		'Hash do texto UTF-8. Não é criptografia reversível.',
 		'Hash of UTF-8 text. This is not reversible encryption.',
+		undefined,
+		'tools.sha',
 	),
 	run: async (v) => ({
 		output: hex(

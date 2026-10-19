@@ -5,11 +5,17 @@ export const MERCOSUR_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'mercosur-data',
 		category: 'mercosur',
-		name: text('Gerador de dados do Mercosul', 'Mercosur Test Data Generator'),
+		name: text(
+			'Gerador de dados do Mercosul',
+			'Mercosur Test Data Generator',
+			undefined,
+			'tools.mercosur-data',
+		),
 		description: text(
 			'Gere pessoas e empresas fictícias para países do Mercosul.',
 			'Generate fictional people and companies for Mercosur countries.',
 			'Genera personas y empresas ficticias para países del Mercosur.',
+			'tools.mercosur-data',
 		),
 		icon: 'code',
 		keywords: '',

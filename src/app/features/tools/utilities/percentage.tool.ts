@@ -7,13 +7,38 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'percentage',
 	[
-		select('operation', 'Cálculo', 'Calculation', [
-			['of', 'Quanto é X% de Y?', 'What is X% of Y?'],
-			['change', 'Variação percentual de X para Y', 'Percentage change from X to Y'],
-			['ratio', 'X representa quantos % de Y?', 'What percent of Y is X?'],
-		]),
-		number('first', 'X / percentual', 'X / percentage', 10, -1_000_000_000, 1_000_000_000, 'any'),
-		number('second', 'Y / valor base', 'Y / base value', 200, -1_000_000_000, 1_000_000_000, 'any'),
+		select(
+			'operation',
+			'Cálculo',
+			'Calculation',
+			[
+				['of', 'Quanto é X% de Y?', 'What is X% of Y?'],
+				['change', 'Variação percentual de X para Y', 'Percentage change from X to Y'],
+				['ratio', 'X representa quantos % de Y?', 'What percent of Y is X?'],
+			],
+			undefined,
+			'tools.percentage',
+		),
+		number(
+			'first',
+			'X / percentual',
+			'X / percentage',
+			10,
+			-1_000_000_000,
+			1_000_000_000,
+			'any',
+			'tools.percentage',
+		),
+		number(
+			'second',
+			'Y / valor base',
+			'Y / base value',
+			200,
+			-1_000_000_000,
+			1_000_000_000,
+			'any',
+			'tools.percentage',
+		),
 	],
 	(v) => {
 		const first = Number(field(v, 'first'));

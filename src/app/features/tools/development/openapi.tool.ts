@@ -30,5 +30,7 @@ export const definition = tool(
 	text(
 		'Visualiza operações de OpenAPI 3.x/Swagger 2.0; referências externas não são carregadas.',
 		'Views OpenAPI 3.x/Swagger 2.0 operations; external references are not fetched.',
+		undefined,
+		'tools.openapi',
 	),
 );

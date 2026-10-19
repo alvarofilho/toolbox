@@ -158,29 +158,17 @@ export class CommandPalette {
 		return [
 			{
 				id: 'tools',
-				label: this.transloco.translate(
-					'messages.tools_950196fc',
-					{},
-					this.translationState().locale,
-				),
+				label: this.transloco.translate('common.tools', {}, this.translationState().locale),
 				commands: tools,
 			},
 			{
 				id: 'navigation',
-				label: this.transloco.translate(
-					'messages.navigation_d08919c3',
-					{},
-					this.translationState().locale,
-				),
+				label: this.transloco.translate('common.navigation', {}, this.translationState().locale),
 				commands: navigation.filter(matches),
 			},
 			{
 				id: 'actions',
-				label: this.transloco.translate(
-					'messages.actions_e65fb504',
-					{},
-					this.translationState().locale,
-				),
+				label: this.transloco.translate('common.actions', {}, this.translationState().locale),
 				commands: actions.filter(matches),
 			},
 		]

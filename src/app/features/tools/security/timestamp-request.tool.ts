@@ -58,5 +58,7 @@ export const definition = tool(
 	text(
 		'Gera uma solicitação RFC 3161 local. Envie-a ao serviço TSA da sua organização para obter a resposta assinada.',
 		'Generates a local RFC 3161 request. Send it to your organization’s TSA to obtain a signed response.',
+		undefined,
+		'tools.timestamp-request',
 	),
 );

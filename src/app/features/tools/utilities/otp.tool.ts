@@ -60,8 +60,16 @@ export const definition = tool(
 			'Base32 secret (blank generates one)',
 			'',
 			'text',
+			'tools.otp',
 		),
-		input('code', 'Código de 6 dígitos (para validar)', '6-digit code (to verify)', '', 'text'),
+		input(
+			'code',
+			'Código de 6 dígitos (para validar)',
+			'6-digit code (to verify)',
+			'',
+			'text',
+			'tools.otp',
+		),
 	],
 	async (v) => {
 		let secret = field(v, 'secret').trim().toUpperCase();
@@ -95,5 +103,7 @@ export const definition = tool(
 	text(
 		'Guarde o segredo com segurança. O código depende do relógio do dispositivo.',
 		'Keep the secret secure. The code depends on the device clock.',
+		undefined,
+		'tools.otp',
 	),
 );

@@ -17,17 +17,18 @@ export const definition = tool(
 	[
 		source,
 		mode(['decode', 'generate']),
-		input('key', 'Chave PIX', 'PIX key', 'teste@example.com', 'text'),
-		input('name', 'Nome do recebedor', 'Merchant name', 'DADOS DE TESTE', 'text'),
-		input('city', 'Cidade', 'City', 'SAO PAULO', 'text'),
+		input('key', 'Chave PIX', 'PIX key', 'teste@example.com', 'text', 'tools.pix'),
+		input('name', 'Nome do recebedor', 'Merchant name', 'DADOS DE TESTE', 'text', 'tools.pix'),
+		input('city', 'Cidade', 'City', 'SAO PAULO', 'text', 'tools.pix'),
 		input(
 			'amount',
 			'Valor (opcional; ponto decimal)',
 			'Amount (optional; decimal point)',
 			'',
 			'text',
+			'tools.pix',
 		),
-		input('txid', 'Identificador (TXID)', 'Transaction ID', '***', 'text'),
+		input('txid', 'Identificador (TXID)', 'Transaction ID', '***', 'text', 'tools.pix'),
 	],
 	(v) => {
 		if (field(v, 'mode') === 'decode') {
@@ -50,5 +51,7 @@ export const definition = tool(
 	text(
 		'Gera ou inspeciona um payload PIX estático e seu CRC. Não consulta a chave nem confirma titularidade ou pagamento.',
 		'Generates or inspects a static PIX payload and CRC. Does not look up keys or confirm ownership or payment.',
+		undefined,
+		'tools.pix',
 	),
 );

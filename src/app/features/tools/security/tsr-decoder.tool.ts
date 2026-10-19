@@ -17,12 +17,29 @@ import { pemBlocks } from '@app/features/tools/security/pem';
 export const definition = tool(
 	'tsr-decoder',
 	[
-		input('input', 'Resposta TSR (PEM ou Base64)', 'TSR response (PEM or Base64)'),
-		input('content', 'Conteúdo original (opcional)', 'Original content (optional)'),
+		input(
+			'input',
+			'Resposta TSR (PEM ou Base64)',
+			'TSR response (PEM or Base64)',
+			undefined,
+			undefined,
+			'tools.tsr-decoder',
+		),
+		input(
+			'content',
+			'Conteúdo original (opcional)',
+			'Original content (optional)',
+			undefined,
+			undefined,
+			'tools.tsr-decoder',
+		),
 		input(
 			'trustedCertificates',
 			'Certificados confiáveis da TSA (PEM, opcional)',
 			'Trusted TSA certificates (PEM, optional)',
+			undefined,
+			undefined,
+			'tools.tsr-decoder',
 		),
 	],
 	async (v) => {
@@ -107,5 +124,7 @@ export const definition = tool(
 	text(
 		'Mostra o status e a estrutura. Com o conteúdo original e certificados confiáveis, verifica a assinatura do token, o imprint e a cadeia da TSA.',
 		'Shows the status and structure. With the original content and trusted certificates, it verifies the token signature, imprint, and TSA chain.',
+		undefined,
+		'tools.tsr-decoder',
 	),
 );

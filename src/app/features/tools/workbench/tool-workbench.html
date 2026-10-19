@@ -1,5 +1,5 @@
-<nav class="tool-breadcrumb" [attr.aria-label]="'messages.breadcrumb_30635f6c' | transloco">
-	<a routerLink="/tools">{{ 'messages.tools_950196fc' | transloco }}</a
+<nav class="tool-breadcrumb" [attr.aria-label]="'common.breadcrumb' | transloco">
+	<a routerLink="/tools">{{ 'common.tools' | transloco }}</a
 	><span aria-hidden="true">/</span>
 	@if (category(); as category) {
 		<a [routerLink]="['/category', category.id]">{{ category.name.key | transloco }}</a
@@ -23,8 +23,8 @@
 	>
 		<app-icon name="star" />{{
 			p.favorites().includes(info().id)
-				? ('messages.favorited_672c32ab' | transloco)
-				: ('messages.favorite_7c6c19ed' | transloco)
+				? ('common.favorited' | transloco)
+				: ('common.favorite' | transloco)
 		}}
 	</button>
 </section>
@@ -37,19 +37,19 @@
 			<h2>
 				{{
 					isDiffTool()
-						? ('messages.texts_to_compare_32f3f7eb' | transloco)
-						: ('messages.configure_your_input_40d53b06' | transloco)
+						? ('common.texts_to_compare' | transloco)
+						: ('common.configure_your_input' | transloco)
 				}}
 			</h2>
 			@if (tool().example) {
 				<button type="button" class="btn btn-ghost btn-sm" (click)="example()" [disabled]="busy()">
-					{{ 'messages.use_example_90d65a32' | transloco }}
+					{{ 'common.use_example' | transloco }}
 				</button>
 			}
 		</div>
 		<fieldset class="tool-fields" [class.diff-fields]="isDiffTool()">
 			<legend class="sr-only">
-				{{ 'messages.tool_input_8461ebfb' | transloco }}
+				{{ 'common.tool_input' | transloco }}
 			</legend>
 			@for (control of controls(); track control.key) {
 				@if (control.type === 'checkbox') {
@@ -104,7 +104,7 @@
 									[placeholder]="
 										control.placeholder
 											? (control.placeholder.key | transloco)
-											: ('messages.paste_or_type_here_33d9abf7' | transloco)
+											: ('common.paste_or_type_here' | transloco)
 									"
 									[attr.aria-describedby]="
 										fieldErrors()[control.key] ? 'error-' + control.key : null
@@ -164,8 +164,8 @@
 										>
 											{{
 												revealed().includes(control.key)
-													? ('messages.hide_e10c7bcd' | transloco)
-													: ('messages.show_29742e5c' | transloco)
+													? ('common.hide' | transloco)
+													: ('common.show' | transloco)
 											}}<span class="sr-only"> {{ control.label.key | transloco }}</span>
 										</button>
 									}
@@ -181,7 +181,7 @@
 		</fieldset>
 		@if (error()) {
 			<div class="tool-error" role="alert">
-				<strong>{{ 'messages.check_your_input_42488fe2' | transloco }}</strong>
+				<strong>{{ 'common.check_your_input' | transloco }}</strong>
 				<p>{{ error() }}</p>
 			</div>
 		}
@@ -190,26 +190,26 @@
 				@if (busy()) {
 					<span class="loading loading-spinner loading-xs"></span>
 				}
-				{{ busy() ? ('messages.processing_ccf76940' | transloco) : action()
+				{{ busy() ? ('common.processing_ellipsis' | transloco) : action()
 				}}<app-icon name="arrow" />
 			</button>
 			@if (busy()) {
 				<button type="button" class="btn btn-ghost" (click)="cancel()">
-					{{ 'messages.continue_editing_f15713b0' | transloco }}
+					{{ 'common.continue_editing' | transloco }}
 				</button>
 			} @else {
 				<button type="button" class="btn btn-ghost" (click)="reset()">
-					{{ 'messages.clear_04a57fc2' | transloco }}
+					{{ 'common.clear' | transloco }}
 				</button>
 			}
 			@if (result()) {
 				<button type="button" class="btn btn-outline jump-result" (click)="showResult()">
-					{{ 'messages.view_result_3a391691' | transloco }}<app-icon name="arrow" />
+					{{ 'common.view_result' | transloco }}<app-icon name="arrow" />
 				</button>
 			}
 			@if (automatic()) {
 				<span class="auto-update-note">{{
-					'messages.updates_automatically_as_you_edit_dd3ed7bd' | transloco
+					'common.updates_automatically_as_you_edit' | transloco
 				}}</span>
 			}
 		</div>
@@ -218,11 +218,11 @@
 		id="tool-result"
 		tabindex="-1"
 		class="output-panel workspace-panel"
-		[attr.aria-label]="'messages.result_504af044' | transloco"
+		[attr.aria-label]="'common.result_title' | transloco"
 		[attr.aria-busy]="busy()"
 	>
 		<div class="panel-heading">
-			<h2>{{ 'messages.result_504af044' | transloco }}</h2>
+			<h2>{{ 'common.result_title' | transloco }}</h2>
 			<div class="output-actions">
 				<button
 					type="button"
@@ -230,7 +230,7 @@
 					(click)="copy()"
 					[disabled]="!result() || stale()"
 				>
-					<app-icon name="copy" />{{ 'messages.copy_658f3664' | transloco }}
+					<app-icon name="copy" />{{ 'common.copy' | transloco }}
 				</button>
 				<button
 					type="button"
@@ -244,19 +244,19 @@
 		</div>
 		@if (stale()) {
 			<p class="result-notice" role="status">
-				{{ 'messages.input_changed_update_to_copy_or_download_t_c1c6465d' | transloco }}
+				{{ 'common.input_changed_update_to_copy_or_download_t' | transloco }}
 			</p>
 		}
 		@if (result(); as result) {
 			@if (isDiffTool()) {
 				<div class="diff-summary" role="status">
-					<span>− {{ diffSummary().removals }} {{ 'messages.removed_3ff7ffdb' | transloco }}</span
-					><span>+ {{ diffSummary().additions }} {{ 'messages.added_0b2656e5' | transloco }}</span>
+					<span>− {{ diffSummary().removals }} {{ 'common.removed' | transloco }}</span
+					><span>+ {{ diffSummary().additions }} {{ 'common.added' | transloco }}</span>
 				</div>
 				<div
 					class="diff-scroll"
 					tabindex="0"
-					[attr.aria-label]="'messages.side_by_side_comparison_1350d50d' | transloco"
+					[attr.aria-label]="'common.side_by_side_comparison' | transloco"
 				>
 					<table class="diff-table">
 						<caption class="sr-only">
@@ -267,10 +267,10 @@
 						<thead>
 							<tr>
 								<th colspan="2" scope="colgroup">
-									{{ 'messages.original_a2fe7692' | transloco }}
+									{{ 'common.original' | transloco }}
 								</th>
 								<th colspan="2" scope="colgroup">
-									{{ 'messages.modified_dd13a6b2' | transloco }}
+									{{ 'common.modified' | transloco }}
 								</th>
 							</tr>
 						</thead>
@@ -287,7 +287,7 @@
 											row.kind === 'change' || row.kind === 'removed' ? '−' : ' '
 										}}</span>
 										@if (row.kind === 'change' || row.kind === 'removed') {
-											<span class="sr-only">{{ 'messages.removed_3dac6509' | transloco }}</span>
+											<span class="sr-only">{{ 'common.removed_colon' | transloco }}</span>
 										}
 										{{ row.leftText }}
 									</td>
@@ -297,7 +297,7 @@
 											row.kind === 'change' || row.kind === 'added' ? '+' : ' '
 										}}</span>
 										@if (row.kind === 'change' || row.kind === 'added') {
-											<span class="sr-only">{{ 'messages.added_1e033af7' | transloco }}</span>
+											<span class="sr-only">{{ 'common.added_colon' | transloco }}</span>
 										}
 										{{ row.rightText }}
 									</td>
@@ -312,7 +312,7 @@
 						class="tool-preview"
 						sandbox=""
 						referrerpolicy="no-referrer"
-						[title]="'messages.result_preview_4a1cf348' | transloco"
+						[title]="'common.result_preview' | transloco"
 						[srcdoc]="preview"
 					></iframe>
 				}
@@ -336,18 +336,18 @@
 					</ul>
 					<details class="text-report">
 						<summary>
-							{{ 'messages.view_text_report_1f3beb33' | transloco }}
+							{{ 'common.view_text_report' | transloco }}
 						</summary>
 						<pre class="result-code" tabindex="0">{{ result.output }}</pre>
 						<button type="button" class="btn btn-ghost" (click)="download()" [disabled]="stale()">
-							{{ 'messages.export_report_01213507' | transloco }}
+							{{ 'common.export_report' | transloco }}
 						</button>
 					</details>
 				} @else {
 					<pre
 						class="result-code"
 						tabindex="0"
-						[attr.aria-label]="'messages.result_text_c5bf66ab' | transloco"
+						[attr.aria-label]="'common.result_text' | transloco"
 						>{{ result.output }}</pre>
 				}
 			}
@@ -356,7 +356,7 @@
 			}
 			<div class="result-meta">
 				{{ result.output.length.toLocaleString(p.locale()) }}
-				{{ 'messages.characters_905580d9' | transloco }}
+				{{ 'common.characters' | transloco }}
 			</div>
 		} @else {
 			<div class="result-empty">
@@ -364,27 +364,25 @@
 				<h3>
 					{{
 						busy()
-							? ('messages.preparing_your_result_65a3b3eb' | transloco)
-							: ('messages.your_result_appears_here_c8b7c539' | transloco)
+							? ('common.preparing_your_result' | transloco)
+							: ('common.your_result_appears_here' | transloco)
 					}}
 				</h3>
 				<p>
-					{{ 'messages.fill_in_the_fields_and_run_the_tool_everyt_b225b5e7' | transloco }}
+					{{ 'common.fill_in_the_fields_and_run_the_tool_everyt' | transloco }}
 				</p>
 			</div>
 		}
 		<span class="sr-only" role="status">{{
 			busy()
-				? ('messages.processing_34c199e6' | transloco)
+				? ('common.processing' | transloco)
 				: result() && !stale()
-					? ('messages.result_ready_f0f66d9b' | transloco)
+					? ('common.result_ready' | transloco)
 					: ''
 		}}</span>
 		<p class="action-feedback" role="status">{{ feedback() }}</p>
 	</section>
 </div>
 <p class="tool-privacy">
-	<app-icon name="shield" />{{
-		'messages.private_by_default_inputs_and_results_are__41fce56f' | transloco
-	}}
+	<app-icon name="shield" />{{ 'common.privacy_notice_complete' | transloco }}
 </p>

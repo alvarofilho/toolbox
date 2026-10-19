@@ -13,14 +13,21 @@ import { digits } from '@app/features/tools/brazilian/test-numbers';
 export const definition = tool(
 	'bank-account',
 	[
-		select('bank', 'Banco', 'Bank', [
-			['001', 'Banco do Brasil', 'Banco do Brasil'],
-			['033', 'Santander', 'Santander'],
-			['104', 'Caixa', 'Caixa'],
-			['237', 'Bradesco', 'Bradesco'],
-			['341', 'Itaú', 'Itaú'],
-		]),
-		number('count', 'Quantidade', 'Count', 5, 1, 100),
+		select(
+			'bank',
+			'Banco',
+			'Bank',
+			[
+				['001', 'Banco do Brasil', 'Banco do Brasil'],
+				['033', 'Santander', 'Santander'],
+				['104', 'Caixa', 'Caixa'],
+				['237', 'Bradesco', 'Bradesco'],
+				['341', 'Itaú', 'Itaú'],
+			],
+			undefined,
+			'tools.bank-account',
+		),
+		number('count', 'Quantidade', 'Count', 5, 1, 100, undefined, 'tools.bank-account'),
 	],
 	(v) => {
 		const count = boundedNumber(field(v, 'count'), 1, 100);

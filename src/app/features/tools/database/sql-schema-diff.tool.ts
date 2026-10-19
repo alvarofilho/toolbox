@@ -25,5 +25,7 @@ export const definition = tool(
 	text(
 		'Compara ASTs de CREATE TABLE PostgreSQL. A saída descreve diferenças; não executa migrações.',
 		'Compares PostgreSQL CREATE TABLE ASTs. Output describes differences; migrations are not executed.',
+		undefined,
+		'tools.sql-schema-diff',
 	),
 );

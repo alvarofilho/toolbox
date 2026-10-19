@@ -1,4 +1,9 @@
 /* Shared interaction patterns for the catalog and tool workbench. */
+.auto-update-note {
+	color: var(--muted);
+	font-size: 13px;
+	line-height: 1.6;
+}
 .field-input-row {
 	display: flex;
 	align-items: center;

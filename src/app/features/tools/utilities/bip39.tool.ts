@@ -16,19 +16,33 @@ export const definition = tool(
 	'bip39',
 	[
 		mode(['generate', 'validate']),
-		select('language', 'Idioma', 'Language', [
-			['en', 'Inglês', 'English'],
-			['es', 'Espanhol', 'Spanish'],
-		]),
-		select('words', 'Tamanho da frase', 'Phrase length', [
-			['12', '12 palavras', '12 words'],
-			['15', '15 palavras', '15 words'],
-			['18', '18 palavras', '18 words'],
-			['21', '21 palavras', '21 words'],
-			['24', '24 palavras', '24 words'],
-		]),
-		input('mnemonic', 'Frase de recuperação', 'Recovery phrase', '', 'textarea'),
-		input('passphrase', 'Passphrase opcional', 'Optional passphrase', '', 'text'),
+		select(
+			'language',
+			'Idioma',
+			'Language',
+			[
+				['en', 'Inglês', 'English'],
+				['es', 'Espanhol', 'Spanish'],
+			],
+			undefined,
+			'tools.bip39',
+		),
+		select(
+			'words',
+			'Tamanho da frase',
+			'Phrase length',
+			[
+				['12', '12 palavras', '12 words'],
+				['15', '15 palavras', '15 words'],
+				['18', '18 palavras', '18 words'],
+				['21', '21 palavras', '21 words'],
+				['24', '24 palavras', '24 words'],
+			],
+			undefined,
+			'tools.bip39',
+		),
+		input('mnemonic', 'Frase de recuperação', 'Recovery phrase', '', 'textarea', 'tools.bip39'),
+		input('passphrase', 'Passphrase opcional', 'Optional passphrase', '', 'text', 'tools.bip39'),
 	],
 	async (v) => {
 		const wordlist = field(v, 'language') === 'es' ? spanishWordlist : englishWordlist;
@@ -49,5 +63,7 @@ export const definition = tool(
 	text(
 		'Uma frase BIP39 controla fundos de carteira. Use apenas para testes; nunca reutilize frases reais.',
 		'A BIP39 phrase can control wallet funds. Use for testing only; never reuse real phrases.',
+		undefined,
+		'tools.bip39',
 	),
 );

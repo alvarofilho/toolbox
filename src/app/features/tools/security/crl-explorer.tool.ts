@@ -13,16 +13,29 @@ import { certInfo } from '@app/features/tools/security/certificates';
 export const definition = tool(
 	'crl-explorer',
 	[
-		input('crl', 'CRL (PEM ou Base64)', 'CRL (PEM or Base64)'),
+		input(
+			'crl',
+			'CRL (PEM ou Base64)',
+			'CRL (PEM or Base64)',
+			undefined,
+			undefined,
+			'tools.crl-explorer',
+		),
 		input(
 			'certificate',
 			'Certificado a consultar (PEM, opcional)',
 			'Certificate to check (PEM, optional)',
+			undefined,
+			undefined,
+			'tools.crl-explorer',
 		),
 		input(
 			'issuer',
 			'Certificado emissor da CRL (PEM, opcional)',
 			'CRL issuer certificate (PEM, optional)',
+			undefined,
+			undefined,
+			'tools.crl-explorer',
 		),
 	],
 	async (v) => {
@@ -76,5 +89,7 @@ export const definition = tool(
 	text(
 		'Inspeciona a CRL e pode comparar um certificado. Uma CRL vencida ou sem consulta à autoridade não confirma o estado atual de revogação.',
 		'Inspects a CRL and can compare a certificate. A stale CRL or lack of an authority lookup does not confirm current revocation status.',
+		undefined,
+		'tools.crl-explorer',
 	),
 );

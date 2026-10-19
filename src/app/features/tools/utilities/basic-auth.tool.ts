@@ -16,8 +16,8 @@ function base64(value: string): string {
 export const definition = tool(
 	'basic-auth',
 	[
-		input('username', 'Usuário', 'Username', '', 'text'),
-		input('password', 'Senha', 'Password', '', 'password'),
+		input('username', 'Usuário', 'Username', '', 'text', 'tools.basic-auth'),
+		input('password', 'Senha', 'Password', '', 'password', 'tools.basic-auth'),
 	],
 	(v) => {
 		const value = `${field(v, 'username')}:${field(v, 'password')}`;

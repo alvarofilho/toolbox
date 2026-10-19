@@ -14,6 +14,8 @@ const choose = (key: string, pt: string, en: string, options: readonly string[])
 		pt,
 		en,
 		options.map((s) => [s, s, s]),
+		undefined,
+		'tools.flexbox',
 	);
 
 export const definition = tool(
@@ -36,8 +38,8 @@ export const definition = tool(
 			'baseline',
 		]),
 		choose('wrap', 'Quebra de linha', 'Wrapping', ['wrap', 'nowrap']),
-		size('gap', 'Espaçamento (px)', 'Gap (px)', 16, 0, 100),
-		size('count', 'Itens', 'Items', 6, 1, 30),
+		size('gap', 'Espaçamento (px)', 'Gap (px)', 16, 0, 100, 'tools.flexbox'),
+		size('count', 'Itens', 'Items', 6, 1, 30, 'tools.flexbox'),
 	],
 	(v) => {
 		const allowed: Record<string, readonly string[]> = {

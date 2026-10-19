@@ -136,5 +136,7 @@ export const definition = tool(
 	text(
 		'Converte comandos docker run POSIX. Opções sem correspondência suportada são rejeitadas com uma mensagem.',
 		'Converts POSIX docker run commands. Options without a supported mapping are rejected with a message.',
+		undefined,
+		'tools.docker-compose',
 	),
 );

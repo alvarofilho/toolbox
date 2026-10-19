@@ -10,7 +10,7 @@ import { digits } from '@app/features/tools/brazilian/test-numbers';
 
 export const definition = tool(
 	'certificate-number',
-	[number('count', 'Quantidade', 'Count', 5, 1, 100)],
+	[number('count', 'Quantidade', 'Count', 5, 1, 100, undefined, 'tools.certificate-number')],
 	(v) =>
 		result(
 			Array.from({ length: boundedNumber(field(v, 'count'), 1, 100) }, () => ({

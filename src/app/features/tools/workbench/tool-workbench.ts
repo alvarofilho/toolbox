@@ -78,8 +78,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		const mode = this.values()['mode'];
 		if (this.tool().id === 'aes') {
 			return mode === 'decrypt'
-				? this.transloco.translate('messages.decrypt_1967dc3a', {}, this.translationState().locale)
-				: this.transloco.translate('messages.encrypt_0be60602', {}, this.translationState().locale);
+				? this.transloco.translate('common.decrypt', {}, this.translationState().locale)
+				: this.transloco.translate('common.encrypt', {}, this.translationState().locale);
 		}
 		if (this.tool().id === 'pdf-pages') {
 			const option = this.tool()
@@ -95,74 +95,34 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			)
 		) {
 			return mode === 'validate' || mode === 'verify'
-				? this.transloco.translate('messages.validate_7a98446b', {}, this.translationState().locale)
-				: this.transloco.translate(
-						'messages.generate_c75562b2',
-						{},
-						this.translationState().locale,
-					);
+				? this.transloco.translate('common.validate', {}, this.translationState().locale)
+				: this.transloco.translate('common.generate', {}, this.translationState().locale);
 		}
 		if (this.tool().id === 'pix') {
 			return mode === 'decode'
-				? this.transloco.translate(
-						'messages.decode_pix_07e36966',
-						{},
-						this.translationState().locale,
-					)
-				: this.transloco.translate(
-						'messages.generate_pix_d664e6bb',
-						{},
-						this.translationState().locale,
-					);
+				? this.transloco.translate('common.decode_pix', {}, this.translationState().locale)
+				: this.transloco.translate('common.generate_pix', {}, this.translationState().locale);
 		}
 		if (this.tool().id === 'bcrypt') {
 			return mode === 'verify'
-				? this.transloco.translate(
-						'messages.verify_password_a7119c1d',
-						{},
-						this.translationState().locale,
-					)
-				: this.transloco.translate(
-						'messages.generate_hash_bd5caada',
-						{},
-						this.translationState().locale,
-					);
+				? this.transloco.translate('common.verify_password', {}, this.translationState().locale)
+				: this.transloco.translate('common.generate_hash', {}, this.translationState().locale);
 		}
 		return this.transloco.translate(this.tool().action.key, {}, this.translationState().locale);
 	});
 	protected readonly downloadLabel = computed(() => {
 		const artifacts = this.result()?.artifacts ?? [];
 		if (artifacts.length !== 1) {
-			return this.transloco.translate(
-				'messages.export_text_1e867eea',
-				{},
-				this.translationState().locale,
-			);
+			return this.transloco.translate('common.export_text', {}, this.translationState().locale);
 		}
 		const filename = artifacts[0].filename.toLowerCase();
 		return filename.endsWith('.zip')
-			? this.transloco.translate(
-					'messages.download_zip_f87e83fa',
-					{},
-					this.translationState().locale,
-				)
+			? this.transloco.translate('common.download_zip', {}, this.translationState().locale)
 			: filename.endsWith('.pdf')
-				? this.transloco.translate(
-						'messages.download_pdf_643bf50b',
-						{},
-						this.translationState().locale,
-					)
+				? this.transloco.translate('common.download_pdf', {}, this.translationState().locale)
 				: /\.(png|jpe?g|webp|svg|ico)$/.test(filename)
-					? this.transloco.translate(
-							'messages.download_image_76b89080',
-							{},
-							this.translationState().locale,
-						)
-					: this.transloco.translate(
-							'messages.download_file_c5671355',
-							{},
-							this.translationState().locale,
-						);
+					? this.transloco.translate('common.download_image', {}, this.translationState().locale)
+					: this.transloco.translate('common.download_file', {}, this.translationState().locale);
 	});
 	protected readonly isDiffTool = computed(() =>
 		['text-diff', 'json-diff'].includes(this.definition().id),
@@ -199,23 +159,19 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	protected readonly diffStatus = computed(() => {
 		if (!this.result()) {
 			return this.transloco.translate(
-				'messages.ready_to_compare_4166c64e',
+				'common.ready_to_compare',
 				{},
 				this.translationState().locale,
 			);
 		}
 		if (this.diffSummary().additions === 0 && this.diffSummary().removals === 0) {
 			return this.transloco.translate(
-				'messages.files_are_identical_dfc8467d',
+				'common.files_are_identical',
 				{},
 				this.translationState().locale,
 			);
 		}
-		return this.transloco.translate(
-			'messages.differences_found_fa780cb3',
-			{},
-			this.translationState().locale,
-		);
+		return this.transloco.translate('common.differences_found', {}, this.translationState().locale);
 	});
 	protected readonly diffLineCounts = computed(() => {
 		const controls = this.definition().controls;
@@ -341,7 +297,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			) {
 				throw new Error(
 					this.transloco.translate(
-						'messages.limit_100_000_characters_per_field_and_200_70d208f8',
+						'common.limit_100_000_characters_per_field_and_200',
 						{},
 						this.translationState().locale,
 					),
@@ -354,19 +310,19 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 					const n = Number(value);
 					if (!value.trim() || !Number.isFinite(n)) {
 						errors[control.key] = this.transloco.translate(
-							'messages.enter_a_valid_number_94a14c45',
+							'common.enter_a_valid_number',
 							{},
 							this.translationState().locale,
 						);
 					} else if (control.step !== 'any' && !Number.isInteger(n)) {
 						errors[control.key] = this.transloco.translate(
-							'messages.enter_a_whole_number_23a2e4b0',
+							'common.enter_a_whole_number',
 							{},
 							this.translationState().locale,
 						);
 					} else if (n < (control.min ?? -Infinity) || n > (control.max ?? Infinity)) {
 						errors[control.key] =
-							`${this.transloco.translate('messages.use_a_value_between_081adcce', {}, this.translationState().locale)} ${control.min ?? '−∞'} ${this.transloco.translate('messages.and_0f29c2a6', {}, this.translationState().locale)} ${control.max ?? '∞'}.`;
+							`${this.transloco.translate('common.use_a_value_between', {}, this.translationState().locale)} ${control.min ?? '−∞'} ${this.transloco.translate('common.and', {}, this.translationState().locale)} ${control.max ?? '∞'}.`;
 					}
 				}
 			}
@@ -376,7 +332,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				}
 				throw new Error(
 					this.transloco.translate(
-						'messages.correct_the_highlighted_fields_d797610e',
+						'common.correct_the_highlighted_fields',
 						{},
 						this.translationState().locale,
 					),
@@ -390,7 +346,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			) {
 				throw new Error(
 					this.transloco.translate(
-						'messages.limit_20_files_20_mb_per_file_50_mb_total_b70843db',
+						'common.limit_20_files_20_mb_per_file_50_mb_total',
 						{},
 						this.translationState().locale,
 					),
@@ -405,7 +361,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			if (result.output.length > 1000000) {
 				throw new Error(
 					this.transloco.translate(
-						'messages.output_too_large_reduce_input_e6edc279',
+						'common.output_too_large_reduce_input',
 						{},
 						this.translationState().locale,
 					),
@@ -417,7 +373,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			) {
 				throw new Error(
 					this.transloco.translate(
-						'messages.output_files_exceed_50_mb_reduce_the_input_d88f2564',
+						'common.output_files_exceed_50_mb_reduce_the_input',
 						{},
 						this.translationState().locale,
 					),
@@ -469,7 +425,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.cancelPending();
 		this.feedback.set(
 			this.transloco.translate(
-				'messages.you_can_continue_editing_this_run_will_not_30825481',
+				'common.you_can_continue_editing_this_run_will_not',
 				{},
 				this.translationState().locale,
 			),
@@ -506,16 +462,12 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		try {
 			await navigator.clipboard.writeText(result.output);
 			this.feedback.set(
-				this.transloco.translate(
-					'messages.result_copied_c8518782',
-					{},
-					this.translationState().locale,
-				),
+				this.transloco.translate('common.result_copied', {}, this.translationState().locale),
 			);
 		} catch {
 			this.feedback.set(
 				this.transloco.translate(
-					'messages.copy_failed_select_the_result_and_copy_it__c4e35deb',
+					'common.copy_failed_select_the_result_and_copy_it_',
 					{},
 					this.translationState().locale,
 				),
@@ -538,11 +490,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		link.click();
 		setTimeout(() => URL.revokeObjectURL(url), 1000);
 		this.feedback.set(
-			this.transloco.translate(
-				'messages.export_started_89f5906c',
-				{},
-				this.translationState().locale,
-			),
+			this.transloco.translate('common.export_started', {}, this.translationState().locale),
 		);
 	}
 }

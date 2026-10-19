@@ -24,10 +24,17 @@ export const definition: ToolDefinition = {
 	id: 'json-yaml',
 	controls: [
 		source,
-		select('mode', 'Direção', 'Direction', [
-			['yaml', 'JSON → YAML', 'JSON → YAML'],
-			['json', 'YAML → JSON', 'YAML → JSON'],
-		]),
+		select(
+			'mode',
+			'Direção',
+			'Direction',
+			[
+				['yaml', 'JSON → YAML', 'JSON → YAML'],
+				['json', 'YAML → JSON', 'YAML → JSON'],
+			],
+			undefined,
+			'tools.json-yaml',
+		),
 	],
 	action: transform,
 	example: { input: '{"project":"Toolbox","local":true,"tools":["JSON","CPF"]}', mode: 'yaml' },

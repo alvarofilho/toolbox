@@ -22,5 +22,7 @@ export const definition = tool(
 	text(
 		'Scripts e atributos perigosos são removidos antes da prévia.',
 		'Scripts and dangerous attributes are removed before preview.',
+		undefined,
+		'tools.html-editor',
 	),
 );

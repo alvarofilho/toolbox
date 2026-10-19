@@ -5,10 +5,12 @@ import { source } from '@app/features/tools/_shared/controls';
 export const definition: ToolDefinition = {
 	id: 'jwt',
 	controls: [source],
-	action: text('Decodificar JWT', 'Decode JWT'),
+	action: text('Decodificar JWT', 'Decode JWT', undefined, 'tools.jwt'),
 	hint: text(
 		'Apenas decodificação. A assinatura e a autenticidade do token não são verificadas.',
 		'Decoding only. The token signature and authenticity are not verified.',
+		undefined,
+		'tools.jwt',
 	),
 	example: {
 		input:

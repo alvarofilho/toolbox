@@ -15,9 +15,24 @@ export const definition = tool(
 			'Local date/time (ISO, without offset)',
 			'2026-01-01T12:00:00',
 			'text',
+			'tools.timezone',
 		),
-		input('from', 'Fuso de origem (IANA)', 'Source timezone (IANA)', 'America/Sao_Paulo', 'text'),
-		input('to', 'Fuso de destino (IANA)', 'Target timezone (IANA)', 'Europe/Lisbon', 'text'),
+		input(
+			'from',
+			'Fuso de origem (IANA)',
+			'Source timezone (IANA)',
+			'America/Sao_Paulo',
+			'text',
+			'tools.timezone',
+		),
+		input(
+			'to',
+			'Fuso de destino (IANA)',
+			'Target timezone (IANA)',
+			'Europe/Lisbon',
+			'text',
+			'tools.timezone',
+		),
 	],
 	(v) => {
 		const local = Temporal.PlainDateTime.from(field(v, 'input'));

@@ -24,7 +24,17 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 export const definition = tool(
 	'p12-explorer',
-	[file(), input('password', 'Senha do arquivo P12', 'P12 file password', '', 'password')],
+	[
+		file(),
+		input(
+			'password',
+			'Senha do arquivo P12',
+			'P12 file password',
+			'',
+			'password',
+			'tools.p12-explorer',
+		),
+	],
 	async (v, files) => {
 		const selected = firstFile(files);
 		if (selected.size > 20_000_000) {
@@ -94,5 +104,7 @@ export const definition = tool(
 	text(
 		'A senha é usada localmente para abrir e conferir a integridade. A análise lista certificados e a presença de chave privada, mas nunca exibe o material privado.',
 		'The password is used locally to open and check integrity. The analysis lists certificates and whether a private key is present, but never displays private key material.',
+		undefined,
+		'tools.p12-explorer',
 	),
 );

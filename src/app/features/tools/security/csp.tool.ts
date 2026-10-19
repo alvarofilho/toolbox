@@ -15,10 +15,11 @@ export const definition = tool(
 			'Script sources (space-separated)',
 			"'self'",
 			'text',
+			'tools.csp',
 		),
-		input('style', 'Origens de estilos', 'Style sources', "'self'", 'text'),
-		input('image', 'Origens de imagens', 'Image sources', "'self' data:", 'text'),
-		input('connect', 'Origens de conexões', 'Connection sources', "'self'", 'text'),
+		input('style', 'Origens de estilos', 'Style sources', "'self'", 'text', 'tools.csp'),
+		input('image', 'Origens de imagens', 'Image sources', "'self' data:", 'text', 'tools.csp'),
+		input('connect', 'Origens de conexões', 'Connection sources', "'self'", 'text', 'tools.csp'),
 	],
 	(v) => {
 		const clean = (s: string) => {

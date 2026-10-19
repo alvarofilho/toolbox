@@ -40,6 +40,8 @@ export const definition = tool(
 			notice: text(
 				`${input.length} → ${svg.length} caracteres`,
 				`${input.length} → ${svg.length} characters`,
+				undefined,
+				'tools.svg-optimizer',
 			),
 		};
 	},

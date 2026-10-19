@@ -12,13 +12,27 @@ export const definition = tool(
 	'bcrypt',
 	[
 		mode(['hash', 'verify']),
-		input('password', 'Senha', 'Password', '', 'password'),
-		input('hash', 'Hash bcrypt (para verificar)', 'Bcrypt hash (to verify)', '', 'text'),
-		select('cost', 'Custo', 'Cost', [
-			['10', '10 (padrão)', '10 (default)'],
-			['12', '12', '12'],
-			['14', '14', '14'],
-		]),
+		input('password', 'Senha', 'Password', '', 'password', 'tools.bcrypt'),
+		input(
+			'hash',
+			'Hash bcrypt (para verificar)',
+			'Bcrypt hash (to verify)',
+			'',
+			'text',
+			'tools.bcrypt',
+		),
+		select(
+			'cost',
+			'Custo',
+			'Cost',
+			[
+				['10', '10 (padrão)', '10 (default)'],
+				['12', '12', '12'],
+				['14', '14', '14'],
+			],
+			undefined,
+			'tools.bcrypt',
+		),
 	],
 	async (v) => {
 		const password = field(v, 'password');
@@ -42,5 +56,7 @@ export const definition = tool(
 	text(
 		'A senha e o hash são processados no navegador. O custo maior demora mais.',
 		'The password and hash are processed in your browser. Higher cost takes longer.',
+		undefined,
+		'tools.bcrypt',
 	),
 );

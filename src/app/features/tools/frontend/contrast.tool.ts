@@ -11,8 +11,20 @@ import { colorInput } from '@app/features/tools/frontend/controls';
 export const definition = tool(
 	'contrast',
 	[
-		colorInput('foreground', 'Cor do texto (opaca)', 'Text color (opaque)', '#176b46'),
-		colorInput('background', 'Cor de fundo (opaca)', 'Background color (opaque)', '#ffffff'),
+		colorInput(
+			'foreground',
+			'Cor do texto (opaca)',
+			'Text color (opaque)',
+			'#176b46',
+			'tools.contrast',
+		),
+		colorInput(
+			'background',
+			'Cor de fundo (opaca)',
+			'Background color (opaque)',
+			'#ffffff',
+			'tools.contrast',
+		),
 	],
 	(v) => {
 		const a = parse(field(v, 'foreground')),

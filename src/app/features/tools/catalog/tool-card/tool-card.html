@@ -20,8 +20,8 @@
 		[attr.aria-pressed]="p.favorites().includes(tool().id)"
 		[attr.aria-label]="
 			(p.favorites().includes(tool().id)
-				? ('messages.remove_favorite_5f19e0a5' | transloco)
-				: ('messages.favorite_8a54dccf' | transloco)) + (tool().name.key | transloco)
+				? ('common.remove_favorite' | transloco)
+				: ('common.favorite_colon' | transloco)) + (tool().name.key | transloco)
 		"
 	>
 		<app-icon name="star" />

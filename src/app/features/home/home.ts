@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PreferencesService } from '@app/core/services/preferences';
@@ -78,64 +77,44 @@ export class Home {
 	);
 	protected readonly emptyTitle = computed(() =>
 		this.mode === 'category' && !this.category()
-			? this.transloco.translate(
-					'messages.category_not_found_3e750170',
-					{},
-					this.translationState().locale,
-				)
+			? this.transloco.translate('common.category_not_found', {}, this.translationState().locale)
 			: this.query()
-				? this.transloco.translate(
-						'messages.no_tools_found_29b23135',
-						{},
-						this.translationState().locale,
-					)
+				? this.transloco.translate('common.no_tools_found', {}, this.translationState().locale)
 				: this.mode === 'favorites'
-					? this.transloco.translate(
-							'messages.no_favorites_yet_fcb8d481',
-							{},
-							this.translationState().locale,
-						)
-					: this.transloco.translate(
-							'messages.no_recent_tools_01a8f16e',
-							{},
-							this.translationState().locale,
-						),
+					? this.transloco.translate('common.no_favorites_yet', {}, this.translationState().locale)
+					: this.transloco.translate('common.no_recent_tools', {}, this.translationState().locale),
 	);
 	protected readonly emptyDescription = computed(() =>
 		this.mode === 'category' && !this.category()
 			? this.transloco.translate(
-					'messages.choose_a_category_to_continue_cb9ff2ab',
+					'common.choose_a_category_to_continue',
 					{},
 					this.translationState().locale,
 				)
 			: this.query()
 				? this.transloco.translate(
-						'messages.try_another_term_or_clear_the_search_to_se_5c2f6e98',
+						'common.try_another_term_or_clear_the_search_to_se',
 						{},
 						this.translationState().locale,
 					)
 				: this.mode === 'favorites'
 					? this.transloco.translate(
-							'messages.star_a_tool_to_find_it_here_54440471',
+							'common.star_a_tool_to_find_it_here',
 							{},
 							this.translationState().locale,
 						)
 					: this.transloco.translate(
-							'messages.tools_you_open_will_appear_here_your_input_84293c7f',
+							'common.tools_you_open_will_appear_here_your_input',
 							{},
 							this.translationState().locale,
 						),
 	);
 	protected readonly title = computed(() =>
 		this.mode === 'favorites'
-			? this.transloco.translate(
-					'messages.your_favorite_tools_e1c3fc79',
-					{},
-					this.translationState().locale,
-				)
+			? this.transloco.translate('common.your_favorite_tools', {}, this.translationState().locale)
 			: this.mode === 'recent'
 				? this.transloco.translate(
-						'messages.pick_up_where_you_left_off_8e171b17',
+						'common.pick_up_where_you_left_off',
 						{},
 						this.translationState().locale,
 					)
@@ -145,11 +124,7 @@ export class Home {
 							{},
 							this.translationState().locale,
 						)
-					: this.transloco.translate(
-							'messages.all_tools_5754d41f',
-							{},
-							this.translationState().locale,
-						),
+					: this.transloco.translate('common.all_tools', {}, this.translationState().locale),
 	);
 	protected search(event: Event): void {
 		if (event.target instanceof HTMLInputElement) {

@@ -5,12 +5,19 @@ import { select, number, generate } from '@app/features/tools/_shared/controls';
 export const definition: ToolDefinition = {
 	id: 'token',
 	controls: [
-		number('bytes', 'Bytes de entropia', 'Entropy bytes', 32, 16, 256),
-		select('encoding', 'Formato', 'Format', [
-			['hex', 'Hexadecimal', 'Hexadecimal'],
-			['base64', 'Base64 padrão', 'Standard Base64'],
-			['base64url', 'Base64 URL-safe', 'Base64 URL-safe'],
-		]),
+		number('bytes', 'Bytes de entropia', 'Entropy bytes', 32, 16, 256, undefined, 'tools.token'),
+		select(
+			'encoding',
+			'Formato',
+			'Format',
+			[
+				['hex', 'Hexadecimal', 'Hexadecimal'],
+				['base64', 'Base64 padrão', 'Standard Base64'],
+				['base64url', 'Base64 URL-safe', 'Base64 URL-safe'],
+			],
+			undefined,
+			'tools.token',
+		),
 	],
 	action: generate,
 	run: (v) => {

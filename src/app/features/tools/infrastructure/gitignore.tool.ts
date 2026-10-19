@@ -24,6 +24,7 @@ export const definition = tool(
 			'Comma-separated templates: node, angular, dotnet, python, rust, windows, macos, vscode',
 			'node,windows,vscode',
 			'text',
+			'tools.gitignore',
 		),
 	],
 	(v) =>

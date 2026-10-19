@@ -16,6 +16,7 @@ const state = select(
 		.split(' ')
 		.map((s) => [s, s, s]),
 	'SP',
+	'tools.address',
 );
 
 export const definition = records(

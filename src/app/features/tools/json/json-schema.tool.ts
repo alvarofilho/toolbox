@@ -8,7 +8,17 @@ import { runDataTask as task } from '@app/features/tools/json/data-runner';
 
 export const definition = tool(
 	'json-schema',
-	[source, input('schema', 'JSON Schema (Draft 7)', 'JSON Schema (Draft 7)')],
+	[
+		source,
+		input(
+			'schema',
+			'JSON Schema (Draft 7)',
+			'JSON Schema (Draft 7)',
+			undefined,
+			undefined,
+			'tools.json-schema',
+		),
+	],
 	async (v) => result(await task('schema', field(v, 'input'), field(v, 'schema'))),
 	{
 		input: '{"name":"Ana"}',

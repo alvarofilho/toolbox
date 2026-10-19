@@ -4,7 +4,7 @@ import { source } from '@app/features/tools/_shared/controls';
 export const definition: ToolDefinition = {
 	id: 'json-minifier',
 	controls: [source],
-	action: text('Minificar JSON', 'Minify JSON'),
+	action: text('Minificar JSON', 'Minify JSON', undefined, 'tools.json-minifier'),
 	example: { input: '{\n  "project": "Toolbox",\n  "local": true\n}' },
 	run: (v) => ({
 		output: JSON.stringify(JSON.parse(field(v, 'input'))),

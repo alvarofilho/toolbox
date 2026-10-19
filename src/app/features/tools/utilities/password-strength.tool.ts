@@ -40,5 +40,7 @@ export const definition = tool(
 	text(
 		'Estimativa heurística local; não substitui um verificador com lista de senhas vazadas.',
 		'Local heuristic estimate; it does not replace a breached-password check.',
+		undefined,
+		'tools.password-strength',
 	),
 );

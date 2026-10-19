@@ -71,5 +71,7 @@ export const definition = tool(
 	text(
 		'Verifica assinaturas entre os certificados fornecidos e mostra validade temporal. Não estabelece confiança de uma CA nem consulta revogação.',
 		'Verifies signatures between supplied certificates and shows validity dates. Does not establish CA trust or check revocation.',
+		undefined,
+		'tools.certificate-chain',
 	),
 );

@@ -13,7 +13,14 @@ export const definition = tool(
 	[
 		source,
 		second,
-		input('range', 'Intervalo semver (opcional)', 'Semver range (optional)', '^1.0.0', 'text'),
+		input(
+			'range',
+			'Intervalo semver (opcional)',
+			'Semver range (optional)',
+			'^1.0.0',
+			'text',
+			'tools.semver',
+		),
 	],
 	(v) => {
 		const a = field(v, 'input').trim(),

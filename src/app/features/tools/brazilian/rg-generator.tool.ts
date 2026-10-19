@@ -8,7 +8,7 @@ import { digits } from '@app/features/tools/brazilian/test-numbers';
 
 export const definition = tool(
 	'rg-generator',
-	[number('count', 'Quantidade', 'Count', 5, 1, 100)],
+	[number('count', 'Quantidade', 'Count', 5, 1, 100, undefined, 'tools.rg-generator')],
 	(v) => {
 		const count = boundedNumber(field(v, 'count'), 1, 100);
 		return result(
@@ -23,5 +23,7 @@ export const definition = tool(
 	text(
 		'RG não possui um único algoritmo nacional de validação; os valores são fictícios e apenas formatados.',
 		'RG does not have one nationwide validation algorithm; values are fictional and format-only.',
+		undefined,
+		'tools.rg-generator',
 	),
 );

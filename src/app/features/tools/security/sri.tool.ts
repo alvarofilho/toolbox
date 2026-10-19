@@ -14,11 +14,18 @@ export const definition = tool(
 	'sri',
 	[
 		file(),
-		select('algorithm', 'Algoritmo', 'Algorithm', [
-			['SHA-256', 'SHA-256', 'SHA-256'],
-			['SHA-384', 'SHA-384', 'SHA-384'],
-			['SHA-512', 'SHA-512', 'SHA-512'],
-		]),
+		select(
+			'algorithm',
+			'Algoritmo',
+			'Algorithm',
+			[
+				['SHA-256', 'SHA-256', 'SHA-256'],
+				['SHA-384', 'SHA-384', 'SHA-384'],
+				['SHA-512', 'SHA-512', 'SHA-512'],
+			],
+			undefined,
+			'tools.sri',
+		),
 	],
 	async (v, files) => {
 		const f = firstFile(files),

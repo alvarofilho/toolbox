@@ -14,5 +14,7 @@ export const definition = tool(
 	text(
 		'Ajuste qualidade e dimensão. PNG é sem perdas; reduzir qualidade não diminui seu tamanho. Confira o tamanho final antes de baixar.',
 		'Adjust quality and dimensions. PNG is lossless; reducing quality does not reduce its size. Check the final size before downloading.',
+		undefined,
+		'tools.image-compressor',
 	),
 );

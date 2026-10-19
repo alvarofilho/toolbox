@@ -4,10 +4,12 @@ import type { ToolRegistration } from '@app/features/tools/catalog/tool-registra
 export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'regex',
-		name: text('Regex Tester', 'Regex Tester'),
+		name: text('Regex Tester', 'Regex Tester', undefined, 'tools.regex'),
 		description: text(
 			'Teste expressões regulares e explore resultados.',
 			'Test regular expressions and explore matches.',
+			undefined,
+			'tools.regex',
 		),
 		category: 'development',
 		icon: 'regex',
@@ -19,11 +21,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'sql-formatter',
 		category: 'development',
-		name: text('SQL Formatter', 'SQL Formatter'),
+		name: text('SQL Formatter', 'SQL Formatter', undefined, 'tools.sql-formatter'),
 		description: text(
 			'Organize SQL com indentação no dialeto escolhido.',
 			'Format SQL with indentation in your chosen dialect.',
 			'Organiza SQL con sangría en el dialecto elegido.',
+			'tools.sql-formatter',
 		),
 		icon: 'code',
 		keywords: '',
@@ -35,11 +38,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'xml-formatter',
 		category: 'development',
-		name: text('XML Formatter', 'XML Formatter'),
+		name: text('XML Formatter', 'XML Formatter', undefined, 'tools.xml-formatter'),
 		description: text(
 			'Formate XML com indentação e verifique a boa formação.',
 			'Format XML with indentation and check well-formedness.',
 			'Formatea XML con sangría y comprueba su buena formación.',
+			'tools.xml-formatter',
 		),
 		icon: 'code',
 		keywords: '',
@@ -51,11 +55,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'xml-validator',
 		category: 'development',
-		name: text('XML Validator', 'XML Validator'),
+		name: text('XML Validator', 'XML Validator', undefined, 'tools.xml-validator'),
 		description: text(
 			'Confira a boa formação de XML, sem validação XSD.',
 			'Check XML well-formedness without XSD validation.',
 			'Comprueba la buena formación de XML, sin validación XSD.',
+			'tools.xml-validator',
 		),
 		icon: 'code',
 		keywords: '',
@@ -67,11 +72,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'yaml-formatter',
 		category: 'development',
-		name: text('YAML Formatter', 'YAML Formatter'),
+		name: text('YAML Formatter', 'YAML Formatter', undefined, 'tools.yaml-formatter'),
 		description: text(
 			'Organize a indentação de um documento YAML.',
 			'Format the indentation of a YAML document.',
 			'Organiza la sangría de un documento YAML.',
+			'tools.yaml-formatter',
 		),
 		icon: 'code',
 		keywords: '',
@@ -83,11 +89,17 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'cron-builder',
 		category: 'development',
-		name: text('Cron Expression Builder', 'Cron Expression Builder'),
+		name: text(
+			'Cron Expression Builder',
+			'Cron Expression Builder',
+			undefined,
+			'tools.cron-builder',
+		),
 		description: text(
 			'Monte uma expressão cron e veja as próximas execuções.',
 			'Build a cron expression and see its next occurrences.',
 			'Crea una expresión cron y consulta sus próximas ejecuciones.',
+			'tools.cron-builder',
 		),
 		icon: 'code',
 		keywords: '',
@@ -99,11 +111,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'cron-parser',
 		category: 'development',
-		name: text('Cron Expression Parser', 'Cron Expression Parser'),
+		name: text('Cron Expression Parser', 'Cron Expression Parser', undefined, 'tools.cron-parser'),
 		description: text(
 			'Interprete uma expressão cron com datas no fuso escolhido.',
 			'Interpret a cron expression in your chosen timezone.',
 			'Interpreta una expresión cron en la zona horaria elegida.',
+			'tools.cron-parser',
 		),
 		icon: 'code',
 		keywords: '',
@@ -115,11 +128,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'http-status',
 		category: 'development',
-		name: text('HTTP Status Explorer', 'HTTP Status Explorer'),
+		name: text('HTTP Status Explorer', 'HTTP Status Explorer', undefined, 'tools.http-status'),
 		description: text(
 			'Consulte o nome e o significado de códigos HTTP.',
 			'Look up HTTP status names and meanings.',
 			'Consulta nombres y significados de códigos HTTP.',
+			'tools.http-status',
 		),
 		icon: 'code',
 		keywords: '',
@@ -131,11 +145,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'http-headers',
 		category: 'development',
-		name: text('HTTP Header Analyzer', 'HTTP Header Analyzer'),
+		name: text('HTTP Header Analyzer', 'HTTP Header Analyzer', undefined, 'tools.http-headers'),
 		description: text(
 			'Analise cabeçalhos HTTP colados de uma resposta.',
 			'Inspect HTTP headers pasted from a response.',
 			'Analiza encabezados HTTP pegados de una respuesta.',
+			'tools.http-headers',
 		),
 		icon: 'code',
 		keywords: '',
@@ -147,11 +162,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'url-parser',
 		category: 'development',
-		name: text('URL Parser', 'URL Parser'),
+		name: text('URL Parser', 'URL Parser', undefined, 'tools.url-parser'),
 		description: text(
 			'Separe protocolo, domínio, caminho e parâmetros de uma URL.',
 			'Split a URL into protocol, host, path and parameters.',
 			'Separa protocolo, dominio, ruta y parámetros de una URL.',
+			'tools.url-parser',
 		),
 		icon: 'code',
 		keywords: '',
@@ -163,11 +179,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'curl',
 		category: 'development',
-		name: text('cURL Generator', 'cURL Generator'),
+		name: text('cURL Generator', 'cURL Generator', undefined, 'tools.curl'),
 		description: text(
 			'Gere um comando cURL com método, cabeçalhos e corpo.',
 			'Generate a cURL command with method, headers and body.',
 			'Genera un comando cURL con método, encabezados y cuerpo.',
+			'tools.curl',
 		),
 		icon: 'code',
 		keywords: '',
@@ -178,11 +195,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-patch',
 		category: 'development',
-		name: text('JSON Patch Builder', 'JSON Patch Builder'),
+		name: text('JSON Patch Builder', 'JSON Patch Builder', undefined, 'tools.json-patch'),
 		description: text(
 			'Compare dois documentos JSON e gere operações JSON Patch.',
 			'Compare two JSON documents and generate JSON Patch operations.',
 			'Compara dos documentos JSON y genera operaciones JSON Patch.',
+			'tools.json-patch',
 		),
 		icon: 'code',
 		keywords: '',
@@ -194,11 +212,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'openapi',
 		category: 'development',
-		name: text('OpenAPI Viewer', 'OpenAPI Viewer'),
+		name: text('OpenAPI Viewer', 'OpenAPI Viewer', undefined, 'tools.openapi'),
 		description: text(
 			'Explore operações e caminhos de um documento OpenAPI ou Swagger.',
 			'Explore operations and paths in OpenAPI or Swagger.',
 			'Explora operaciones y rutas de OpenAPI o Swagger.',
+			'tools.openapi',
 		),
 		icon: 'code',
 		keywords: '',
@@ -209,11 +228,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'openapi-diff',
 		category: 'development',
-		name: text('OpenAPI Diff', 'OpenAPI Diff'),
+		name: text('OpenAPI Diff', 'OpenAPI Diff', undefined, 'tools.openapi-diff'),
 		description: text(
 			'Encontre mudanças entre duas versões de uma especificação OpenAPI.',
 			'Find changes between two versions of an OpenAPI specification.',
 			'Encuentra cambios entre dos versiones de una especificación OpenAPI.',
+			'tools.openapi-diff',
 		),
 		icon: 'code',
 		keywords: '',
@@ -225,11 +245,12 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'graphql',
 		category: 'development',
-		name: text('GraphQL Formatter', 'GraphQL Formatter'),
+		name: text('GraphQL Formatter', 'GraphQL Formatter', undefined, 'tools.graphql'),
 		description: text(
 			'Formate consultas e documentos GraphQL.',
 			'Format GraphQL queries and documents.',
 			'Formatea consultas y documentos GraphQL.',
+			'tools.graphql',
 		),
 		icon: 'code',
 		keywords: '',
@@ -240,11 +261,17 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'semver',
 		category: 'development',
-		name: text('Semantic Version Comparator', 'Semantic Version Comparator'),
+		name: text(
+			'Semantic Version Comparator',
+			'Semantic Version Comparator',
+			undefined,
+			'tools.semver',
+		),
 		description: text(
 			'Compare versões semânticas e confira intervalos de compatibilidade.',
 			'Compare semantic versions and check version ranges.',
 			'Compara versiones semánticas y comprueba intervalos de versiones.',
+			'tools.semver',
 		),
 		icon: 'code',
 		keywords: '',

@@ -7,12 +7,19 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'dotnet-appsettings',
 	[
-		input('server', 'Servidor', 'Server', 'localhost', 'text'),
-		number('port', 'Porta', 'Port', 1433, 1, 65535),
-		input('database', 'Banco de dados', 'Database', 'AppDb', 'text'),
-		input('username', 'Usuário', 'Username', 'app_user', 'text'),
-		input('password', 'Senha', 'Password', '', 'password'),
-		input('environment', 'Nome da conexão', 'Connection name', 'DefaultConnection', 'text'),
+		input('server', 'Servidor', 'Server', 'localhost', 'text', 'tools.dotnet-appsettings'),
+		number('port', 'Porta', 'Port', 1433, 1, 65535, undefined, 'tools.dotnet-appsettings'),
+		input('database', 'Banco de dados', 'Database', 'AppDb', 'text', 'tools.dotnet-appsettings'),
+		input('username', 'Usuário', 'Username', 'app_user', 'text', 'tools.dotnet-appsettings'),
+		input('password', 'Senha', 'Password', '', 'password', 'tools.dotnet-appsettings'),
+		input(
+			'environment',
+			'Nome da conexão',
+			'Connection name',
+			'DefaultConnection',
+			'text',
+			'tools.dotnet-appsettings',
+		),
 	],
 	(v) => {
 		const connectionName = field(v, 'environment').trim();
@@ -35,5 +42,7 @@ export const definition = tool(
 	text(
 		'Não compartilhe o arquivo se incluir uma senha real. Prefira secrets do ambiente em produção.',
 		'Do not share the file if it contains a real password. Prefer environment secrets in production.',
+		undefined,
+		'tools.dotnet-appsettings',
 	),
 );
