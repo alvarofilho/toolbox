@@ -21,6 +21,23 @@
 				"build": {
 					"builder": "@angular/build:application",
 					"options": {
+						"allowedCommonJsDependencies": [
+							"cron-parser",
+							"cronstrue",
+							"ipaddr.js",
+							"jsbi",
+							"jsonschema",
+							"jszip",
+							"nearley",
+							"node-sql-parser/build/postgresql",
+							"pako",
+							"papaparse",
+							"pvtsutils",
+							"qrcode",
+							"reflect-metadata",
+							"semver",
+							"shell-quote"
+						],
 						"outputPath": "dist/cloudflare",
 						"deployUrl": "/",
 						"browser": "src/main.ts",

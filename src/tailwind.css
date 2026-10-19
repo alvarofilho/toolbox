@@ -2,7 +2,9 @@
 @import '@fontsource-variable/manrope';
 @import '@fontsource-variable/ibm-plex-sans';
 @import '@fontsource/ibm-plex-mono/400.css';
-@import 'tailwindcss';
+/* All component templates are external. Tool data and translations are not UI classes. */
+@import 'tailwindcss' source(none);
+@source './**/*.html';
 @plugin 'daisyui' {
 	themes: false;
 }

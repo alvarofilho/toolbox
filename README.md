@@ -29,6 +29,10 @@ The static build is written to `dist/cloudflare/browser`. Both TypeScript `stric
 
 Production disables only critical CSS inlining (`optimization.styles.inlineCritical: false`): Angular's generated inline loader would be blocked by `script-src 'self'`. Scripts and styles remain minified. Keep this setting aligned with the CSP in `public/_headers`.
 
+Tailwind scans `src/**/*.html` explicitly because all components use external templates. Scanning tool definitions, schemas, and translations also generates styles for data tokens that happen to match utility or DaisyUI class names. Keep UI classes in templates; register any future inline-template sources in `src/tailwind.css`.
+
+`allowedCommonJsDependencies` in `angular.json` records the existing CommonJS exceptions: CSV (`papaparse`), certificates (`reflect-metadata`, `pvtsutils`), QR codes (`qrcode`), ZIP files (`jszip`), versions (`semver`), JSON Schema (`jsonschema`), IP addresses (`ipaddr.js`), shell arguments (`shell-quote`), date arithmetic (`jsbi` via Temporal), PostgreSQL parsing (`node-sql-parser/build/postgresql`), cron (`cron-parser`, `cronstrue`), PDFs (`pako` via pdf-lib), and SQL formatting (`nearley`). This suppresses warnings for those specific modules; it does not convert them to ESM or reduce their size. Keep implementations lazy-loaded and review the exceptions when upgrading dependencies. New CommonJS dependencies still produce warnings.
+
 The response headers set `Cache-Control: public, max-age=0, must-revalidate, no-transform` to preserve published assets and prevent Cloudflare proxy features such as Rocket Loader and Web Analytics from injecting scripts. Browsers revalidate assets with the server. Do not enable HTML rewriting optimizations for this app.
 
 `deployUrl: "/"` keeps scripts, styles, and preload paths rooted at the site origin. This prevents Cloudflare Early Hints from resolving a relative chunk inside `/tools/` when a user opens a tool directly.

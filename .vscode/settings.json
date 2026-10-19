@@ -1,7 +1,7 @@
 {
 	"editor.defaultFormatter": "oxc.oxc-vscode",
 	"[javascript]": {
-		"editor.defaultFormatter": "oxc.oxc-vscode"
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
 	"[javascriptreact]": {
 		"editor.defaultFormatter": "oxc.oxc-vscode"
@@ -20,6 +20,12 @@
 		"source.fixAll.oxc": "explicit"
 	},
 	"[html]": {
-		"editor.defaultFormatter": "vscode.html-language-features"
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[angular-html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[scss]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}
 }

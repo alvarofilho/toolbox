@@ -29,6 +29,10 @@ O build estático fica em `dist/cloudflare/browser`. A configuração mantém `s
 
 A produção desabilita apenas a inserção de CSS crítico (`optimization.styles.inlineCritical: false`): o carregador inline gerado pelo Angular seria bloqueado por `script-src 'self'`. Scripts e CSS continuam minificados. Mantenha essa opção alinhada à CSP em `public/_headers`.
 
+O Tailwind procura classes explicitamente em `src/**/*.html`, pois todos os componentes usam templates externos. Varrer definições de ferramentas, schemas e traduções também gera estilos para palavras dos dados que coincidem com classes do Tailwind ou DaisyUI. Mantenha as classes nos templates e registre em `src/tailwind.css` eventuais arquivos com templates inline.
+
+`allowedCommonJsDependencies` em `angular.json` registra as exceções CommonJS existentes, incluindo dependências transitivas de certificados, Temporal, PDF e formatação SQL. A lista desativa avisos apenas para esses módulos; não os converte para ESM nem reduz seu tamanho. Mantenha as implementações carregadas sob demanda e revise as exceções ao atualizar dependências. Novas dependências CommonJS continuam gerando avisos. O [README em inglês](README.md) detalha os módulos e seus usos.
+
 Os headers usam `Cache-Control: public, max-age=0, must-revalidate, no-transform` para preservar os arquivos publicados e impedir injeção automática de scripts pelo proxy Cloudflare, incluindo Rocket Loader e Web Analytics. O navegador revalida os recursos com o servidor; não habilite otimizações que reescrevam o HTML desta aplicação.
 
 `deployUrl: "/"` mantém os caminhos de scripts, estilos e preloads ancorados na raiz. Isso evita que os Early Hints do Cloudflare resolvam um chunk relativo dentro de `/tools/` ao abrir uma ferramenta diretamente.

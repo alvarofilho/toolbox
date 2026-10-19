@@ -1,21 +1,21 @@
 // @ts-check
-const eslint = require('@eslint/js');
-const { defineConfig } = require('eslint/config');
-const tseslint = require('typescript-eslint');
-const angular = require('angular-eslint');
-const eslintConfigPrettier = require('eslint-config-prettier/flat');
+import { configs } from '@eslint/js';
+import { defineConfig } from 'eslint/config';
+import { configs as _configs } from 'typescript-eslint';
+import { configs as __configs, processInlineTemplates } from 'angular-eslint';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
-module.exports = defineConfig([
+export default defineConfig([
 	eslintConfigPrettier,
 	{
 		files: ['**/*.ts'],
 		extends: [
-			eslint.configs.recommended,
-			tseslint.configs.recommended,
-			tseslint.configs.stylistic,
-			angular.configs.tsRecommended,
+			configs.recommended,
+			_configs.recommended,
+			_configs.stylistic,
+			__configs.tsRecommended,
 		],
-		processor: angular.processInlineTemplates,
+		processor: processInlineTemplates,
 		rules: {
 			curly: ['error', 'all'],
 			'no-restricted-imports': [
@@ -49,7 +49,7 @@ module.exports = defineConfig([
 	},
 	{
 		files: ['**/*.html'],
-		extends: [angular.configs.templateRecommended, angular.configs.templateAccessibility],
+		extends: [__configs.templateRecommended, __configs.templateAccessibility],
 		rules: {},
 	},
 ]);
