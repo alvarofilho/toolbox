@@ -7,7 +7,7 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'temperature',
 	[
-		number('value', 'Temperatura', 'Temperature', 0, -1_000_000, 1_000_000),
+		number('value', 'Temperatura', 'Temperature', 0, -1_000_000, 1_000_000, 'any'),
 		select('from', 'De', 'From', [
 			['C', 'Celsius', 'Celsius'],
 			['F', 'Fahrenheit', 'Fahrenheit'],

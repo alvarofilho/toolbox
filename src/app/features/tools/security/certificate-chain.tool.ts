@@ -21,20 +21,46 @@ export const definition = tool(
 			throw new Error('Use 1–20 certificados PEM / Use 1–20 PEM certificates');
 		}
 		const certs = blocks.map((pem) => new X509Certificate(pem));
-		const certificates = await Promise.all(
-			certs.map(async (cert) => {
-				const issuer = certs.find((candidate) => candidate.subject === cert.issuer);
+		const ordered: X509Certificate[] = [];
+		const remaining = [...certs];
+		let current = remaining.shift();
+		while (current) {
+			ordered.push(current);
+			let issuerIndex = -1;
+			for (let index = 0; index < remaining.length; index++) {
+				const candidate = remaining[index];
+				if (
+					candidate.subject === current.issuer &&
+					(await current.verify({ publicKey: candidate.publicKey, signatureOnly: true }))
+				) {
+					issuerIndex = index;
+					break;
+				}
+			}
+			if (issuerIndex < 0) {
+				break;
+			}
+			current = remaining.splice(issuerIndex, 1)[0];
+		}
+		const path = await Promise.all(
+			ordered.map(async (cert, index) => {
+				const issuer = ordered[index + 1] ?? (cert.subject === cert.issuer ? cert : undefined);
+				const signatureVerified = issuer
+					? await cert.verify({ publicKey: issuer.publicKey, signatureOnly: true })
+					: null;
 				return {
 					...certInfo(cert),
-					issuerPresent: !!issuer,
-					signatureVerified: issuer
-						? await cert.verify({ publicKey: issuer.publicKey, signatureOnly: true })
-						: false,
+					issuerCertificateInInput: !!issuer,
+					issuerSubject: issuer?.subject ?? null,
+					signatureVerified,
 				};
 			}),
 		);
 		return result({
-			certificates,
+			certificates: path,
+			suppliedCertificateCount: certs.length,
+			orderedFrom: 'first supplied certificate',
+			unlinkedCertificates: remaining.map((cert) => cert.subject),
 			trustEstablished: false,
 			revocationChecked: false,
 			hostnameChecked: false,

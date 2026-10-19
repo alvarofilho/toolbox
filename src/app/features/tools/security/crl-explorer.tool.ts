@@ -1,42 +1,80 @@
 import 'reflect-metadata';
 
-import { fromBER } from 'asn1js';
-
-import { CertificateRevocationList } from 'pkijs';
+import { X509Certificate, X509Crl } from '@peculiar/x509';
 
 import { tool, result } from '@app/features/tools/_shared/definition';
 
-import { source } from '@app/features/tools/_shared/controls';
+import { input } from '@app/features/tools/_shared/controls';
 
 import { field, text } from '@app/core/models/tool';
 
-import { base64Bytes } from '@app/features/tools/_shared/bytes';
-
-import { pemBlocks } from '@app/features/tools/security/pem';
+import { certInfo } from '@app/features/tools/security/certificates';
 
 export const definition = tool(
 	'crl-explorer',
-	[source],
-	(v) => {
-		const value = field(v, 'input').trim();
-		const bytes = value.startsWith('-----') ? pemBlocks(value)[0].bytes : base64Bytes(value);
-		const parsed = fromBER(bytes.buffer);
-		if (parsed.offset === -1 || parsed.offset !== bytes.length) {
-			throw new Error('CRL ASN.1 inválida / Invalid CRL ASN.1');
+	[
+		input('crl', 'CRL (PEM ou Base64)', 'CRL (PEM or Base64)'),
+		input(
+			'certificate',
+			'Certificado a consultar (PEM, opcional)',
+			'Certificate to check (PEM, optional)',
+		),
+		input(
+			'issuer',
+			'Certificado emissor da CRL (PEM, opcional)',
+			'CRL issuer certificate (PEM, optional)',
+		),
+	],
+	async (v) => {
+		const value = field(v, 'crl').trim();
+		if (!value) {
+			throw new Error('Informe uma CRL / Provide a CRL');
 		}
-		const crl = new CertificateRevocationList({ schema: parsed.result });
+		const crl = new X509Crl(value);
+		const now = new Date();
+		const certificatePem = field(v, 'certificate').trim();
+		const issuerPem = field(v, 'issuer').trim();
+		const certificate = certificatePem ? new X509Certificate(certificatePem) : undefined;
+		const issuer = issuerPem ? new X509Certificate(issuerPem) : undefined;
+		const revokedEntry = certificate ? crl.findRevoked(certificate) : null;
+		const certificateIssuerMatches = certificate ? certificate.issuer === crl.issuer : null;
+		const issuerMatches = issuer ? issuer.subject === crl.issuer : null;
+		const signatureVerified =
+			issuer && issuerMatches ? await crl.verify({ publicKey: issuer }) : null;
 		return result({
-			issuer: crl.issuer.toJSON(),
-			thisUpdate: crl.thisUpdate.toJSON(),
-			nextUpdate: crl.nextUpdate?.toJSON() ?? null,
-			revokedCertificates: crl.revokedCertificates?.map((entry) => entry.toJSON()) ?? [],
-			signatureAlgorithm: crl.signatureAlgorithm.toJSON(),
-			signatureVerified: false,
+			issuer: crl.issuer,
+			thisUpdate: crl.thisUpdate,
+			nextUpdate: crl.nextUpdate ?? null,
+			freshness:
+				now < crl.thisUpdate
+					? 'not_yet_valid'
+					: crl.nextUpdate && now > crl.nextUpdate
+						? 'stale'
+						: 'current_or_no_expiry',
+			revokedCertificateCount: crl.entries.length,
+			revokedCertificates: crl.entries.map((entry) => ({
+				serialNumber: entry.serialNumber,
+				revocationDate: entry.revocationDate,
+				reason: entry.reason ?? null,
+			})),
+			signatureAlgorithm: crl.signatureAlgorithm,
+			certificateIssuerMatches,
+			issuerCertificateMatches: issuerMatches,
+			signatureVerified,
+			certificate: certificate ? certInfo(certificate, now) : null,
+			revocationStatus: certificate
+				? !certificateIssuerMatches
+					? 'issuer_mismatch'
+					: revokedEntry
+						? 'revoked'
+						: 'not_listed_on_crl'
+				: null,
+			revocationCheckedAgainstCurrentAuthority: false,
 		});
 	},
 	undefined,
 	text(
-		'Inspeciona a estrutura da CRL. Não consulta nem confirma o estado de revogação de um certificado.',
-		'Inspects the CRL structure. It does not query or confirm a certificate revocation status.',
+		'Inspeciona a CRL e pode comparar um certificado. Uma CRL vencida ou sem consulta à autoridade não confirma o estado atual de revogação.',
+		'Inspects a CRL and can compare a certificate. A stale CRL or lack of an authority lookup does not confirm current revocation status.',
 	),
 );

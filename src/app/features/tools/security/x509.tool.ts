@@ -22,7 +22,7 @@ export const definition = tool(
 		return result({
 			...certInfo(cert),
 			sha256: bytesHex(new Uint8Array(await cert.getThumbprint('SHA-256'))),
-			signatureVerified: false,
+			signatureVerification: 'not_checked',
 		});
 	},
 	undefined,

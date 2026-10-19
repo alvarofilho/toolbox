@@ -6,7 +6,7 @@ import { mode } from '@app/features/tools/_shared/execution-controls';
 
 import { result, tool } from '@app/features/tools/_shared/definition';
 
-import { generateMnemonic, mnemonicToSeedSync, validateMnemonic } from '@scure/bip39';
+import { generateMnemonic, mnemonicToSeed, validateMnemonic } from '@scure/bip39';
 
 import { wordlist as englishWordlist } from '@scure/bip39/wordlists/english.js';
 
@@ -30,7 +30,7 @@ export const definition = tool(
 		input('mnemonic', 'Frase de recuperação', 'Recovery phrase', '', 'textarea'),
 		input('passphrase', 'Passphrase opcional', 'Optional passphrase', '', 'text'),
 	],
-	(v) => {
+	async (v) => {
 		const wordlist = field(v, 'language') === 'es' ? spanishWordlist : englishWordlist;
 		if (field(v, 'mode') === 'validate') {
 			const phrase = field(v, 'mnemonic').trim().toLowerCase().replace(/\s+/g, ' ');
@@ -41,7 +41,7 @@ export const definition = tool(
 		}
 		const strength = (Number(field(v, 'words')) / 3) * 32;
 		const mnemonic = generateMnemonic(wordlist, strength);
-		const seed = mnemonicToSeedSync(mnemonic, field(v, 'passphrase'));
+		const seed = await mnemonicToSeed(mnemonic, field(v, 'passphrase'));
 		const seedHex = Array.from(seed, (byte) => byte.toString(16).padStart(2, '0')).join('');
 		return result({ mnemonic, seedHex }, 'bip39-mnemonic.json');
 	},
