@@ -1,26 +1,26 @@
 .global-search {
-  min-width: 0;
-  min-height: 44px;
-  padding: 6px 0;
-  border: 0;
-  background: transparent;
-  text-align: left;
-  font: inherit;
-  font-size: 13px;
+	min-width: 0;
+	min-height: 44px;
+	padding: 6px 0;
+	border: 0;
+	background: transparent;
+	text-align: left;
+	font: inherit;
+	font-size: 13px;
 }
 .global-search span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .global-search kbd {
-  margin-left: auto;
+	margin-left: auto;
 }
 .global-search:hover {
-  color: var(--accent);
+	color: var(--accent);
 }
 @media (max-width: 720px) {
-  .global-search {
-    font-size: 12px;
-  }
+	.global-search {
+		font-size: 12px;
+	}
 }

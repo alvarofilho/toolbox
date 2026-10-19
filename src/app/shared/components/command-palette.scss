@@ -1,182 +1,182 @@
 :host {
-  display: contents;
+	display: contents;
 }
 dialog {
-  width: min(620px, calc(100vw - 32px));
-  max-height: min(680px, 80dvh);
-  padding: 0;
-  margin: min(10dvh, 96px) auto auto;
-  border: 0;
-  border-radius: 14px;
-  color: var(--ink);
-  background: var(--surface);
-  box-shadow: 0 24px 80px #0004;
-  overflow: hidden;
+	width: min(620px, calc(100vw - 32px));
+	max-height: min(680px, 80dvh);
+	padding: 0;
+	margin: min(10dvh, 96px) auto auto;
+	border: 0;
+	border-radius: 14px;
+	color: var(--ink);
+	background: var(--surface);
+	box-shadow: 0 24px 80px #0004;
+	overflow: hidden;
 }
 dialog[open] {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 dialog::backdrop {
-  background: #0c1c1680;
+	background: #0c1c1680;
 }
 .command-search {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px 12px 22px;
-  border-bottom: 1px solid var(--line);
-  flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 16px 12px 22px;
+	border-bottom: 1px solid var(--line);
+	flex-shrink: 0;
 }
 .command-search > app-icon {
-  color: var(--accent);
+	color: var(--accent);
 }
 .command-search input {
-  width: 100%;
-  min-width: 0;
-  min-height: 44px;
-  border: 0;
-  background: transparent;
-  color: var(--ink);
-  font: inherit;
-  font-size: 16px;
+	width: 100%;
+	min-width: 0;
+	min-height: 44px;
+	border: 0;
+	background: transparent;
+	color: var(--ink);
+	font: inherit;
+	font-size: 16px;
 }
 .command-search input:focus-visible {
-  outline-offset: 2px;
-  border-radius: 4px;
+	outline-offset: 2px;
+	border-radius: 4px;
 }
 .command-close {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border: 0;
-  border-radius: 6px;
-  color: var(--muted);
-  background: transparent;
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	flex-shrink: 0;
+	border: 0;
+	border-radius: 6px;
+	color: var(--muted);
+	background: transparent;
 }
 .command-close:hover {
-  color: var(--ink);
-  background: var(--wash);
+	color: var(--ink);
+	background: var(--wash);
 }
 .command-results {
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 8px;
+	min-height: 0;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	padding: 8px;
 }
 .command-group-label {
-  padding: 12px 12px 6px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 600;
+	padding: 12px 12px 6px;
+	color: var(--muted);
+	font-size: 12px;
+	font-weight: 600;
 }
 .command-option {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  width: 100%;
-  min-height: 68px;
-  padding: 10px 12px;
-  border: 0;
-  border-radius: 8px;
-  text-align: left;
-  font: inherit;
-  color: var(--ink);
-  background: transparent;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	width: 100%;
+	min-height: 68px;
+	padding: 10px 12px;
+	border: 0;
+	border-radius: 8px;
+	text-align: left;
+	font: inherit;
+	color: var(--ink);
+	background: transparent;
 }
 .command-option[aria-selected='true'],
 .command-option:hover {
-  background: var(--wash);
+	background: var(--wash);
 }
 .command-option > app-icon {
-  color: var(--accent);
+	color: var(--accent);
 }
 .command-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-  flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	min-width: 0;
+	flex: 1;
 }
 .command-copy strong {
-  font-size: 14px;
-  font-weight: 600;
+	font-size: 14px;
+	font-weight: 600;
 }
 .command-copy > span {
-  font-size: 12px;
-  color: var(--muted);
+	font-size: 12px;
+	color: var(--muted);
 }
 .command-go {
-  width: 16px;
-  height: 16px;
-  visibility: hidden;
+	width: 16px;
+	height: 16px;
+	visibility: hidden;
 }
 .command-option[aria-selected='true'] .command-go {
-  visibility: visible;
+	visibility: visible;
 }
 .command-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
-  border-top: 1px solid var(--line);
-  color: var(--muted);
-  background: var(--paper);
-  font-size: 12px;
-  flex-shrink: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 20px;
+	border-top: 1px solid var(--line);
+	color: var(--muted);
+	background: var(--paper);
+	font-size: 12px;
+	flex-shrink: 0;
 }
 .command-hints,
 .command-hints > span {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+	display: flex;
+	align-items: center;
+	gap: 6px;
 }
 .command-hints {
-  gap: 14px;
+	gap: 14px;
 }
 kbd {
-  font:
-    11px 'IBM Plex Mono',
-    monospace;
-  padding: 2px 4px;
-  border: 1px solid var(--line);
-  border-radius: 4px;
+	font:
+		11px 'IBM Plex Mono',
+		monospace;
+	padding: 2px 4px;
+	border: 1px solid var(--line);
+	border-radius: 4px;
 }
 .command-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 44px 24px;
-  text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	padding: 44px 24px;
+	text-align: center;
 }
 .command-empty > app-icon {
-  color: var(--muted);
+	color: var(--muted);
 }
 .command-empty strong {
-  font-size: 15px;
+	font-size: 15px;
 }
 .command-empty p {
-  color: var(--muted);
-  font-size: 13px;
+	color: var(--muted);
+	font-size: 13px;
 }
 @media (max-width: 720px) {
-  dialog {
-    margin-top: 20px;
-    max-height: calc(100dvh - 40px);
-  }
-  .command-search {
-    padding: 8px 8px 8px 16px;
-    gap: 10px;
-  }
-  .command-footer {
-    padding-inline: 12px;
-    font-size: 11px;
-  }
-  .command-hints {
-    gap: 8px;
-  }
+	dialog {
+		margin-top: 20px;
+		max-height: calc(100dvh - 40px);
+	}
+	.command-search {
+		padding: 8px 8px 8px 16px;
+		gap: 10px;
+	}
+	.command-footer {
+		padding-inline: 12px;
+		font-size: 11px;
+	}
+	.command-hints {
+		gap: 8px;
+	}
 }

@@ -1,51 +1,51 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 const paths: Readonly<Record<string, string>> = {
-  box: 'M4 8h16v12H4z M8 8V5h8v3 M4 12h16 M10 12v3h4v-3',
-  home: 'm3 10 9-7 9 7 M5 9v12h5v-7h4v7h5V9',
-  grid: 'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z',
-  star: 'm12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z',
-  clock: 'M12 7v5l3 2 M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',
-  search: 'M20 20l-5-5 M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',
-  braces: 'M8 3H6v6l-3 3 3 3v6h2 M16 3h2v6l3 3-3 3v6h-2',
-  arrows: 'M4 7h16m-4-4 4 4-4 4 M20 17H4m4-4-4 4 4 4',
-  spark: 'm12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z',
-  shield: 'm12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z m-4 9 3 3 5-6',
-  code: 'm8 6-6 6 6 6 M16 6l6 6-6 6 M14 3l-4 18',
-  type: 'M3 5h12 M9 5v15 M16 12h5 M18.5 12v8 M5 20h8',
-  document: 'M14 3H5v18h14V8z M14 3v5h5 M8 12h8 M8 16h5',
-  compress: 'M3 8h6V2 M9 8 3 2 M21 16h-6v6 M15 16l6 6',
-  diff: 'M3 6h8 M7 2v8 M14 17h8 M3 15h5 M16 4h5 M4 21h5',
-  link: 'm10 13 4-4 M8 16l-2 2a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0 M16 8l2-2a4 4 0 0 1 6 6l-5 5a4 4 0 0 1-6 0',
-  fingerprint:
-    'M5 10a7 7 0 0 1 14 0v4 M8 11a4 4 0 0 1 8 0v5 M11 12v5l-2 4 M5 14v2l-2 3 M14 20l2-2 M19 17v3',
-  key: 'M14 8a5 5 0 1 1-5 5L3 19v3h4v-3h3l3-5 M17 7h.01',
-  hash: 'M9 3 7 21 M17 3l-2 18 M3 9h18 M2 15h18',
-  scan: 'M8 3H3v5 M16 3h5v5 M21 16v5h-5 M8 21H3v-5 M7 8h10 M7 12h10 M7 16h6',
-  regex: 'M4 17h.01 M10 5v12 M5 8l10 6 M15 8 5 14 M19 16h.01',
-  building: 'M4 21V7h9v14 M13 3h7v18 M7 10h3 M7 14h3 M16 7h1 M16 11h1 M16 15h1 M7 21v-3h3v3',
-  users:
-    'M16 21v-3a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v3 M13 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0 M18 3a4 4 0 0 1 0 8 M18 15a4 4 0 0 1 4 4v2',
-  'file-code': 'M14 3H5v18h14V8z M14 3v5h5 m-9 3-3 3 3 3 m4-6 3 3-3 3',
-  sun: 'M12 3V1 M12 23v-2 M3 12H1 M23 12h-2 M5 5 3 3 M21 21l-2-2 M3 21l2-2 M19 5l2-2 M17 12a5 5 0 1 1-10 0 5 5 0 0 1 10 0',
-  moon: 'M20 15A9 9 0 0 1 9 4a9 9 0 1 0 11 11',
-  github:
-    'M9 20c-5 1-5-3-7-3 M15 23v-4c0-1 .1-2-.5-2.5 4-.5 7-2 7-6a5 5 0 0 0-1.5-3.5 4 4 0 0 0-.1-3.5s-1.5-.5-4.5 1a15 15 0 0 0-8 0C4.5 3 3 3.5 3 3.5a4 4 0 0 0 0 3.5A5 5 0 0 0 1.5 10.5c0 4 3 5.5 7 6C8 17 8 18 8 19v4',
-  arrow: 'M4 12h16 m-6-6 6 6-6 6',
-  check: 'm5 12 4 4L19 6',
-  menu: 'M4 6h16 M4 12h16 M4 18h16',
-  close: 'm6 6 12 12 M6 18 18 6',
-  copy: 'M8 8h13v13H8z M16 4V2H2v14h2',
-  download: 'M12 3v12 m-5-5 5 5 5-5 M4 16v5h16v-5',
+	box: 'M4 8h16v12H4z M8 8V5h8v3 M4 12h16 M10 12v3h4v-3',
+	home: 'm3 10 9-7 9 7 M5 9v12h5v-7h4v7h5V9',
+	grid: 'M3 3h7v7H3z M14 3h7v7h-7z M3 14h7v7H3z M14 14h7v7h-7z',
+	star: 'm12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z',
+	clock: 'M12 7v5l3 2 M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0',
+	search: 'M20 20l-5-5 M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',
+	braces: 'M8 3H6v6l-3 3 3 3v6h2 M16 3h2v6l3 3-3 3v6h-2',
+	arrows: 'M4 7h16m-4-4 4 4-4 4 M20 17H4m4-4-4 4 4 4',
+	spark: 'm12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z',
+	shield: 'm12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z m-4 9 3 3 5-6',
+	code: 'm8 6-6 6 6 6 M16 6l6 6-6 6 M14 3l-4 18',
+	type: 'M3 5h12 M9 5v15 M16 12h5 M18.5 12v8 M5 20h8',
+	document: 'M14 3H5v18h14V8z M14 3v5h5 M8 12h8 M8 16h5',
+	compress: 'M3 8h6V2 M9 8 3 2 M21 16h-6v6 M15 16l6 6',
+	diff: 'M3 6h8 M7 2v8 M14 17h8 M3 15h5 M16 4h5 M4 21h5',
+	link: 'm10 13 4-4 M8 16l-2 2a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0 M16 8l2-2a4 4 0 0 1 6 6l-5 5a4 4 0 0 1-6 0',
+	fingerprint:
+		'M5 10a7 7 0 0 1 14 0v4 M8 11a4 4 0 0 1 8 0v5 M11 12v5l-2 4 M5 14v2l-2 3 M14 20l2-2 M19 17v3',
+	key: 'M14 8a5 5 0 1 1-5 5L3 19v3h4v-3h3l3-5 M17 7h.01',
+	hash: 'M9 3 7 21 M17 3l-2 18 M3 9h18 M2 15h18',
+	scan: 'M8 3H3v5 M16 3h5v5 M21 16v5h-5 M8 21H3v-5 M7 8h10 M7 12h10 M7 16h6',
+	regex: 'M4 17h.01 M10 5v12 M5 8l10 6 M15 8 5 14 M19 16h.01',
+	building: 'M4 21V7h9v14 M13 3h7v18 M7 10h3 M7 14h3 M16 7h1 M16 11h1 M16 15h1 M7 21v-3h3v3',
+	users:
+		'M16 21v-3a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v3 M13 6a4 4 0 1 1-8 0 4 4 0 0 1 8 0 M18 3a4 4 0 0 1 0 8 M18 15a4 4 0 0 1 4 4v2',
+	'file-code': 'M14 3H5v18h14V8z M14 3v5h5 m-9 3-3 3 3 3 m4-6 3 3-3 3',
+	sun: 'M12 3V1 M12 23v-2 M3 12H1 M23 12h-2 M5 5 3 3 M21 21l-2-2 M3 21l2-2 M19 5l2-2 M17 12a5 5 0 1 1-10 0 5 5 0 0 1 10 0',
+	moon: 'M20 15A9 9 0 0 1 9 4a9 9 0 1 0 11 11',
+	github:
+		'M9 20c-5 1-5-3-7-3 M15 23v-4c0-1 .1-2-.5-2.5 4-.5 7-2 7-6a5 5 0 0 0-1.5-3.5 4 4 0 0 0-.1-3.5s-1.5-.5-4.5 1a15 15 0 0 0-8 0C4.5 3 3 3.5 3 3.5a4 4 0 0 0 0 3.5A5 5 0 0 0 1.5 10.5c0 4 3 5.5 7 6C8 17 8 18 8 19v4',
+	arrow: 'M4 12h16 m-6-6 6 6-6 6',
+	check: 'm5 12 4 4L19 6',
+	menu: 'M4 6h16 M4 12h16 M4 18h16',
+	close: 'm6 6 12 12 M6 18 18 6',
+	copy: 'M8 8h13v13H8z M16 4V2H2v14h2',
+	download: 'M12 3v12 m-5-5 5 5 5-5 M4 16v5h16v-5',
 };
 @Component({
-  selector: 'app-icon',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template:
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path [attr.d]="path()" /></svg>',
-  host: { 'aria-hidden': 'true' },
+	selector: 'app-icon',
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	template:
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path [attr.d]="path()" /></svg>',
+	host: { 'aria-hidden': 'true' },
 })
 export class Icon {
-  readonly name = input('box');
-  protected readonly path = computed(() => paths[this.name()] ?? paths['box']);
+	readonly name = input('box');
+	protected readonly path = computed(() => paths[this.name()] ?? paths['box']);
 }

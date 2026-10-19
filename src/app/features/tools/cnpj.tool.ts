@@ -1,3 +1,3 @@
-import { documentDefinition } from './document-definition';
+import { documentDefinition } from '@app/features/tools/document-definition';
 
 export const definition = documentDefinition('cnpj');

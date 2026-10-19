@@ -1,97 +1,97 @@
 <dialog
-  #dialog
-  id="command-palette"
-  tabindex="-1"
-  aria-labelledby="command-palette-title"
-  (cancel)="cancel($event)"
-  (close)="onClose()"
-  (click)="onBackdrop($event)"
-  (keydown)="onKey($event)"
+	#dialog
+	id="command-palette"
+	tabindex="-1"
+	aria-labelledby="command-palette-title"
+	(cancel)="cancel($event)"
+	(close)="onClose()"
+	(click)="onBackdrop($event)"
+	(keydown)="onKey($event)"
 >
-  <h2 id="command-palette-title" class="sr-only">
-    {{ p.label('Paleta de comandos', 'Command palette') }}
-  </h2>
-  <div class="command-search">
-    <app-icon name="search" />
-    <input
-      #search
-      id="command-search"
-      type="text"
-      role="combobox"
-      aria-autocomplete="list"
-      aria-controls="command-results"
-      [attr.aria-expanded]="isOpen()"
-      [attr.aria-activedescendant]="activeId() ? 'command-' + activeId() : null"
-      [attr.aria-label]="p.label('Buscar ferramentas e ações', 'Search tools and actions')"
-      [placeholder]="
-        p.label('Qual ferramenta ou ação você procura?', 'Find a tool or run an action…')
-      "
-      [value]="query()"
-      (input)="onInput($event)"
-      autocomplete="off"
-      spellcheck="false"
-    />
-    <button
-      type="button"
-      class="command-close"
-      (click)="close()"
-      [attr.aria-label]="p.label('Fechar paleta de comandos', 'Close command palette')"
-    >
-      <app-icon name="close" />
-    </button>
-  </div>
-  <div
-    class="command-results"
-    id="command-results"
-    role="listbox"
-    [attr.aria-label]="p.label('Comandos', 'Commands')"
-  >
-    @for (group of groups(); track group.id) {
-      <div role="group" [attr.aria-labelledby]="'command-group-' + group.id">
-        <div class="command-group-label" [id]="'command-group-' + group.id">{{ group.label }}</div>
-        @for (command of group.commands; track command.id) {
-          <button
-            type="button"
-            role="option"
-            tabindex="-1"
-            class="command-option"
-            [id]="'command-' + command.id"
-            [attr.aria-selected]="activeId() === command.id"
-            (pointermove)="select(command)"
-            (click)="execute(command)"
-          >
-            <app-icon [name]="command.icon" />
-            <span class="command-copy"
-              ><strong>{{ p.t(command.name) }}</strong
-              ><span>{{ p.t(command.description) }}</span></span
-            >
-            <app-icon class="command-go" name="arrow" />
-          </button>
-        }
-      </div>
-    }
-  </div>
-  @if (!results().length) {
-    <div class="command-empty">
-      <app-icon name="search" />
-      <strong>{{ p.label('Nenhum comando encontrado', 'No commands found') }}</strong>
-      <p>
-        {{
-          p.label('Tente outro nome, categoria ou ação.', 'Try another name, category or action.')
-        }}
-      </p>
-    </div>
-  }
-  <div class="command-footer">
-    <span class="command-hints"
-      ><span><kbd>↑</kbd><kbd>↓</kbd> {{ p.label('navegar', 'navigate') }}</span
-      ><span><kbd>Enter</kbd> {{ p.label('executar', 'run') }}</span></span
-    >
-    <span role="status" aria-live="polite"
-      >{{ results().length }}
-      {{
-        results().length === 1 ? p.label('resultado', 'result') : p.label('resultados', 'results')
-      }}</span
-    >
-  </div>
+	<h2 id="command-palette-title" class="sr-only">
+		{{ p.label('Paleta de comandos', 'Command palette') }}
+	</h2>
+	<div class="command-search">
+		<app-icon name="search" />
+		<input
+			#search
+			id="command-search"
+			type="text"
+			role="combobox"
+			aria-autocomplete="list"
+			aria-controls="command-results"
+			[attr.aria-expanded]="isOpen()"
+			[attr.aria-activedescendant]="activeId() ? 'command-' + activeId() : null"
+			[attr.aria-label]="p.label('Buscar ferramentas e ações', 'Search tools and actions')"
+			[placeholder]="
+				p.label('Qual ferramenta ou ação você procura?', 'Find a tool or run an action…')
+			"
+			[value]="query()"
+			(input)="onInput($event)"
+			autocomplete="off"
+			spellcheck="false"
+		/>
+		<button
+			type="button"
+			class="command-close"
+			(click)="close()"
+			[attr.aria-label]="p.label('Fechar paleta de comandos', 'Close command palette')"
+		>
+			<app-icon name="close" />
+		</button>
+	</div>
+	<div
+		class="command-results"
+		id="command-results"
+		role="listbox"
+		[attr.aria-label]="p.label('Comandos', 'Commands')"
+	>
+		@for (group of groups(); track group.id) {
+			<div role="group" [attr.aria-labelledby]="'command-group-' + group.id">
+				<div class="command-group-label" [id]="'command-group-' + group.id">{{ group.label }}</div>
+				@for (command of group.commands; track command.id) {
+					<button
+						type="button"
+						role="option"
+						tabindex="-1"
+						class="command-option"
+						[id]="'command-' + command.id"
+						[attr.aria-selected]="activeId() === command.id"
+						(pointermove)="select(command)"
+						(click)="execute(command)"
+					>
+						<app-icon [name]="command.icon" />
+						<span class="command-copy"
+							><strong>{{ p.t(command.name) }}</strong
+							><span>{{ p.t(command.description) }}</span></span
+						>
+						<app-icon class="command-go" name="arrow" />
+					</button>
+				}
+			</div>
+		}
+	</div>
+	@if (!results().length) {
+		<div class="command-empty">
+			<app-icon name="search" />
+			<strong>{{ p.label('Nenhum comando encontrado', 'No commands found') }}</strong>
+			<p>
+				{{
+					p.label('Tente outro nome, categoria ou ação.', 'Try another name, category or action.')
+				}}
+			</p>
+		</div>
+	}
+	<div class="command-footer">
+		<span class="command-hints"
+			><span><kbd>↑</kbd><kbd>↓</kbd> {{ p.label('navegar', 'navigate') }}</span
+			><span><kbd>Enter</kbd> {{ p.label('executar', 'run') }}</span></span
+		>
+		<span role="status" aria-live="polite"
+			>{{ results().length }}
+			{{
+				results().length === 1 ? p.label('resultado', 'result') : p.label('resultados', 'results')
+			}}</span
+		>
+	</div>
 </dialog>
