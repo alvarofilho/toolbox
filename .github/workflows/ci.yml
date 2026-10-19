@@ -19,7 +19,7 @@ jobs:
           node-version-file: .node-version
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec vp check
-      - run: pnpm exec vp test
-      - run: pnpm exec vp run test --watch=false
-      - run: pnpm exec vp run build
+      - run: pnpm run format:check
+      - run: pnpm run lint
+      - run: pnpm run test --watch=false
+      - run: pnpm run build
