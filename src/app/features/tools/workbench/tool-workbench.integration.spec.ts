@@ -81,6 +81,7 @@ describe('tool workbench integration', () => {
 	});
 	it('provides textual addition and removal markers in a diff', async () => {
 		const harness = await RouterTestingHarness.create('/tools/text-diff');
+		await harness.fixture.whenStable();
 		const root = harness.routeNativeElement;
 		if (!root) {
 			throw new Error('Diff missing');
@@ -118,6 +119,7 @@ describe('tool workbench integration', () => {
 	});
 	it('renders QR previews in a sandbox and exposes the generated file', async () => {
 		const harness = await RouterTestingHarness.create('/tools/qr');
+		await harness.fixture.whenStable();
 		const root = harness.routeNativeElement;
 		if (!root) {
 			throw new Error('Route missing');

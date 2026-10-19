@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { TOOLS, findTools, CATEGORIES } from '@app/features/tools/catalog/tools';
 import { yamlToJson } from '@app/features/tools/json/json-yaml.tool';
+import { presentDefinition } from '@app/features/tools/workbench/presentation';
+import pt from '@app/i18n/pt.json';
+import en from '@app/i18n/en.json';
+import es from '@app/i18n/es.json';
+import type { Localized } from '@app/core/models/tool';
 
 async function loadDefinition(id: string) {
 	const tool = TOOLS.find((tool) => tool.id === id);
@@ -18,6 +23,28 @@ async function run(id: string, values: Record<string, string> = {}) {
 	});
 }
 describe('tool catalog', () => {
+	it('translates every published tool, control, option and action in all supported languages', async () => {
+		const dictionaries: readonly Readonly<Record<string, unknown>>[] = [pt, en, es];
+		for (const info of TOOLS) {
+			const definition = presentDefinition(await info.loadDefinition(), info);
+			const localized: Localized[] = [info.name, info.description, definition.action];
+			if (definition.hint) {
+				localized.push(definition.hint);
+			}
+			for (const control of definition.controls) {
+				localized.push(control.label);
+				if (control.placeholder) {
+					localized.push(control.placeholder);
+				}
+				localized.push(...(control.options ?? []).map((option) => option.label));
+			}
+			for (const value of localized) {
+				for (const dictionary of dictionaries) {
+					expect(dictionary[value.key], `${info.id}: ${value.key}`).toEqual(expect.any(String));
+				}
+			}
+		}
+	}, 15000);
 	it('keeps the complete catalog unique with valid categories and lazy loaders', async () => {
 		expect(TOOLS.length).toBeGreaterThanOrEqual(128);
 		expect(new Set(TOOLS.map((t) => t.id)).size).toBe(TOOLS.length);

@@ -201,6 +201,18 @@
 	}
 }
 @media (max-width: 600px) {
+	.tool-heading {
+		display: grid;
+		grid-template-columns: 44px minmax(0, 1fr);
+		align-items: start;
+	}
+	.tool-heading > .tool-icon {
+		margin-top: 4px;
+	}
+	.tool-heading > .tool-favorite {
+		grid-column: 2;
+		justify-self: start;
+	}
 	.input,
 	.select,
 	.textarea,
