@@ -1,0 +1,270 @@
+/* Shared interaction patterns for the catalog and tool workbench. */
+.field-input-row {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	min-width: 0;
+}
+.field-input-row .input {
+	min-width: 0;
+	flex: 1;
+}
+.reveal-password {
+	flex-shrink: 0;
+}
+.field-error {
+	margin-top: 8px;
+	color: var(--color-error);
+	font-size: 13px;
+	line-height: 1.6;
+}
+[aria-invalid='true'] {
+	border-color: var(--color-error);
+}
+.selected-files,
+.artifact-list {
+	margin: 12px 0 0;
+	padding: 0;
+	list-style: none;
+}
+.selected-files li {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	overflow-wrap: anywhere;
+	font-size: 13px;
+}
+.selected-files span,
+.artifact-list span {
+	color: var(--muted);
+	font-size: 12px;
+}
+.artifact-list {
+	padding: 20px;
+}
+.artifact-list li {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	margin-bottom: 16px;
+	overflow-wrap: anywhere;
+}
+.artifact-list .btn {
+	max-width: 100%;
+	height: auto;
+	min-height: 44px;
+	padding-block: 8px;
+	overflow-wrap: anywhere;
+	white-space: normal;
+}
+.tool-preview {
+	display: block;
+	width: 100%;
+	min-height: 320px;
+	border: 0;
+	border-bottom: 1px solid var(--line);
+	background: var(--surface);
+}
+.text-report {
+	border-top: 1px solid var(--line);
+}
+.text-report summary {
+	padding: 16px 20px;
+	color: var(--accent);
+	font-size: 14px;
+	cursor: pointer;
+}
+.text-report .result-code {
+	min-height: 0;
+}
+#tool-result {
+	scroll-margin-top: 16px;
+}
+#tool-result:focus-visible {
+	outline-offset: 3px;
+}
+.diff-summary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	padding: 16px 20px;
+	font-size: 14px;
+	border-bottom: 1px solid var(--line);
+}
+.diff-marker {
+	display: inline-block;
+	width: 2ch;
+	font-weight: 700;
+	user-select: none;
+}
+.workbench-diff {
+	grid-template-columns: minmax(0, 1fr);
+}
+.diff-fields {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.diff-fields .field-large {
+	grid-column: auto;
+}
+.diff-fields .textarea {
+	min-height: 320px;
+}
+.catalog-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+	margin-block: 20px;
+	font-size: 13px;
+	color: var(--muted);
+}
+.catalog-view {
+	margin-inline-start: auto;
+	display: flex;
+	gap: 4px;
+}
+.catalog-view [aria-pressed='true'] {
+	background: var(--wash);
+	color: var(--accent);
+}
+.catalog-group + .catalog-group {
+	margin-top: 36px;
+}
+.catalog-group > h2 {
+	font-size: 18px;
+	margin-bottom: 16px;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+.tools-list {
+	display: grid;
+	gap: 8px;
+}
+.section-title .page-title {
+	font-size: 30px;
+	font-weight: 700;
+	letter-spacing: -0.03em;
+}
+.category-directory-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	border-top: 1px solid var(--line);
+}
+.category-directory-grid a {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-width: 0;
+	min-height: 64px;
+	border-bottom: 1px solid var(--line);
+	padding: 12px;
+	font-size: 14px;
+}
+.category-directory-grid a:hover {
+	background: var(--wash);
+	color: var(--accent);
+}
+.category-count {
+	margin-inline-start: auto;
+	color: var(--muted);
+	font-variant-numeric: tabular-nums;
+}
+.empty-state h2 {
+	font-size: 22px;
+	margin-bottom: 12px;
+	color: var(--ink);
+}
+@media (pointer: coarse) {
+	.btn-sm {
+		min-height: 44px;
+		height: 44px;
+	}
+	.checkbox-field {
+		min-height: 44px;
+	}
+}
+@media (max-width: 1024px) {
+	.topbar {
+		gap: 8px;
+		padding-inline: 12px;
+	}
+	.header-actions .btn-square {
+		width: 44px;
+	}
+	.tool-privacy,
+	.tool-hint,
+	.result-notice,
+	.action-feedback {
+		font-size: 14px;
+	}
+}
+@media (max-width: 600px) {
+	.input,
+	.select,
+	.textarea,
+	.catalog-search input,
+	.intro-search input {
+		font-size: 16px;
+	}
+	.input,
+	.select {
+		height: 46px;
+	}
+	.tool-fields,
+	.diff-fields {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 18px;
+	}
+	.field label,
+	.checkbox-field {
+		font-size: 14px;
+	}
+	.tool-heading > div {
+		min-width: 0;
+	}
+	.tool-heading h1 {
+		overflow-wrap: anywhere;
+	}
+	.section-title .page-title {
+		font-size: 26px;
+	}
+	.section-title {
+		flex-wrap: wrap;
+	}
+	.category-directory-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.form-actions {
+		gap: 8px;
+	}
+	.form-actions .auto-update-note {
+		flex-basis: 100%;
+		font-size: 13px;
+	}
+	.output-actions {
+		flex-wrap: wrap;
+	}
+	.panel-heading {
+		padding-inline: 16px;
+		gap: 8px;
+	}
+	.panel-heading h2 {
+		font-size: 16px;
+	}
+	.diff-fields .textarea {
+		min-height: 200px;
+	}
+	.result-code {
+		font-size: 14px;
+		padding: 16px;
+	}
+	.language-control {
+		margin-right: 0;
+	}
+	.global-search {
+		flex: 1;
+		max-width: 200px;
+	}
+}

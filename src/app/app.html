@@ -1,11 +1,11 @@
-<a href="#main-content" class="skip-link">{{ p.label('Ir para o conteúdo', 'Skip to content') }}</a>
+<a href="#main-content" class="skip-link">{{ 'messages.skip_to_content_c7af44e6' | transloco }}</a>
 <aside
 	id="sidebar"
 	class="sidebar"
 	[class.is-open]="menuOpen()"
 	[attr.role]="menuOpen() ? 'dialog' : null"
 	[attr.aria-modal]="menuOpen() ? 'true' : null"
-	[attr.aria-label]="p.label('Navegação principal', 'Main navigation')"
+	[attr.aria-label]="'messages.main_navigation_c5a8374a' | transloco"
 >
 	<a class="brand" routerLink="/" (click)="closeMenu(false)"
 		><span class="brand-mark"><app-icon name="box" /></span
@@ -15,12 +15,12 @@
 		id="sidebar-close"
 		class="btn btn-ghost btn-square sidebar-close"
 		(click)="closeMenu()"
-		[attr.aria-label]="p.label('Fechar navegação', 'Close navigation')"
+		[attr.aria-label]="'messages.close_navigation_feac2727' | transloco"
 	>
 		<app-icon name="close" />
 	</button>
 	<div class="sidebar-caption">
-		{{ p.label('Seu kit de desenvolvimento', 'Your development toolkit') }}
+		{{ 'messages.your_development_toolkit_486a5709' | transloco }}
 	</div>
 	<nav class="main-nav">
 		<a
@@ -29,7 +29,7 @@
 			routerLinkActive="active"
 			[routerLinkActiveOptions]="{ exact: true }"
 			ariaCurrentWhenActive="page"
-			><app-icon name="home" />{{ p.label('Visão geral', 'Overview') }}</a
+			><app-icon name="home" />{{ 'messages.overview_6a494fba' | transloco }}</a
 		>
 		<a
 			routerLink="/tools"
@@ -37,7 +37,7 @@
 			routerLinkActive="active"
 			[routerLinkActiveOptions]="{ exact: true }"
 			ariaCurrentWhenActive="page"
-			><app-icon name="grid" />{{ p.label('Todas as ferramentas', 'All tools')
+			><app-icon name="grid" />{{ 'messages.all_tools_5754d41f' | transloco
 			}}<span class="nav-count">{{ count }}</span></a
 		>
 		<a
@@ -45,7 +45,7 @@
 			(click)="closeMenu(false)"
 			routerLinkActive="active"
 			ariaCurrentWhenActive="page"
-			><app-icon name="star" />{{ p.label('Favoritos', 'Favorites') }}
+			><app-icon name="star" />{{ 'messages.favorites_7c2c53ba' | transloco }}
 			@if (p.favorites().length) {
 				<span class="nav-count">{{ p.favorites().length }}</span>
 			}
@@ -55,34 +55,28 @@
 			(click)="closeMenu(false)"
 			routerLinkActive="active"
 			ariaCurrentWhenActive="page"
-			><app-icon name="clock" />{{ p.label('Recentes', 'Recent tools') }}</a
+			><app-icon name="clock" />{{ 'messages.recent_tools_ce7e7c65' | transloco }}</a
 		>
-		<div class="nav-heading">{{ p.label('Categorias', 'Categories') }}</div>
+		<div class="nav-heading">{{ 'messages.categories_f075e98d' | transloco }}</div>
 		@for (category of categories; track category.id) {
 			<a
 				[routerLink]="['/category', category.id]"
 				(click)="closeMenu(false)"
 				routerLinkActive="active"
 				ariaCurrentWhenActive="page"
-				><app-icon [name]="category.icon" />{{ p.t(category.name) }}</a
+				><app-icon [name]="category.icon" />{{ category.name.key | transloco }}</a
 			>
 		}
 	</nav>
 	<div class="sidebar-bottom">
 		<app-icon name="shield" /><strong>{{
-			p.label('Seus dados ficam com você.', 'Your data stays with you.')
+			'messages.your_data_stays_with_you_88fb72bb' | transloco
 		}}</strong>
 		<p>
-			{{
-				p.label(
-					'Tudo é processado no seu navegador. Sem cadastro, sem rastreamento.',
-					'Everything
-      runs in your browser. No account, no tracking.'
-				)
-			}}
+			{{ 'messages.everything_runs_in_your_browser_no_account_1fa0e49e' | transloco }}
 		</p>
 		<span class="local-status"
-			><span></span>{{ p.label('Feito para funcionar localmente', 'Built to run locally') }}</span
+			><span></span>{{ 'messages.built_to_run_locally_db271725' | transloco }}</span
 		>
 	</div>
 </aside>
@@ -91,7 +85,7 @@
 		class="sidebar-backdrop"
 		(click)="closeMenu()"
 		tabindex="-1"
-		[attr.aria-label]="p.label('Fechar navegação', 'Close navigation')"
+		[attr.aria-label]="'messages.close_navigation_feac2727' | transloco"
 	></button>
 }
 <div class="app-body" [attr.inert]="menuOpen() ? '' : null">
@@ -102,7 +96,7 @@
 			(click)="toggleMenu()"
 			[attr.aria-expanded]="menuOpen()"
 			aria-controls="sidebar"
-			[attr.aria-label]="p.label('Alternar navegação', 'Toggle navigation')"
+			[attr.aria-label]="'messages.toggle_navigation_70cc3d61' | transloco"
 		>
 			<app-icon [name]="menuOpen() ? 'close' : 'menu'" />
 		</button>
@@ -114,20 +108,20 @@
 			aria-controls="command-palette"
 			aria-keyshortcuts="Control+k Meta+k"
 			(click)="openCommands()"
-			[attr.aria-label]="p.label('Abrir paleta de comandos', 'Open command palette')"
+			[attr.aria-label]="'messages.open_command_palette_8a60d457' | transloco"
 		>
 			<app-icon name="search" />
-			<span>{{ p.label('Buscar ferramentas e ações…', 'Search tools and actions…') }}</span>
+			<span>{{ 'messages.search_tools_and_actions_bc8632ae' | transloco }}</span>
 			<kbd>{{ commandShortcut }}</kbd>
 		</button>
 		<div class="header-actions">
 			<span class="header-local"
-				><app-icon name="shield" />{{ p.label('100% no navegador', '100% in your browser') }}</span
+				><app-icon name="shield" />{{ 'messages.100_in_your_browser_27f48f79' | transloco }}</span
 			><span class="header-divider"></span
 			><label class="language-control">
 				<select
 					class="language-select"
-					[attr.aria-label]="p.label('Idioma', 'Language', 'Idioma')"
+					[attr.aria-label]="'messages.language_9a73db9b' | transloco"
 					[value]="p.locale()"
 					(change)="changeLocale($event)"
 				>
@@ -138,7 +132,7 @@
 			><button
 				class="btn btn-ghost btn-square"
 				(click)="p.toggleTheme()"
-				[attr.aria-label]="p.label('Alternar tema claro e escuro', 'Toggle light and dark theme')"
+				[attr.aria-label]="'messages.toggle_light_and_dark_theme_3fbc378d' | transloco"
 			>
 				<app-icon [name]="p.theme() === 'light' ? 'moon' : 'sun'" /></button
 			><a
@@ -146,9 +140,7 @@
 				href="https://github.com/alvarofilho/toolbox"
 				target="_blank"
 				rel="noopener noreferrer"
-				[attr.aria-label]="
-					p.label('Repositório no GitHub (nova aba)', 'GitHub repository (new tab)')
-				"
+				[attr.aria-label]="'messages.github_repository_new_tab_735ed5da' | transloco"
 				><app-icon name="github"
 			/></a>
 		</div>
@@ -156,13 +148,7 @@
 	<main id="main-content" tabindex="-1">
 		@if (p.storageUnavailable()) {
 			<p class="storage-notice" role="status">
-				{{
-					p.label(
-						'O armazenamento local está indisponível. Preferências valem apenas nesta
-      sessão.',
-						'Local storage is unavailable. Preferences apply to this session only.'
-					)
-				}}
+				{{ 'messages.local_storage_is_unavailable_preferences_a_653fc0f8' | transloco }}
 			</p>
 		}
 		<router-outlet />
@@ -170,9 +156,9 @@
 	<footer class="page-footer">
 		<span
 			>toolbox. <span class="footer-separator">/</span>
-			{{ p.label('Menos atrito. Mais código.', 'Less friction. More code.') }}</span
+			{{ 'messages.less_friction_more_code_6cbc7a38' | transloco }}</span
 		><span
-			>{{ p.label('Gratuito. Aberto. Seu.', 'Free. Open. Yours.') }}
+			>{{ 'messages.free_open_yours_70b02551' | transloco }}
 			<a href="https://github.com/alvarofilho/toolbox" target="_blank" rel="noopener noreferrer"
 				>GitHub ↗</a
 			></span

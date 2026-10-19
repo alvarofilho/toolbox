@@ -6,6 +6,8 @@ import { App } from '@app/app';
 import { routes } from '@app/app.routes';
 import { provideToolboxTransloco } from '@app/core/services/transloco.providers';
 import { PreferencesService, readPreferences } from '@app/core/services/preferences';
+import { TOOLS } from '@app/features/tools/catalog/tools';
+import { firstValueFrom } from 'rxjs';
 
 // jsdom does not implement the native dialog top layer. Browser QA covers focus trapping.
 function mockDialog(element: HTMLElement): HTMLDialogElement {
@@ -233,7 +235,7 @@ describe('platform integration', () => {
 		expect(document.body.style.overflow).toBe('auto');
 		document.body.style.overflow = '';
 	});
-	it('runs JSON, displays validation errors, clears output on edits and resets', async () => {
+	it('runs JSON, preserves stale output on edits, displays validation errors and resets', async () => {
 		const harness = await RouterTestingHarness.create('/tools/json-formatter');
 		const element = harness.routeNativeElement;
 		if (!element) {
@@ -252,7 +254,9 @@ describe('platform integration', () => {
 		textarea.value = '{broken';
 		textarea.dispatchEvent(new Event('input'));
 		await harness.fixture.whenStable();
-		expect(element.querySelector('.result-code')).toBeNull();
+		expect(element.querySelector('.result-code')?.textContent).toContain('"ok": true');
+		expect(element.querySelector('.result-notice')?.textContent).toContain('Entrada alterada');
+		expect(element.querySelector<HTMLButtonElement>('.output-actions button')?.disabled).toBe(true);
 		form.dispatchEvent(new Event('submit', { cancelable: true }));
 		await harness.fixture.whenStable();
 		expect(element.querySelector('[role=alert]')?.textContent).toContain('Confira');
@@ -278,7 +282,7 @@ describe('platform integration', () => {
 		expect(harness.routeNativeElement?.querySelectorAll('app-tool-card')).toHaveLength(1);
 		prefs.toggleFavorite('cpf');
 		await harness.fixture.whenStable();
-		expect(harness.routeNativeElement?.textContent).toContain('Nothing here yet');
+		expect(harness.routeNativeElement?.textContent).toContain('No favorites yet');
 	});
 	it('handles corrupt preferences and rejects unknown IDs', () => {
 		expect(readPreferences('{broken').favorites).toEqual([]);
@@ -288,7 +292,14 @@ describe('platform integration', () => {
 			),
 		).toEqual({ locale: 'pt', theme: 'light', favorites: ['cpf'], recent: [] });
 	});
+	it('preserves more than eighteen favorites when preferences are reopened', () => {
+		const ids = TOOLS.slice(0, 30).map((tool) => tool.id);
+		const saved = readPreferences(JSON.stringify({ favorites: ids, recent: ids }));
+		expect(saved.favorites).toEqual(ids);
+		expect(saved.recent).toHaveLength(8);
+	});
 	it('shows a missing page for unknown tools', async () => {
+		await firstValueFrom(TestBed.inject(TranslocoService).load('pt'));
 		const harness = await RouterTestingHarness.create('/tools/missing');
 		expect(harness.routeNativeElement?.textContent).toContain('Página não encontrada');
 	});

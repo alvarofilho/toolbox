@@ -12,14 +12,14 @@ export const select = (
 	key: string,
 	pt: string,
 	en: string,
-	options: readonly (readonly [string, string, string])[],
+	options: readonly (readonly [string, string, string, string?])[],
 	value = options[0][0],
 ): ToolControl => ({
 	key,
 	label: text(pt, en),
 	type: 'select',
 	value,
-	options: options.map(([value, pt, en]) => ({ value, label: text(pt, en) })),
+	options: options.map(([value, pt, en, es]) => ({ value, label: text(pt, en, es ?? en) })),
 });
 
 export const number = (
@@ -29,7 +29,17 @@ export const number = (
 	value: number,
 	min: number,
 	max: number,
-): ToolControl => ({ key, label: text(pt, en), value: String(value), type: 'number', min, max });
+	step: number | 'any' = 1,
+): ToolControl => ({
+	key,
+	label: text(pt, en),
+	value: String(value),
+	type: 'number',
+	min,
+	max,
+	step,
+	inputMode: step === 'any' ? 'decimal' : 'numeric',
+});
 
 export const check = (key: string, pt: string, en: string, checked = true): ToolControl =>
 	input(key, pt, en, String(checked), 'checkbox');

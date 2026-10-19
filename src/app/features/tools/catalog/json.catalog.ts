@@ -53,7 +53,7 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		icon: 'file-code',
 		keywords: 'yml converter serialize deserializar',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/json-yaml.tool').then((module) => module.definition),
 	},
 	{
@@ -61,14 +61,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON Validator', 'JSON Validator'),
 		description: text(
-			'JSON Validator: processe e exporte localmente.',
-			'JSON Validator: process and export locally.',
-			'JSON Validator: procesa y exporta localmente.',
+			'Confira se a sintaxe de um documento JSON é válida.',
+			'Check whether a JSON document has valid syntax.',
+			'Comprueba si un documento JSON tiene sintaxis válida.',
 		),
 		icon: 'code',
-		keywords: 'JSON Validator JSON Validator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/json-validator.tool').then((module) => module.definition),
 	},
 	{
@@ -76,14 +76,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON Viewer', 'JSON Viewer'),
 		description: text(
-			'JSON Viewer: processe e exporte localmente.',
-			'JSON Viewer: process and export locally.',
-			'JSON Viewer: procesa y exporta localmente.',
+			'Explore objetos e listas JSON em uma árvore expansível.',
+			'Explore JSON objects and arrays in an expandable tree.',
+			'Explora objetos y listas JSON en un árbol desplegable.',
 		),
 		icon: 'code',
-		keywords: 'JSON Viewer JSON Viewer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/json-viewer.tool').then((module) => module.definition),
 	},
 	{
@@ -91,14 +91,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSONPath Tester', 'JSONPath Tester'),
 		description: text(
-			'JSONPath Tester: processe e exporte localmente.',
-			'JSONPath Tester: process and export locally.',
-			'JSONPath Tester: procesa y exporta localmente.',
+			'Extraia valores de um documento JSON usando JSONPath.',
+			'Extract values from a JSON document using JSONPath.',
+			'Extrae valores de un documento JSON con JSONPath.',
 		),
 		icon: 'code',
-		keywords: 'JSONPath Tester JSONPath Tester',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/jsonpath.tool').then((module) => module.definition),
 	},
 	{
@@ -106,14 +106,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON Schema Validator', 'JSON Schema Validator'),
 		description: text(
-			'JSON Schema Validator: processe e exporte localmente.',
-			'JSON Schema Validator: process and export locally.',
-			'JSON Schema Validator: procesa y exporta localmente.',
+			'Valide dados JSON contra um schema Draft 7.',
+			'Validate JSON data against a Draft 7 schema.',
+			'Valida datos JSON frente a un schema Draft 7.',
 		),
 		icon: 'code',
-		keywords: 'JSON Schema Validator JSON Schema Validator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/json-schema.tool').then((module) => module.definition),
 	},
 	{
@@ -121,14 +121,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON para TypeScript', 'JSON to TypeScript'),
 		description: text(
-			'JSON para TypeScript: processe e exporte localmente.',
-			'JSON to TypeScript: process and export locally.',
-			'JSON para TypeScript: procesa y exporta localmente.',
+			'Transforme objetos JSON em tipos TypeScript.',
+			'Turn JSON objects into TypeScript types.',
+			'Convierte objetos JSON en tipos TypeScript.',
 		),
 		icon: 'code',
-		keywords: 'JSON para TypeScript JSON to TypeScript',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../json/json-typescript.tool').then((module) => module.definition),
 	},
@@ -137,14 +137,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON para interfaces C#', 'JSON to C# Interfaces'),
 		description: text(
-			'JSON para interfaces C#: processe e exporte localmente.',
-			'JSON to C# Interfaces: process and export locally.',
-			'JSON para interfaces C#: procesa y exporta localmente.',
+			'Transforme objetos JSON em interfaces C#.',
+			'Turn JSON objects into C# interfaces.',
+			'Convierte objetos JSON en interfaces C#.',
 		),
 		icon: 'code',
-		keywords: 'JSON para interfaces C# JSON to C# Interfaces',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../json/json-csharp-interface.tool').then((module) => module.definition),
 	},
@@ -153,14 +153,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON para CSV', 'JSON to CSV'),
 		description: text(
-			'JSON para CSV: processe e exporte localmente.',
-			'JSON to CSV: process and export locally.',
-			'JSON para CSV: procesa y exporta localmente.',
+			'Converta uma lista de objetos JSON em uma tabela CSV.',
+			'Convert a JSON array of objects into a CSV table.',
+			'Convierte una lista de objetos JSON en una tabla CSV.',
 		),
 		icon: 'code',
-		keywords: 'JSON para CSV JSON to CSV',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/json-csv.tool').then((module) => module.definition),
 	},
 	{
@@ -168,14 +168,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('CSV para JSON', 'CSV to JSON'),
 		description: text(
-			'CSV para JSON: processe e exporte localmente.',
-			'CSV to JSON: process and export locally.',
-			'CSV para JSON: procesa y exporta localmente.',
+			'Transforme CSV com cabeçalho em uma lista de objetos JSON.',
+			'Turn CSV with headers into a JSON array of objects.',
+			'Convierte CSV con encabezado en una lista de objetos JSON.',
 		),
 		icon: 'code',
-		keywords: 'CSV para JSON CSV to JSON',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/csv-json.tool').then((module) => module.definition),
 	},
 	{
@@ -183,14 +183,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON para YAML', 'JSON to YAML'),
 		description: text(
-			'JSON para YAML: processe e exporte localmente.',
-			'JSON to YAML: process and export locally.',
-			'JSON para YAML: procesa y exporta localmente.',
+			'Converta um documento JSON para YAML.',
+			'Convert a JSON document to YAML.',
+			'Convierte un documento JSON a YAML.',
 		),
 		icon: 'code',
-		keywords: 'JSON para YAML JSON to YAML',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/json-to-yaml.tool').then((module) => module.definition),
 	},
 	{
@@ -198,14 +198,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('YAML para JSON', 'YAML to JSON'),
 		description: text(
-			'YAML para JSON: processe e exporte localmente.',
-			'YAML to JSON: process and export locally.',
-			'YAML para JSON: procesa y exporta localmente.',
+			'Converta YAML para JSON e confira a estrutura.',
+			'Convert YAML to JSON and inspect its structure.',
+			'Convierte YAML a JSON y revisa su estructura.',
 		),
 		icon: 'code',
-		keywords: 'YAML para JSON YAML to JSON',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/yaml-to-json.tool').then((module) => module.definition),
 	},
 	{
@@ -213,14 +213,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON para XML', 'JSON to XML'),
 		description: text(
-			'JSON para XML: processe e exporte localmente.',
-			'JSON to XML: process and export locally.',
-			'JSON para XML: procesa y exporta localmente.',
+			'Converta objetos JSON em XML com elemento raiz.',
+			'Convert JSON objects to XML with a root element.',
+			'Convierte objetos JSON a XML con un elemento raíz.',
 		),
 		icon: 'code',
-		keywords: 'JSON para XML JSON to XML',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/json-xml.tool').then((module) => module.definition),
 	},
 	{
@@ -228,14 +228,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON para SQL INSERT', 'JSON to SQL INSERT'),
 		description: text(
-			'JSON para SQL INSERT: processe e exporte localmente.',
-			'JSON to SQL INSERT: process and export locally.',
-			'JSON para SQL INSERT: procesa y exporta localmente.',
+			'Gere comandos SQL INSERT a partir de objetos JSON.',
+			'Generate SQL INSERT statements from JSON objects.',
+			'Genera sentencias SQL INSERT a partir de objetos JSON.',
 		),
 		icon: 'code',
-		keywords: 'JSON para SQL INSERT JSON to SQL INSERT',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/json-sql.tool').then((module) => module.definition),
 	},
 	{
@@ -243,14 +243,14 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 		category: 'json',
 		name: text('JSON Schema Faker', 'JSON Schema Faker'),
 		description: text(
-			'JSON Schema Faker: processe e exporte localmente.',
-			'JSON Schema Faker: process and export locally.',
-			'JSON Schema Faker: procesa y exporta localmente.',
+			'Gere dados sintéticos que seguem um JSON Schema.',
+			'Generate synthetic data matching a JSON Schema.',
+			'Genera datos sintéticos que cumplen un JSON Schema.',
 		),
 		icon: 'code',
-		keywords: 'JSON Schema Faker JSON Schema Faker',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../json/schema-faker.tool').then((module) => module.definition),
 	},
 ];

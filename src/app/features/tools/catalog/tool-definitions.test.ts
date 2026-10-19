@@ -2,7 +2,11 @@ import 'reflect-metadata';
 import { describe, expect, it } from 'vitest';
 import { PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
-import { X509CertificateGenerator, Pkcs10CertificateRequestGenerator } from '@peculiar/x509';
+import {
+	X509CertificateGenerator,
+	X509CrlGenerator,
+	Pkcs10CertificateRequestGenerator,
+} from '@peculiar/x509';
 import { TOOLS } from '@app/features/tools/catalog/tools';
 import type { ToolFiles, ToolValues } from '@app/core/models/tool';
 import { sqlInsert } from '@app/features/tools/json/data-utils';
@@ -183,12 +187,14 @@ describe('cryptography and certificates', () => {
 		});
 		const pem = cert.toString('pem');
 		expect(JSON.parse((await run('pem', { input: pem })).output)[0].label).toBe('CERTIFICATE');
-		expect(JSON.parse((await run('x509', { input: pem })).output).subject).toContain(
-			'Toolbox Test',
-		);
+		const certificate = JSON.parse((await run('x509', { input: pem })).output);
+		expect(certificate.subject).toContain('Toolbox Test');
+		expect(certificate.signatureVerification).toBe('not_checked');
+		expect(certificate.isCertificateAuthority).toBeNull();
 		expect(JSON.parse((await run('pem-jwk', { input: pem })).output).kty).toBe('EC');
 		const chain = JSON.parse((await run('certificate-chain', { input: pem })).output);
 		expect(chain.certificates[0].signatureVerified).toBe(true);
+		expect(chain.certificates[0].issuerCertificateInInput).toBe(true);
 		expect(chain.trustEstablished).toBe(false);
 		const csr = await Pkcs10CertificateRequestGenerator.create({
 			name: 'CN=Toolbox Test',
@@ -198,6 +204,40 @@ describe('cryptography and certificates', () => {
 		expect(
 			JSON.parse((await run('csr', { input: csr.toString('pem') })).output).signatureVerified,
 		).toBe(true);
+	});
+	it('checks a certificate against a signed CRL without claiming live revocation status', async () => {
+		const keys = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, [
+			'sign',
+			'verify',
+		]);
+		const cert = await X509CertificateGenerator.createSelfSigned({
+			name: 'CN=CRL Test',
+			serialNumber: '42',
+			notBefore: new Date('2020-01-01'),
+			notAfter: new Date('2030-01-01'),
+			signingAlgorithm: { name: 'ECDSA', hash: 'SHA-256' },
+			keys,
+		});
+		const crl = await X509CrlGenerator.create({
+			issuer: cert.subject,
+			signingKey: keys.privateKey,
+			signingAlgorithm: { name: 'ECDSA', hash: 'SHA-256' },
+			thisUpdate: new Date('2026-01-01'),
+			nextUpdate: new Date('2027-01-01'),
+			entries: [{ serialNumber: cert.serialNumber }],
+		});
+		const report = JSON.parse(
+			(
+				await run('crl-explorer', {
+					crl: crl.toString(),
+					certificate: cert.toString('pem'),
+					issuer: cert.toString('pem'),
+				})
+			).output,
+		);
+		expect(report.revocationStatus).toBe('revoked');
+		expect(report.signatureVerified).toBe(true);
+		expect(report.revocationCheckedAgainstCurrentAuthority).toBe(false);
 	});
 });
 describe('network, Brazilian and file formats', () => {

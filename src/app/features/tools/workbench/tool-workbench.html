@@ -1,506 +1,390 @@
-<nav class="tool-breadcrumb" [attr.aria-label]="p.label('Caminho de navegação', 'Breadcrumb')">
-	<a routerLink="/tools">{{ p.label('Ferramentas', 'Tools') }}</a
-	><span>/</span>
-	@if (category(); as c) {
-		<a [routerLink]="['/category', c.id]">{{ p.t(c.name) }}</a
-		><span>/</span>
+<nav class="tool-breadcrumb" [attr.aria-label]="'messages.breadcrumb_30635f6c' | transloco">
+	<a routerLink="/tools">{{ 'messages.tools_950196fc' | transloco }}</a
+	><span aria-hidden="true">/</span>
+	@if (category(); as category) {
+		<a [routerLink]="['/category', category.id]">{{ category.name.key | transloco }}</a
+		><span aria-hidden="true">/</span>
 	}
-	<span aria-current="page">{{ p.t(info().name) }}</span>
+	<span aria-current="page">{{ info().name.key | transloco }}</span>
 </nav>
 <section class="tool-heading">
 	<span class="tool-icon" [attr.data-category]="info().category"
 		><app-icon [name]="info().icon"
 	/></span>
 	<div>
-		<h1>{{ p.t(info().name) }}</h1>
-		<p>{{ p.t(info().description) }}</p>
+		<h1>{{ info().name.key | transloco }}</h1>
+		<p>{{ info().description.key | transloco }}</p>
 	</div>
 	<button
+		type="button"
 		class="btn btn-outline tool-favorite"
 		(click)="p.toggleFavorite(info().id)"
 		[attr.aria-pressed]="p.favorites().includes(info().id)"
 	>
 		<app-icon name="star" />{{
 			p.favorites().includes(info().id)
-				? p.label('Nos favoritos', 'Favorited')
-				: p.label('Favoritar', 'Favorite')
+				? ('messages.favorited_672c32ab' | transloco)
+				: ('messages.favorite_7c6c19ed' | transloco)
 		}}
 	</button>
 </section>
-@if (definition().hint; as hint) {
-	<p class="tool-hint"><app-icon name="shield" />{{ p.t(hint) }}</p>
+@if (tool().hint; as hint) {
+	<p class="tool-hint"><app-icon name="shield" />{{ hint.key | transloco }}</p>
 }
-@if (isDiffTool()) {
-	<form
-		class="meld-workbench workspace-panel"
-		[class.has-result]="!!result()"
-		(submit)="run($event)"
-	>
-		<div class="meld-toolbar">
-			<div class="meld-file-tab">
-				<span class="meld-file-index">1</span>
-				<div>
-					<strong>{{ p.label('Original', 'Original') }}</strong>
-					<span>{{ p.label('Arquivo 1', 'File 1') }}</span>
-				</div>
-				@if (definition().example) {
-					<button
-						type="button"
-						class="btn btn-ghost btn-sm"
-						(click)="example()"
-						[disabled]="busy()"
-					>
-						{{ p.label('Exemplo', 'Example') }}
-					</button>
-				}
-			</div>
-			<div class="meld-compare-action">
-				<button type="submit" class="btn btn-primary btn-sm" [disabled]="busy()">
-					@if (busy()) {
-						<span class="loading loading-spinner loading-xs"></span>
-					}
-					{{ busy() ? p.label('Comparando…', 'Comparing…') : p.t(definition().action) }}
+<div class="workbench" [class.workbench-diff]="isDiffTool()">
+	<form class="input-panel workspace-panel" (submit)="run($event)" novalidate>
+		<div class="panel-heading">
+			<h2>
+				{{
+					isDiffTool()
+						? ('messages.texts_to_compare_32f3f7eb' | transloco)
+						: ('messages.configure_your_input_40d53b06' | transloco)
+				}}
+			</h2>
+			@if (tool().example) {
+				<button type="button" class="btn btn-ghost btn-sm" (click)="example()" [disabled]="busy()">
+					{{ 'messages.use_example_90d65a32' | transloco }}
 				</button>
-				<span class="auto-update-note">{{
-					p.label('Compara automaticamente ao editar', 'Compares automatically as you edit')
-				}}</span>
-			</div>
-			<div class="meld-file-tab meld-file-tab-right">
-				@if (result()) {
-					<button type="button" class="btn btn-ghost btn-sm" (click)="copy()">
-						<app-icon name="copy" />{{ p.label('Copiar', 'Copy') }}
-					</button>
-					<button type="button" class="btn btn-ghost btn-sm" (click)="download()">
-						<app-icon name="download" />{{ p.label('Exportar', 'Export') }}
-					</button>
-				} @else {
-					<button type="button" class="btn btn-ghost btn-sm" (click)="reset()" [disabled]="busy()">
-						{{ p.label('Limpar', 'Clear') }}
-					</button>
-				}
-				<div class="meld-file-name">
-					<strong>{{ p.label('Modificado', 'Modified') }}</strong>
-					<span>{{ p.label('Arquivo 2', 'File 2') }}</span>
-				</div>
-				<span class="meld-file-index">2</span>
-			</div>
+			}
 		</div>
-		@if (error()) {
-			<div class="tool-error" role="alert">
-				<strong>{{ p.label('Confira sua entrada', 'Check your input') }}</strong>
-				<p>{{ error() }}</p>
-			</div>
-		}
-		<div class="meld-status-banners" aria-live="polite">
-			<div class="meld-status-banner">
-				<span class="meld-status-icon" aria-hidden="true"></span>
-				<strong>{{
-					result() ? diffStatus() : p.label('Pronto para comparar', 'Ready to compare')
-				}}</strong>
-			</div>
-			<div class="meld-status-banner">
-				<span class="meld-status-icon" aria-hidden="true"></span>
-				<strong>{{
-					result() ? diffStatus() : p.label('Pronto para comparar', 'Ready to compare')
-				}}</strong>
-			</div>
-		</div>
-		@if (result()) {
-			<div class="meld-editors">
-				<div class="meld-editor-pane">
-					<label class="sr-only" for="meld-original">{{
-						p.label('Texto original', 'Original text')
-					}}</label>
-					<textarea
-						id="meld-original"
-						class="meld-editor"
-						[value]="values()['input'] ?? ''"
-						(input)="update('input', $event)"
-						spellcheck="false"
-						maxlength="100001"
-						[placeholder]="p.label('Cole o texto original', 'Paste the original text')"
-					></textarea>
-				</div>
-				<div class="meld-editor-pane">
-					<label class="sr-only" for="meld-modified">{{
-						p.label('Texto modificado', 'Modified text')
-					}}</label>
-					<textarea
-						id="meld-modified"
-						class="meld-editor"
-						[value]="values()['second'] ?? ''"
-						(input)="update('second', $event)"
-						spellcheck="false"
-						maxlength="100001"
-						[placeholder]="p.label('Cole o texto modificado', 'Paste the modified text')"
-					></textarea>
-				</div>
-			</div>
-			<div
-				class="diff-scroll meld-diff-scroll"
-				tabindex="0"
-				[attr.aria-label]="p.label('Comparação lado a lado', 'Side-by-side comparison')"
-			>
-				<table class="diff-table">
-					<caption class="sr-only">
-						{{
-							p.label(
-								'Comparação lado a lado, linhas alinhadas',
-								'Side-by-side comparison, aligned lines'
-							)
-						}}
-					</caption>
-					<thead>
-						<tr>
-							<th colspan="2" scope="colgroup">{{ p.label('Original', 'Original') }}</th>
-							<th colspan="2" scope="colgroup">{{ p.label('Modificado', 'Modified') }}</th>
-						</tr>
-					</thead>
-					<tbody>
-						@for (row of diffRows(); track $index) {
-							<tr
-								[class.diff-row-change]="row.kind === 'change'"
-								[class.diff-row-removed]="row.kind === 'removed'"
-								[class.diff-row-added]="row.kind === 'added'"
-							>
-								<td class="diff-line-number">{{ row.leftNumber ?? '' }}</td>
-								<td class="diff-line-content">{{ row.leftText }}</td>
-								<td class="diff-line-number">{{ row.rightNumber ?? '' }}</td>
-								<td class="diff-line-content">{{ row.rightText }}</td>
-							</tr>
-						}
-					</tbody>
-				</table>
-			</div>
-		} @else {
-			<div class="meld-editors">
-				<div class="meld-editor-pane">
-					<label class="sr-only" for="meld-original">{{
-						p.label('Texto original', 'Original text')
-					}}</label>
-					<textarea
-						id="meld-original"
-						class="meld-editor"
-						[value]="values()['input'] ?? ''"
-						(input)="update('input', $event)"
-						[disabled]="busy()"
-						spellcheck="false"
-						maxlength="100001"
-						[placeholder]="
-							p.label('Cole ou digite o texto original…', 'Paste or type the original text…')
-						"
-					></textarea>
-				</div>
-				<div class="meld-editor-pane">
-					<label class="sr-only" for="meld-modified">{{
-						p.label('Texto modificado', 'Modified text')
-					}}</label>
-					<textarea
-						id="meld-modified"
-						class="meld-editor"
-						[value]="values()['second'] ?? ''"
-						(input)="update('second', $event)"
-						[disabled]="busy()"
-						spellcheck="false"
-						maxlength="100001"
-						[placeholder]="
-							p.label('Cole ou digite o texto modificado…', 'Paste or type the modified text…')
-						"
-					></textarea>
-				</div>
-			</div>
-		}
-		<div class="meld-status-bar">
-			<div>
-				<span>UTF-8</span
-				><span>{{
-					definition().id === 'json-diff' ? 'JSON' : p.label('Texto simples', 'Plain text')
-				}}</span
-				><span>{{ diffLineCounts().left }} {{ p.label('linhas', 'lines') }}</span>
-			</div>
-			<div>
-				<span>UTF-8</span
-				><span>{{
-					definition().id === 'json-diff' ? 'JSON' : p.label('Texto simples', 'Plain text')
-				}}</span
-				><span>{{ diffLineCounts().right }} {{ p.label('linhas', 'lines') }}</span>
-			</div>
-		</div>
-		<p class="action-feedback meld-feedback" role="status">{{ feedback() }}</p>
-	</form>
-} @else {
-	<div class="workbench">
-		<form class="input-panel workspace-panel" (submit)="run($event)">
-			<div class="panel-heading">
-				<h2>{{ p.label('Configure sua entrada', 'Configure your input') }}</h2>
-				@if (definition().example) {
-					<button
-						type="button"
-						class="btn btn-ghost btn-sm"
-						(click)="example()"
-						[disabled]="busy()"
+		<fieldset class="tool-fields" [class.diff-fields]="isDiffTool()">
+			<legend class="sr-only">
+				{{ 'messages.tool_input_8461ebfb' | transloco }}
+			</legend>
+			@for (control of controls(); track control.key) {
+				@if (control.type === 'checkbox') {
+					<label class="checkbox-field"
+						><input
+							type="checkbox"
+							class="checkbox checkbox-sm"
+							[checked]="values()[control.key] === 'true'"
+							(change)="update(control.key, $event)"
+						/>{{ control.label.key | transloco }}</label
 					>
-						{{ p.label('Usar exemplo', 'Use example') }}
-					</button>
-				}
-			</div>
-			<fieldset class="tool-fields">
-				@for (control of definition().controls; track control.key) {
-					@if (control.type === 'checkbox') {
-						<label class="checkbox-field"
-							><input
-								type="checkbox"
-								class="checkbox checkbox-sm"
-								[checked]="values()[control.key] === 'true'"
-								(change)="update(control.key, $event)"
-							/>{{ p.t(control.label) }}</label
-						>
-					} @else {
-						<div class="field" [class.field-large]="control.type === 'textarea'">
-							<label [for]="'field-' + control.key">{{ p.t(control.label) }}</label>
-							@switch (control.type) {
-								@case ('file') {
-									<input
-										class="file-input"
-										type="file"
-										#fileInput
-										[id]="'field-' + control.key"
-										[accept]="control.accept ?? ''"
-										[multiple]="control.multiple ?? false"
-										(change)="update(control.key, $event)"
-									/>
-									@if (files()[control.key]?.length) {
-										<p>
-											{{ files()[control.key]?.length }}
-											{{
-												p.label(
-													'arquivo(s) selecionado(s)',
-													'file(s)
-          selected'
-												)
-											}}
-										</p>
-									}
-								}
-								@case ('textarea') {
-									<textarea
-										class="textarea"
-										[id]="'field-' + control.key"
-										[value]="values()[control.key]"
-										(input)="update(control.key, $event)"
-										rows="10"
-										spellcheck="false"
-										maxlength="100001"
-										[placeholder]="p.label('Cole ou digite aqui…', 'Paste or type here…')"
-									></textarea>
-								}
-								@case ('select') {
-									<select
-										class="select"
-										[id]="'field-' + control.key"
-										[value]="values()[control.key]"
-										(change)="update(control.key, $event)"
-									>
-										@for (option of control.options; track option.value) {
-											<option
-												[value]="option.value"
-												[selected]="values()[control.key] === option.value"
-											>
-												{{ p.t(option.label) }}
-											</option>
+				} @else {
+					<div
+						class="field"
+						[class.field-large]="control.type === 'textarea' || control.type === 'file'"
+					>
+						<label [for]="'field-' + control.key">{{ control.label.key | transloco }}</label>
+						@switch (control.type) {
+							@case ('file') {
+								<input
+									#fileInput
+									class="file-input"
+									type="file"
+									[id]="'field-' + control.key"
+									[accept]="control.accept ?? ''"
+									[multiple]="control.multiple ?? false"
+									(change)="update(control.key, $event)"
+									[attr.aria-describedby]="
+										fieldErrors()[control.key] ? 'error-' + control.key : null
+									"
+									[attr.aria-invalid]="fieldErrors()[control.key] ? 'true' : null"
+								/>
+								@if (files()[control.key]?.length) {
+									<ul class="selected-files">
+										@for (file of files()[control.key]; track $index) {
+											<li>
+												{{ file.name }} <span>{{ (file.size / 1024).toFixed(1) }} KB</span>
+											</li>
 										}
-									</select>
+									</ul>
 								}
-								@default {
+							}
+							@case ('textarea') {
+								<textarea
+									class="textarea"
+									[id]="'field-' + control.key"
+									[value]="values()[control.key]"
+									(input)="update(control.key, $event)"
+									rows="8"
+									spellcheck="false"
+									maxlength="100001"
+									[placeholder]="
+										control.placeholder
+											? (control.placeholder.key | transloco)
+											: ('messages.paste_or_type_here_33d9abf7' | transloco)
+									"
+									[attr.aria-describedby]="
+										fieldErrors()[control.key] ? 'error-' + control.key : null
+									"
+									[attr.aria-invalid]="fieldErrors()[control.key] ? 'true' : null"
+								></textarea>
+							}
+							@case ('select') {
+								<select
+									class="select"
+									[id]="'field-' + control.key"
+									[value]="values()[control.key]"
+									(change)="update(control.key, $event)"
+									[attr.aria-describedby]="
+										fieldErrors()[control.key] ? 'error-' + control.key : null
+									"
+									[attr.aria-invalid]="fieldErrors()[control.key] ? 'true' : null"
+								>
+									@for (option of control.options; track option.value) {
+										<option
+											[value]="option.value"
+											[selected]="values()[control.key] === option.value"
+										>
+											{{ option.label.key | transloco }}
+										</option>
+									}
+								</select>
+							}
+							@default {
+								<div class="field-input-row">
 									<input
 										class="input"
 										[id]="'field-' + control.key"
-										[type]="control.type"
+										[type]="inputType(control)"
 										[value]="values()[control.key]"
 										(input)="update(control.key, $event)"
 										[min]="control.min ?? null"
 										[max]="control.max ?? null"
-										[attr.step]="control.type === 'number' ? 1 : null"
+										[attr.step]="control.type === 'number' ? (control.step ?? 1) : null"
+										[attr.inputmode]="control.inputMode ?? null"
+										[placeholder]="control.placeholder ? (control.placeholder.key | transloco) : ''"
+										[attr.aria-describedby]="
+											fieldErrors()[control.key] ? 'error-' + control.key : null
+										"
+										[attr.aria-invalid]="fieldErrors()[control.key] ? 'true' : null"
 										autocomplete="off"
 										spellcheck="false"
 										maxlength="100001"
 									/>
-								}
+									@if (control.type === 'password') {
+										<button
+											class="btn btn-ghost btn-sm reveal-password"
+											type="button"
+											[attr.aria-controls]="'field-' + control.key"
+											[attr.aria-pressed]="revealed().includes(control.key)"
+											(click)="toggleReveal(control.key)"
+										>
+											{{
+												revealed().includes(control.key)
+													? ('messages.hide_e10c7bcd' | transloco)
+													: ('messages.show_29742e5c' | transloco)
+											}}<span class="sr-only"> {{ control.label.key | transloco }}</span>
+										</button>
+									}
+								</div>
 							}
-						</div>
-					}
+						}
+						@if (fieldErrors()[control.key]; as message) {
+							<p class="field-error" [id]="'error-' + control.key">{{ message }}</p>
+						}
+					</div>
 				}
-			</fieldset>
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary" [disabled]="busy()">
-					@if (busy()) {
-						<span class="loading loading-spinner loading-xs"></span>
-					}
-					{{ busy() ? p.label('Processando…', 'Processing…') : p.t(definition().action)
-					}}<app-icon name="arrow" /></button
-				><button type="button" class="btn btn-ghost" (click)="reset()">
-					{{ p.label('Limpar', 'Clear') }}
+			}
+		</fieldset>
+		@if (error()) {
+			<div class="tool-error" role="alert">
+				<strong>{{ 'messages.check_your_input_42488fe2' | transloco }}</strong>
+				<p>{{ error() }}</p>
+			</div>
+		}
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary" [disabled]="busy()">
+				@if (busy()) {
+					<span class="loading loading-spinner loading-xs"></span>
+				}
+				{{ busy() ? ('messages.processing_ccf76940' | transloco) : action()
+				}}<app-icon name="arrow" />
+			</button>
+			@if (busy()) {
+				<button type="button" class="btn btn-ghost" (click)="cancel()">
+					{{ 'messages.continue_editing_f15713b0' | transloco }}
 				</button>
+			} @else {
+				<button type="button" class="btn btn-ghost" (click)="reset()">
+					{{ 'messages.clear_04a57fc2' | transloco }}
+				</button>
+			}
+			@if (result()) {
+				<button type="button" class="btn btn-outline jump-result" (click)="showResult()">
+					{{ 'messages.view_result_3a391691' | transloco }}<app-icon name="arrow" />
+				</button>
+			}
+			@if (automatic()) {
 				<span class="auto-update-note">{{
-					p.label('Atualiza automaticamente ao editar', 'Updates automatically as you edit')
+					'messages.updates_automatically_as_you_edit_dd3ed7bd' | transloco
 				}}</span>
+			}
+		</div>
+	</form>
+	<section
+		id="tool-result"
+		tabindex="-1"
+		class="output-panel workspace-panel"
+		[attr.aria-label]="'messages.result_504af044' | transloco"
+		[attr.aria-busy]="busy()"
+	>
+		<div class="panel-heading">
+			<h2>{{ 'messages.result_504af044' | transloco }}</h2>
+			<div class="output-actions">
+				<button
+					type="button"
+					class="btn btn-ghost btn-sm"
+					(click)="copy()"
+					[disabled]="!result() || stale()"
+				>
+					<app-icon name="copy" />{{ 'messages.copy_658f3664' | transloco }}
+				</button>
+				<button
+					type="button"
+					class="btn btn-ghost btn-sm"
+					(click)="downloadPrimary()"
+					[disabled]="!result() || stale()"
+				>
+					<app-icon name="download" />{{ downloadLabel() }}
+				</button>
 			</div>
-		</form>
-		<section
-			class="output-panel workspace-panel"
-			[attr.aria-label]="p.label('Resultado', 'Result')"
-			[attr.aria-busy]="busy()"
-		>
-			<div class="panel-heading">
-				<h2>{{ p.label('Resultado', 'Result') }}</h2>
-				<div class="output-actions">
-					<button class="btn btn-ghost btn-sm" (click)="copy()" [disabled]="!result()">
-						<app-icon name="copy" />{{ p.label('Copiar', 'Copy') }}</button
-					><button class="btn btn-ghost btn-sm" (click)="download()" [disabled]="!result()">
-						<app-icon name="download" />{{ p.label('Exportar', 'Export') }}
-					</button>
+		</div>
+		@if (stale()) {
+			<p class="result-notice" role="status">
+				{{ 'messages.input_changed_update_to_copy_or_download_t_c1c6465d' | transloco }}
+			</p>
+		}
+		@if (result(); as result) {
+			@if (isDiffTool()) {
+				<div class="diff-summary" role="status">
+					<span>− {{ diffSummary().removals }} {{ 'messages.removed_3ff7ffdb' | transloco }}</span
+					><span>+ {{ diffSummary().additions }} {{ 'messages.added_0b2656e5' | transloco }}</span>
 				</div>
-			</div>
-			@if (error()) {
-				<div class="tool-error" role="alert">
-					<strong>{{ p.label('Confira sua entrada', 'Check your input') }}</strong>
-					<p>{{ error() }}</p>
-				</div>
-			} @else if (result(); as result) {
-				@if (isDiffTool()) {
-					<div class="diff-summary" aria-live="polite">
-						<span class="diff-count diff-count-removed">
-							{{ diffSummary().removals }} {{ p.label('removidas', 'removed') }}
-						</span>
-						<span class="diff-count diff-count-added">
-							{{ diffSummary().additions }} {{ p.label('adicionadas', 'added') }}
-						</span>
-					</div>
-					<div
-						class="diff-scroll"
-						tabindex="0"
-						[attr.aria-label]="p.label('Comparação lado a lado', 'Side-by-side comparison')"
-					>
-						<table class="diff-table">
-							<caption class="sr-only">
-								{{
-									p.label(
-										'Comparação lado a lado, linhas alinhadas',
-										'Side-by-side comparison, aligned lines'
-									)
-								}}
-							</caption>
-							<thead>
-								<tr>
-									<th colspan="2" scope="colgroup">{{ p.label('Original', 'Original') }}</th>
-									<th colspan="2" scope="colgroup">{{ p.label('Modificado', 'Modified') }}</th>
+				<div
+					class="diff-scroll"
+					tabindex="0"
+					[attr.aria-label]="'messages.side_by_side_comparison_1350d50d' | transloco"
+				>
+					<table class="diff-table">
+						<caption class="sr-only">
+							{{
+								diffStatus()
+							}}
+						</caption>
+						<thead>
+							<tr>
+								<th colspan="2" scope="colgroup">
+									{{ 'messages.original_a2fe7692' | transloco }}
+								</th>
+								<th colspan="2" scope="colgroup">
+									{{ 'messages.modified_dd13a6b2' | transloco }}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							@for (row of diffRows(); track $index) {
+								<tr
+									[class.diff-row-change]="row.kind === 'change'"
+									[class.diff-row-removed]="row.kind === 'removed'"
+									[class.diff-row-added]="row.kind === 'added'"
+								>
+									<td class="diff-line-number">{{ row.leftNumber ?? '' }}</td>
+									<td class="diff-line-content">
+										<span class="diff-marker" aria-hidden="true">{{
+											row.kind === 'change' || row.kind === 'removed' ? '−' : ' '
+										}}</span>
+										@if (row.kind === 'change' || row.kind === 'removed') {
+											<span class="sr-only">{{ 'messages.removed_3dac6509' | transloco }}</span>
+										}
+										{{ row.leftText }}
+									</td>
+									<td class="diff-line-number">{{ row.rightNumber ?? '' }}</td>
+									<td class="diff-line-content">
+										<span class="diff-marker" aria-hidden="true">{{
+											row.kind === 'change' || row.kind === 'added' ? '+' : ' '
+										}}</span>
+										@if (row.kind === 'change' || row.kind === 'added') {
+											<span class="sr-only">{{ 'messages.added_1e033af7' | transloco }}</span>
+										}
+										{{ row.rightText }}
+									</td>
 								</tr>
-							</thead>
-							<tbody>
-								@for (row of diffRows(); track $index) {
-									<tr
-										[class.diff-row-change]="row.kind === 'change'"
-										[class.diff-row-removed]="row.kind === 'removed'"
-										[class.diff-row-added]="row.kind === 'added'"
-									>
-										<td class="diff-line-number">{{ row.leftNumber ?? '' }}</td>
-										<td class="diff-line-content">{{ row.leftText }}</td>
-										<td class="diff-line-number">{{ row.rightNumber ?? '' }}</td>
-										<td class="diff-line-content">{{ row.rightText }}</td>
-									</tr>
-								}
-							</tbody>
-						</table>
-					</div>
-				} @else if (preview(); as preview) {
+							}
+						</tbody>
+					</table>
+				</div>
+			} @else {
+				@if (preview(); as preview) {
 					<iframe
 						class="tool-preview"
 						sandbox=""
 						referrerpolicy="no-referrer"
-						[title]="p.label('Prévia do resultado', 'Result preview')"
+						[title]="'messages.result_preview_4a1cf348' | transloco"
 						[srcdoc]="preview"
-						style="
-							width: 100%;
-							min-height: 320px;
-							border: 1px solid var(--border-color, #ccc);
-							border-radius: 8px;
-						"
 					></iframe>
 				}
-				@for (artifact of result.artifacts; track $index) {
-					<button type="button" class="btn btn-outline btn-sm" (click)="download($index)">
-						<app-icon name="download" />{{ artifact.filename }}
-					</button>
-				}
-				@if (result.notice; as notice) {
-					<p class="result-notice">{{ p.t(notice) }}</p>
-				}
-				@if (isDiffTool()) {
-					<div class="result-meta">
-						{{
-							diffRows().length.toLocaleString(
-								p.locale() === 'pt' ? 'pt-BR' : p.locale() === 'es' ? 'es' : 'en'
-							)
-						}}
-						{{ p.label('linhas comparadas', 'lines compared') }}
-					</div>
+				@if (result.artifacts?.length) {
+					<ul class="artifact-list">
+						@for (artifact of result.artifacts; track $index) {
+							<li>
+								<button
+									type="button"
+									class="btn btn-outline"
+									(click)="download($index)"
+									[disabled]="stale()"
+								>
+									<app-icon name="download" />{{ artifact.filename }}</button
+								><span
+									>{{ (artifact.blob.size / 1024).toFixed(1) }} KB ·
+									{{ artifact.blob.type || 'application/octet-stream' }}</span
+								>
+							</li>
+						}
+					</ul>
+					<details class="text-report">
+						<summary>
+							{{ 'messages.view_text_report_1f3beb33' | transloco }}
+						</summary>
+						<pre class="result-code" tabindex="0">{{ result.output }}</pre>
+						<button type="button" class="btn btn-ghost" (click)="download()" [disabled]="stale()">
+							{{ 'messages.export_report_01213507' | transloco }}
+						</button>
+					</details>
 				} @else {
 					<pre
 						class="result-code"
 						tabindex="0"
-						[attr.aria-label]="p.label('Texto do resultado', 'Result text')"
+						[attr.aria-label]="'messages.result_text_c5bf66ab' | transloco"
 						>{{ result.output }}</pre>
-					<div class="result-meta">
-						{{
-							result.output.length.toLocaleString(
-								p.locale() === 'pt' ? 'pt-BR' : p.locale() === 'es' ? 'es' : 'en'
-							)
-						}}
-						{{ p.label('caracteres', 'characters') }}
-					</div>
 				}
-			} @else {
-				<div class="result-empty">
-					<app-icon [name]="busy() ? 'clock' : 'code'" />
-					<h3>
-						{{
-							busy()
-								? p.label('Preparando o resultado…', 'Preparing your result…')
-								: p.label(
-										'Seu
-        resultado aparece aqui',
-										'Your result appears here'
-									)
-						}}
-					</h3>
-					<p>
-						{{
-							p.label(
-								'Preencha os campos e execute a ferramenta. Tudo acontece neste navegador.',
-								'Fill in the fields and run the tool. Everything happens in this browser.'
-							)
-						}}
-					</p>
-				</div>
 			}
-			<span class="sr-only" role="status">{{
-				busy()
-					? p.label('Processando', 'Processing')
-					: result()
-						? p.label('Resultado pronto', 'Result ready')
-						: ''
-			}}</span>
-			<p class="action-feedback" role="status">{{ feedback() }}</p>
-		</section>
-	</div>
-}
-<div class="tool-privacy">
-	<app-icon name="shield" /><span>{{
-		p.label(
-			'Privado por padrão. Entradas e resultados não são enviados nem salvos
-    automaticamente.',
-			'Private by default. Inputs and results are never uploaded or saved
-    automatically.'
-		)
-	}}</span>
+			@if (result.notice; as notice) {
+				<p class="result-notice">{{ notice.key | transloco }}</p>
+			}
+			<div class="result-meta">
+				{{ result.output.length.toLocaleString(p.locale()) }}
+				{{ 'messages.characters_905580d9' | transloco }}
+			</div>
+		} @else {
+			<div class="result-empty">
+				<app-icon [name]="busy() ? 'clock' : 'code'" />
+				<h3>
+					{{
+						busy()
+							? ('messages.preparing_your_result_65a3b3eb' | transloco)
+							: ('messages.your_result_appears_here_c8b7c539' | transloco)
+					}}
+				</h3>
+				<p>
+					{{ 'messages.fill_in_the_fields_and_run_the_tool_everyt_b225b5e7' | transloco }}
+				</p>
+			</div>
+		}
+		<span class="sr-only" role="status">{{
+			busy()
+				? ('messages.processing_34c199e6' | transloco)
+				: result() && !stale()
+					? ('messages.result_ready_f0f66d9b' | transloco)
+					: ''
+		}}</span>
+		<p class="action-feedback" role="status">{{ feedback() }}</p>
+	</section>
 </div>
+<p class="tool-privacy">
+	<app-icon name="shield" />{{
+		'messages.private_by_default_inputs_and_results_are__41fce56f' | transloco
+	}}
+</p>

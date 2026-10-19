@@ -48,14 +48,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de empresas', 'Company Generator'),
 		description: text(
-			'Gerador de empresas: processe e exporte localmente.',
-			'Company Generator: process and export locally.',
-			'Gerador de empresas: procesa y exporta localmente.',
+			'Gere empresas fictícias com CNPJ em JSON, CSV ou SQL.',
+			'Generate fictional companies with CNPJ as JSON, CSV or SQL.',
+			'Genera empresas ficticias con CNPJ en JSON, CSV o SQL.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de empresas Company Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../generators/company.tool').then((module) => module.definition),
 	},
 	{
@@ -63,14 +63,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de endereços', 'Address Generator'),
 		description: text(
-			'Gerador de endereços: processe e exporte localmente.',
-			'Address Generator: process and export locally.',
-			'Gerador de endereços: procesa y exporta localmente.',
+			'Gere endereços sintéticos com UF em JSON, CSV ou SQL.',
+			'Generate synthetic addresses by state as JSON, CSV or SQL.',
+			'Genera direcciones sintéticas por estado en JSON, CSV o SQL.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de endereços Address Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../generators/address.tool').then((module) => module.definition),
 	},
 	{
@@ -78,14 +78,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de e-mails', 'Email Generator'),
 		description: text(
-			'Gerador de e-mails: processe e exporte localmente.',
-			'Email Generator: process and export locally.',
-			'Gerador de e-mails: procesa y exporta localmente.',
+			'Crie e-mails de teste com o domínio example.com.',
+			'Create test email addresses using example.com.',
+			'Crea correos de prueba con el dominio example.com.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de e-mails Email Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../generators/email.tool').then((module) => module.definition),
 	},
 	{
@@ -93,14 +93,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de telefones', 'Phone Generator'),
 		description: text(
-			'Gerador de telefones: processe e exporte localmente.',
-			'Phone Generator: process and export locally.',
-			'Gerador de telefones: procesa y exporta localmente.',
+			'Gere telefones fictícios com o DDD escolhido.',
+			'Generate fictional phone numbers with your chosen area code.',
+			'Genera teléfonos ficticios con el prefijo elegido.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de telefones Phone Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../generators/phone.tool').then((module) => module.definition),
 	},
 	{
@@ -108,14 +108,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de ULID', 'ULID Generator'),
 		description: text(
-			'Gerador de ULID: processe e exporte localmente.',
-			'ULID Generator: process and export locally.',
-			'Gerador de ULID: procesa y exporta localmente.',
+			'Crie identificadores ULID ordenáveis por tempo.',
+			'Create time-sortable ULID identifiers.',
+			'Crea identificadores ULID ordenables por tiempo.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de ULID ULID Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../generators/ulid.tool').then((module) => module.definition),
 	},
 	{
@@ -123,14 +123,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de GUID', 'GUID Generator'),
 		description: text(
-			'Gerador de GUID: processe e exporte localmente.',
-			'GUID Generator: process and export locally.',
-			'Gerador de GUID: procesa y exporta localmente.',
+			'Gere uma lista de identificadores GUID aleatórios.',
+			'Generate a list of random GUID identifiers.',
+			'Genera una lista de identificadores GUID aleatorios.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de GUID GUID Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../generators/guid.tool').then((module) => module.definition),
 	},
 	{
@@ -138,14 +138,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de datas aleatórias', 'Random Date Generator'),
 		description: text(
-			'Gerador de datas aleatórias: processe e exporte localmente.',
-			'Random Date Generator: process and export locally.',
-			'Gerador de datas aleatórias: procesa y exporta localmente.',
+			'Gere datas aleatórias dentro de um intervalo ISO.',
+			'Generate random dates within an ISO date range.',
+			'Genera fechas aleatorias dentro de un intervalo ISO.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de datas aleatórias Random Date Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../generators/random-date.tool').then((module) => module.definition),
 	},
@@ -154,14 +154,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de Lorem Ipsum', 'Lorem Ipsum Generator'),
 		description: text(
-			'Gerador de Lorem Ipsum: processe e exporte localmente.',
-			'Lorem Ipsum Generator: process and export locally.',
-			'Gerador de Lorem Ipsum: procesa y exporta localmente.',
+			'Gere parágrafos de texto para protótipos e testes.',
+			'Generate placeholder paragraphs for prototypes and tests.',
+			'Genera párrafos de relleno para prototipos y pruebas.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de Lorem Ipsum Lorem Ipsum Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../generators/lorem.tool').then((module) => module.definition),
 	},
 	{
@@ -169,14 +169,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de QR Code', 'QR Code Generator'),
 		description: text(
-			'Gerador de QR Code: processe e exporte localmente.',
-			'QR Code Generator: process and export locally.',
-			'Gerador de QR Code: procesa y exporta localmente.',
+			'Transforme texto ou URL em um QR Code SVG.',
+			'Turn text or a URL into an SVG QR Code.',
+			'Convierte texto o una URL en un código QR SVG.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de QR Code QR Code Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../generators/qr.tool').then((module) => module.definition),
 	},
 	{
@@ -184,14 +184,14 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 		category: 'generators',
 		name: text('Gerador de massa de dados', 'Test Data Generator'),
 		description: text(
-			'Gerador de massa de dados: processe e exporte localmente.',
-			'Test Data Generator: process and export locally.',
-			'Gerador de massa de dados: procesa y exporta localmente.',
+			'Defina campos e tipos para gerar registros em JSON, CSV ou SQL.',
+			'Define fields and types to generate JSON, CSV or SQL records.',
+			'Define campos y tipos para generar registros JSON, CSV o SQL.',
 		),
 		icon: 'spark',
-		keywords: 'Gerador de massa de dados Test Data Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../generators/data-generator.tool').then((module) => module.definition),
 	},

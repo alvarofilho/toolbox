@@ -1,0 +1,29 @@
+<article
+	class="tool-card"
+	[class.tool-card-compact]="variant() === 'compact'"
+	[class.tool-card-list]="variant() === 'list'"
+>
+	<a [routerLink]="['/tools', tool().id]" class="tool-card-link">
+		<div class="card-top">
+			<span class="tool-icon" [attr.data-category]="tool().category"
+				><app-icon [name]="tool().icon"
+			/></span>
+		</div>
+		<h3>{{ tool().name.key | transloco }}</h3>
+		<p>{{ variant() === 'compact' ? categoryName() : (tool().description.key | transloco) }}</p>
+		<span class="card-open">{{ categoryName() }} <app-icon name="arrow" /></span>
+	</a>
+	<button
+		class="favorite-button btn btn-ghost btn-square"
+		[class.is-favorite]="p.favorites().includes(tool().id)"
+		(click)="p.toggleFavorite(tool().id)"
+		[attr.aria-pressed]="p.favorites().includes(tool().id)"
+		[attr.aria-label]="
+			(p.favorites().includes(tool().id)
+				? ('messages.remove_favorite_5f19e0a5' | transloco)
+				: ('messages.favorite_8a54dccf' | transloco)) + (tool().name.key | transloco)
+		"
+	>
+		<app-icon name="star" />
+	</button>
+</article>

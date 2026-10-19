@@ -2,7 +2,7 @@
 .sidebar-close {
 	display: none;
 }
-@media (max-width: 720px) {
+@media (max-width: 1024px) {
 	.sidebar-close {
 		display: inline-flex;
 		position: absolute;
@@ -71,7 +71,7 @@
 .result-code {
 	font-size: 13px;
 }
-@media (max-width: 720px) {
+@media (max-width: 1024px) {
 	.sidebar:not(.is-open) {
 		visibility: hidden;
 	}

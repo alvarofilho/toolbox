@@ -24,7 +24,7 @@ Markdown é exibido em iframe com sandbox sem scripts ou acesso à origem princi
 
 SHA-256/SHA-512; HMAC; AES; JWT Decoder; JWT Claims Analyzer; PEM; PEM → JWK; ASN.1; X.509; CSR; inspeção de cadeia; hash de arquivo; CSP; SRI.
 
-AES usa AES-256-GCM, salt e IV aleatórios e PBKDF2-SHA256 com 310.000 iterações. O envelope inclui os parâmetros necessários para descriptografar e rejeita senha incorreta ou conteúdo adulterado. JWT apenas decodifica e analisa claims, sem verificar assinatura. CSR verifica a assinatura da requisição. A inspeção de cadeia verifica assinaturas entre certificados fornecidos e mostra validade temporal; não estabelece confiança de CA nem verifica revogação, hostname ou todas as políticas de certificação. PEM → JWK aceita certificado, chave pública SPKI e chave privada PKCS#8.
+AES usa AES-256-GCM, salt e IV aleatórios e PBKDF2-SHA256 com 310.000 iterações. O envelope inclui os parâmetros necessários para descriptografar e rejeita senha incorreta ou conteúdo adulterado. JWT apenas decodifica e analisa claims, sem verificar assinatura. CSR verifica a assinatura da requisição. X.509 mostra validade, SAN, usos de chave e algoritmo. A inspeção de cadeia ordena os emissores encontrados e verifica as assinaturas entre eles; não estabelece confiança de CA nem verifica revogação, hostname ou todas as políticas de certificação. PEM → JWK aceita certificado, chave pública SPKI e chave privada PKCS#8.
 
 ## Desenvolvimento e APIs
 
@@ -72,7 +72,7 @@ O gerador regional cria registros de pessoa e empresa em JSON/CSV/SQL para Argen
 
 ## Certificados e carimbo de tempo
 
-PKCS#12/P12 Explorer abre o arquivo localmente, confere sua estrutura e integridade e não exibe nem envia chaves privadas. O P7B Builder cria um pacote SignedData sem assinatura; P7B Explorer lista seus certificados; CRL Explorer inspeciona a lista local sem consultar o estado atual de revogação. Timestamp Request gera uma solicitação RFC 3161 que precisa ser enviada a uma TSA; TSR Decoder mostra o status e tipo de token sem validar a assinatura ou a confiança da TSA. O API Proxy Generator produz configuração para hospedar em Nginx ou Vite; o browser não atua como proxy de rede.
+PKCS#12/P12 Explorer abre o arquivo localmente, confere sua integridade e resume certificados e presença de chaves privadas sem expor o material privado. O P7B Builder cria um pacote SignedData sem assinatura; P7B Explorer lista seus certificados. CRL Explorer inspeciona a lista, pode verificar sua assinatura com o certificado emissor e comparar um certificado; uma CRL vencida ou sem consulta à autoridade não confirma revogação atual. Timestamp Request gera uma solicitação RFC 3161 que precisa ser enviada a uma TSA; TSR Decoder pode validar assinatura, imprint e cadeia quando recebe o conteúdo original e certificados confiáveis. O API Proxy Generator produz configuração para hospedar em Nginx ou Vite; o browser não atua como proxy de rede.
 
 ## Geradores e validadores brasileiros adicionais
 

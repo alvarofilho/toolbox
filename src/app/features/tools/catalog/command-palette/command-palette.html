@@ -9,7 +9,7 @@
 	(keydown)="onKey($event)"
 >
 	<h2 id="command-palette-title" class="sr-only">
-		{{ p.label('Paleta de comandos', 'Command palette') }}
+		{{ 'messages.command_palette_d54729b1' | transloco }}
 	</h2>
 	<div class="command-search">
 		<app-icon name="search" />
@@ -22,10 +22,8 @@
 			aria-controls="command-results"
 			[attr.aria-expanded]="isOpen()"
 			[attr.aria-activedescendant]="activeId() ? 'command-' + activeId() : null"
-			[attr.aria-label]="p.label('Buscar ferramentas e ações', 'Search tools and actions')"
-			[placeholder]="
-				p.label('Qual ferramenta ou ação você procura?', 'Find a tool or run an action…')
-			"
+			[attr.aria-label]="'messages.search_tools_and_actions_b2bec77c' | transloco"
+			[placeholder]="'messages.find_a_tool_or_run_an_action_9f30395a' | transloco"
 			[value]="query()"
 			(input)="onInput($event)"
 			autocomplete="off"
@@ -35,7 +33,7 @@
 			type="button"
 			class="command-close"
 			(click)="close()"
-			[attr.aria-label]="p.label('Fechar paleta de comandos', 'Close command palette')"
+			[attr.aria-label]="'messages.close_command_palette_98e9772d' | transloco"
 		>
 			<app-icon name="close" />
 		</button>
@@ -44,7 +42,7 @@
 		class="command-results"
 		id="command-results"
 		role="listbox"
-		[attr.aria-label]="p.label('Comandos', 'Commands')"
+		[attr.aria-label]="'messages.commands_971550f3' | transloco"
 	>
 		@for (group of groups(); track group.id) {
 			<div role="group" [attr.aria-labelledby]="'command-group-' + group.id">
@@ -62,8 +60,8 @@
 					>
 						<app-icon [name]="command.icon" />
 						<span class="command-copy"
-							><strong>{{ p.t(command.name) }}</strong
-							><span>{{ p.t(command.description) }}</span></span
+							><strong>{{ command.name.key | transloco }}</strong
+							><span>{{ command.description.key | transloco }}</span></span
 						>
 						<app-icon class="command-go" name="arrow" />
 					</button>
@@ -74,23 +72,23 @@
 	@if (!results().length) {
 		<div class="command-empty">
 			<app-icon name="search" />
-			<strong>{{ p.label('Nenhum comando encontrado', 'No commands found') }}</strong>
+			<strong>{{ 'messages.no_commands_found_e7887fc0' | transloco }}</strong>
 			<p>
-				{{
-					p.label('Tente outro nome, categoria ou ação.', 'Try another name, category or action.')
-				}}
+				{{ 'messages.try_another_name_category_or_action_67a92c59' | transloco }}
 			</p>
 		</div>
 	}
 	<div class="command-footer">
 		<span class="command-hints"
-			><span><kbd>↑</kbd><kbd>↓</kbd> {{ p.label('navegar', 'navigate') }}</span
-			><span><kbd>Enter</kbd> {{ p.label('executar', 'run') }}</span></span
+			><span><kbd>↑</kbd><kbd>↓</kbd> {{ 'messages.navigate_82e00886' | transloco }}</span
+			><span><kbd>Enter</kbd> {{ 'messages.run_2acd4eca' | transloco }}</span></span
 		>
 		<span role="status" aria-live="polite"
 			>{{ results().length }}
 			{{
-				results().length === 1 ? p.label('resultado', 'result') : p.label('resultados', 'results')
+				results().length === 1
+					? ('messages.result_0a377624' | transloco)
+					: ('messages.results_6c4f4af5' | transloco)
 			}}</span
 		>
 	</div>

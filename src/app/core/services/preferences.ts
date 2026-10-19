@@ -1,9 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal, PendingTasks } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import { TranslocoService } from '@jsverse/transloco';
 import { TOOLS } from '@app/features/tools/catalog/tools';
-import { translationKey } from '@app/core/models/translation-key';
-import type { Locale, Localized } from '@app/core/models/tool';
+import type { Locale } from '@app/core/models/tool';
 
 interface Preferences {
 	readonly locale: Locale;
@@ -28,7 +28,7 @@ export function readPreferences(value: string | null): Preferences {
 									typeof id === 'string' && TOOLS.some((t) => t.id === id),
 							),
 						),
-					].slice(0, 18)
+					]
 				: [];
 		return {
 			locale:
@@ -45,8 +45,9 @@ export function readPreferences(value: string | null): Preferences {
 export class PreferencesService {
 	private readonly document = inject(DOCUMENT);
 	private readonly transloco = inject(TranslocoService);
+	private readonly pendingTasks = inject(PendingTasks);
+	readonly translationsReady = signal(false);
 	readonly storageUnavailable = signal(false);
-	private readonly translationsReady = signal(false);
 	private readonly saved = this.read();
 	readonly locale = signal<Locale>(this.saved.locale);
 	readonly theme = signal<'light' | 'dark'>(this.saved.theme);
@@ -58,27 +59,12 @@ export class PreferencesService {
 	);
 	constructor() {
 		const initialLocale = this.locale();
-		this.transloco.load(initialLocale).subscribe(() => {
-			if (this.locale() !== initialLocale) {
-				return;
-			}
-			this.transloco.setActiveLang(initialLocale);
-			this.translationsReady.set(true);
-		});
+		this.loadLocale(initialLocale);
 		effect(() => {
 			this.document.documentElement.dataset['theme'] = this.theme();
 			this.document.documentElement.lang =
 				this.locale() === 'pt' ? 'pt-BR' : this.locale() === 'es' ? 'es' : 'en';
 		});
-	}
-	t(value: Localized): string {
-		return this.translate(value.key, value[this.locale()] ?? value.en);
-	}
-	label(pt: string, en: string, es = en): string {
-		return this.translate(
-			translationKey(en),
-			this.locale() === 'pt' ? pt : this.locale() === 'es' ? es : en,
-		);
 	}
 	toggleTheme(): void {
 		this.theme.update((v) => (v === 'light' ? 'dark' : 'light'));
@@ -97,12 +83,15 @@ export class PreferencesService {
 		this.transloco.setActiveLang(locale);
 		this.translationsReady.set(false);
 		this.save();
-		this.transloco.load(locale).subscribe(() => {
-			if (this.locale() !== locale) {
-				return;
+		this.loadLocale(locale);
+	}
+	private loadLocale(locale: Locale): void {
+		this.pendingTasks.run(async () => {
+			await firstValueFrom(this.transloco.load(locale));
+			if (this.locale() === locale) {
+				this.transloco.setActiveLang(locale);
+				this.translationsReady.set(true);
 			}
-			this.transloco.setActiveLang(locale);
-			this.translationsReady.set(true);
 		});
 	}
 	toggleFavorite(id: string): void {
@@ -141,12 +130,5 @@ export class PreferencesService {
 		} catch {
 			this.storageUnavailable.set(true);
 		}
-	}
-	private translate(key: string, fallback: string): string {
-		if (!this.translationsReady()) {
-			return fallback;
-		}
-		const translation = this.transloco.translate<string>(key, {}, this.locale());
-		return translation === key ? fallback : translation;
 	}
 }

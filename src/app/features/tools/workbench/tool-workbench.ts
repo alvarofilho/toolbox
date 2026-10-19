@@ -9,12 +9,25 @@ import {
 	signal,
 	viewChildren,
 	ElementRef,
+	afterNextRender,
+	Injector,
+	PendingTasks,
 } from '@angular/core';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+
+import { DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PreferencesService } from '@app/core/services/preferences';
 import { CATEGORIES, TOOLS } from '@app/features/tools/catalog/tools';
-import type { ToolDefinition, ToolFiles, ToolResult, ToolValues } from '@app/core/models/tool';
+import type {
+	ToolControl,
+	ToolDefinition,
+	ToolFiles,
+	ToolResult,
+	ToolValues,
+} from '@app/core/models/tool';
+import { presentDefinition, visibleControl } from '@app/features/tools/workbench/presentation';
 import {
 	canonicalJson,
 	sideBySideDiff,
@@ -24,24 +37,133 @@ import { Icon } from '@app/shared/components/icon';
 
 @Component({
 	selector: 'app-tool-workbench',
-	imports: [RouterLink, Icon],
+	imports: [RouterLink, Icon, TranslocoPipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './tool-workbench.html',
 })
 export class ToolWorkbench implements OnInit, OnDestroy {
 	readonly definition = input.required<ToolDefinition>();
 	protected readonly p = inject(PreferencesService);
+	private readonly translationState = computed(() => ({
+		locale: this.p.locale(),
+		ready: this.p.translationsReady(),
+	}));
+	private readonly transloco = inject(TranslocoService);
 	protected readonly values = signal<ToolValues>({});
 	protected readonly files = signal<ToolFiles>({});
+	private readonly document = inject(DOCUMENT);
+	private readonly injector = inject(Injector);
+	private readonly pendingTasks = inject(PendingTasks);
+	protected readonly stale = signal(false);
+	protected readonly fieldErrors = signal<Readonly<Record<string, string>>>({});
+	protected readonly revealed = signal<readonly string[]>([]);
+	private readonly completedValues = signal<ToolValues>({});
 	private readonly fileInputs = viewChildren<ElementRef<HTMLInputElement>>('fileInput');
 	private readonly sanitizer = inject(DomSanitizer);
 	// Only used in an opaque-origin, scriptless sandbox with a restrictive child CSP.
 	protected readonly preview = computed(() =>
 		this.result()?.preview
-			? this.sanitizer.bypassSecurityTrustHtml(this.result()?.preview ?? '')
+			? this.sanitizer.bypassSecurityTrustHtml(
+					(this.result()?.preview ?? '').replace('<html>', `<html data-theme="${this.p.theme()}">`),
+				)
 			: null,
 	);
 	protected readonly result = signal<ToolResult | null>(null);
+	protected readonly tool = computed(() => presentDefinition(this.definition(), this.info()));
+	protected readonly controls = computed(() =>
+		this.tool().controls.filter((control) => visibleControl(control, this.values())),
+	);
+	protected readonly automatic = computed(() => this.tool().execution === 'automatic');
+	protected readonly action = computed(() => {
+		const mode = this.values()['mode'];
+		if (this.tool().id === 'aes') {
+			return mode === 'decrypt'
+				? this.transloco.translate('messages.decrypt_1967dc3a', {}, this.translationState().locale)
+				: this.transloco.translate('messages.encrypt_0be60602', {}, this.translationState().locale);
+		}
+		if (this.tool().id === 'pdf-pages') {
+			const option = this.tool()
+				.controls.find((control) => control.key === 'mode')
+				?.options?.find((option) => option.value === mode);
+			if (option) {
+				return this.transloco.translate(option.label.key, {}, this.translationState().locale);
+			}
+		}
+		if (
+			['cpf', 'cnpj', 'renavam', 'plate', 'credit-card', 'nfe', 'bip39', 'otp'].includes(
+				this.tool().id,
+			)
+		) {
+			return mode === 'validate' || mode === 'verify'
+				? this.transloco.translate('messages.validate_7a98446b', {}, this.translationState().locale)
+				: this.transloco.translate(
+						'messages.generate_c75562b2',
+						{},
+						this.translationState().locale,
+					);
+		}
+		if (this.tool().id === 'pix') {
+			return mode === 'decode'
+				? this.transloco.translate(
+						'messages.decode_pix_07e36966',
+						{},
+						this.translationState().locale,
+					)
+				: this.transloco.translate(
+						'messages.generate_pix_d664e6bb',
+						{},
+						this.translationState().locale,
+					);
+		}
+		if (this.tool().id === 'bcrypt') {
+			return mode === 'verify'
+				? this.transloco.translate(
+						'messages.verify_password_a7119c1d',
+						{},
+						this.translationState().locale,
+					)
+				: this.transloco.translate(
+						'messages.generate_hash_bd5caada',
+						{},
+						this.translationState().locale,
+					);
+		}
+		return this.transloco.translate(this.tool().action.key, {}, this.translationState().locale);
+	});
+	protected readonly downloadLabel = computed(() => {
+		const artifacts = this.result()?.artifacts ?? [];
+		if (artifacts.length !== 1) {
+			return this.transloco.translate(
+				'messages.export_text_1e867eea',
+				{},
+				this.translationState().locale,
+			);
+		}
+		const filename = artifacts[0].filename.toLowerCase();
+		return filename.endsWith('.zip')
+			? this.transloco.translate(
+					'messages.download_zip_f87e83fa',
+					{},
+					this.translationState().locale,
+				)
+			: filename.endsWith('.pdf')
+				? this.transloco.translate(
+						'messages.download_pdf_643bf50b',
+						{},
+						this.translationState().locale,
+					)
+				: /\.(png|jpe?g|webp|svg|ico)$/.test(filename)
+					? this.transloco.translate(
+							'messages.download_image_76b89080',
+							{},
+							this.translationState().locale,
+						)
+					: this.transloco.translate(
+							'messages.download_file_c5671355',
+							{},
+							this.translationState().locale,
+						);
+	});
 	protected readonly isDiffTool = computed(() =>
 		['text-diff', 'json-diff'].includes(this.definition().id),
 	);
@@ -55,8 +177,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		if (!leftKey || !rightKey) {
 			return [];
 		}
-		let left = this.values()[leftKey] ?? '';
-		let right = this.values()[rightKey] ?? '';
+		let left = this.completedValues()[leftKey] ?? '';
+		let right = this.completedValues()[rightKey] ?? '';
 		try {
 			if (this.definition().id === 'json-diff') {
 				left = JSON.stringify(canonicalJson(JSON.parse(left)), null, 2);
@@ -76,12 +198,24 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	});
 	protected readonly diffStatus = computed(() => {
 		if (!this.result()) {
-			return this.p.label('Pronto para comparar', 'Ready to compare');
+			return this.transloco.translate(
+				'messages.ready_to_compare_4166c64e',
+				{},
+				this.translationState().locale,
+			);
 		}
 		if (this.diffSummary().additions === 0 && this.diffSummary().removals === 0) {
-			return this.p.label('Os textos são idênticos', 'Files are identical');
+			return this.transloco.translate(
+				'messages.files_are_identical_dfc8467d',
+				{},
+				this.translationState().locale,
+			);
 		}
-		return this.p.label('Diferenças encontradas', 'Differences found');
+		return this.transloco.translate(
+			'messages.differences_found_fa780cb3',
+			{},
+			this.translationState().locale,
+		);
 	});
 	protected readonly diffLineCounts = computed(() => {
 		const controls = this.definition().controls;
@@ -134,12 +268,14 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 						? String(target.checked)
 						: target.value,
 			}));
-			if (!this.isDiffTool()) {
-				this.result.set(null);
-			}
+			this.stale.set(!!this.result());
 			this.error.set('');
+			this.fieldErrors.set({});
 			this.feedback.set('');
-			this.scheduleRun();
+			this.cancelPending();
+			if (this.automatic()) {
+				this.scheduleRun();
+			}
 		}
 	}
 	protected reset(): void {
@@ -157,11 +293,15 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.result.set(null);
 		this.error.set('');
 		this.feedback.set('');
+		this.stale.set(false);
+		this.fieldErrors.set({});
+		this.revealed.set([]);
+		this.completedValues.set({});
 	}
 	protected example(): void {
 		this.reset();
 		this.values.update((values) => ({ ...values, ...this.definition().example }));
-		this.scheduleRun();
+		void this.run();
 	}
 	private scheduleRun(): void {
 		if (this.autoRunTimer) {
@@ -170,41 +310,77 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.runId++;
 		this.autoRunTimer = setTimeout(() => {
 			this.autoRunTimer = undefined;
-			void this.run();
-		}, 300);
+			if (
+				this.controls().some(
+					(control) => control.key === 'input' && !this.values()[control.key]?.trim(),
+				)
+			) {
+				return;
+			}
+			void this.run(undefined, true);
+		}, 450);
 	}
-	protected async run(event?: Event): Promise<void> {
+	protected async run(event?: Event, automaticRun = false): Promise<void> {
 		event?.preventDefault();
 		if (this.autoRunTimer) {
 			clearTimeout(this.autoRunTimer);
 			this.autoRunTimer = undefined;
 		}
 		const id = ++this.runId;
+		const completeTask = this.pendingTasks.add();
 		this.busy.set(true);
 		this.error.set('');
 		this.feedback.set('');
-		if (!this.isDiffTool()) {
-			this.result.set(null);
-		}
+		this.fieldErrors.set({});
+		const values = this.values();
+		const files = this.files();
 		try {
 			if (
 				Object.values(this.values()).some((v) => v.length > 100000) ||
 				Object.values(this.values()).reduce((sum, v) => sum + v.length, 0) > 200000
 			) {
 				throw new Error(
-					this.p.label(
-						'Limite de 100.000 caracteres por campo e 200.000 no total. Reduza a entrada.',
-						'Limit: 100,000 characters per field and 200,000 total. Reduce the input.',
+					this.transloco.translate(
+						'messages.limit_100_000_characters_per_field_and_200_70d208f8',
+						{},
+						this.translationState().locale,
 					),
 				);
 			}
-			for (const control of this.definition().controls) {
+			const errors: Record<string, string> = {};
+			for (const control of this.controls()) {
 				if (control.type === 'number') {
-					const n = Number(this.values()[control.key]);
-					if (!Number.isInteger(n) || n < (control.min ?? 0) || n > (control.max ?? Infinity)) {
-						throw new Error(`${this.p.t(control.label)}: ${control.min}–${control.max}`);
+					const value = values[control.key] ?? '';
+					const n = Number(value);
+					if (!value.trim() || !Number.isFinite(n)) {
+						errors[control.key] = this.transloco.translate(
+							'messages.enter_a_valid_number_94a14c45',
+							{},
+							this.translationState().locale,
+						);
+					} else if (control.step !== 'any' && !Number.isInteger(n)) {
+						errors[control.key] = this.transloco.translate(
+							'messages.enter_a_whole_number_23a2e4b0',
+							{},
+							this.translationState().locale,
+						);
+					} else if (n < (control.min ?? -Infinity) || n > (control.max ?? Infinity)) {
+						errors[control.key] =
+							`${this.transloco.translate('messages.use_a_value_between_081adcce', {}, this.translationState().locale)} ${control.min ?? '−∞'} ${this.transloco.translate('messages.and_0f29c2a6', {}, this.translationState().locale)} ${control.max ?? '∞'}.`;
 					}
 				}
+			}
+			if (Object.keys(errors).length) {
+				if (!automaticRun) {
+					this.fieldErrors.set(errors);
+				}
+				throw new Error(
+					this.transloco.translate(
+						'messages.correct_the_highlighted_fields_d797610e',
+						{},
+						this.translationState().locale,
+					),
+				);
 			}
 			const selected = Object.values(this.files()).flat();
 			if (
@@ -213,18 +389,25 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				selected.reduce((n, f) => n + f.size, 0) > 50 * 1024 * 1024
 			) {
 				throw new Error(
-					this.p.label(
-						'Limite de 20 arquivos, 20 MB por arquivo e 50 MB no total.',
-						'Limit: 20 files, 20 MB per file, 50 MB total.',
+					this.transloco.translate(
+						'messages.limit_20_files_20_mb_per_file_50_mb_total_b70843db',
+						{},
+						this.translationState().locale,
 					),
 				);
 			}
-			const result = await this.definition().run(this.values(), this.files());
+			// Yield once so loading and cancellation controls render before local processing.
+			await new Promise<void>((resolve) => setTimeout(resolve, 0));
+			if (id !== this.runId) {
+				return;
+			}
+			const result = await this.definition().run(values, files);
 			if (result.output.length > 1000000) {
 				throw new Error(
-					this.p.label(
-						'Resultado muito grande. Reduza a entrada.',
-						'Output too large. Reduce input.',
+					this.transloco.translate(
+						'messages.output_too_large_reduce_input_e6edc279',
+						{},
+						this.translationState().locale,
 					),
 				);
 			}
@@ -233,24 +416,87 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				50 * 1024 * 1024
 			) {
 				throw new Error(
-					this.p.label(
-						'Arquivos de saída excedem 50 MB. Reduza a entrada.',
-						'Output files exceed 50 MB. Reduce the input.',
+					this.transloco.translate(
+						'messages.output_files_exceed_50_mb_reduce_the_input_d88f2564',
+						{},
+						this.translationState().locale,
 					),
 				);
 			}
 			if (id === this.runId) {
 				this.result.set(result);
+				this.completedValues.set(values);
+				this.stale.set(false);
 			}
 		} catch (error: unknown) {
 			if (id === this.runId) {
-				this.error.set(error instanceof Error ? error.message : String(error));
+				if (!automaticRun) {
+					const message = error instanceof Error ? error.message : String(error);
+					this.error.set(message);
+					const source = this.controls().find((control) => control.key === 'input');
+					if (source && !Object.keys(this.fieldErrors()).length) {
+						this.fieldErrors.set({ [source.key]: message });
+					}
+				}
 			}
 		} finally {
+			completeTask();
 			if (id === this.runId) {
 				this.busy.set(false);
+				if (!automaticRun) {
+					afterNextRender(
+						() => {
+							const key = Object.keys(this.fieldErrors())[0];
+							if (key) {
+								this.document.getElementById(`field-${key}`)?.focus();
+							}
+						},
+						{ injector: this.injector },
+					);
+				}
 			}
 		}
+	}
+	private cancelPending(): void {
+		if (this.autoRunTimer) {
+			clearTimeout(this.autoRunTimer);
+		}
+		this.autoRunTimer = undefined;
+		this.runId++;
+		this.busy.set(false);
+	}
+	protected cancel(): void {
+		this.cancelPending();
+		this.feedback.set(
+			this.transloco.translate(
+				'messages.you_can_continue_editing_this_run_will_not_30825481',
+				{},
+				this.translationState().locale,
+			),
+		);
+	}
+	protected showResult(): void {
+		const result = this.document.getElementById('tool-result');
+		result?.focus({ preventScroll: true });
+		result?.scrollIntoView({
+			block: 'start',
+			behavior: this.document.defaultView?.matchMedia('(prefers-reduced-motion: reduce)').matches
+				? 'auto'
+				: 'smooth',
+		});
+	}
+	protected toggleReveal(key: string): void {
+		this.revealed.update((keys) =>
+			keys.includes(key) ? keys.filter((value) => value !== key) : [...keys, key],
+		);
+	}
+	protected inputType(control: ToolControl): string {
+		return control.type === 'password' && this.revealed().includes(control.key)
+			? 'text'
+			: control.type;
+	}
+	protected downloadPrimary(): void {
+		this.download(this.result()?.artifacts?.length === 1 ? 0 : undefined);
 	}
 	protected async copy(): Promise<void> {
 		const result = this.result();
@@ -259,12 +505,19 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		}
 		try {
 			await navigator.clipboard.writeText(result.output);
-			this.feedback.set(this.p.label('Resultado copiado.', 'Result copied.'));
+			this.feedback.set(
+				this.transloco.translate(
+					'messages.result_copied_c8518782',
+					{},
+					this.translationState().locale,
+				),
+			);
 		} catch {
 			this.feedback.set(
-				this.p.label(
-					'Não foi possível copiar. Selecione o resultado e copie manualmente.',
-					'Copy failed. Select the result and copy it manually.',
+				this.transloco.translate(
+					'messages.copy_failed_select_the_result_and_copy_it__c4e35deb',
+					{},
+					this.translationState().locale,
 				),
 			);
 		}
@@ -284,6 +537,12 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		link.download = artifact?.filename ?? result.filename ?? `${this.definition().id}.txt`;
 		link.click();
 		setTimeout(() => URL.revokeObjectURL(url), 1000);
-		this.feedback.set(this.p.label('Exportação iniciada.', 'Export started.'));
+		this.feedback.set(
+			this.transloco.translate(
+				'messages.export_started_89f5906c',
+				{},
+				this.translationState().locale,
+			),
+		);
 	}
 }

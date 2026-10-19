@@ -7,14 +7,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('SQL DDL para classes C#', 'SQL DDL to C# Classes'),
 		description: text(
-			'SQL DDL para classes C#: processe e exporte localmente.',
-			'SQL DDL to C# Classes: process and export locally.',
-			'SQL DDL para classes C#: procesa y exporta localmente.',
+			'Transforme CREATE TABLE PostgreSQL em classes C#.',
+			'Turn PostgreSQL CREATE TABLE into C# classes.',
+			'Convierte CREATE TABLE PostgreSQL en clases C#.',
 		),
 		icon: 'code',
-		keywords: 'SQL DDL para classes C# SQL DDL to C# Classes',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../database/ddl-csharp.tool').then((module) => module.definition),
 	},
 	{
@@ -22,14 +22,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('JSON para classes C#', 'JSON to C# Classes'),
 		description: text(
-			'JSON para classes C#: processe e exporte localmente.',
-			'JSON to C# Classes: process and export locally.',
-			'JSON para classes C#: procesa y exporta localmente.',
+			'Gere classes C# a partir da estrutura de objetos JSON.',
+			'Generate C# classes from JSON object structures.',
+			'Genera clases C# a partir de estructuras de objetos JSON.',
 		),
 		icon: 'code',
-		keywords: 'JSON para classes C# JSON to C# Classes',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../database/json-csharp.tool').then((module) => module.definition),
 	},
@@ -38,14 +38,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('SQL INSERT Generator', 'SQL INSERT Generator'),
 		description: text(
-			'SQL INSERT Generator: processe e exporte localmente.',
-			'SQL INSERT Generator: process and export locally.',
-			'SQL INSERT Generator: procesa y exporta localmente.',
+			'Transforme registros JSON em comandos SQL INSERT.',
+			'Turn JSON records into SQL INSERT statements.',
+			'Convierte registros JSON en sentencias SQL INSERT.',
 		),
 		icon: 'code',
-		keywords: 'SQL INSERT Generator SQL INSERT Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../database/sql-insert.tool').then((module) => module.definition),
 	},
 	{
@@ -53,14 +53,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('Database Seed Generator', 'Database Seed Generator'),
 		description: text(
-			'Database Seed Generator: processe e exporte localmente.',
-			'Database Seed Generator: process and export locally.',
-			'Database Seed Generator: procesa y exporta localmente.',
+			'Gere registros sintéticos como comandos SQL INSERT.',
+			'Generate synthetic records as SQL INSERT statements.',
+			'Genera registros sintéticos como sentencias SQL INSERT.',
 		),
 		icon: 'code',
-		keywords: 'Database Seed Generator Database Seed Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../database/database-seed.tool').then((module) => module.definition),
 	},
@@ -69,14 +69,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('Connection String Builder', 'Connection String Builder'),
 		description: text(
-			'Connection String Builder: processe e exporte localmente.',
-			'Connection String Builder: process and export locally.',
-			'Connection String Builder: procesa y exporta localmente.',
+			'Monte connection strings para SQL Server, PostgreSQL, MySQL ou SQLite.',
+			'Build connection strings for SQL Server, PostgreSQL, MySQL or SQLite.',
+			'Crea cadenas de conexión para SQL Server, PostgreSQL, MySQL o SQLite.',
 		),
 		icon: 'code',
-		keywords: 'Connection String Builder Connection String Builder',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../database/connection-string.tool').then((module) => module.definition),
 	},
@@ -85,14 +85,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('.NET Ticks Converter', '.NET Ticks Converter'),
 		description: text(
-			'.NET Ticks Converter: processe e exporte localmente.',
-			'.NET Ticks Converter: process and export locally.',
-			'.NET Ticks Converter: procesa y exporta localmente.',
+			'Converta datas ISO e ticks .NET com precisão de 100 ns.',
+			'Convert ISO dates and .NET ticks with 100 ns precision.',
+			'Convierte fechas ISO y ticks .NET con precisión de 100 ns.',
 		),
 		icon: 'code',
-		keywords: '.NET Ticks Converter .NET Ticks Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../database/dotnet-ticks.tool').then((module) => module.definition),
 	},
@@ -101,14 +101,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('GUID Formatter', 'GUID Formatter'),
 		description: text(
-			'GUID Formatter: processe e exporte localmente.',
-			'GUID Formatter: process and export locally.',
-			'GUID Formatter: procesa y exporta localmente.',
+			'Reformate GUIDs entre os formatos D, N, B, P e X.',
+			'Reformat GUIDs between D, N, B, P and X formats.',
+			'Reformatea GUID entre los formatos D, N, B, P y X.',
 		),
 		icon: 'code',
-		keywords: 'GUID Formatter GUID Formatter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../database/guid-formatter.tool').then((module) => module.definition),
 	},
@@ -117,14 +117,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('C# String Escape', 'C# String Escape'),
 		description: text(
-			'C# String Escape: processe e exporte localmente.',
-			'C# String Escape: process and export locally.',
-			'C# String Escape: procesa y exporta localmente.',
+			'Escape texto para strings C# regulares ou verbatim.',
+			'Escape text for regular or verbatim C# strings.',
+			'Escapa texto para cadenas C# regulares o verbatim.',
 		),
 		icon: 'code',
-		keywords: 'C# String Escape C# String Escape',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../database/csharp-escape.tool').then((module) => module.definition),
 	},
@@ -133,14 +133,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('PascalCase / camelCase Converter', 'PascalCase / camelCase Converter'),
 		description: text(
-			'PascalCase / camelCase Converter: processe e exporte localmente.',
-			'PascalCase / camelCase Converter: process and export locally.',
-			'PascalCase / camelCase Converter: procesa y exporta localmente.',
+			'Converta nomes entre PascalCase e camelCase.',
+			'Convert names between PascalCase and camelCase.',
+			'Convierte nombres entre PascalCase y camelCase.',
 		),
 		icon: 'code',
-		keywords: 'PascalCase / camelCase Converter PascalCase / camelCase Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../database/pascal-camel.tool').then((module) => module.definition),
 	},
@@ -149,14 +149,14 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 		category: 'database',
 		name: text('SQL Schema Diff', 'SQL Schema Diff'),
 		description: text(
-			'SQL Schema Diff: processe e exporte localmente.',
-			'SQL Schema Diff: process and export locally.',
-			'SQL Schema Diff: procesa y exporta localmente.',
+			'Compare estruturas CREATE TABLE PostgreSQL e veja as diferenças.',
+			'Compare PostgreSQL CREATE TABLE structures and see differences.',
+			'Compara estructuras CREATE TABLE PostgreSQL y consulta las diferencias.',
 		),
 		icon: 'code',
-		keywords: 'SQL Schema Diff SQL Schema Diff',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../database/sql-schema-diff.tool').then((module) => module.definition),
 	},

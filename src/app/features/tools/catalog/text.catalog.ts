@@ -33,14 +33,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('Contador de palavras e caracteres', 'Word and Character Counter'),
 		description: text(
-			'Contador de palavras e caracteres: processe e exporte localmente.',
-			'Word and Character Counter: process and export locally.',
-			'Contador de palavras e caracteres: procesa y exporta localmente.',
+			'Conte palavras, caracteres e linhas de um texto.',
+			'Count words, characters and lines in text.',
+			'Cuenta palabras, caracteres y líneas de un texto.',
 		),
 		icon: 'type',
-		keywords: 'Contador de palavras e caracteres Word and Character Counter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/word-count.tool').then((module) => module.definition),
 	},
 	{
@@ -48,14 +48,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('Remover linhas duplicadas', 'Remove Duplicate Lines'),
 		description: text(
-			'Remover linhas duplicadas: processe e exporte localmente.',
-			'Remove Duplicate Lines: process and export locally.',
-			'Remover linhas duplicadas: procesa y exporta localmente.',
+			'Remova linhas repetidas com comparação exata ou normalizada.',
+			'Remove duplicate lines with exact or normalized comparison.',
+			'Elimina líneas duplicadas con comparación exacta o normalizada.',
 		),
 		icon: 'type',
-		keywords: 'Remover linhas duplicadas Remove Duplicate Lines',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/dedupe-lines.tool').then((module) => module.definition),
 	},
 	{
@@ -63,14 +63,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('Ordenar linhas', 'Sort Lines'),
 		description: text(
-			'Ordenar linhas: processe e exporte localmente.',
-			'Sort Lines: process and export locally.',
-			'Ordenar linhas: procesa y exporta localmente.',
+			'Ordene linhas por texto ou valor numérico.',
+			'Sort lines by text or numeric value.',
+			'Ordena líneas por texto o valor numérico.',
 		),
 		icon: 'type',
-		keywords: 'Ordenar linhas Sort Lines',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/sort-lines.tool').then((module) => module.definition),
 	},
 	{
@@ -78,14 +78,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('Slug Generator', 'Slug Generator'),
 		description: text(
-			'Slug Generator: processe e exporte localmente.',
-			'Slug Generator: process and export locally.',
-			'Slug Generator: procesa y exporta localmente.',
+			'Transforme um título em um slug para URLs.',
+			'Turn a title into a URL slug.',
+			'Convierte un título en un slug para URL.',
 		),
 		icon: 'type',
-		keywords: 'Slug Generator Slug Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/slug.tool').then((module) => module.definition),
 	},
 	{
@@ -93,14 +93,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('CSV Cleaner', 'CSV Cleaner'),
 		description: text(
-			'CSV Cleaner: processe e exporte localmente.',
-			'CSV Cleaner: process and export locally.',
-			'CSV Cleaner: procesa y exporta localmente.',
+			'Limpe espaços e duplicatas de CSV e escolha o delimitador.',
+			'Clean CSV whitespace and duplicates and choose a delimiter.',
+			'Limpia espacios y duplicados de CSV y elige el delimitador.',
 		),
 		icon: 'type',
-		keywords: 'CSV Cleaner CSV Cleaner',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/csv-cleaner.tool').then((module) => module.definition),
 	},
 	{
@@ -108,14 +108,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('SVG Optimizer', 'SVG Optimizer'),
 		description: text(
-			'SVG Optimizer: processe e exporte localmente.',
-			'SVG Optimizer: process and export locally.',
-			'SVG Optimizer: procesa y exporta localmente.',
+			'Sanitize e reduza um SVG, com prévia isolada.',
+			'Sanitize and optimize SVG with an isolated preview.',
+			'Sanea y optimiza SVG con una vista previa aislada.',
 		),
 		icon: 'type',
-		keywords: 'SVG Optimizer SVG Optimizer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/svg-optimizer.tool').then((module) => module.definition),
 	},
 	{
@@ -123,14 +123,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('Image Converter', 'Image Converter'),
 		description: text(
-			'Image Converter: processe e exporte localmente.',
-			'Image Converter: process and export locally.',
-			'Image Converter: procesa y exporta localmente.',
+			'Converta imagens raster para WebP, PNG ou JPEG.',
+			'Convert raster images to WebP, PNG or JPEG.',
+			'Convierte imágenes raster a WebP, PNG o JPEG.',
 		),
 		icon: 'type',
-		keywords: 'Image Converter Image Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../text/image-converter.tool').then((module) => module.definition),
 	},
@@ -139,14 +139,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('Image Compressor', 'Image Compressor'),
 		description: text(
-			'Image Compressor: processe e exporte localmente.',
-			'Image Compressor: process and export locally.',
-			'Image Compressor: procesa y exporta localmente.',
+			'Ajuste dimensão e qualidade de imagens e compare os tamanhos.',
+			'Adjust image dimensions and quality and compare file sizes.',
+			'Ajusta dimensiones y calidad de imágenes y compara sus tamaños.',
 		),
 		icon: 'type',
-		keywords: 'Image Compressor Image Compressor',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../text/image-compressor.tool').then((module) => module.definition),
 	},
@@ -155,14 +155,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('Image EXIF Viewer', 'Image EXIF Viewer'),
 		description: text(
-			'Image EXIF Viewer: processe e exporte localmente.',
-			'Image EXIF Viewer: process and export locally.',
-			'Image EXIF Viewer: procesa y exporta localmente.',
+			'Leia metadados EXIF de uma imagem local.',
+			'Read EXIF metadata from a local image.',
+			'Lee metadatos EXIF de una imagen local.',
 		),
 		icon: 'type',
-		keywords: 'Image EXIF Viewer Image EXIF Viewer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/image-exif.tool').then((module) => module.definition),
 	},
 	{
@@ -170,14 +170,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('PDF Metadata Viewer', 'PDF Metadata Viewer'),
 		description: text(
-			'PDF Metadata Viewer: processe e exporte localmente.',
-			'PDF Metadata Viewer: process and export locally.',
-			'PDF Metadata Viewer: procesa y exporta localmente.',
+			'Leia título, autor e outras propriedades de um PDF.',
+			"Read a PDF's title, author and other properties.",
+			'Lee el título, el autor y otras propiedades de un PDF.',
 		),
 		icon: 'type',
-		keywords: 'PDF Metadata Viewer PDF Metadata Viewer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/pdf-metadata.tool').then((module) => module.definition),
 	},
 	{
@@ -185,14 +185,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('PDF Merge/Split', 'PDF Merge/Split'),
 		description: text(
-			'PDF Merge/Split: processe e exporte localmente.',
-			'PDF Merge/Split: process and export locally.',
-			'PDF Merge/Split: procesa y exporta localmente.',
+			'Una PDFs, extraia páginas ou divida arquivos em ZIP.',
+			'Merge PDFs, extract pages or split files into a ZIP.',
+			'Une PDF, extrae páginas o divide archivos en un ZIP.',
 		),
 		icon: 'type',
-		keywords: 'PDF Merge/Split PDF Merge/Split',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/pdf-pages.tool').then((module) => module.definition),
 	},
 	{
@@ -200,14 +200,14 @@ export const TEXT_TOOLS: readonly ToolRegistration[] = [
 		category: 'text',
 		name: text('File Signature Inspector', 'File Signature Inspector'),
 		description: text(
-			'File Signature Inspector: processe e exporte localmente.',
-			'File Signature Inspector: process and export locally.',
-			'File Signature Inspector: procesa y exporta localmente.',
+			'Identifique o formato de um arquivo pelos bytes iniciais.',
+			'Identify a file format from its leading bytes.',
+			'Identifica el formato de un archivo por sus bytes iniciales.',
 		),
 		icon: 'type',
-		keywords: 'File Signature Inspector File Signature Inspector',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../text/file-signature.tool').then((module) => module.definition),
 	},
 ];

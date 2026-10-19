@@ -12,6 +12,8 @@ import {
 	signal,
 	viewChild,
 } from '@angular/core';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+
 import { Router } from '@angular/router';
 import { text, type Localized } from '@app/core/models/tool';
 import { CATEGORIES, findTools } from '@app/features/tools/catalog/tools';
@@ -34,7 +36,7 @@ const normalize = (value: string): string =>
 		.toLowerCase();
 
 @Component({
-	imports: [Icon],
+	imports: [Icon, TranslocoPipe],
 	selector: 'app-command-palette',
 	styleUrl: './command-palette.scss',
 	templateUrl: './command-palette.html',
@@ -42,6 +44,11 @@ const normalize = (value: string): string =>
 })
 export class CommandPalette {
 	protected readonly p = inject(PreferencesService);
+	private readonly translationState = computed(() => ({
+		locale: this.p.locale(),
+		ready: this.p.translationsReady(),
+	}));
+	private readonly transloco = inject(TranslocoService);
 	private readonly router = inject(Router);
 	private readonly document = inject(DOCUMENT);
 	private readonly injector = inject(Injector);
@@ -110,9 +117,9 @@ export class CommandPalette {
 			{
 				id: 'locale',
 				name:
-					this.p.locale() === 'pt'
+					this.translationState().locale === 'pt'
 						? text('Mudar para inglês', 'Switch to English', 'Cambiar a inglés')
-						: this.p.locale() === 'en'
+						: this.translationState().locale === 'en'
 							? text('Mudar para espanhol', 'Switch to Spanish', 'Cambiar a español')
 							: text('Mudar para português', 'Switch to Portuguese', 'Cambiar a portugués'),
 				description: text('Idioma', 'Language'),
@@ -125,7 +132,7 @@ export class CommandPalette {
 		const matches = (command: Command): boolean =>
 			words.every((word) =>
 				normalize(
-					`${command.name.pt} ${command.name.en} ${command.name.es ?? ''} ${this.p.t(command.name)} ${command.description.pt} ${command.description.en} ${command.description.es ?? ''} ${this.p.t(command.description)} ${command.keywords}`,
+					`${command.name.pt} ${command.name.en} ${command.name.es ?? ''} ${this.transloco.translate(command.name.key, {}, this.translationState().locale)} ${command.description.pt} ${command.description.en} ${command.description.es ?? ''} ${this.transloco.translate(command.description.key, {}, this.translationState().locale)} ${command.keywords}`,
 				).includes(word),
 			);
 		const recent = this.p.recent();
@@ -134,7 +141,11 @@ export class CommandPalette {
 			const index = recent.indexOf(id);
 			return index >= 0 ? 100 - index : favorites.includes(id) ? 50 : 0;
 		};
-		const tools: readonly Command[] = [...findTools(this.query(), (value) => this.p.t(value))]
+		const tools: readonly Command[] = [
+			...findTools(this.query(), (value) =>
+				this.transloco.translate(value.key, {}, this.translationState().locale),
+			),
+		]
 			.sort((a, b) => priority(b.id) - priority(a.id))
 			.map((tool) => ({
 				id: `tool-${tool.id}`,
@@ -145,14 +156,38 @@ export class CommandPalette {
 				route: `/tools/${tool.id}`,
 			}));
 		return [
-			{ id: 'tools', label: this.p.label('Ferramentas', 'Tools'), commands: tools },
+			{
+				id: 'tools',
+				label: this.transloco.translate(
+					'messages.tools_950196fc',
+					{},
+					this.translationState().locale,
+				),
+				commands: tools,
+			},
 			{
 				id: 'navigation',
-				label: this.p.label('Navegação', 'Navigation'),
+				label: this.transloco.translate(
+					'messages.navigation_d08919c3',
+					{},
+					this.translationState().locale,
+				),
 				commands: navigation.filter(matches),
 			},
-			{ id: 'actions', label: this.p.label('Ações', 'Actions'), commands: actions.filter(matches) },
-		].filter((group) => group.commands.length > 0);
+			{
+				id: 'actions',
+				label: this.transloco.translate(
+					'messages.actions_e65fb504',
+					{},
+					this.translationState().locale,
+				),
+				commands: actions.filter(matches),
+			},
+		]
+			.filter((group) => group.commands.length > 0)
+			.sort((a, b) =>
+				this.query().trim() ? Number(b.id === 'actions') - Number(a.id === 'actions') : 0,
+			);
 	});
 	protected readonly results = computed(() => this.groups().flatMap((group) => group.commands));
 	protected readonly activeIndex = linkedSignal({ source: this.results, computation: () => 0 });

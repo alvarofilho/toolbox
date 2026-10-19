@@ -9,6 +9,8 @@ import {
 	signal,
 	viewChild,
 } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
+
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
@@ -20,7 +22,7 @@ import { CommandPalette } from '@app/features/tools/catalog/command-palette/comm
 
 @Component({
 	selector: 'app-root',
-	imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon, CommandPalette],
+	imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon, CommandPalette, TranslocoPipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './app.html',
 	styleUrl: './app.scss',
@@ -150,7 +152,7 @@ export class App {
 
 	@HostListener('window:resize')
 	protected onResize(): void {
-		if (this.menuOpen() && (this.document.defaultView?.innerWidth ?? 0) > 720) {
+		if (this.menuOpen() && (this.document.defaultView?.innerWidth ?? 0) > 1024) {
 			this.closeMenu(false);
 		}
 	}

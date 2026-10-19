@@ -7,14 +7,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('IPv4 Subnet Calculator', 'IPv4 Subnet Calculator'),
 		description: text(
-			'IPv4 Subnet Calculator: processe e exporte localmente.',
-			'IPv4 Subnet Calculator: process and export locally.',
-			'IPv4 Subnet Calculator: procesa y exporta localmente.',
+			'Calcule rede, máscara e intervalo de endereços IPv4.',
+			'Calculate IPv4 network, mask and address range.',
+			'Calcula red, máscara e intervalo de direcciones IPv4.',
 		),
 		icon: 'code',
-		keywords: 'IPv4 Subnet Calculator IPv4 Subnet Calculator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../infrastructure/ipv4.tool').then((module) => module.definition),
 	},
 	{
@@ -22,14 +22,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('CIDR Calculator', 'CIDR Calculator'),
 		description: text(
-			'CIDR Calculator: processe e exporte localmente.',
-			'CIDR Calculator: process and export locally.',
-			'CIDR Calculator: procesa y exporta localmente.',
+			'Explore os limites de rede de um bloco CIDR IPv4.',
+			'Inspect the network boundaries of an IPv4 CIDR block.',
+			'Consulta los límites de red de un bloque CIDR IPv4.',
 		),
 		icon: 'code',
-		keywords: 'CIDR Calculator CIDR Calculator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../infrastructure/cidr.tool').then((module) => module.definition),
 	},
 	{
@@ -37,14 +37,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('IPv6 Calculator', 'IPv6 Calculator'),
 		description: text(
-			'IPv6 Calculator: processe e exporte localmente.',
-			'IPv6 Calculator: process and export locally.',
-			'IPv6 Calculator: procesa y exporta localmente.',
+			'Expanda endereços IPv6 e calcule seu prefixo de rede.',
+			'Expand IPv6 addresses and calculate their network prefix.',
+			'Expande direcciones IPv6 y calcula su prefijo de red.',
 		),
 		icon: 'code',
-		keywords: 'IPv6 Calculator IPv6 Calculator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../infrastructure/ipv6.tool').then((module) => module.definition),
 	},
 	{
@@ -52,14 +52,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('Chmod Calculator', 'Chmod Calculator'),
 		description: text(
-			'Chmod Calculator: processe e exporte localmente.',
-			'Chmod Calculator: process and export locally.',
-			'Chmod Calculator: procesa y exporta localmente.',
+			'Converta permissões octais em representação simbólica.',
+			'Convert octal permissions to symbolic notation.',
+			'Convierte permisos octales a representación simbólica.',
 		),
 		icon: 'code',
-		keywords: 'Chmod Calculator Chmod Calculator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../infrastructure/chmod.tool').then((module) => module.definition),
 	},
@@ -68,14 +68,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('Docker Run para Docker Compose', 'Docker Run to Docker Compose'),
 		description: text(
-			'Docker Run para Docker Compose: processe e exporte localmente.',
-			'Docker Run to Docker Compose: process and export locally.',
-			'Docker Run para Docker Compose: procesa y exporta localmente.',
+			'Transforme um comando docker run POSIX em Docker Compose.',
+			'Turn a POSIX docker run command into Docker Compose.',
+			'Convierte un comando docker run POSIX en Docker Compose.',
 		),
 		icon: 'code',
-		keywords: 'Docker Run para Docker Compose Docker Run to Docker Compose',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../infrastructure/docker-compose.tool').then((module) => module.definition),
 	},
@@ -84,14 +84,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('Docker Compose Visualizer', 'Docker Compose Visualizer'),
 		description: text(
-			'Docker Compose Visualizer: processe e exporte localmente.',
-			'Docker Compose Visualizer: process and export locally.',
-			'Docker Compose Visualizer: procesa y exporta localmente.',
+			'Inspecione serviços, portas e dependências de um Compose.',
+			'Inspect services, ports and dependencies in a Compose file.',
+			'Inspecciona servicios, puertos y dependencias de un archivo Compose.',
 		),
 		icon: 'code',
-		keywords: 'Docker Compose Visualizer Docker Compose Visualizer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../infrastructure/compose-viewer.tool').then((module) => module.definition),
 	},
@@ -100,14 +100,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('.env Diff', '.env Diff'),
 		description: text(
-			'.env Diff: processe e exporte localmente.',
-			'.env Diff: process and export locally.',
-			'.env Diff: procesa y exporta localmente.',
+			'Compare variáveis entre dois arquivos .env.',
+			'Compare variables in two .env files.',
+			'Compara variables entre dos archivos .env.',
 		),
 		icon: 'code',
-		keywords: '.env Diff .env Diff',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../infrastructure/env-diff.tool').then((module) => module.definition),
 	},
@@ -116,14 +116,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('.env Validator', '.env Validator'),
 		description: text(
-			'.env Validator: processe e exporte localmente.',
-			'.env Validator: process and export locally.',
-			'.env Validator: procesa y exporta localmente.',
+			'Confira sintaxe e referências de variáveis em .env.',
+			'Check syntax and variable references in .env files.',
+			'Comprueba sintaxis y referencias de variables en archivos .env.',
 		),
 		icon: 'code',
-		keywords: '.env Validator .env Validator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../infrastructure/env-validator.tool').then((module) => module.definition),
 	},
@@ -132,14 +132,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('Gitignore Generator', 'Gitignore Generator'),
 		description: text(
-			'Gitignore Generator: processe e exporte localmente.',
-			'Gitignore Generator: process and export locally.',
-			'Gitignore Generator: procesa y exporta localmente.',
+			'Combine templates locais para gerar um arquivo .gitignore.',
+			'Combine local templates to generate a .gitignore file.',
+			'Combina plantillas locales para generar un archivo .gitignore.',
 		),
 		icon: 'code',
-		keywords: 'Gitignore Generator Gitignore Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../infrastructure/gitignore.tool').then((module) => module.definition),
 	},
@@ -148,14 +148,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('Kubernetes YAML Validator', 'Kubernetes YAML Validator'),
 		description: text(
-			'Kubernetes YAML Validator: processe e exporte localmente.',
-			'Kubernetes YAML Validator: process and export locally.',
-			'Kubernetes YAML Validator: procesa y exporta localmente.',
+			'Valide manifests YAML com schemas locais ou um schema próprio.',
+			'Validate YAML manifests with local or custom schemas.',
+			'Valida manifests YAML con schemas locales o uno propio.',
 		),
 		icon: 'code',
-		keywords: 'Kubernetes YAML Validator Kubernetes YAML Validator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../infrastructure/kubernetes.tool').then((module) => module.definition),
 	},
@@ -164,14 +164,14 @@ export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 		category: 'infrastructure',
 		name: text('Log Parser', 'Log Parser'),
 		description: text(
-			'Log Parser: processe e exporte localmente.',
-			'Log Parser: process and export locally.',
-			'Log Parser: procesa y exporta localmente.',
+			'Leia logs JSON Lines ou Apache/Nginx combined como dados.',
+			'Read JSON Lines or Apache/Nginx combined logs as data.',
+			'Lee logs JSON Lines o Apache/Nginx combined como datos.',
 		),
 		icon: 'code',
-		keywords: 'Log Parser Log Parser',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../infrastructure/log-parser.tool').then((module) => module.definition),
 	},

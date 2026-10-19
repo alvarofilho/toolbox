@@ -17,6 +17,10 @@ export interface ToolControl {
 	readonly options?: readonly { readonly value: string; readonly label: Localized }[];
 	readonly min?: number;
 	readonly max?: number;
+	readonly step?: number | 'any';
+	readonly inputMode?: 'text' | 'numeric' | 'decimal' | 'email' | 'url';
+	readonly placeholder?: Localized;
+	readonly when?: { readonly key: string; readonly values: readonly string[] };
 }
 export type ToolValues = Readonly<Record<string, string>>;
 export type ToolFiles = Readonly<Record<string, readonly File[]>>;
@@ -38,6 +42,7 @@ export interface ToolDefinition {
 	readonly action: Localized;
 	readonly hint?: Localized;
 	readonly example?: ToolValues;
+	readonly execution?: 'automatic' | 'manual';
 	readonly run: (values: ToolValues, files?: ToolFiles) => ToolResult | Promise<ToolResult>;
 }
 export interface ToolInfo {

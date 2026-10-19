@@ -2,67 +2,58 @@
 	<section class="home-intro" [class.is-searching]="query().length > 0">
 		<div class="intro-copy">
 			<h1>
-				{{ p.label('Menos abas.', 'Fewer tabs.') }}<br /><span>{{
-					p.label('Mais soluções.', 'More solutions.')
+				{{ 'messages.fewer_tabs_774933c4' | transloco }}<br /><span>{{
+					'messages.more_solutions_722866fe' | transloco
 				}}</span>
 			</h1>
 			<p>
-				{{
-					p.label(
-						'Seu kit de ferramentas para transformar dados, testar ideias e simplificar o dia
-      a dia.',
-						'Your toolkit to transform data, test ideas and simplify your everyday work.'
-					)
-				}}
+				{{ 'messages.your_toolkit_to_transform_data_test_ideas__6af56eb6' | transloco }}
 			</p>
 			<div class="intro-search">
 				<app-icon name="search" /><input
 					type="search"
-					[placeholder]="p.label('O que você precisa fazer hoje?', 'What do you need to do today?')"
-					[attr.aria-label]="p.label('Pesquisar ferramentas', 'Search tools')"
+					[value]="query()"
+					[placeholder]="'messages.what_do_you_need_to_do_today_b6da7d3f' | transloco"
+					[attr.aria-label]="'messages.search_tools_f8803c82' | transloco"
 					(input)="search($event)"
 				/>
 			</div>
 			<div class="intro-note">
 				<app-icon name="check" />{{
-					p.label(
-						'Sem instalar. Sem cadastro. Sem enviar seus dados.',
-						'No
-      install. No sign-up. No uploading your data.'
-					)
+					'messages.no_install_no_sign_up_no_uploading_your_da_d271581a' | transloco
 				}}
 			</div>
 		</div>
 		<section
 			class="example-workbench"
-			[attr.aria-label]="p.label('Exemplo de formatação JSON', 'JSON formatting example')"
+			[attr.aria-label]="'messages.json_formatting_example_955ef3a0' | transloco"
 		>
 			<div class="example-heading">
 				<span><app-icon name="braces" /> JSON Formatter</span>
-				<span class="example-label">{{ p.label('Exemplo', 'Example') }}</span>
+				<span class="example-label">{{ 'messages.example_12931341' | transloco }}</span>
 			</div>
 			<div class="example-input">
-				<span>{{ p.label('Entrada', 'Input') }}</span
+				<span>{{ 'messages.input_9f93e11b' | transloco }}</span
 				><code>{{ exampleInput() }}</code>
 			</div>
 			<div class="example-result">
-				<span>{{ p.label('Resultado · 2 espaços', 'Result · 2 spaces') }}</span>
+				<span>{{ 'messages.result_2_spaces_cbc53ffe' | transloco }}</span>
 				<pre>@for(line of exampleLines();track $index){<span class="example-line"><span class="example-line-number" aria-hidden="true">{{$index+1}}</span>{{line}}</span>}</pre>
 			</div>
 			<a class="example-action" routerLink="/tools/json-formatter"
-				>{{ p.label('Formatar meu JSON', 'Format my JSON') }}<app-icon name="arrow"
+				>{{ 'messages.format_my_json_112fa5fa' | transloco }}<app-icon name="arrow"
 			/></a>
 		</section>
 	</section>
 	@if (!query()) {
 		@if (p.recentTools().length) {
 			<section class="recent-strip">
-				<span
-					><app-icon name="clock" />{{ p.label('Acessadas recentemente', 'Recently opened') }}</span
-				>
+				<span><app-icon name="clock" />{{ 'messages.recently_opened_ae1b44ea' | transloco }}</span>
 				<div>
 					@for (tool of p.recentTools().slice(0, 3); track tool.id) {
-						<a [routerLink]="['/tools', tool.id]">{{ p.t(tool.name) }} <app-icon name="arrow" /></a>
+						<a [routerLink]="['/tools', tool.id]"
+							>{{ tool.name.key | transloco }} <app-icon name="arrow"
+						/></a>
 					}
 				</div>
 			</section>
@@ -70,9 +61,9 @@
 		@if (p.favoriteTools().length) {
 			<section class="catalog-section">
 				<div class="section-title">
-					<h2>{{ p.label('Seus favoritos', 'Your favorites') }}</h2>
+					<h2>{{ 'messages.your_favorites_96d0be83' | transloco }}</h2>
 					<a routerLink="/favorites"
-						>{{ p.label('Ver favoritos', 'View favorites') }} <app-icon name="arrow"
+						>{{ 'messages.view_favorites_80f50985' | transloco }} <app-icon name="arrow"
 					/></a>
 				</div>
 				<div class="tools-grid">
@@ -85,15 +76,13 @@
 		<section class="catalog-section essentials">
 			<div class="section-title">
 				<div>
-					<h2>{{ p.label('Essenciais do dia a dia', 'Everyday essentials') }}</h2>
+					<h2>{{ 'messages.everyday_essentials_353db927' | transloco }}</h2>
 					<p>
-						{{
-							p.label('Uma seleção para manter por perto.', 'A selection to keep close at hand.')
-						}}
+						{{ 'messages.a_selection_to_keep_close_at_hand_16e38bf0' | transloco }}
 					</p>
 				</div>
 				<a routerLink="/tools"
-					>{{ p.label('Explorar todas', 'Explore all') }} <app-icon name="arrow"
+					>{{ 'messages.explore_all_a8368a2f' | transloco }} <app-icon name="arrow"
 				/></a>
 			</div>
 			<div class="tools-grid">
@@ -104,126 +93,156 @@
 		</section>
 	}
 }
-<section class="catalog-section all-tools">
-	<div class="section-title">
-		<div>
-			<h2
-				[class.page-title]="mode !== 'home' || query()"
-				[attr.aria-level]="mode !== 'home' ? 1 : 2"
-			>
-				{{ query() ? p.label('Resultados da pesquisa', 'Search results') : title() }}
-				<span class="total-count">{{ filtered().length }}</span>
-			</h2>
-			<p>
-				{{
-					mode === 'favorites'
-						? p.label(
-								'Seu atalho para o que importa. Use a estrela para
-        adicionar ferramentas.',
-								'Your shortcut to what matters. Use the star to add tools.'
-							)
-						: mode === 'recent'
-							? p.label(
-									'Somente as ferramentas visitadas. Os dados inseridos não são
-        salvos.',
-									'Only visited tools. Your inputs are never saved.'
-								)
-							: p.label(
-									'Pequenas
-        ferramentas. Grandes atalhos. Tudo no seu navegador.',
-									'Small tools. Big shortcuts. All in
-        your browser.'
-								)
-				}}
-			</p>
+@if (mode === 'home' && !query()) {
+	<section class="category-directory catalog-section">
+		<div class="section-title">
+			<div>
+				<h2>
+					{{ 'messages.explore_by_category_6ddc4af7' | transloco }}
+				</h2>
+				<p>
+					{{ 'messages.find_a_shortcut_for_your_next_task_b318474f' | transloco }}
+				</p>
+			</div>
+			<a routerLink="/tools"
+				>{{ 'messages.view_all_4a4ffecb' | transloco }}<app-icon name="arrow"
+			/></a>
 		</div>
-		@if (mode === 'recent' && p.recent().length) {
-			<button class="btn btn-ghost" (click)="p.clearRecent()">
-				{{ p.label('Limpar histórico', 'Clear history') }}
-			</button>
-		}
-	</div>
-	@if (mode !== 'home') {
-		<div class="catalog-search">
-			<app-icon name="search" /><input
-				type="search"
-				[value]="query()"
-				(input)="search($event)"
-				[placeholder]="
-					p.label(
-						'Pesquisar por nome, categoria ou palavra-chave…',
-						'Search by name, category or keyword…'
-					)
-				"
-				[attr.aria-label]="p.label('Filtrar ferramentas', 'Filter tools')"
-			/>
-		</div>
-	}
-	@if ((mode === 'home' || mode === 'all' || mode === 'category') && !query()) {
 		<nav
-			class="category-filters"
-			[attr.aria-label]="p.label('Filtrar por categoria', 'Filter by category')"
+			class="category-directory-grid"
+			[attr.aria-label]="'messages.tool_categories_3e7215ed' | transloco"
 		>
-			<a
-				routerLink="/tools"
-				[class.selected]="mode !== 'category'"
-				[attr.aria-current]="mode !== 'category' ? 'page' : null"
-				>{{ p.label('Todas', 'All') }} <span>{{ tools.length }}</span></a
-			>
-			@for (c of categories; track c.id) {
-				<a
-					[routerLink]="['/category', c.id]"
-					[class.selected]="category()?.id === c.id"
-					[attr.aria-current]="category()?.id === c.id ? 'page' : null"
-					><app-icon [name]="c.icon" />{{ p.t(c.name) }}</a
+			@for (category of categoryDirectory; track category.id) {
+				<a [routerLink]="['/category', category.id]"
+					><app-icon [name]="category.icon" /><span>{{ category.name.key | transloco }}</span
+					><span class="category-count">{{ category.count }}</span></a
 				>
 			}
 		</nav>
-	}
-	<div class="tools-grid">
-		@for (tool of filtered(); track tool.id) {
-			<app-tool-card [tool]="tool" />
-		} @empty {
-			<div class="empty-state">
-				<app-icon [name]="mode === 'favorites' ? 'star' : mode === 'recent' ? 'clock' : 'search'" />
-				<h3>{{ p.label('Nada por aqui ainda', 'Nothing here yet') }}</h3>
+	</section>
+} @else {
+	<section class="catalog-section all-tools">
+		<div class="section-title">
+			<div>
+				@if (mode !== 'home') {
+					<h1 class="page-title">
+						{{ query() ? ('messages.search_results_94f50c43' | transloco) : title() }}
+					</h1>
+				} @else {
+					<h2>
+						{{ 'messages.search_results_94f50c43' | transloco }}
+					</h2>
+				}
 				<p>
 					{{
-						query()
-							? p.label(
-									'Tente outro termo ou explore as categorias.',
-									'Try another term or
-        explore the categories.'
-								)
-							: mode === 'favorites'
-								? p.label(
-										'Clique na estrela de uma
-        ferramenta para encontrá-la aqui.',
-										'Click a tool’s star to find it here.'
-									)
-								: p.label(
-										'As
-        ferramentas que você abrir vão aparecer aqui.',
-										'Tools you open will appear here.'
-									)
+						mode === 'favorites'
+							? ('messages.your_shortcut_to_what_matters_use_the_star_82dec6c4' | transloco)
+							: mode === 'recent'
+								? ('messages.only_visited_tools_your_inputs_are_never_s_1ceca2f3' | transloco)
+								: ('messages.small_tools_big_shortcuts_all_in_your_brow_0da1afb9' | transloco)
 					}}
 				</p>
-				<a class="btn btn-primary" routerLink="/tools">{{
-					p.label('Explorar ferramentas', 'Explore tools')
-				}}</a>
+			</div>
+			@if (mode === 'recent' && p.recent().length) {
+				<button type="button" class="btn btn-ghost" (click)="p.clearRecent()">
+					{{ 'messages.clear_history_3813826e' | transloco }}
+				</button>
+			}
+		</div>
+		@if (mode !== 'home') {
+			<div class="catalog-search">
+				<app-icon name="search" /><input
+					type="search"
+					[value]="query()"
+					(input)="search($event)"
+					[placeholder]="'messages.name_category_or_keyword_86e81958' | transloco"
+					[attr.aria-label]="'messages.filter_tools_a33708cc' | transloco"
+				/>
 			</div>
 		}
-	</div>
-	@if (mode === 'home' && !query() && !p.favorites().length) {
-		<p class="favorites-tip">
-			<app-icon name="star" />{{
-				p.label(
-					'Tem uma ferramenta que você usa sempre? Marque a estrela e
-    deixe nos favoritos.',
-					'Have a tool you use all the time? Star it and keep it in your
-    favorites.'
-				)
-			}}
-		</p>
-	}
-</section>
+		<div class="catalog-toolbar">
+			<p role="status">
+				{{ filtered().length }}
+				{{ 'messages.tools_found_64ebfa98' | transloco }}
+			</p>
+			@if (query()) {
+				<button type="button" class="btn btn-ghost" (click)="clearSearch()">
+					{{ 'messages.clear_search_5a13e946' | transloco }}
+				</button>
+			}
+			@if (filtered().length) {
+				<div
+					class="catalog-view"
+					role="group"
+					[attr.aria-label]="'messages.catalog_view_20feb089' | transloco"
+				>
+					<button
+						type="button"
+						class="btn btn-ghost"
+						[attr.aria-pressed]="view() === 'list'"
+						(click)="view.set('list')"
+					>
+						{{ 'messages.list_8d2937a1' | transloco }}</button
+					><button
+						type="button"
+						class="btn btn-ghost"
+						[attr.aria-pressed]="view() === 'standard'"
+						(click)="view.set('standard')"
+					>
+						{{ 'messages.cards_2a273ae4' | transloco }}
+					</button>
+				</div>
+			}
+		</div>
+		@if ((mode === 'all' || mode === 'category') && !query()) {
+			<nav
+				class="category-filters"
+				[attr.aria-label]="'messages.filter_by_category_ac1405e4' | transloco"
+			>
+				<a
+					routerLink="/tools"
+					[class.selected]="mode === 'all'"
+					[attr.aria-current]="mode === 'all' ? 'page' : null"
+					>{{ 'messages.all_75afe364' | transloco }} <span>{{ tools.length }}</span></a
+				>
+				@for (c of categories; track c.id) {
+					<a
+						[routerLink]="['/category', c.id]"
+						[class.selected]="c.id === category()?.id"
+						[attr.aria-current]="c.id === category()?.id ? 'page' : null"
+						>{{ c.name.key | transloco }}</a
+					>
+				}
+			</nav>
+		}
+		@if (filtered().length) {
+			@for (group of groups(); track group.id) {
+				<section class="catalog-group">
+					@if (group.name) {
+						<h2>
+							{{ group.name }} <span class="total-count">{{ group.tools.length }}</span>
+						</h2>
+					}
+					<div [class.tools-grid]="view() === 'standard'" [class.tools-list]="view() === 'list'">
+						@for (tool of group.tools; track tool.id) {
+							<app-tool-card [tool]="tool" [variant]="view()" />
+						}
+					</div>
+				</section>
+			}
+		} @else {
+			<div class="empty-state">
+				<app-icon [name]="mode === 'favorites' ? 'star' : mode === 'recent' ? 'clock' : 'search'" />
+				<h2>{{ emptyTitle() }}</h2>
+				<p>{{ emptyDescription() }}</p>
+				@if (query()) {
+					<button type="button" class="btn btn-primary" (click)="clearSearch()">
+						{{ 'messages.clear_search_5a13e946' | transloco }}
+					</button>
+				} @else {
+					<a class="btn btn-primary" routerLink="/tools">{{ 'common.exploreTools' | transloco }}</a>
+				}
+			</div>
+		}
+	</section>
+}

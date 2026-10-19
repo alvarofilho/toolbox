@@ -12,6 +12,89 @@ describe('tool workbench integration', () => {
 			providers: [provideRouter(routes, withComponentInputBinding()), ...provideToolboxTransloco()],
 		});
 	});
+	it.each([
+		['temperature', 'value', '36.5', '97.7'],
+		['percentage', 'first', '12.5', '25'],
+		['rule-of-three', 'a', '2.5', '4.8'],
+	])('accepts fractional input in %s', async (id, key, value, expected) => {
+		const harness = await RouterTestingHarness.create(`/tools/${id}`);
+		const root = harness.routeNativeElement;
+		const input = root?.querySelector<HTMLInputElement>(`#field-${key}`);
+		if (!root || !input) {
+			throw new Error('Input missing');
+		}
+		input.value = value;
+		input.dispatchEvent(new Event('input'));
+		root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+		await harness.fixture.whenStable();
+		expect(root.querySelector('[role=alert]')).toBeNull();
+		expect(root.querySelector('.result-code')?.textContent).toContain(expected);
+	});
+	it('keeps generators manual and associates an integer error with its field', async () => {
+		const harness = await RouterTestingHarness.create('/tools/uuid');
+		const root = harness.routeNativeElement;
+		const count = root?.querySelector<HTMLInputElement>('#field-count');
+		if (!root || !count) {
+			throw new Error('Count missing');
+		}
+		count.value = '2.5';
+		count.dispatchEvent(new Event('input'));
+		await new Promise((resolve) => setTimeout(resolve, 500));
+		await harness.fixture.whenStable();
+		expect(root.querySelector('.result-code')).toBeNull();
+		root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+		await harness.fixture.whenStable();
+		expect(count.getAttribute('aria-invalid')).toBe('true');
+		expect(count.getAttribute('aria-describedby')).toBe('error-count');
+		expect(root.querySelector('#error-count')?.textContent).toContain('inteiro');
+		count.value = '2';
+		count.dispatchEvent(new Event('input'));
+		root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+		await harness.fixture.whenStable();
+		expect(root.querySelector('.result-code')?.textContent?.trim().split('\n')).toHaveLength(2);
+	});
+	it('shows only the selected PIX operation and preserves hidden configuration', async () => {
+		const harness = await RouterTestingHarness.create('/tools/pix');
+		const root = harness.routeNativeElement;
+		const mode = root?.querySelector<HTMLSelectElement>('#field-mode');
+		if (!root || !mode) {
+			throw new Error('PIX mode missing');
+		}
+		expect(root.querySelector('#field-key')).toBeNull();
+		mode.value = 'generate';
+		mode.dispatchEvent(new Event('change'));
+		await harness.fixture.whenStable();
+		const key = root.querySelector<HTMLInputElement>('#field-key');
+		if (!key) {
+			throw new Error('PIX key missing');
+		}
+		expect(root.querySelector('#field-input')).toBeNull();
+		key.value = 'custom@example.com';
+		key.dispatchEvent(new Event('input'));
+		mode.value = 'decode';
+		mode.dispatchEvent(new Event('change'));
+		await harness.fixture.whenStable();
+		mode.value = 'generate';
+		mode.dispatchEvent(new Event('change'));
+		await harness.fixture.whenStable();
+		expect(root.querySelector<HTMLInputElement>('#field-key')?.value).toBe('custom@example.com');
+	});
+	it('provides textual addition and removal markers in a diff', async () => {
+		const harness = await RouterTestingHarness.create('/tools/text-diff');
+		const root = harness.routeNativeElement;
+		if (!root) {
+			throw new Error('Diff missing');
+		}
+		Array.from(root.querySelectorAll('button'))
+			.find((button) => button.textContent?.includes('Usar exemplo'))
+			?.click();
+		await harness.fixture.whenStable();
+		expect(root.querySelector('.diff-row-change')?.textContent).toContain('Removido:');
+		expect(root.querySelector('.diff-row-change')?.textContent).toContain('Adicionado:');
+		expect(Array.from(root.querySelectorAll('.diff-marker')).map((el) => el.textContent)).toContain(
+			'+',
+		);
+	});
 	it('updates conversions automatically as input controls change', async () => {
 		const harness = await RouterTestingHarness.create('/tools/base-converter');
 		const root = harness.routeNativeElement;
@@ -23,7 +106,7 @@ describe('tool workbench integration', () => {
 			throw new Error('Select missing');
 		}
 		expect(select.value).toBe('10');
-		const input = root.querySelector<HTMLTextAreaElement>('textarea');
+		const input = root.querySelector<HTMLInputElement>('#field-input');
 		if (!input) {
 			throw new Error('Input missing');
 		}

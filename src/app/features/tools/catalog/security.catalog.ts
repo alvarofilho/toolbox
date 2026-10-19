@@ -34,14 +34,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('HMAC Generator', 'HMAC Generator'),
 		description: text(
-			'HMAC Generator: processe e exporte localmente.',
-			'HMAC Generator: process and export locally.',
-			'HMAC Generator: procesa y exporta localmente.',
+			'Calcule HMAC SHA-256 ou SHA-512 com um segredo.',
+			'Compute HMAC SHA-256 or SHA-512 with a secret.',
+			'Calcula HMAC SHA-256 o SHA-512 con un secreto.',
 		),
 		icon: 'shield',
-		keywords: 'HMAC Generator HMAC Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/hmac.tool').then((module) => module.definition),
 	},
 	{
@@ -49,14 +49,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('AES Encrypt/Decrypt', 'AES Encrypt/Decrypt'),
 		description: text(
-			'AES Encrypt/Decrypt: processe e exporte localmente.',
-			'AES Encrypt/Decrypt: process and export locally.',
-			'AES Encrypt/Decrypt: procesa y exporta localmente.',
+			'Criptografe ou descriptografe texto com AES-256-GCM e senha.',
+			'Encrypt or decrypt text with AES-256-GCM and a password.',
+			'Cifra o descifra texto con AES-256-GCM y una contraseña.',
 		),
 		icon: 'shield',
-		keywords: 'AES Encrypt/Decrypt AES Encrypt/Decrypt',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/aes.tool').then((module) => module.definition),
 	},
 	{
@@ -64,14 +64,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('JWT Claims Analyzer', 'JWT Claims Analyzer'),
 		description: text(
-			'JWT Claims Analyzer: processe e exporte localmente.',
-			'JWT Claims Analyzer: process and export locally.',
-			'JWT Claims Analyzer: procesa y exporta localmente.',
+			'Analise claims, expiração, emissor e audiência de um JWT.',
+			'Inspect JWT claims, expiry, issuer and audience.',
+			'Analiza claims, caducidad, emisor y audiencia de un JWT.',
 		),
 		icon: 'shield',
-		keywords: 'JWT Claims Analyzer JWT Claims Analyzer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/jwt-claims.tool').then((module) => module.definition),
 	},
 	{
@@ -79,14 +79,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('PEM Decoder', 'PEM Decoder'),
 		description: text(
-			'PEM Decoder: processe e exporte localmente.',
-			'PEM Decoder: process and export locally.',
-			'PEM Decoder: procesa y exporta localmente.',
+			'Inspecione blocos PEM e seus dados codificados.',
+			'Inspect PEM blocks and their encoded data.',
+			'Inspecciona bloques PEM y sus datos codificados.',
 		),
 		icon: 'shield',
-		keywords: 'PEM Decoder PEM Decoder',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/pem.tool').then((module) => module.definition),
 	},
 	{
@@ -94,14 +94,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('PEM para JWK', 'PEM to JWK'),
 		description: text(
-			'PEM para JWK: processe e exporte localmente.',
-			'PEM to JWK: process and export locally.',
-			'PEM para JWK: procesa y exporta localmente.',
+			'Converta certificado ou chave PEM em uma chave JWK.',
+			'Convert a PEM certificate or key to JWK.',
+			'Convierte un certificado o clave PEM a JWK.',
 		),
 		icon: 'shield',
-		keywords: 'PEM para JWK PEM to JWK',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/pem-jwk.tool').then((module) => module.definition),
 	},
 	{
@@ -109,14 +109,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('ASN.1 Decoder', 'ASN.1 Decoder'),
 		description: text(
-			'ASN.1 Decoder: processe e exporte localmente.',
-			'ASN.1 Decoder: process and export locally.',
-			'ASN.1 Decoder: procesa y exporta localmente.',
+			'Explore a estrutura ASN.1 de dados DER em Base64.',
+			'Explore the ASN.1 structure of Base64 DER data.',
+			'Explora la estructura ASN.1 de datos DER en Base64.',
 		),
 		icon: 'shield',
-		keywords: 'ASN.1 Decoder ASN.1 Decoder',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/asn1.tool').then((module) => module.definition),
 	},
 	{
@@ -124,14 +124,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('X.509 Certificate Viewer', 'X.509 Certificate Viewer'),
 		description: text(
-			'X.509 Certificate Viewer: processe e exporte localmente.',
-			'X.509 Certificate Viewer: process and export locally.',
-			'X.509 Certificate Viewer: procesa y exporta localmente.',
+			'Leia emissor, validade e extensões de um certificado X.509.',
+			"Read an X.509 certificate's issuer, validity and extensions.",
+			'Lee el emisor, la validez y las extensiones de un certificado X.509.',
 		),
 		icon: 'shield',
-		keywords: 'X.509 Certificate Viewer X.509 Certificate Viewer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/x509.tool').then((module) => module.definition),
 	},
 	{
@@ -139,14 +139,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('CSR Decoder', 'CSR Decoder'),
 		description: text(
-			'CSR Decoder: processe e exporte localmente.',
-			'CSR Decoder: process and export locally.',
-			'CSR Decoder: procesa y exporta localmente.',
+			'Inspecione uma solicitação CSR e confira sua assinatura.',
+			'Inspect a CSR request and check its signature.',
+			'Inspecciona una solicitud CSR y comprueba su firma.',
 		),
 		icon: 'shield',
-		keywords: 'CSR Decoder CSR Decoder',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/csr.tool').then((module) => module.definition),
 	},
 	{
@@ -154,14 +154,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('Certificate Chain Inspector', 'Certificate Chain Inspector'),
 		description: text(
-			'Certificate Chain Inspector: processe e exporte localmente.',
-			'Certificate Chain Inspector: process and export locally.',
-			'Certificate Chain Inspector: procesa y exporta localmente.',
+			'Confira assinaturas entre os certificados de uma cadeia fornecida.',
+			'Check signatures between certificates in a supplied chain.',
+			'Comprueba firmas entre certificados de una cadena proporcionada.',
 		),
 		icon: 'shield',
-		keywords: 'Certificate Chain Inspector Certificate Chain Inspector',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../security/certificate-chain.tool').then((module) => module.definition),
 	},
@@ -170,14 +170,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('File Hash Calculator', 'File Hash Calculator'),
 		description: text(
-			'File Hash Calculator: processe e exporte localmente.',
-			'File Hash Calculator: process and export locally.',
-			'File Hash Calculator: procesa y exporta localmente.',
+			'Calcule o hash de um arquivo sem enviá-lo.',
+			'Compute a file hash without uploading the file.',
+			'Calcula el hash de un archivo sin enviarlo.',
 		),
 		icon: 'shield',
-		keywords: 'File Hash Calculator File Hash Calculator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/file-hash.tool').then((module) => module.definition),
 	},
 	{
@@ -185,14 +185,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('CSP Generator', 'CSP Generator'),
 		description: text(
-			'CSP Generator: processe e exporte localmente.',
-			'CSP Generator: process and export locally.',
-			'CSP Generator: procesa y exporta localmente.',
+			'Monte uma política CSP a partir das origens permitidas.',
+			'Build a CSP policy from allowed resource origins.',
+			'Crea una política CSP con los orígenes permitidos.',
 		),
 		icon: 'shield',
-		keywords: 'CSP Generator CSP Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/csp.tool').then((module) => module.definition),
 	},
 	{
@@ -200,14 +200,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('SRI Hash Generator', 'SRI Hash Generator'),
 		description: text(
-			'SRI Hash Generator: processe e exporte localmente.',
-			'SRI Hash Generator: process and export locally.',
-			'SRI Hash Generator: procesa y exporta localmente.',
+			'Gere um atributo integrity a partir do hash de um arquivo.',
+			'Generate an integrity attribute from a file hash.',
+			'Genera un atributo integrity a partir del hash de un archivo.',
 		),
 		icon: 'shield',
-		keywords: 'SRI Hash Generator SRI Hash Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/sri.tool').then((module) => module.definition),
 	},
 	{
@@ -215,14 +215,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('Webhook Signature Generator', 'Webhook Signature Generator'),
 		description: text(
-			'Webhook Signature Generator: processe e exporte localmente.',
-			'Webhook Signature Generator: process and export locally.',
-			'Webhook Signature Generator: procesa y exporta localmente.',
+			'Gere assinaturas HMAC nos formatos GitHub, Stripe ou genérico.',
+			'Generate webhook HMAC signatures for GitHub, Stripe or a generic format.',
+			'Genera firmas HMAC de webhooks para GitHub, Stripe o un formato genérico.',
 		),
 		icon: 'shield',
-		keywords: 'Webhook Signature Generator Webhook Signature Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../security/webhook-signature.tool').then((module) => module.definition),
 	},
@@ -231,14 +231,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('Explorador de PKCS#12/P12', 'PKCS#12/P12 Explorer'),
 		description: text(
-			'Explorador de PKCS#12/P12: processe e exporte localmente.',
-			'PKCS#12/P12 Explorer: process and export locally.',
-			'Explorador de PKCS#12/P12: procesa y exporta localmente.',
+			'Abra um arquivo P12 com senha e inspecione seus certificados.',
+			'Open a password-protected P12 file and inspect its certificates.',
+			'Abre un archivo P12 con contraseña e inspecciona sus certificados.',
 		),
 		icon: 'shield',
-		keywords: 'Explorador de PKCS#12/P12 PKCS#12/P12 Explorer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../security/p12-explorer.tool').then((module) => module.definition),
 	},
@@ -247,14 +247,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('Criador de pacote P7B', 'P7B Certificate Bundle Builder'),
 		description: text(
-			'Criador de pacote P7B: processe e exporte localmente.',
-			'P7B Certificate Bundle Builder: process and export locally.',
-			'Criador de pacote P7B: procesa y exporta localmente.',
+			'Empacote certificados PEM em um arquivo P7B sem assinatura.',
+			'Bundle PEM certificates into an unsigned P7B file.',
+			'Agrupa certificados PEM en un archivo P7B sin firma.',
 		),
 		icon: 'shield',
-		keywords: 'Criador de pacote P7B P7B Certificate Bundle Builder',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../security/p7b-bundle.tool').then((module) => module.definition),
 	},
 	{
@@ -262,14 +262,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('Explorador de pacote P7B', 'P7B Certificate Bundle Explorer'),
 		description: text(
-			'Explorador de pacote P7B: processe e exporte localmente.',
-			'P7B Certificate Bundle Explorer: process and export locally.',
-			'Explorador de pacote P7B: procesa y exporta localmente.',
+			'Liste os certificados presentes em um pacote P7B.',
+			'List the certificates contained in a P7B bundle.',
+			'Lista los certificados de un paquete P7B.',
 		),
 		icon: 'shield',
-		keywords: 'Explorador de pacote P7B P7B Certificate Bundle Explorer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../security/p7b-explorer.tool').then((module) => module.definition),
 	},
@@ -278,14 +278,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('Explorador de CRL', 'CRL Explorer'),
 		description: text(
-			'Explorador de CRL: processe e exporte localmente.',
-			'CRL Explorer: process and export locally.',
-			'Explorador de CRL: procesa y exporta localmente.',
+			'Leia a estrutura e as entradas de uma lista de revogação.',
+			"Read a certificate revocation list's structure and entries.",
+			'Lee la estructura y las entradas de una lista de revocación.',
 		),
 		icon: 'shield',
-		keywords: 'Explorador de CRL CRL Explorer',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../security/crl-explorer.tool').then((module) => module.definition),
 	},
@@ -294,14 +294,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('Gerador de solicitação de carimbo de tempo', 'Timestamp Request Generator'),
 		description: text(
-			'Gerador de solicitação de carimbo de tempo: processe e exporte localmente.',
-			'Timestamp Request Generator: process and export locally.',
-			'Gerador de solicitação de carimbo de tempo: procesa y exporta localmente.',
+			'Crie uma solicitação RFC 3161 para enviar a uma TSA.',
+			'Create an RFC 3161 request to send to a TSA.',
+			'Crea una solicitud RFC 3161 para enviar a una TSA.',
 		),
 		icon: 'shield',
-		keywords: 'Gerador de solicitação de carimbo de tempo Timestamp Request Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../security/timestamp-request.tool').then((module) => module.definition),
 	},
@@ -310,14 +310,14 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 		category: 'security',
 		name: text('Decodificador de resposta TSR', 'TSR Response Decoder'),
 		description: text(
-			'Decodificador de resposta TSR: processe e exporte localmente.',
-			'TSR Response Decoder: process and export locally.',
-			'Decodificador de resposta TSR: procesa y exporta localmente.',
+			'Inspecione o status e a estrutura de uma resposta TSR.',
+			'Inspect the status and structure of a TSR response.',
+			'Inspecciona el estado y la estructura de una respuesta TSR.',
 		),
 		icon: 'shield',
-		keywords: 'Decodificador de resposta TSR TSR Response Decoder',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../security/tsr-decoder.tool').then((module) => module.definition),
 	},

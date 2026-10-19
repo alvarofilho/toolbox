@@ -48,14 +48,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('HTML Entities Encode/Decode', 'HTML Entities Encode/Decode'),
 		description: text(
-			'HTML Entities Encode/Decode: processe e exporte localmente.',
-			'HTML Entities Encode/Decode: process and export locally.',
-			'HTML Entities Encode/Decode: procesa y exporta localmente.',
+			'Codifique ou decodifique entidades HTML no texto.',
+			'Encode or decode HTML entities in text.',
+			'Codifica o decodifica entidades HTML en texto.',
 		),
 		icon: 'code',
-		keywords: 'HTML Entities Encode/Decode HTML Entities Encode/Decode',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../converters/html-entities.tool').then((module) => module.definition),
 	},
@@ -64,14 +64,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Unicode Converter', 'Unicode Converter'),
 		description: text(
-			'Unicode Converter: processe e exporte localmente.',
-			'Unicode Converter: process and export locally.',
-			'Unicode Converter: procesa y exporta localmente.',
+			'Converta caracteres em escapes Unicode e vice-versa.',
+			'Convert characters to Unicode escapes and back.',
+			'Convierte caracteres a escapes Unicode y viceversa.',
 		),
 		icon: 'code',
-		keywords: 'Unicode Converter Unicode Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../converters/unicode.tool').then((module) => module.definition),
 	},
 	{
@@ -79,14 +79,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Hexadecimal Converter', 'Hexadecimal Converter'),
 		description: text(
-			'Hexadecimal Converter: processe e exporte localmente.',
-			'Hexadecimal Converter: process and export locally.',
-			'Hexadecimal Converter: procesa y exporta localmente.',
+			'Converta texto UTF-8 em hexadecimal e vice-versa.',
+			'Convert UTF-8 text to hexadecimal and back.',
+			'Convierte texto UTF-8 a hexadecimal y viceversa.',
 		),
 		icon: 'code',
-		keywords: 'Hexadecimal Converter Hexadecimal Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../converters/hex.tool').then((module) => module.definition),
 	},
 	{
@@ -94,14 +94,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Binário / Decimal / Hexadecimal', 'Binary / Decimal / Hexadecimal'),
 		description: text(
-			'Binário / Decimal / Hexadecimal: processe e exporte localmente.',
-			'Binary / Decimal / Hexadecimal: process and export locally.',
-			'Binário / Decimal / Hexadecimal: procesa y exporta localmente.',
+			'Converta inteiros entre bases binária, decimal e hexadecimal.',
+			'Convert integers between binary, decimal and hexadecimal.',
+			'Convierte enteros entre binario, decimal y hexadecimal.',
 		),
 		icon: 'code',
-		keywords: 'Binário / Decimal / Hexadecimal Binary / Decimal / Hexadecimal',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../converters/base-converter.tool').then((module) => module.definition),
 	},
@@ -110,14 +110,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Date Converter', 'Date Converter'),
 		description: text(
-			'Date Converter: processe e exporte localmente.',
-			'Date Converter: process and export locally.',
-			'Date Converter: procesa y exporta localmente.',
+			'Converta datas ISO, brasileiras, americanas e Unix.',
+			'Convert ISO, Brazilian, US and Unix dates.',
+			'Convierte fechas ISO, brasileñas, estadounidenses y Unix.',
 		),
 		icon: 'code',
-		keywords: 'Date Converter Date Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../converters/date.tool').then((module) => module.definition),
 	},
 	{
@@ -125,14 +125,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Timezone Converter', 'Timezone Converter'),
 		description: text(
-			'Timezone Converter: processe e exporte localmente.',
-			'Timezone Converter: process and export locally.',
-			'Timezone Converter: procesa y exporta localmente.',
+			'Converta data e hora entre fusos IANA.',
+			'Convert a local date and time between IANA timezones.',
+			'Convierte fecha y hora entre zonas IANA.',
 		),
 		icon: 'code',
-		keywords: 'Timezone Converter Timezone Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../converters/timezone.tool').then((module) => module.definition),
 	},
 	{
@@ -140,14 +140,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Text to Binary', 'Text to Binary'),
 		description: text(
-			'Text to Binary: processe e exporte localmente.',
-			'Text to Binary: process and export locally.',
-			'Text to Binary: procesa y exporta localmente.',
+			'Converta texto UTF-8 em sequências de bytes binários.',
+			'Convert UTF-8 text to sequences of binary bytes.',
+			'Convierte texto UTF-8 en secuencias de bytes binarios.',
 		),
 		icon: 'code',
-		keywords: 'Text to Binary Text to Binary',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../converters/text-binary.tool').then((module) => module.definition),
 	},
@@ -156,14 +156,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Binary to Text', 'Binary to Text'),
 		description: text(
-			'Binary to Text: processe e exporte localmente.',
-			'Binary to Text: process and export locally.',
-			'Binary to Text: procesa y exporta localmente.',
+			'Decodifique bytes binários em texto UTF-8.',
+			'Decode binary bytes into UTF-8 text.',
+			'Decodifica bytes binarios como texto UTF-8.',
 		),
 		icon: 'code',
-		keywords: 'Binary to Text Binary to Text',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () =>
 			import('../converters/binary-text.tool').then((module) => module.definition),
 	},
@@ -172,14 +172,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Markdown Preview', 'Markdown Preview'),
 		description: text(
-			'Markdown Preview: processe e exporte localmente.',
-			'Markdown Preview: process and export locally.',
-			'Markdown Preview: procesa y exporta localmente.',
+			'Veja uma prévia de Markdown sem executar scripts.',
+			'Preview Markdown without executing scripts.',
+			'Previsualiza Markdown sin ejecutar scripts.',
 		),
 		icon: 'code',
-		keywords: 'Markdown Preview Markdown Preview',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../converters/markdown.tool').then((module) => module.definition),
 	},
 	{
@@ -187,14 +187,14 @@ export const CONVERTERS_TOOLS: readonly ToolRegistration[] = [
 		category: 'converters',
 		name: text('Punycode Converter', 'Punycode Converter'),
 		description: text(
-			'Punycode Converter: processe e exporte localmente.',
-			'Punycode Converter: process and export locally.',
-			'Punycode Converter: procesa y exporta localmente.',
+			'Converta nomes de domínio Unicode e Punycode.',
+			'Convert domain names between Unicode and Punycode.',
+			'Convierte nombres de dominio entre Unicode y Punycode.',
 		),
 		icon: 'code',
-		keywords: 'Punycode Converter Punycode Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../converters/punycode.tool').then((module) => module.definition),
 	},
 ];

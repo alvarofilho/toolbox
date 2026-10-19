@@ -7,14 +7,14 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 		category: 'frontend',
 		name: text('Color Converter', 'Color Converter'),
 		description: text(
-			'Color Converter: processe e exporte localmente.',
-			'Color Converter: process and export locally.',
-			'Color Converter: procesa y exporta localmente.',
+			'Converta cores CSS entre hexadecimal, RGB e HSL.',
+			'Convert CSS colors between hexadecimal, RGB and HSL.',
+			'Convierte colores CSS entre hexadecimal, RGB y HSL.',
 		),
 		icon: 'code',
-		keywords: 'Color Converter Color Converter',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../frontend/color.tool').then((module) => module.definition),
 	},
 	{
@@ -22,14 +22,14 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 		category: 'frontend',
 		name: text('CSS Gradient Generator', 'CSS Gradient Generator'),
 		description: text(
-			'CSS Gradient Generator: processe e exporte localmente.',
-			'CSS Gradient Generator: process and export locally.',
-			'CSS Gradient Generator: procesa y exporta localmente.',
+			'Crie um gradiente CSS com duas cores e um ângulo.',
+			'Build a CSS gradient with two colors and an angle.',
+			'Crea un degradado CSS con dos colores y un ángulo.',
 		),
 		icon: 'code',
-		keywords: 'CSS Gradient Generator CSS Gradient Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../frontend/gradient.tool').then((module) => module.definition),
 	},
 	{
@@ -37,14 +37,14 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 		category: 'frontend',
 		name: text('CSS Box Shadow Generator', 'CSS Box Shadow Generator'),
 		description: text(
-			'CSS Box Shadow Generator: processe e exporte localmente.',
-			'CSS Box Shadow Generator: process and export locally.',
-			'CSS Box Shadow Generator: procesa y exporta localmente.',
+			'Ajuste deslocamento, desfoque, expansão e cor de uma sombra CSS.',
+			"Adjust a CSS shadow's offset, blur, spread and color.",
+			'Ajusta desplazamiento, desenfoque, extensión y color de una sombra CSS.',
 		),
 		icon: 'code',
-		keywords: 'CSS Box Shadow Generator CSS Box Shadow Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../frontend/box-shadow.tool').then((module) => module.definition),
 	},
 	{
@@ -52,14 +52,14 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 		category: 'frontend',
 		name: text('CSS Clamp Calculator', 'CSS Clamp Calculator'),
 		description: text(
-			'CSS Clamp Calculator: processe e exporte localmente.',
-			'CSS Clamp Calculator: process and export locally.',
-			'CSS Clamp Calculator: procesa y exporta localmente.',
+			'Calcule CSS clamp para variar um tamanho entre dois viewports.',
+			'Calculate CSS clamp for sizes between two viewports.',
+			'Calcula CSS clamp para variar un tamaño entre dos viewports.',
 		),
 		icon: 'code',
-		keywords: 'CSS Clamp Calculator CSS Clamp Calculator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../frontend/clamp.tool').then((module) => module.definition),
 	},
 	{
@@ -67,14 +67,14 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 		category: 'frontend',
 		name: text('Flexbox Playground', 'Flexbox Playground'),
 		description: text(
-			'Flexbox Playground: processe e exporte localmente.',
-			'Flexbox Playground: process and export locally.',
-			'Flexbox Playground: procesa y exporta localmente.',
+			'Experimente alinhamento, direção e espaçamento em um layout Flexbox.',
+			'Explore alignment, direction and spacing in a Flexbox layout.',
+			'Explora alineación, dirección y espaciado en un diseño Flexbox.',
 		),
 		icon: 'code',
-		keywords: 'Flexbox Playground Flexbox Playground',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../frontend/flexbox.tool').then((module) => module.definition),
 	},
 	{
@@ -82,14 +82,14 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 		category: 'frontend',
 		name: text('CSS Grid Playground', 'CSS Grid Playground'),
 		description: text(
-			'CSS Grid Playground: processe e exporte localmente.',
-			'CSS Grid Playground: process and export locally.',
-			'CSS Grid Playground: procesa y exporta localmente.',
+			'Configure colunas, linhas e espaçamento de um CSS Grid.',
+			'Configure columns, rows and spacing in a CSS Grid.',
+			'Configura columnas, filas y espaciado de un CSS Grid.',
 		),
 		icon: 'code',
-		keywords: 'CSS Grid Playground CSS Grid Playground',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../frontend/css-grid.tool').then((module) => module.definition),
 	},
 	{
@@ -97,14 +97,14 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 		category: 'frontend',
 		name: text('WCAG Contrast Checker', 'WCAG Contrast Checker'),
 		description: text(
-			'WCAG Contrast Checker: processe e exporte localmente.',
-			'WCAG Contrast Checker: process and export locally.',
-			'WCAG Contrast Checker: procesa y exporta localmente.',
+			'Compare duas cores e confira as relações de contraste WCAG.',
+			'Compare two colors and check WCAG contrast ratios.',
+			'Compara dos colores y comprueba las relaciones de contraste WCAG.',
 		),
 		icon: 'code',
-		keywords: 'WCAG Contrast Checker WCAG Contrast Checker',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../frontend/contrast.tool').then((module) => module.definition),
 	},
 	{
@@ -112,14 +112,14 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 		category: 'frontend',
 		name: text('Favicon Generator', 'Favicon Generator'),
 		description: text(
-			'Favicon Generator: processe e exporte localmente.',
-			'Favicon Generator: process and export locally.',
-			'Favicon Generator: procesa y exporta localmente.',
+			'Gere ícones PNG, ICO e manifest em um pacote ZIP.',
+			'Generate PNG icons, ICO and a manifest in a ZIP bundle.',
+			'Genera iconos PNG, ICO y un manifest en un paquete ZIP.',
 		),
 		icon: 'code',
-		keywords: 'Favicon Generator Favicon Generator',
+		keywords: '',
 		available: true,
-		isNew: true,
+
 		loadDefinition: () => import('../frontend/favicon.tool').then((module) => module.definition),
 	},
 ];
