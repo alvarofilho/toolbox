@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { TOOLS } from '../registry/tools';
 import type { Locale, Localized } from '../models/tool';
+
 interface Preferences {
   readonly locale: Locale;
   readonly theme: 'light' | 'dark';

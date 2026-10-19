@@ -1,6 +1,7 @@
 import { field, boundedNumber, type ToolDefinition } from '../../core/models/tool';
 import { password } from '../../shared/utils/random';
 import { number, check, generate } from './controls';
+
 const sets = {
   upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   lower: 'abcdefghijklmnopqrstuvwxyz',

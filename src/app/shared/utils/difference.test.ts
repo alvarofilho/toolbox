@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it } from 'vitest';
 import { canonicalJson, lineDiff } from './difference';
+
 describe('diff', () => {
   it('ignores JSON object key order recursively but preserves array order', () => {
     expect(canonicalJson({ b: 2, a: { d: 4, c: 3 } })).toEqual({ a: { c: 3, d: 4 }, b: 2 });

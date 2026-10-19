@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it } from 'vitest';
 import { people, exportPeople, PERSON_FIELDS } from './person';
 import { validDocument } from './documents';
+
 describe('synthetic people', () => {
   it('generates selected fields, valid check digits and reserved email domains', () => {
     const rows = people(20, PERSON_FIELDS, 'MG', 18, 65);

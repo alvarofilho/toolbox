@@ -1,6 +1,7 @@
 import { field, text, boundedNumber, type ToolDefinition } from '../../core/models/tool';
 import { people, exportPeople, PERSON_FIELDS } from '../../shared/utils/person';
 import { check, number, select, generate, synthetic } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'person',
   controls: [

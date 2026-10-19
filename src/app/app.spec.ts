@@ -5,6 +5,20 @@ import { App } from './app';
 import { routes } from './app.routes';
 import { PreferencesService, readPreferences } from './core/services/preferences';
 
+// jsdom does not implement the native dialog top layer. Browser QA covers focus trapping.
+function mockDialog(element: HTMLElement): HTMLDialogElement {
+  const dialog = element.querySelector('dialog');
+  if (!dialog) throw new Error('Command dialog missing');
+  dialog.showModal = () => {
+    dialog.open = true;
+  };
+  dialog.close = () => {
+    dialog.open = false;
+    dialog.dispatchEvent(new Event('close'));
+  };
+  return dialog;
+}
+
 describe('platform integration', () => {
   beforeEach(() => {
     localStorage.clear();
@@ -13,21 +27,32 @@ describe('platform integration', () => {
       providers: [provideRouter(routes, withComponentInputBinding())],
     });
   });
-  it('renders the catalog and filters by keyword without losing focus', async () => {
+  it('opens the command palette, finds a tool and preserves mobile menu focus', async () => {
     const fixture = TestBed.createComponent(App);
     await TestBed.inject(Router).navigateByUrl('/');
     await fixture.whenStable();
     const element: HTMLElement = fixture.nativeElement;
     expect(element.querySelector('h1')?.textContent).toContain('Menos abas');
-    const search = element.querySelector<HTMLInputElement>('#global-search');
+    const dialog = mockDialog(element);
+    const trigger = element.querySelector<HTMLButtonElement>('#global-search');
+    trigger?.click();
+    await fixture.whenStable();
+    expect(dialog.open).toBe(true);
+    const search = element.querySelector<HTMLInputElement>('#command-search');
     if (!search) throw new Error('Search missing');
     search.focus();
     search.value = 'alfanumerico';
     search.dispatchEvent(new Event('input'));
     await fixture.whenStable();
-    expect(element.querySelectorAll('app-tool-card')).toHaveLength(1);
-    expect(element.querySelector('app-tool-card')?.textContent).toContain('CNPJ');
+    expect(element.querySelectorAll('[role=option]')).toHaveLength(1);
+    expect(element.querySelector('[role=option]')?.textContent).toContain('CNPJ');
     expect(document.activeElement).toBe(search);
+    expect(TestBed.inject(Router).url).toBe('/');
+    search.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await fixture.whenStable();
+    expect(TestBed.inject(Router).url).toBe('/tools/cnpj');
+    expect(dialog.open).toBe(false);
+    expect(document.body.style.overflow).toBe('');
     const toggle = element.querySelector<HTMLButtonElement>('#menu-toggle');
     if (!toggle) throw new Error('Menu toggle missing');
     toggle.click();
@@ -47,6 +72,105 @@ describe('platform integration', () => {
     await fixture.whenStable();
     expect(document.activeElement).toBe(toggle);
     expect(element.querySelector('.app-body')?.hasAttribute('inert')).toBe(false);
+  });
+  it('supports both shortcuts, wraps selection and resets it after filtering', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const element: HTMLElement = fixture.nativeElement;
+    const dialog = mockDialog(element);
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }),
+    );
+    await fixture.whenStable();
+    expect(dialog.open).toBe(true);
+    const search = element.querySelector<HTMLInputElement>('#command-search');
+    if (!search) throw new Error('Command search missing');
+    search.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+    await fixture.whenStable();
+    expect(search.getAttribute('aria-activedescendant')).toBe('command-locale');
+    search.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    await fixture.whenStable();
+    expect(search.getAttribute('aria-activedescendant')).toBe('command-tool-json-formatter');
+    search.value = 'FAVORITOS';
+    search.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+    expect(search.getAttribute('aria-activedescendant')).toBe('command-favorites');
+    search.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await fixture.whenStable();
+    expect(TestBed.inject(Router).url).toBe('/favorites');
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }),
+    );
+    await fixture.whenStable();
+    expect(dialog.open).toBe(true);
+    expect(search.value).toBe('');
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }),
+    );
+    await fixture.whenStable();
+    expect(dialog.open).toBe(false);
+  });
+  it('executes theme and language actions and handles no matches safely', async () => {
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const element: HTMLElement = fixture.nativeElement;
+    const dialog = mockDialog(element);
+    const trigger = element.querySelector<HTMLButtonElement>('#global-search');
+    const search = element.querySelector<HTMLInputElement>('#command-search');
+    if (!trigger || !search) throw new Error('Command controls missing');
+    for (const [query, id] of [
+      ['TEMA', 'theme'],
+      ['ingles', 'locale'],
+    ]) {
+      trigger.click();
+      await fixture.whenStable();
+      search.value = query;
+      search.dispatchEvent(new Event('input'));
+      await fixture.whenStable();
+      expect(search.getAttribute('aria-activedescendant')).toBe(`command-${id}`);
+      search.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      await fixture.whenStable();
+      expect(dialog.open).toBe(false);
+    }
+    const prefs = TestBed.inject(PreferencesService);
+    expect(prefs.theme()).toBe('dark');
+    expect(prefs.locale()).toBe('en');
+    trigger.click();
+    await fixture.whenStable();
+    search.value = 'no-such-command';
+    search.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+    expect(element.querySelector('.command-empty')?.textContent).toContain('No commands found');
+    expect(search.hasAttribute('aria-activedescendant')).toBe(false);
+    search.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    search.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await fixture.whenStable();
+    expect(dialog.open).toBe(true);
+    dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
+    await fixture.whenStable();
+    expect(dialog.open).toBe(false);
+    expect(document.body.style.overflow).toBe('');
+  });
+  it('prioritizes recent and favorite tools and restores scroll on destruction', async () => {
+    const prefs = TestBed.inject(PreferencesService);
+    prefs.toggleFavorite('cpf');
+    prefs.visit('uuid');
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const element: HTMLElement = fixture.nativeElement;
+    mockDialog(element);
+    document.body.style.overflow = 'auto';
+    element.querySelector<HTMLButtonElement>('#global-search')?.click();
+    await fixture.whenStable();
+    expect(
+      Array.from(element.querySelectorAll('[role=option]'))
+        .slice(0, 2)
+        .map((option) => option.id),
+    ).toEqual(['command-tool-uuid', 'command-tool-cpf']);
+    expect(document.body.style.overflow).toBe('hidden');
+    fixture.destroy();
+    expect(document.body.style.overflow).toBe('auto');
+    document.body.style.overflow = '';
   });
   it('runs JSON, displays validation errors, clears output on edits and resets', async () => {
     const harness = await RouterTestingHarness.create('/tools/json-formatter');

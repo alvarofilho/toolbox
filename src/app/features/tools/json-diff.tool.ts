@@ -1,6 +1,7 @@
 import { field, text, type ToolDefinition } from '../../core/models/tool';
 import { canonicalJson, lineDiff } from '../../shared/utils/difference';
 import { input } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'json-diff',
   controls: [

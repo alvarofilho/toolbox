@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it } from 'vitest';
 import { base64Encode, base64Decode, convertCase, decodeJwt, timestamp } from './encoding';
+
 describe('encoding', () => {
   it.each(['Olá 🌎!', 'foo', '', '漢字\n\0'])('round-trips Unicode %s', (text) =>
     expect(base64Decode(base64Encode(text))).toBe(text),

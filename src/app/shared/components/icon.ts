@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+
 const paths: Readonly<Record<string, string>> = {
   box: 'M4 8h16v12H4z M8 8V5h8v3 M4 12h16 M10 12v3h4v-3',
   home: 'm3 10 9-7 9 7 M5 9v12h5v-7h4v7h5V9',

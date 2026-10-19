@@ -4,11 +4,12 @@ import { PreferencesService } from '../../core/services/preferences';
 import type { ToolInfo } from '../../core/models/tool';
 import { Icon } from './icon';
 import { CATEGORIES } from '../../core/registry/tools';
+
 @Component({
   selector: 'app-tool-card',
   imports: [RouterLink, Icon],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: './tool-card.css',
+  styleUrl: './tool-card.scss',
   template: ` <article class="tool-card" [class.tool-card-compact]="variant() === 'compact'">
     <a [routerLink]="['/tools', tool().id]" class="tool-card-link">
       <div class="card-top">

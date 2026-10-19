@@ -1,6 +1,7 @@
 import { parseDocument, stringify } from 'yaml';
 import { field, type ToolDefinition } from '../../core/models/tool';
 import { source, select, transform } from './controls';
+
 export function yamlToJson(input: string): string {
   if (!input.trim()) throw new Error('YAML vazio / Empty YAML');
   const document = parseDocument(input, { uniqueKeys: true });

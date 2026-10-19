@@ -1,6 +1,7 @@
 import { field, text, type ToolDefinition } from '../../core/models/tool';
 import { decodeJwt } from '../../shared/utils/encoding';
 import { source } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'jwt',
   controls: [source],

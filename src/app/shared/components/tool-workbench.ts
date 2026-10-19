@@ -7,12 +7,16 @@ import {
   OnDestroy,
   OnInit,
   signal,
+  viewChildren,
+  ElementRef,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { PreferencesService } from '../../core/services/preferences';
 import { CATEGORIES, TOOLS } from '../../core/registry/tools';
-import type { ToolDefinition, ToolResult, ToolValues } from '../../core/models/tool';
+import type { ToolDefinition, ToolFiles, ToolResult, ToolValues } from '../../core/models/tool';
 import { Icon } from './icon';
+
 @Component({
   selector: 'app-tool-workbench',
   imports: [RouterLink, Icon],
@@ -23,6 +27,15 @@ export class ToolWorkbench implements OnInit, OnDestroy {
   readonly definition = input.required<ToolDefinition>();
   protected readonly p = inject(PreferencesService);
   protected readonly values = signal<ToolValues>({});
+  protected readonly files = signal<ToolFiles>({});
+  private readonly fileInputs = viewChildren<ElementRef<HTMLInputElement>>('fileInput');
+  private readonly sanitizer = inject(DomSanitizer);
+  // Only used in an opaque-origin, scriptless sandbox with a restrictive child CSP.
+  protected readonly preview = computed(() =>
+    this.result()?.preview
+      ? this.sanitizer.bypassSecurityTrustHtml(this.result()?.preview ?? '')
+      : null,
+  );
   protected readonly result = signal<ToolResult | null>(null);
   protected readonly error = signal('');
   protected readonly busy = signal(false);
@@ -50,6 +63,9 @@ export class ToolWorkbench implements OnInit, OnDestroy {
       target instanceof HTMLTextAreaElement ||
       target instanceof HTMLSelectElement
     ) {
+      if (target instanceof HTMLInputElement && target.type === 'file') {
+        this.files.update((files) => ({ ...files, [key]: Array.from(target.files ?? []) }));
+      }
       this.values.update((values) => ({
         ...values,
         [key]:
@@ -63,6 +79,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
     }
   }
   protected reset(): void {
+    for (const input of this.fileInputs()) input.nativeElement.value = '';
+    this.files.set({});
     this.values.set(Object.fromEntries(this.definition().controls.map((c) => [c.key, c.value])));
     this.result.set(null);
     this.error.set('');
@@ -98,12 +116,34 @@ export class ToolWorkbench implements OnInit, OnDestroy {
             throw new Error(`${this.p.t(control.label)}: ${control.min}–${control.max}`);
         }
       }
-      const result = await this.definition().run(this.values());
+      const selected = Object.values(this.files()).flat();
+      if (
+        selected.length > 20 ||
+        selected.some((f) => f.size > 20 * 1024 * 1024) ||
+        selected.reduce((n, f) => n + f.size, 0) > 50 * 1024 * 1024
+      )
+        throw new Error(
+          this.p.label(
+            'Limite de 20 arquivos, 20 MB por arquivo e 50 MB no total.',
+            'Limit: 20 files, 20 MB per file, 50 MB total.',
+          ),
+        );
+      const result = await this.definition().run(this.values(), this.files());
       if (result.output.length > 1000000)
         throw new Error(
           this.p.label(
             'Resultado muito grande. Reduza a entrada.',
             'Output too large. Reduce input.',
+          ),
+        );
+      if (
+        (result.artifacts ?? []).reduce((n, artifact) => n + artifact.blob.size, 0) >
+        50 * 1024 * 1024
+      )
+        throw new Error(
+          this.p.label(
+            'Arquivos de saída excedem 50 MB. Reduza a entrada.',
+            'Output files exceed 50 MB. Reduce the input.',
           ),
         );
       if (id === this.runId) this.result.set(result);
@@ -128,15 +168,17 @@ export class ToolWorkbench implements OnInit, OnDestroy {
       );
     }
   }
-  protected download(): void {
+  protected download(artifactIndex?: number): void {
     const result = this.result();
     if (!result) return;
+    const artifact = artifactIndex === undefined ? undefined : result.artifacts?.[artifactIndex];
     const url = URL.createObjectURL(
-      new Blob([result.output], { type: result.mime ?? 'text/plain;charset=utf-8' }),
+      artifact?.blob ??
+        new Blob([result.output], { type: result.mime ?? 'text/plain;charset=utf-8' }),
     );
     const link = document.createElement('a');
     link.href = url;
-    link.download = result.filename ?? `${this.definition().id}.txt`;
+    link.download = artifact?.filename ?? result.filename ?? `${this.definition().id}.txt`;
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
     this.feedback.set(this.p.label('Exportação iniciada.', 'Export started.'));

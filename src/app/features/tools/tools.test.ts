@@ -1,7 +1,8 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it } from 'vitest';
 import { TOOL_LOADERS } from '../../app.routes';
 import { TOOLS, findTools, CATEGORIES } from '../../core/registry/tools';
 import { yamlToJson } from './json-yaml.tool';
+
 async function run(id: string, values: Record<string, string> = {}) {
   const { definition } = await TOOL_LOADERS[id]();
   return definition.run({
@@ -10,18 +11,19 @@ async function run(id: string, values: Record<string, string> = {}) {
   });
 }
 describe('tool catalog', () => {
-  it('has exactly 18 unique tools with valid categories and lazy loaders', async () => {
-    expect(TOOLS).toHaveLength(18);
-    expect(new Set(TOOLS.map((t) => t.id)).size).toBe(18);
+  it('keeps the complete catalog unique with valid categories and lazy loaders', async () => {
+    expect(TOOLS.length).toBeGreaterThanOrEqual(128);
+    expect(new Set(TOOLS.map((t) => t.id)).size).toBe(TOOLS.length);
     for (const tool of TOOLS) {
       expect(CATEGORIES.some((c) => c.id === tool.category)).toBe(true);
       expect((await TOOL_LOADERS[tool.id]()).definition.id).toBe(tool.id);
     }
-  });
+  }, 15000);
   it('searches names, descriptions, categories and accent-insensitive keywords', () => {
     expect(findTools('alfanumerico').map((t) => t.id)).toContain('cnpj');
     expect(findTools('criptografia').map((t) => t.id)).toContain('sha');
     expect(findTools('BASE64').map((t) => t.id)).toContain('base64');
+    expect(findTools('chave').map((t) => t.id)).toContain('token');
     expect(findTools('nonsense term')).toEqual([]);
   });
 });
@@ -61,7 +63,10 @@ describe('other tool definitions', () => {
   it('generates passwords and secure tokens in both encodings', async () => {
     expect((await run('password')).output).toHaveLength(24);
     expect((await run('token')).output).toMatch(/^[0-9a-f]{64}$/);
-    expect((await run('token', { encoding: 'base64' })).output).toMatch(/^[A-Za-z0-9_-]{43}$/);
+    const standardBase64 = (await run('token', { encoding: 'base64' })).output;
+    expect(standardBase64).toMatch(/^[A-Za-z0-9+/]{43}=$/);
+    expect(atob(standardBase64)).toHaveLength(32);
+    expect((await run('token', { encoding: 'base64url' })).output).toMatch(/^[A-Za-z0-9_-]{43}$/);
   });
   it('hashes known SHA-256 and SHA-512 vectors', async () => {
     expect((await run('sha', { input: 'abc', algorithm: 'SHA-256' })).output).toBe(

@@ -22,9 +22,10 @@
   <div class="sidebar-caption">
     {{ p.label('Seu kit de desenvolvimento', 'Your development toolkit') }}
   </div>
-  <nav class="main-nav" (click)="closeMenu(false)">
+  <nav class="main-nav">
     <a
       routerLink="/"
+      (click)="closeMenu(false)"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
       ariaCurrentWhenActive="page"
@@ -32,25 +33,35 @@
     >
     <a
       routerLink="/tools"
+      (click)="closeMenu(false)"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
       ariaCurrentWhenActive="page"
       ><app-icon name="grid" />{{ p.label('Todas as ferramentas', 'All tools')
       }}<span class="nav-count">{{ count }}</span></a
     >
-    <a routerLink="/favorites" routerLinkActive="active" ariaCurrentWhenActive="page"
+    <a
+      routerLink="/favorites"
+      (click)="closeMenu(false)"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
       ><app-icon name="star" />{{ p.label('Favoritos', 'Favorites') }}
       @if (p.favorites().length) {
         <span class="nav-count">{{ p.favorites().length }}</span>
       }
     </a>
-    <a routerLink="/recent" routerLinkActive="active" ariaCurrentWhenActive="page"
+    <a
+      routerLink="/recent"
+      (click)="closeMenu(false)"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
       ><app-icon name="clock" />{{ p.label('Recentes', 'Recent tools') }}</a
     >
     <div class="nav-heading">{{ p.label('Categorias', 'Categories') }}</div>
     @for (category of categories; track category.id) {
       <a
         [routerLink]="['/category', category.id]"
+        (click)="closeMenu(false)"
         routerLinkActive="active"
         ariaCurrentWhenActive="page"
         ><app-icon [name]="category.icon" />{{ p.t(category.name) }}</a
@@ -65,7 +76,8 @@
       {{
         p.label(
           'Tudo é processado no seu navegador. Sem cadastro, sem rastreamento.',
-          'Everything runs in your browser. No account, no tracking.'
+          'Everything
+      runs in your browser. No account, no tracking.'
         )
       }}
     </p>
@@ -94,16 +106,20 @@
     >
       <app-icon [name]="menuOpen() ? 'close' : 'menu'" />
     </button>
-    <div class="global-search">
-      <app-icon name="search" /><input
-        id="global-search"
-        type="search"
-        [placeholder]="p.label('Encontre uma ferramenta…', 'Find a tool…')"
-        [attr.aria-label]="p.label('Pesquisa global', 'Global search')"
-        (input)="search($event)"
-        autocomplete="off"
-      /><kbd>Ctrl K</kbd>
-    </div>
+    <button
+      id="global-search"
+      type="button"
+      class="global-search"
+      aria-haspopup="dialog"
+      aria-controls="command-palette"
+      aria-keyshortcuts="Control+k Meta+k"
+      (click)="openCommands()"
+      [attr.aria-label]="p.label('Abrir paleta de comandos', 'Open command palette')"
+    >
+      <app-icon name="search" />
+      <span>{{ p.label('Buscar ferramentas e ações…', 'Search tools and actions…') }}</span>
+      <kbd>{{ commandShortcut }}</kbd>
+    </button>
     <div class="header-actions">
       <span class="header-local"
         ><app-icon name="shield" />{{ p.label('100% no navegador', '100% in your browser') }}</span
@@ -137,7 +153,8 @@
       <p class="storage-notice" role="status">
         {{
           p.label(
-            'O armazenamento local está indisponível. Preferências valem apenas nesta sessão.',
+            'O armazenamento local está indisponível. Preferências valem apenas nesta
+      sessão.',
             'Local storage is unavailable. Preferences apply to this session only.'
           )
         }}
@@ -157,3 +174,4 @@
     >
   </footer>
 </div>
+<app-command-palette />

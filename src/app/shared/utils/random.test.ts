@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it } from 'vitest';
 import { randomInt, randomString, password, uuid } from './random';
+
 describe('secure generation', () => {
   it('generates UUID v4 and v7 with version and variant bits', () => {
     for (const version of ['4', '7']) {

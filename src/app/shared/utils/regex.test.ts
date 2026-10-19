@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it } from 'vitest';
 import { regexMatches } from './regex';
+
 describe('regex matching', () => {
   it('returns captures, positions and multiple results', () =>
     expect(regexMatches('(a)(b)', 'g', 'ab ab')).toEqual([

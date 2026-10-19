@@ -1,5 +1,6 @@
 import { field, text, type ToolDefinition } from '../../core/models/tool';
 import { source, select } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'json-formatter',
   controls: [

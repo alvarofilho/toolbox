@@ -4,18 +4,27 @@ export const text = (pt: string, en: string): Localized => ({ pt, en });
 export interface ToolControl {
   readonly key: string;
   readonly label: Localized;
-  readonly type: 'textarea' | 'text' | 'number' | 'select' | 'checkbox';
+  readonly type: 'textarea' | 'text' | 'password' | 'number' | 'select' | 'checkbox' | 'file';
+  readonly accept?: string;
+  readonly multiple?: boolean;
   readonly value: string;
   readonly options?: readonly { readonly value: string; readonly label: Localized }[];
   readonly min?: number;
   readonly max?: number;
 }
 export type ToolValues = Readonly<Record<string, string>>;
+export type ToolFiles = Readonly<Record<string, readonly File[]>>;
+export interface ToolArtifact {
+  readonly blob: Blob;
+  readonly filename: string;
+}
 export interface ToolResult {
   readonly output: string;
   readonly filename?: string;
   readonly mime?: string;
   readonly notice?: Localized;
+  readonly artifacts?: readonly ToolArtifact[];
+  readonly preview?: string;
 }
 export interface ToolDefinition {
   readonly id: string;
@@ -23,7 +32,7 @@ export interface ToolDefinition {
   readonly action: Localized;
   readonly hint?: Localized;
   readonly example?: ToolValues;
-  readonly run: (values: ToolValues) => ToolResult | Promise<ToolResult>;
+  readonly run: (values: ToolValues, files?: ToolFiles) => ToolResult | Promise<ToolResult>;
 }
 export interface ToolInfo {
   readonly id: string;
@@ -39,6 +48,7 @@ export interface ToolInfo {
 export function field(values: ToolValues, key: string): string {
   return values[key] ?? '';
 }
+
 export function boundedNumber(value: string, min: number, max: number): number {
   const number = Number(value);
   if (!value.trim() || !Number.isInteger(number) || number < min || number > max) {

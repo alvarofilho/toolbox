@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vite-plus/test';
+import { describe, expect, it } from 'vitest';
 import {
   cpfDigits,
   cnpjDigits,
@@ -6,6 +6,7 @@ import {
   generateDocument,
   normalizeDocument,
 } from './documents';
+
 describe('Brazilian check digits', () => {
   it.each(['529.982.247-25', '111.444.777-35', '012.345.678-90'])('validates CPF %s', (value) =>
     expect(validDocument(value, 'cpf')).toBe(true),

@@ -9,14 +9,17 @@ export function randomInt(max: number): number {
   } while (value >= limit);
   return value % max;
 }
+
 export function randomString(length: number, alphabet: string): string {
   boundedNumber(String(length), 1, 4096);
   if (!alphabet.length)
     throw new Error('Select at least one character set / Selecione caracteres.');
   return Array.from({ length }, () => alphabet[randomInt(alphabet.length)]).join('');
 }
+
 export const hex = (bytes: Uint8Array): string =>
   Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+
 export function uuid(version: string): string {
   if (version === '4') return crypto.randomUUID();
   if (version !== '7') throw new Error('UUID version: 4 / 7');
@@ -31,6 +34,7 @@ export function uuid(version: string): string {
   const value = hex(bytes);
   return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
 }
+
 export function password(length: number, sets: readonly string[]): string {
   boundedNumber(String(length), 8, 256);
   if (!sets.length) throw new Error('Selecione caracteres / Select character sets.');

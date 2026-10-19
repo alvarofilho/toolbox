@@ -1,4 +1,5 @@
 import { text, type ToolControl } from '../../core/models/tool';
+
 export const input = (
   key: string,
   pt: string,
@@ -6,6 +7,7 @@ export const input = (
   value = '',
   type: ToolControl['type'] = 'textarea',
 ): ToolControl => ({ key, label: text(pt, en), value, type });
+
 export const select = (
   key: string,
   pt: string,
@@ -19,6 +21,7 @@ export const select = (
   value,
   options: options.map(([value, pt, en]) => ({ value, label: text(pt, en) })),
 });
+
 export const number = (
   key: string,
   pt: string,
@@ -27,6 +30,7 @@ export const number = (
   min: number,
   max: number,
 ): ToolControl => ({ key, label: text(pt, en), value: String(value), type: 'number', min, max });
+
 export const check = (key: string, pt: string, en: string, checked = true): ToolControl =>
   input(key, pt, en, String(checked), 'checkbox');
 export const source = input('input', 'Entrada', 'Input');

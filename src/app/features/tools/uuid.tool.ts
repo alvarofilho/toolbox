@@ -1,6 +1,7 @@
 import { field, boundedNumber, type ToolDefinition } from '../../core/models/tool';
 import { uuid } from '../../shared/utils/random';
 import { select, number, generate } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'uuid',
   controls: [

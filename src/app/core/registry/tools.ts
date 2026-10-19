@@ -1,4 +1,6 @@
 import { text, type ToolInfo } from '../models/tool';
+import { EXTENDED_TOOLS } from './extended-tools';
+
 export const CATEGORIES = [
   { id: 'json', name: text('JSON e dados', 'JSON & data'), icon: 'braces' },
   {
@@ -13,8 +15,17 @@ export const CATEGORIES = [
     icon: 'shield',
   },
   { id: 'development', name: text('Desenvolvimento', 'Development'), icon: 'code' },
+  { id: 'utilities', name: text('Utilitários gerais', 'General utilities'), icon: 'spark' },
   { id: 'text', name: text('Texto', 'Text'), icon: 'type' },
   { id: 'brazilian', name: text('Ferramentas brasileiras', 'Brazilian tools'), icon: 'document' },
+  { id: 'mercosur', name: text('Mercosul', 'Mercosur'), icon: 'document' },
+  { id: 'database', name: text('Banco de dados e .NET', 'Databases & .NET'), icon: 'building' },
+  {
+    id: 'infrastructure',
+    name: text('Redes e infraestrutura', 'Networks & infrastructure'),
+    icon: 'link',
+  },
+  { id: 'frontend', name: text('CSS e frontend', 'CSS & frontend'), icon: 'grid' },
 ] as const;
 export const TOOLS: readonly ToolInfo[] = [
   {
@@ -107,14 +118,14 @@ export const TOOLS: readonly ToolInfo[] = [
   },
   {
     id: 'token',
-    name: text('Gerador de tokens', 'Secure Token Generator'),
+    name: text('Gerador de tokens e chaves', 'Secure Token and Key Generator'),
     description: text(
-      'Tokens aleatórios com entropia criptográfica.',
-      'Random tokens with cryptographic entropy.',
+      'Gere tokens, segredos e chaves com entropia criptográfica.',
+      'Generate tokens, secrets and keys with cryptographic entropy.',
     ),
     category: 'generators',
     icon: 'hash',
-    keywords: 'secret token hex base64 random seguro',
+    keywords: 'secret token key chave criptografica hexadecimal hex base64 random seguro',
     available: true,
   },
   {
@@ -242,6 +253,7 @@ export const TOOLS: readonly ToolInfo[] = [
     available: true,
     isNew: true,
   },
+  ...EXTENDED_TOOLS,
 ];
 export function findTools(query: string): readonly ToolInfo[] {
   const normalize = (value: string): string =>

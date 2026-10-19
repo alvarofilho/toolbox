@@ -1,5 +1,6 @@
 import { field, text, type ToolDefinition } from '../../core/models/tool';
 import { input } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'regex',
   controls: [

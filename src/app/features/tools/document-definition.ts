@@ -1,6 +1,7 @@
 import { field, text, boundedNumber, type ToolDefinition } from '../../core/models/tool';
 import { generateDocument, validDocument } from '../../shared/utils/documents';
 import { input, select, number, check, synthetic } from './controls';
+
 export function documentDefinition(kind: 'cpf' | 'cnpj'): ToolDefinition {
   return {
     id: kind,

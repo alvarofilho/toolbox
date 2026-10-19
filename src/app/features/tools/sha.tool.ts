@@ -1,6 +1,7 @@
 import { field, text, type ToolDefinition } from '../../core/models/tool';
 import { hex } from '../../shared/utils/random';
 import { source, select } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'sha',
   controls: [

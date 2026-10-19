@@ -9,7 +9,8 @@
       <p>
         {{
           p.label(
-            'Seu kit de ferramentas para transformar dados, testar ideias e simplificar o dia a dia.',
+            'Seu kit de ferramentas para transformar dados, testar ideias e simplificar o dia
+      a dia.',
             'Your toolkit to transform data, test ideas and simplify your everyday work.'
           )
         }}
@@ -26,7 +27,8 @@
         <app-icon name="check" />{{
           p.label(
             'Sem instalar. Sem cadastro. Sem enviar seus dados.',
-            'No install. No sign-up. No uploading your data.'
+            'No
+      install. No sign-up. No uploading your data.'
           )
         }}
       </div>
@@ -116,17 +118,21 @@
         {{
           mode === 'favorites'
             ? p.label(
-                'Seu atalho para o que importa. Use a estrela para adicionar ferramentas.',
+                'Seu atalho para o que importa. Use a estrela para
+        adicionar ferramentas.',
                 'Your shortcut to what matters. Use the star to add tools.'
               )
             : mode === 'recent'
               ? p.label(
-                  'Somente as ferramentas visitadas. Os dados inseridos não são salvos.',
+                  'Somente as ferramentas visitadas. Os dados inseridos não são
+        salvos.',
                   'Only visited tools. Your inputs are never saved.'
                 )
               : p.label(
-                  'Pequenas ferramentas. Grandes atalhos. Tudo no seu navegador.',
-                  'Small tools. Big shortcuts. All in your browser.'
+                  'Pequenas
+        ferramentas. Grandes atalhos. Tudo no seu navegador.',
+                  'Small tools. Big shortcuts. All in
+        your browser.'
                 )
         }}
       </p>
@@ -186,15 +192,18 @@
             query()
               ? p.label(
                   'Tente outro termo ou explore as categorias.',
-                  'Try another term or explore the categories.'
+                  'Try another term or
+        explore the categories.'
                 )
               : mode === 'favorites'
                 ? p.label(
-                    'Clique na estrela de uma ferramenta para encontrá-la aqui.',
+                    'Clique na estrela de uma
+        ferramenta para encontrá-la aqui.',
                     'Click a tool’s star to find it here.'
                   )
                 : p.label(
-                    'As ferramentas que você abrir vão aparecer aqui.',
+                    'As
+        ferramentas que você abrir vão aparecer aqui.',
                     'Tools you open will appear here.'
                   )
           }}
@@ -209,8 +218,10 @@
     <p class="favorites-tip">
       <app-icon name="star" />{{
         p.label(
-          'Tem uma ferramenta que você usa sempre? Marque a estrela e deixe nos favoritos.',
-          'Have a tool you use all the time? Star it and keep it in your favorites.'
+          'Tem uma ferramenta que você usa sempre? Marque a estrela e
+    deixe nos favoritos.',
+          'Have a tool you use all the time? Star it and keep it in your
+    favorites.'
         )
       }}
     </p>

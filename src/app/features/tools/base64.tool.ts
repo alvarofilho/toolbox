@@ -1,6 +1,7 @@
 import { field, type ToolDefinition } from '../../core/models/tool';
 import { base64Decode, base64Encode } from '../../shared/utils/encoding';
 import { source, select, transform } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'base64',
   controls: [

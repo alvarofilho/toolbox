@@ -1,6 +1,7 @@
 import { field, text, type ToolDefinition } from '../../core/models/tool';
 import { timestamp } from '../../shared/utils/encoding';
 import { input, select } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'timestamp',
   controls: [

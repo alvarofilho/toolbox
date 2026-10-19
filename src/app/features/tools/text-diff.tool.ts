@@ -1,6 +1,7 @@
 import { field, text, type ToolDefinition } from '../../core/models/tool';
 import { lineDiff } from '../../shared/utils/difference';
 import { input } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'text-diff',
   controls: [

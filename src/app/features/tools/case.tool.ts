@@ -1,6 +1,7 @@
 import { field, type ToolDefinition } from '../../core/models/tool';
 import { convertCase } from '../../shared/utils/encoding';
 import { source, select, transform } from './controls';
+
 export const definition: ToolDefinition = {
   id: 'case',
   controls: [

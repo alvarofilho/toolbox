@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
 import type { ToolDefinition } from './core/models/tool';
 import { TOOLS } from './core/registry/tools';
+import { EXTENDED_LOADERS } from './features/tools/extended/loaders';
 
 export const TOOL_LOADERS: Readonly<Record<string, () => Promise<{ definition: ToolDefinition }>>> =
   {
+    ...EXTENDED_LOADERS,
     'json-formatter': () => import('./features/tools/json-formatter.tool'),
     'json-minifier': () => import('./features/tools/json-minifier.tool'),
     'json-diff': () => import('./features/tools/json-diff.tool'),

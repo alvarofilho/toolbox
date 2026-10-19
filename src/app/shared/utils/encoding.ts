@@ -1,6 +1,7 @@
 export function base64Encode(value: string): string {
   return btoa(Array.from(new TextEncoder().encode(value), (b) => String.fromCharCode(b)).join(''));
 }
+
 export function base64Decode(value: string): string {
   const compact = value.replace(/\s/g, '');
   if (!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}(?:==)?|[A-Za-z0-9+/]{3}=?)?$/.test(compact))
@@ -9,6 +10,7 @@ export function base64Decode(value: string): string {
     Uint8Array.from(atob(compact), (c) => c.charCodeAt(0)),
   );
 }
+
 export function decodeJwt(value: string): string {
   const parts = value.trim().split('.');
   if (
@@ -39,6 +41,7 @@ export function decodeJwt(value: string): string {
   }
   return JSON.stringify({ header, payload, dates: claims, signatureVerified: false }, null, 2);
 }
+
 export function timestamp(value: string, mode: string): string {
   if (mode === 'iso') {
     if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2})$/.test(value))
@@ -83,6 +86,7 @@ export function timestamp(value: string, mode: string): string {
     2,
   );
 }
+
 export function convertCase(value: string, mode: string): string {
   const words = value
     .replace(/([a-z\d])([A-Z])/g, '$1 $2')

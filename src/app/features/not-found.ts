@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PreferencesService } from '../core/services/preferences';
+
 @Component({
   imports: [RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,

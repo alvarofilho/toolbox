@@ -5,12 +5,13 @@ import { PreferencesService } from '../../core/services/preferences';
 import { CATEGORIES, findTools, TOOLS } from '../../core/registry/tools';
 import { ToolCard } from '../../shared/components/tool-card';
 import { Icon } from '../../shared/components/icon';
+
 @Component({
   selector: 'app-home',
   imports: [ToolCard, Icon, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrl: './home.scss',
 })
 export class Home {
   protected readonly p = inject(PreferencesService);

@@ -1,5 +1,6 @@
 /// <reference lib="webworker" />
 import { regexMatches } from '../../shared/utils/regex';
+
 addEventListener(
   'message',
   ({ data }: MessageEvent<{ pattern: string; flags: string; input: string }>) => {

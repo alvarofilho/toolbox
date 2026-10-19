@@ -7,6 +7,7 @@ import {
   inject,
   Injector,
   signal,
+  viewChild,
 } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -15,11 +16,14 @@ import { DOCUMENT } from '@angular/common';
 import { PreferencesService } from './core/services/preferences';
 import { CATEGORIES, TOOLS } from './core/registry/tools';
 import { Icon } from './shared/components/icon';
+import { CommandPalette } from './shared/components/command-palette';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon, CommandPalette],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.html',
+  styleUrl: './app.scss',
 })
 export class App {
   protected readonly p = inject(PreferencesService);
@@ -29,6 +33,12 @@ export class App {
   protected readonly categories = CATEGORIES;
   protected readonly count = TOOLS.length;
   protected readonly menuOpen = signal(false);
+  private readonly commands = viewChild.required(CommandPalette);
+  protected readonly commandShortcut = /Mac|iPhone|iPad/.test(
+    this.document.defaultView?.navigator.platform ?? '',
+  )
+    ? '⌘ K'
+    : 'Ctrl K';
   private lastPath = '';
   constructor() {
     effect((onCleanup) => {
@@ -48,15 +58,19 @@ export class App {
       .subscribe((event) => {
         const path = event.urlAfterRedirects.split('?')[0];
         this.menuOpen.set(false);
-        if (path !== this.lastPath && this.document.activeElement?.id !== 'global-search')
+        this.commands().close();
+        if (path !== this.lastPath)
           this.document.getElementById('main-content')?.focus({ preventScroll: true });
         this.lastPath = path;
       });
   }
-  protected search(event: Event): void {
-    const target = event.target;
-    if (target instanceof HTMLInputElement)
-      void this.router.navigate(['/tools'], { queryParams: { q: target.value || null } });
+  protected openCommands(): void {
+    if (this.commands().isOpen()) {
+      this.commands().close();
+      return;
+    }
+    this.menuOpen.set(false);
+    afterNextRender(() => this.commands().open(), { injector: this.injector });
   }
   @HostListener('document:keydown', ['$event'])
   protected onKey(event: KeyboardEvent): void {
@@ -85,10 +99,7 @@ export class App {
     }
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
       event.preventDefault();
-      this.menuOpen.set(false);
-      afterNextRender(() => this.document.getElementById('global-search')?.focus(), {
-        injector: this.injector,
-      });
+      if (!event.repeat && !event.isComposing) this.openCommands();
     }
     if (event.key === 'Escape' && this.menuOpen()) {
       this.closeMenu();

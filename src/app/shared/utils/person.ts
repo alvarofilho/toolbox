@@ -45,6 +45,7 @@ export function people(
     return person;
   });
 }
+
 export function exportPeople(records: readonly Person[], format: string): string {
   if (format === 'json') return JSON.stringify(records, null, 2);
   const keys = Object.keys(records[0] ?? {});

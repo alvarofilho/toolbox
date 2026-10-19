@@ -1,4 +1,5 @@
 import { diffLines } from 'diff';
+
 export function lineDiff(left: string, right: string): string {
   if (left === right) return '= Sem diferenças / No differences';
   const changes = diffLines(left, right, { timeout: 300, maxEditLength: 2000 });
@@ -19,6 +20,7 @@ export function lineDiff(left: string, right: string): string {
     )
     .join('');
 }
+
 export function canonicalJson(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(canonicalJson);
   if (value !== null && typeof value === 'object')
