@@ -25,6 +25,8 @@ O build estático fica em `dist/cloudflare/browser`. A configuração mantém `s
 
 A produção desabilita apenas a inserção de CSS crítico (`optimization.styles.inlineCritical: false`): o carregador inline gerado pelo Angular seria bloqueado por `script-src 'self'`. Scripts e CSS continuam minificados. Mantenha essa opção alinhada à CSP em `public/_headers`.
 
+Os headers usam `Cache-Control: public, max-age=0, must-revalidate, no-transform` para preservar os arquivos publicados e impedir injeção automática de scripts pelo proxy Cloudflare, incluindo Rocket Loader e Web Analytics. O navegador revalida os recursos com o servidor; não habilite otimizações que reescrevam o HTML desta aplicação.
+
 ## MVP funcional
 
 | Área                    | Ferramentas                                                 |
