@@ -126,7 +126,8 @@
 .example-result {
 	background: var(--paper);
 }
-.example-result pre {
+.example-code {
+	display: block;
 	font:
 		12px/1.9 'IBM Plex Mono',
 		monospace;

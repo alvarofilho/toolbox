@@ -1,199 +1,269 @@
 @if (mode === 'home') {
-<section class="home-intro" [class.is-searching]="query().length > 0">
-	<div class="intro-copy">
-		<h1>
-			{{ 'common.fewer_tabs' | transloco }}
-			<br />
-			<span>
-				{{'common.more_solutions' | transloco}}
-			</span>
-		</h1>
-		<p>
-			{{ 'common.your_toolkit_to_transform_data_test_ideas_' | transloco }}
-		</p>
-		<div class="intro-search">
-			<app-icon name="search" />
-			<input type="search" [value]="query()" [placeholder]="'common.what_do_you_need_to_do_today' | transloco"
-				[attr.aria-label]="'common.search_tools' | transloco" (input)="search($event)" />
-		</div>
-		<div class="intro-note">
-			<app-icon name="check" />{{
-			'common.no_install_no_sign_up_no_uploading_your_da' | transloco
-			}}
-		</div>
-	</div>
-	<section class="example-workbench" [attr.aria-label]="'common.json_formatting_example' | transloco">
-		<div class="example-heading">
-			<span><app-icon name="braces" /> JSON Formatter</span>
-			<span class="example-label">{{ 'common.example' | transloco }}</span>
-		</div>
-		<div class="example-input">
-			<span>{{ 'common.input' | transloco }}</span><code>{{ exampleInput() }}</code>
-		</div>
-		<div class="example-result">
-			<span>{{ 'common.result_2_spaces' | transloco }}</span>
-			<pre>@for(line of exampleLines();track $index){<span class="example-line"><span class="example-line-number" aria-hidden="true">{{$index+1}}</span>{{line}}</span>}</pre>
-		</div>
-		<a class="example-action" routerLink="/tools/json-formatter">{{ 'common.format_my_json' | transloco }}<app-icon
-				name="arrow" /></a>
-	</section>
-</section>
-@if (!query()) {
-@if (p.recentTools().length) {
-<section class="recent-strip">
-	<span><app-icon name="clock" />{{ 'common.recently_opened' | transloco }}</span>
-	<div>
-		@for (tool of p.recentTools().slice(0, 3); track tool.id) {
-		<a [routerLink]="['/tools', tool.id]">{{ tool.name.key | transloco }} <app-icon name="arrow" /></a>
-		}
-	</div>
-</section>
-}
-@if (p.favoriteTools().length) {
-<section class="catalog-section">
-	<div class="section-title">
-		<h2>{{ 'common.your_favorites' | transloco }}</h2>
-		<a routerLink="/favorites">{{ 'common.view_favorites' | transloco }} <app-icon name="arrow" /></a>
-	</div>
-	<div class="tools-grid">
-		@for (tool of p.favoriteTools().slice(0, 3); track tool.id) {
-		<app-tool-card [tool]="tool" />
-		}
-	</div>
-</section>
-}
-<section class="catalog-section essentials">
-	<div class="section-title">
-		<div>
-			<h2>{{ 'common.everyday_essentials' | transloco }}</h2>
+	<section class="home-intro" [class.is-searching]="query().length > 0">
+		<div class="intro-copy">
+			<h1>
+				{{ 'common.fewer_tabs' | transloco }}
+				<br />
+				<span>
+					{{ 'common.more_solutions' | transloco }}
+				</span>
+			</h1>
 			<p>
-				{{ 'common.a_selection_to_keep_close_at_hand' | transloco }}
+				{{ 'common.your_toolkit_to_transform_data_test_ideas_' | transloco }}
 			</p>
+			<div class="intro-search">
+				<app-icon name="search" />
+				<input
+					type="search"
+					[value]="query()"
+					[placeholder]="'common.what_do_you_need_to_do_today' | transloco"
+					[attr.aria-label]="'common.search_tools' | transloco"
+					(input)="search($event)"
+				/>
+			</div>
+			<div class="intro-note">
+				<app-icon name="check" />
+				{{ 'common.no_install_no_sign_up_no_uploading_your_da' | transloco }}
+			</div>
 		</div>
-		<a routerLink="/tools">{{ 'common.explore_all' | transloco }} <app-icon name="arrow" /></a>
-	</div>
-	<div class="tools-grid">
-		@for (tool of popular; track tool.id) {
-		<app-tool-card [tool]="tool" variant="compact" />
+		<section
+			class="example-workbench"
+			[attr.aria-label]="'common.json_formatting_example' | transloco"
+		>
+			<div class="example-heading">
+				<span>
+					<app-icon name="braces" />
+					JSON Formatter
+				</span>
+				<span class="example-label">{{ 'common.example' | transloco }}</span>
+			</div>
+			<div class="example-input">
+				<span>{{ 'common.input' | transloco }}</span>
+				<code>{{ exampleInput() }}</code>
+			</div>
+			<div class="example-result">
+				<span>{{ 'common.result_2_spaces' | transloco }}</span>
+				<code class="example-code">
+					@for (line of exampleLines(); track $index) {
+						<span class="example-line">
+							<span class="example-line-number" aria-hidden="true">{{ $index + 1 }}</span>
+							<span [textContent]="line"></span>
+						</span>
+					}
+				</code>
+			</div>
+			<a class="example-action" routerLink="/tools/json-formatter">
+				{{ 'common.format_my_json' | transloco }}
+				<app-icon name="arrow" />
+			</a>
+		</section>
+	</section>
+	@if (!query()) {
+		@if (p.recentTools().length) {
+			<section class="recent-strip">
+				<span>
+					<app-icon name="clock" />
+					{{ 'common.recently_opened' | transloco }}
+				</span>
+				<div>
+					@for (tool of p.recentTools().slice(0, 3); track tool.id) {
+						<a [routerLink]="['/tools', tool.id]">
+							{{ tool.name.key | transloco }}
+							<app-icon name="arrow" />
+						</a>
+					}
+				</div>
+			</section>
 		}
-	</div>
-</section>
-}
+		@if (p.favoriteTools().length) {
+			<section class="catalog-section">
+				<div class="section-title">
+					<h2>{{ 'common.your_favorites' | transloco }}</h2>
+					<a routerLink="/favorites">
+						{{ 'common.view_favorites' | transloco }}
+						<app-icon name="arrow" />
+					</a>
+				</div>
+				<div class="tools-grid">
+					@for (tool of p.favoriteTools().slice(0, 3); track tool.id) {
+						<app-tool-card [tool]="tool" />
+					}
+				</div>
+			</section>
+		}
+		<section class="catalog-section essentials">
+			<div class="section-title">
+				<div>
+					<h2>{{ 'common.everyday_essentials' | transloco }}</h2>
+					<p>
+						{{ 'common.a_selection_to_keep_close_at_hand' | transloco }}
+					</p>
+				</div>
+				<a routerLink="/tools">
+					{{ 'common.explore_all' | transloco }}
+					<app-icon name="arrow" />
+				</a>
+			</div>
+			<div class="tools-grid">
+				@for (tool of popular; track tool.id) {
+					<app-tool-card [tool]="tool" variant="compact" />
+				}
+			</div>
+		</section>
+	}
 }
 @if (mode === 'home' && !query()) {
-<section class="category-directory catalog-section">
-	<div class="section-title">
-		<div>
-			<h2>
-				{{ 'common.explore_by_category' | transloco }}
-			</h2>
-			<p>
-				{{ 'common.find_a_shortcut_for_your_next_task' | transloco }}
-			</p>
+	<section class="category-directory catalog-section">
+		<div class="section-title">
+			<div>
+				<h2>
+					{{ 'common.explore_by_category' | transloco }}
+				</h2>
+				<p>
+					{{ 'common.find_a_shortcut_for_your_next_task' | transloco }}
+				</p>
+			</div>
+			<a routerLink="/tools">
+				{{ 'common.view_all' | transloco }}
+				<app-icon name="arrow" />
+			</a>
 		</div>
-		<a routerLink="/tools">{{ 'common.view_all' | transloco }}<app-icon name="arrow" /></a>
-	</div>
-	<nav class="category-directory-grid" [attr.aria-label]="'common.tool_categories' | transloco">
-		@for (category of categoryDirectory; track category.id) {
-		<a [routerLink]="['/category', category.id]"><app-icon [name]="category.icon" /><span>{{ category.name.key |
-				transloco }}</span><span class="category-count">{{ category.count }}</span></a>
-		}
-	</nav>
-</section>
-} @else {
-<section class="catalog-section all-tools">
-	<div class="section-title">
-		<div>
-			@if (mode !== 'home') {
-			<h1 class="page-title">
-				{{ query() ? ('common.search_results' | transloco) : title() }}
-			</h1>
-			} @else {
-			<h2>
-				{{ 'common.search_results' | transloco }}
-			</h2>
+		<nav class="category-directory-grid" [attr.aria-label]="'common.tool_categories' | transloco">
+			@for (category of categoryDirectory; track category.id) {
+				<a [routerLink]="['/category', category.id]">
+					<app-icon [name]="category.icon" />
+					<span>{{ category.name.key | transloco }}</span>
+					<span class="category-count">{{ category.count }}</span>
+				</a>
 			}
-			<p>
-				{{
-				mode === 'favorites'
-				? ('common.your_shortcut_to_what_matters_use_the_star' | transloco)
-				: mode === 'recent'
-				? ('common.only_visited_tools_your_inputs_are_never_s' | transloco)
-				: ('common.small_tools_big_shortcuts_all_in_your_brow' | transloco)
-				}}
-			</p>
+		</nav>
+	</section>
+} @else {
+	<section class="catalog-section all-tools">
+		<div class="section-title">
+			<div>
+				@if (mode !== 'home') {
+					<h1 class="page-title">
+						{{ query() ? ('common.search_results' | transloco) : title() }}
+					</h1>
+				} @else {
+					<h2>
+						{{ 'common.search_results' | transloco }}
+					</h2>
+				}
+				<p>
+					{{
+						mode === 'favorites'
+							? ('common.your_shortcut_to_what_matters_use_the_star' | transloco)
+							: mode === 'recent'
+								? ('common.only_visited_tools_your_inputs_are_never_s' | transloco)
+								: ('common.small_tools_big_shortcuts_all_in_your_brow' | transloco)
+					}}
+				</p>
+			</div>
+			@if (mode === 'recent' && p.recent().length) {
+				<button type="button" class="btn btn-ghost" (click)="p.clearRecent()">
+					{{ 'common.clear_history' | transloco }}
+				</button>
+			}
 		</div>
-		@if (mode === 'recent' && p.recent().length) {
-		<button type="button" class="btn btn-ghost" (click)="p.clearRecent()">
-			{{ 'common.clear_history' | transloco }}
-		</button>
+		@if (mode !== 'home') {
+			<div class="catalog-search">
+				<app-icon name="search" />
+				<input
+					type="search"
+					[value]="query()"
+					(input)="search($event)"
+					[placeholder]="'common.name_category_or_keyword' | transloco"
+					[attr.aria-label]="'common.filter_tools' | transloco"
+				/>
+			</div>
 		}
-	</div>
-	@if (mode !== 'home') {
-	<div class="catalog-search">
-		<app-icon name="search" /><input type="search" [value]="query()" (input)="search($event)"
-			[placeholder]="'common.name_category_or_keyword' | transloco"
-			[attr.aria-label]="'common.filter_tools' | transloco" />
-	</div>
-	}
-	<div class="catalog-toolbar">
-		<p role="status">
-			{{ filtered().length }}
-			{{ 'common.tools_found' | transloco }}
-		</p>
-		@if (query()) {
-		<button type="button" class="btn btn-ghost" (click)="clearSearch()">
-			{{ 'common.clear_search' | transloco }}
-		</button>
+		<div class="catalog-toolbar">
+			<p role="status">
+				{{ filtered().length }}
+				{{ 'common.tools_found' | transloco }}
+			</p>
+			@if (query()) {
+				<button type="button" class="btn btn-ghost" (click)="clearSearch()">
+					{{ 'common.clear_search' | transloco }}
+				</button>
+			}
+			@if (filtered().length) {
+				<div
+					class="catalog-view"
+					role="group"
+					[attr.aria-label]="'common.catalog_view' | transloco"
+				>
+					<button
+						type="button"
+						class="btn btn-ghost"
+						[attr.aria-pressed]="view() === 'list'"
+						(click)="view.set('list')"
+					>
+						{{ 'common.list' | transloco }}
+					</button>
+					<button
+						type="button"
+						class="btn btn-ghost"
+						[attr.aria-pressed]="view() === 'standard'"
+						(click)="view.set('standard')"
+					>
+						{{ 'common.cards' | transloco }}
+					</button>
+				</div>
+			}
+		</div>
+		@if ((mode === 'all' || mode === 'category') && !query()) {
+			<nav class="category-filters" [attr.aria-label]="'common.filter_by_category' | transloco">
+				<a
+					routerLink="/tools"
+					[class.selected]="mode === 'all'"
+					[attr.aria-current]="mode === 'all' ? 'page' : null"
+				>
+					{{ 'common.all' | transloco }}
+					<span>{{ tools.length }}</span>
+				</a>
+				@for (c of categories; track c.id) {
+					<a
+						[routerLink]="['/category', c.id]"
+						[class.selected]="c.id === category()?.id"
+						[attr.aria-current]="c.id === category()?.id ? 'page' : null"
+					>
+						{{ c.name.key | transloco }}
+					</a>
+				}
+			</nav>
 		}
 		@if (filtered().length) {
-		<div class="catalog-view" role="group" [attr.aria-label]="'common.catalog_view' | transloco">
-			<button type="button" class="btn btn-ghost" [attr.aria-pressed]="view() === 'list'" (click)="view.set('list')">
-				{{ 'common.list' | transloco }}</button><button type="button" class="btn btn-ghost"
-				[attr.aria-pressed]="view() === 'standard'" (click)="view.set('standard')">
-				{{ 'common.cards' | transloco }}
-			</button>
-		</div>
-		}
-	</div>
-	@if ((mode === 'all' || mode === 'category') && !query()) {
-	<nav class="category-filters" [attr.aria-label]="'common.filter_by_category' | transloco">
-		<a routerLink="/tools" [class.selected]="mode === 'all'" [attr.aria-current]="mode === 'all' ? 'page' : null">{{
-			'common.all' | transloco }} <span>{{ tools.length }}</span></a>
-		@for (c of categories; track c.id) {
-		<a [routerLink]="['/category', c.id]" [class.selected]="c.id === category()?.id"
-			[attr.aria-current]="c.id === category()?.id ? 'page' : null">{{ c.name.key | transloco }}</a>
-		}
-	</nav>
-	}
-	@if (filtered().length) {
-	@for (group of groups(); track group.id) {
-	<section class="catalog-group">
-		@if (group.name) {
-		<h2>
-			{{ group.name }} <span class="total-count">{{ group.tools.length }}</span>
-		</h2>
-		}
-		<div [class.tools-grid]="view() === 'standard'" [class.tools-list]="view() === 'list'">
-			@for (tool of group.tools; track tool.id) {
-			<app-tool-card [tool]="tool" [variant]="view()" />
+			@for (group of groups(); track group.id) {
+				<section class="catalog-group">
+					@if (group.name) {
+						<h2>
+							{{ group.name }}
+							<span class="total-count">{{ group.tools.length }}</span>
+						</h2>
+					}
+					<div [class.tools-grid]="view() === 'standard'" [class.tools-list]="view() === 'list'">
+						@for (tool of group.tools; track tool.id) {
+							<app-tool-card [tool]="tool" [variant]="view()" />
+						}
+					</div>
+				</section>
 			}
-		</div>
-	</section>
-	}
-	} @else {
-	<div class="empty-state">
-		<app-icon [name]="mode === 'favorites' ? 'star' : mode === 'recent' ? 'clock' : 'search'" />
-		<h2>{{ emptyTitle() }}</h2>
-		<p>{{ emptyDescription() }}</p>
-		@if (query()) {
-		<button type="button" class="btn btn-primary" (click)="clearSearch()">
-			{{ 'common.clear_search' | transloco }}
-		</button>
 		} @else {
-		<a class="btn btn-primary" routerLink="/tools">{{ 'common.exploreTools' | transloco }}</a>
+			<div class="empty-state">
+				<app-icon [name]="mode === 'favorites' ? 'star' : mode === 'recent' ? 'clock' : 'search'" />
+				<h2>{{ emptyTitle() }}</h2>
+				<p>{{ emptyDescription() }}</p>
+				@if (query()) {
+					<button type="button" class="btn btn-primary" (click)="clearSearch()">
+						{{ 'common.clear_search' | transloco }}
+					</button>
+				} @else {
+					<a class="btn btn-primary" routerLink="/tools">{{ 'common.exploreTools' | transloco }}</a>
+				}
+			</div>
 		}
-	</div>
-	}
-</section>
+	</section>
 }

@@ -7,10 +7,13 @@
 	[attr.aria-modal]="menuOpen() ? 'true' : null"
 	[attr.aria-label]="'common.main_navigation' | transloco"
 >
-	<a class="brand" routerLink="/" (click)="closeMenu(false)"
-		><span class="brand-mark"><app-icon name="box" /></span
-		><span>toolbox<span class="brand-dot">.</span></span></a
-	>
+	<a class="brand" routerLink="/" (click)="closeMenu(false)">
+		<span class="brand-mark"><app-icon name="box" /></span>
+		<span>
+			toolbox
+			<span class="brand-dot">.</span>
+		</span>
+	</a>
 	<button
 		id="sidebar-close"
 		class="btn btn-ghost btn-square sidebar-close"
@@ -29,23 +32,29 @@
 			routerLinkActive="active"
 			[routerLinkActiveOptions]="{ exact: true }"
 			ariaCurrentWhenActive="page"
-			><app-icon name="home" />{{ 'common.overview' | transloco }}</a
 		>
+			<app-icon name="home" />
+			{{ 'common.overview' | transloco }}
+		</a>
 		<a
 			routerLink="/tools"
 			(click)="closeMenu(false)"
 			routerLinkActive="active"
 			[routerLinkActiveOptions]="{ exact: true }"
 			ariaCurrentWhenActive="page"
-			><app-icon name="grid" />{{ 'common.all_tools' | transloco
-			}}<span class="nav-count">{{ count }}</span></a
 		>
+			<app-icon name="grid" />
+			{{ 'common.all_tools' | transloco }}
+			<span class="nav-count">{{ count }}</span>
+		</a>
 		<a
 			routerLink="/favorites"
 			(click)="closeMenu(false)"
 			routerLinkActive="active"
 			ariaCurrentWhenActive="page"
-			><app-icon name="star" />{{ 'common.favorites' | transloco }}
+		>
+			<app-icon name="star" />
+			{{ 'common.favorites' | transloco }}
 			@if (p.favorites().length) {
 				<span class="nav-count">{{ p.favorites().length }}</span>
 			}
@@ -55,8 +64,10 @@
 			(click)="closeMenu(false)"
 			routerLinkActive="active"
 			ariaCurrentWhenActive="page"
-			><app-icon name="clock" />{{ 'common.recent_tools' | transloco }}</a
 		>
+			<app-icon name="clock" />
+			{{ 'common.recent_tools' | transloco }}
+		</a>
 		<div class="nav-heading">{{ 'common.categories' | transloco }}</div>
 		@for (category of categories; track category.id) {
 			<a
@@ -64,16 +75,22 @@
 				(click)="closeMenu(false)"
 				routerLinkActive="active"
 				ariaCurrentWhenActive="page"
-				><app-icon [name]="category.icon" />{{ category.name.key | transloco }}</a
 			>
+				<app-icon [name]="category.icon" />
+				{{ category.name.key | transloco }}
+			</a>
 		}
 	</nav>
 	<div class="sidebar-bottom">
-		<app-icon name="shield" /><strong>{{ 'common.your_data_stays_with_you' | transloco }}</strong>
+		<app-icon name="shield" />
+		<strong>{{ 'common.your_data_stays_with_you' | transloco }}</strong>
 		<p>
 			{{ 'common.everything_runs_in_your_browser_no_account' | transloco }}
 		</p>
-		<span class="local-status"><span></span>{{ 'common.built_to_run_locally' | transloco }}</span>
+		<span class="local-status">
+			<span></span>
+			{{ 'common.built_to_run_locally' | transloco }}
+		</span>
 	</div>
 </aside>
 @if (menuOpen()) {
@@ -111,10 +128,12 @@
 			<kbd>{{ commandShortcut }}</kbd>
 		</button>
 		<div class="header-actions">
-			<span class="header-local"
-				><app-icon name="shield" />{{ 'common.100_in_your_browser' | transloco }}</span
-			><span class="header-divider"></span
-			><label class="language-control">
+			<span class="header-local">
+				<app-icon name="shield" />
+				{{ 'common.100_in_your_browser' | transloco }}
+			</span>
+			<span class="header-divider"></span>
+			<label class="language-control">
 				<select
 					class="language-select"
 					[attr.aria-label]="'common.language' | transloco"
@@ -124,21 +143,24 @@
 					<option value="pt">Português</option>
 					<option value="en">English</option>
 					<option value="es">Español</option>
-				</select> </label
-			><button
+				</select>
+			</label>
+			<button
 				class="btn btn-ghost btn-square"
 				(click)="p.toggleTheme()"
 				[attr.aria-label]="'common.toggle_light_and_dark_theme' | transloco"
 			>
-				<app-icon [name]="p.theme() === 'light' ? 'moon' : 'sun'" /></button
-			><a
+				<app-icon [name]="p.theme() === 'light' ? 'moon' : 'sun'" />
+			</button>
+			<a
 				class="btn btn-ghost btn-square"
 				href="https://github.com/alvarofilho/toolbox"
 				target="_blank"
 				rel="noopener noreferrer"
 				[attr.aria-label]="'common.github_repository_new_tab' | transloco"
-				><app-icon name="github"
-			/></a>
+			>
+				<app-icon name="github" />
+			</a>
 		</div>
 	</header>
 	<main id="main-content" tabindex="-1">
@@ -150,15 +172,17 @@
 		<router-outlet />
 	</main>
 	<footer class="page-footer">
-		<span
-			>toolbox. <span class="footer-separator">/</span>
-			{{ 'common.less_friction_more_code' | transloco }}</span
-		><span
-			>{{ 'common.free_open_yours' | transloco }}
-			<a href="https://github.com/alvarofilho/toolbox" target="_blank" rel="noopener noreferrer"
-				>GitHub ↗</a
-			></span
-		>
+		<span>
+			toolbox.
+			<span class="footer-separator">/</span>
+			{{ 'common.less_friction_more_code' | transloco }}
+		</span>
+		<span>
+			{{ 'common.free_open_yours' | transloco }}
+			<a href="https://github.com/alvarofilho/toolbox" target="_blank" rel="noopener noreferrer">
+				GitHub ↗
+			</a>
+		</span>
 	</footer>
 </div>
 <app-command-palette />

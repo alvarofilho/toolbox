@@ -5,13 +5,16 @@
 >
 	<a [routerLink]="['/tools', tool().id]" class="tool-card-link">
 		<div class="card-top">
-			<span class="tool-icon" [attr.data-category]="tool().category"
-				><app-icon [name]="tool().icon"
-			/></span>
+			<span class="tool-icon" [attr.data-category]="tool().category">
+				<app-icon [name]="tool().icon" />
+			</span>
 		</div>
 		<h3>{{ tool().name.key | transloco }}</h3>
 		<p>{{ variant() === 'compact' ? categoryName() : (tool().description.key | transloco) }}</p>
-		<span class="card-open">{{ categoryName() }} <app-icon name="arrow" /></span>
+		<span class="card-open">
+			{{ categoryName() }}
+			<app-icon name="arrow" />
+		</span>
 	</a>
 	<button
 		class="favorite-button btn btn-ghost btn-square"

@@ -59,10 +59,10 @@
 						(click)="execute(command)"
 					>
 						<app-icon [name]="command.icon" />
-						<span class="command-copy"
-							><strong>{{ command.name.key | transloco }}</strong
-							><span>{{ command.description.key | transloco }}</span></span
-						>
+						<span class="command-copy">
+							<strong>{{ command.name.key | transloco }}</strong>
+							<span>{{ command.description.key | transloco }}</span>
+						</span>
 						<app-icon class="command-go" name="arrow" />
 					</button>
 				}
@@ -79,15 +79,20 @@
 		</div>
 	}
 	<div class="command-footer">
-		<span class="command-hints"
-			><span><kbd>↑</kbd><kbd>↓</kbd> {{ 'common.navigate' | transloco }}</span
-			><span><kbd>Enter</kbd> {{ 'common.run' | transloco }}</span></span
-		>
-		<span role="status" aria-live="polite"
-			>{{ results().length }}
-			{{
-				results().length === 1 ? ('common.result' | transloco) : ('common.results' | transloco)
-			}}</span
-		>
+		<span class="command-hints">
+			<span>
+				<kbd>↑</kbd>
+				<kbd>↓</kbd>
+				{{ 'common.navigate' | transloco }}
+			</span>
+			<span>
+				<kbd>Enter</kbd>
+				{{ 'common.run' | transloco }}
+			</span>
+		</span>
+		<span role="status" aria-live="polite">
+			{{ results().length }}
+			{{ results().length === 1 ? ('common.result' | transloco) : ('common.results' | transloco) }}
+		</span>
 	</div>
 </dialog>

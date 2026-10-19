@@ -1,16 +1,16 @@
 <nav class="tool-breadcrumb" [attr.aria-label]="'common.breadcrumb' | transloco">
-	<a routerLink="/tools">{{ 'common.tools' | transloco }}</a
-	><span aria-hidden="true">/</span>
+	<a routerLink="/tools">{{ 'common.tools' | transloco }}</a>
+	<span aria-hidden="true">/</span>
 	@if (category(); as category) {
-		<a [routerLink]="['/category', category.id]">{{ category.name.key | transloco }}</a
-		><span aria-hidden="true">/</span>
+		<a [routerLink]="['/category', category.id]">{{ category.name.key | transloco }}</a>
+		<span aria-hidden="true">/</span>
 	}
 	<span aria-current="page">{{ info().name.key | transloco }}</span>
 </nav>
 <section class="tool-heading">
-	<span class="tool-icon" [attr.data-category]="info().category"
-		><app-icon [name]="info().icon"
-	/></span>
+	<span class="tool-icon" [attr.data-category]="info().category">
+		<app-icon [name]="info().icon" />
+	</span>
 	<div>
 		<h1>{{ info().name.key | transloco }}</h1>
 		<p>{{ info().description.key | transloco }}</p>
@@ -21,7 +21,8 @@
 		(click)="p.toggleFavorite(info().id)"
 		[attr.aria-pressed]="p.favorites().includes(info().id)"
 	>
-		<app-icon name="star" />{{
+		<app-icon name="star" />
+		{{
 			p.favorites().includes(info().id)
 				? ('common.favorited' | transloco)
 				: ('common.favorite' | transloco)
@@ -29,7 +30,10 @@
 	</button>
 </section>
 @if (tool().hint; as hint) {
-	<p class="tool-hint"><app-icon name="shield" />{{ hint.key | transloco }}</p>
+	<p class="tool-hint">
+		<app-icon name="shield" />
+		{{ hint.key | transloco }}
+	</p>
 }
 <div class="workbench" [class.workbench-diff]="isDiffTool()">
 	<form class="input-panel workspace-panel" (submit)="run($event)" novalidate>
@@ -53,14 +57,15 @@
 			</legend>
 			@for (control of controls(); track control.key) {
 				@if (control.type === 'checkbox') {
-					<label class="checkbox-field"
-						><input
+					<label class="checkbox-field">
+						<input
 							type="checkbox"
 							class="checkbox checkbox-sm"
 							[checked]="values()[control.key] === 'true'"
 							(change)="update(control.key, $event)"
-						/>{{ control.label.key | transloco }}</label
-					>
+						/>
+						{{ control.label.key | transloco }}
+					</label>
 				} @else {
 					<div
 						class="field"
@@ -86,7 +91,8 @@
 									<ul class="selected-files">
 										@for (file of files()[control.key]; track $index) {
 											<li>
-												{{ file.name }} <span>{{ (file.size / 1024).toFixed(1) }} KB</span>
+												{{ file.name }}
+												<span>{{ (file.size / 1024).toFixed(1) }} KB</span>
 											</li>
 										}
 									</ul>
@@ -166,7 +172,8 @@
 												revealed().includes(control.key)
 													? ('common.hide' | transloco)
 													: ('common.show' | transloco)
-											}}<span class="sr-only"> {{ control.label.key | transloco }}</span>
+											}}
+											<span class="sr-only">{{ control.label.key | transloco }}</span>
 										</button>
 									}
 								</div>
@@ -190,8 +197,8 @@
 				@if (busy()) {
 					<span class="loading loading-spinner loading-xs"></span>
 				}
-				{{ busy() ? ('common.processing_ellipsis' | transloco) : action()
-				}}<app-icon name="arrow" />
+				{{ busy() ? ('common.processing_ellipsis' | transloco) : action() }}
+				<app-icon name="arrow" />
 			</button>
 			@if (busy()) {
 				<button type="button" class="btn btn-ghost" (click)="cancel()">
@@ -204,13 +211,14 @@
 			}
 			@if (result()) {
 				<button type="button" class="btn btn-outline jump-result" (click)="showResult()">
-					{{ 'common.view_result' | transloco }}<app-icon name="arrow" />
+					{{ 'common.view_result' | transloco }}
+					<app-icon name="arrow" />
 				</button>
 			}
 			@if (automatic()) {
-				<span class="auto-update-note">{{
-					'common.updates_automatically_as_you_edit' | transloco
-				}}</span>
+				<span class="auto-update-note">
+					{{ 'common.updates_automatically_as_you_edit' | transloco }}
+				</span>
 			}
 		</div>
 	</form>
@@ -230,7 +238,8 @@
 					(click)="copy()"
 					[disabled]="!result() || stale()"
 				>
-					<app-icon name="copy" />{{ 'common.copy' | transloco }}
+					<app-icon name="copy" />
+					{{ 'common.copy' | transloco }}
 				</button>
 				<button
 					type="button"
@@ -238,7 +247,8 @@
 					(click)="downloadPrimary()"
 					[disabled]="!result() || stale()"
 				>
-					<app-icon name="download" />{{ downloadLabel() }}
+					<app-icon name="download" />
+					{{ downloadLabel() }}
 				</button>
 			</div>
 		</div>
@@ -250,8 +260,8 @@
 		@if (result(); as result) {
 			@if (isDiffTool()) {
 				<div class="diff-summary" role="status">
-					<span>− {{ diffSummary().removals }} {{ 'common.removed' | transloco }}</span
-					><span>+ {{ diffSummary().additions }} {{ 'common.added' | transloco }}</span>
+					<span>− {{ diffSummary().removals }} {{ 'common.removed' | transloco }}</span>
+					<span>+ {{ diffSummary().additions }} {{ 'common.added' | transloco }}</span>
 				</div>
 				<div
 					class="diff-scroll"
@@ -260,9 +270,7 @@
 				>
 					<table class="diff-table">
 						<caption class="sr-only">
-							{{
-								diffStatus()
-							}}
+							{{ diffStatus() }}
 						</caption>
 						<thead>
 							<tr>
@@ -283,23 +291,27 @@
 								>
 									<td class="diff-line-number">{{ row.leftNumber ?? '' }}</td>
 									<td class="diff-line-content">
-										<span class="diff-marker" aria-hidden="true">{{
-											row.kind === 'change' || row.kind === 'removed' ? '−' : ' '
-										}}</span>
+										<span
+											class="diff-marker"
+											aria-hidden="true"
+											[textContent]="row.kind === 'change' || row.kind === 'removed' ? '−' : ' '"
+										></span>
 										@if (row.kind === 'change' || row.kind === 'removed') {
 											<span class="sr-only">{{ 'common.removed_colon' | transloco }}</span>
 										}
-										{{ row.leftText }}
+										<span [textContent]="row.leftText"></span>
 									</td>
 									<td class="diff-line-number">{{ row.rightNumber ?? '' }}</td>
 									<td class="diff-line-content">
-										<span class="diff-marker" aria-hidden="true">{{
-											row.kind === 'change' || row.kind === 'added' ? '+' : ' '
-										}}</span>
+										<span
+											class="diff-marker"
+											aria-hidden="true"
+											[textContent]="row.kind === 'change' || row.kind === 'added' ? '+' : ' '"
+										></span>
 										@if (row.kind === 'change' || row.kind === 'added') {
 											<span class="sr-only">{{ 'common.added_colon' | transloco }}</span>
 										}
-										{{ row.rightText }}
+										<span [textContent]="row.rightText"></span>
 									</td>
 								</tr>
 							}
@@ -326,11 +338,13 @@
 									(click)="download($index)"
 									[disabled]="stale()"
 								>
-									<app-icon name="download" />{{ artifact.filename }}</button
-								><span
-									>{{ (artifact.blob.size / 1024).toFixed(1) }} KB ·
-									{{ artifact.blob.type || 'application/octet-stream' }}</span
-								>
+									<app-icon name="download" />
+									{{ artifact.filename }}
+								</button>
+								<span>
+									{{ (artifact.blob.size / 1024).toFixed(1) }} KB ·
+									{{ artifact.blob.type || 'application/octet-stream' }}
+								</span>
 							</li>
 						}
 					</ul>
@@ -338,7 +352,7 @@
 						<summary>
 							{{ 'common.view_text_report' | transloco }}
 						</summary>
-						<pre class="result-code" tabindex="0">{{ result.output }}</pre>
+						<pre class="result-code" tabindex="0" [textContent]="result.output"></pre>
 						<button type="button" class="btn btn-ghost" (click)="download()" [disabled]="stale()">
 							{{ 'common.export_report' | transloco }}
 						</button>
@@ -348,7 +362,8 @@
 						class="result-code"
 						tabindex="0"
 						[attr.aria-label]="'common.result_text' | transloco"
-						>{{ result.output }}</pre>
+						[textContent]="result.output"
+					></pre>
 				}
 			}
 			@if (result.notice; as notice) {
@@ -373,16 +388,19 @@
 				</p>
 			</div>
 		}
-		<span class="sr-only" role="status">{{
-			busy()
-				? ('common.processing' | transloco)
-				: result() && !stale()
-					? ('common.result_ready' | transloco)
-					: ''
-		}}</span>
+		<span class="sr-only" role="status">
+			{{
+				busy()
+					? ('common.processing' | transloco)
+					: result() && !stale()
+						? ('common.result_ready' | transloco)
+						: ''
+			}}
+		</span>
 		<p class="action-feedback" role="status">{{ feedback() }}</p>
 	</section>
 </div>
 <p class="tool-privacy">
-	<app-icon name="shield" />{{ 'common.privacy_notice_complete' | transloco }}
+	<app-icon name="shield" />
+	{{ 'common.privacy_notice_complete' | transloco }}
 </p>
