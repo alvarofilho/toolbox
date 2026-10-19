@@ -21,6 +21,7 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": "dist/cloudflare",
+            "deployUrl": "/",
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "webWorkerTsConfig": "tsconfig.worker.json",

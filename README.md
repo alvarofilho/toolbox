@@ -27,6 +27,8 @@ A produção desabilita apenas a inserção de CSS crítico (`optimization.style
 
 Os headers usam `Cache-Control: public, max-age=0, must-revalidate, no-transform` para preservar os arquivos publicados e impedir injeção automática de scripts pelo proxy Cloudflare, incluindo Rocket Loader e Web Analytics. O navegador revalida os recursos com o servidor; não habilite otimizações que reescrevam o HTML desta aplicação.
 
+`deployUrl: "/"` mantém os caminhos de scripts, estilos e preloads ancorados na raiz. Isso evita que os Early Hints do Cloudflare resolvam um chunk relativo dentro de `/tools/` ao abrir uma ferramenta diretamente.
+
 ## MVP funcional
 
 | Área                    | Ferramentas                                                 |
