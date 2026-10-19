@@ -1,13 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PreferencesService } from '../../core/services/preferences';
 import type { ToolInfo } from '../../core/models/tool';
 import { Icon } from './icon';
+import { CATEGORIES } from '../../core/registry/tools';
 @Component({
   selector: 'app-tool-card',
   imports: [RouterLink, Icon],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: ` <article class="tool-card">
+  styleUrl: './tool-card.css',
+  template: ` <article class="tool-card" [class.tool-card-compact]="variant() === 'compact'">
     <a [routerLink]="['/tools', tool().id]" class="tool-card-link">
       <div class="card-top">
         <span class="tool-icon" [attr.data-category]="tool().category"
@@ -18,10 +20,8 @@ import { Icon } from './icon';
         }
       </div>
       <h3>{{ p.t(tool().name) }}</h3>
-      <p>{{ p.t(tool().description) }}</p>
-      <span class="card-open"
-        >{{ p.label('Abrir ferramenta', 'Open tool') }} <app-icon name="arrow"
-      /></span>
+      <p>{{ variant() === 'compact' ? categoryName() : p.t(tool().description) }}</p>
+      <span class="card-open">{{ categoryName() }} <app-icon name="arrow" /></span>
     </a>
     <button
       class="favorite-button btn btn-ghost btn-square"
@@ -36,5 +36,10 @@ import { Icon } from './icon';
 })
 export class ToolCard {
   readonly tool = input.required<ToolInfo>();
+  readonly variant = input<'standard' | 'compact'>('standard');
   protected readonly p = inject(PreferencesService);
+  protected readonly categoryName = computed(() => {
+    const category = CATEGORIES.find((c) => c.id === this.tool().category);
+    return category ? this.p.t(category.name) : this.p.label('Ferramenta', 'Tool');
+  });
 }

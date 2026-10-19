@@ -24,14 +24,10 @@
   font-size: 10px;
 }
 .global-search input,
-.hero-search input,
 .catalog-search input {
   font-size: 13px;
 }
 .header-local {
-  font-size: 11px;
-}
-.welcome-note {
   font-size: 11px;
 }
 .section-title p {

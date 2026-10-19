@@ -29,9 +29,9 @@ colors:
 typography:
   display:
     fontFamily: "'Manrope Variable', sans-serif"
-    fontSize: 'clamp(36px, 3.6vw, 53px)'
+    fontSize: 'clamp(38px, 3.7vw, 56px)'
     fontWeight: 750
-    lineHeight: 1.18
+    lineHeight: 1.13
     letterSpacing: '-0.04em'
   headline:
     fontFamily: "'Manrope Variable', sans-serif"
@@ -117,7 +117,7 @@ components:
 
 Uma bancada organizada, clara e técnica: papel suave, ferramentas reconhecíveis e espaço para trabalhar. A navegação permanece disponível em telas amplas; pesquisa, catálogo e área de entrada/resultado compartilham a mesma linguagem. A personalidade aprovada combina tons de papel, verde escuro, tipografia técnica e um modo escuro equivalente. Fontes são locais.
 
-Este documento atualiza a direção aprovada com o que foi construído em `src/styles.css`, `src/legibility.css`, no shell e nos componentes compartilhados. O contrato permanece: reconhecer a finalidade no primeiro viewport, encontrar ferramentas por nome ou palavra-chave e executar, copiar ou exportar sem cadastro. A composição específica da home não é uma obrigação para toda tela. Os valores preliminares de tinta, verde ativo e largura do seed foram resolvidos pelos tokens e medidas atuais abaixo.
+Este documento atualiza a direção aprovada com o que foi construído em `src/styles.css`, `src/legibility.css`, `src/app/features/home/home.css`, no shell e nos componentes compartilhados. O contrato permanece: reconhecer a finalidade no primeiro viewport, encontrar ferramentas por nome ou palavra-chave e executar, copiar ou exportar sem cadastro. A composição específica da home não é uma obrigação para toda tela. Os valores preliminares de tinta, verde ativo e largura do seed foram resolvidos pelos tokens e medidas atuais abaixo.
 
 **Key Characteristics:**
 
@@ -157,7 +157,7 @@ A marca e os títulos têm desenho geométrico firme, enquanto a interface mant�
 
 ### Hierarchy
 
-- **Display:** título da home com escala fluida, peso forte e entrelinha compacta. Ajustes responsivos observados: 40px até 1200px, 45px até 960px, 43px até 720px e 40px até 420px.
+- **Display:** título da home com escala fluida, peso forte e entrelinha compacta. Usa 46px até 1100px e 42px até 600px. Durante a pesquisa, recolhe para 32px (30px no móvel) sem remover o campo nem perder foco.
 - **Headline:** seções do catálogo; páginas de listagem usam título maior (30px, reduzido para 26px e 25px).
 - **Title:** nomes dos cards; cabeçalhos dos painéis usam 14px. Títulos de ferramenta usam `clamp(24px, 2.5vw, 32px)`, com 25px no móvel.
 - **Body / Label:** descrições, navegação e campos usam a escala final de legibilidade, normalmente 13px. A regra em `src/legibility.css` prevalece sobre valores anteriores da folha global.
@@ -172,18 +172,19 @@ O shell amplo tem sidebar fixa (248px), topbar (76px) e corpo deslocado pela lar
 O catálogo usa três colunas iguais com intervalo de 15px; os cards preenchem a altura de sua linha. A bancada usa duas colunas iguais com intervalo de 22px e painéis alinhados pelo topo. Formulários usam duas colunas internas quando o espaço permite; campos de texto extensos ocupam a largura completa.
 
 - **Até 1200px:** sidebar de 224px, conteúdo com padding de 35px 30px 50px e bancada em uma coluna, entrada antes do resultado.
-- **Até 960px:** catálogo em duas colunas; a home passa a uma coluna e omite a prévia decorativa.
+- **Até 1100px:** a home passa a uma coluna e omite o exemplo de transformação; atalhos essenciais passam a duas colunas.
+- **Até 960px:** catálogo em duas colunas.
 - **Até 720px:** sidebar vira gaveta de 260px, corpo sem deslocamento, topbar de 66px e conteúdo com padding de 30px 22px 40px. O rodapé empilha.
 - **Até 420px:** catálogo e campos passam a uma coluna. A interface suporta largura mínima de 320px.
-- **A partir de 1700px:** aumenta o espaço entre conteúdo e prévia da home e o tamanho do texto da prévia.
+- **Até 600px:** atalhos essenciais passam a uma coluna.
 
 A organização deve sobreviver a português e inglês, que usam o mesmo layout. Conteúdo de resultado pode crescer; não o limite a uma imagem estática ou a uma linha sem quebra.
 
 ## Elevation & Depth
 
-A maior parte da interface é plana: superfícies, divisórias finas e mudanças tonais constroem profundidade. Botões e cards não usam sombra como tratamento padrão. As exceções são a pesquisa principal da home, com sombra difusa baixa (`0 3px 9px #173b2410`), e a prévia de código (`5px 11px 26px #173b2410`). A gaveta móvel tem fundo de proteção translúcido; sua função é delimitar o contexto modal.
+A maior parte da interface é plana: superfícies, divisórias finas e mudanças tonais constroem profundidade. Botões, cards e o exemplo de transformação não usam sombra. A pesquisa principal da home tem sombra difusa baixa (`0 4px 14px #173b2409`). A gaveta móvel tem fundo de proteção translúcido; sua função é delimitar o contexto modal.
 
-A prévia da home inclina levemente e se alinha no hover. Cards transicionam borda e fundo em 150ms; prévia e gaveta usam 200ms com `ease-out`. Movimento reduzido remove transições e animações, sem ocultar conteúdo.
+O exemplo da home permanece alinhado à bancada. Cards e o acesso ao formatador transicionam apenas borda e fundo em 150ms; a gaveta usa 200ms com `ease-out`. Movimento reduzido remove transições e animações, sem ocultar conteúdo.
 
 **The Quiet Surface Rule.** Use bordas e contraste tonal para organizar o trabalho; reserve a elevação observada para os elementos de apresentação da home.
 
@@ -204,6 +205,8 @@ Foco visível usa contorno de 2px no acento, afastado 4px; campos usam afastamen
 Filtros de categoria são links com contorno, ícone opcional e cantos de navegação. O selecionado usa acento sólido e texto de papel. Seleção é informação de estado, não apenas hover.
 
 ### Cards / Containers
+
+Na home, os essenciais usam uma variante compacta de 90px, com nome, ícone, categoria e favorito independente. O catálogo completo conserva os cards com descrições; seus rodapés identificam a categoria e a seta indica navegação. A assinatura da home é um exemplo de transformação JSON, com entrada compacta, resultado formatado e acesso à ferramenta real. O exemplo é identificado explicitamente, usa código selecionável e não simula um editor. Durante a busca, o destaque recolhe e os filtros de categoria cedem espaço aos resultados. Esses estilos ficam em `home.css` e `tool-card.css`, encapsulados nos componentes.
 
 Cards do catálogo usam superfície, borda fina e raio de superfície. O link cobre o conteúdo principal; o favorito é um botão independente, fora do link. A estrela padrão usa texto secundário; a selecionada recebe acento, fundo tonal e preenchimento. O estado também é exposto por `aria-pressed`.
 

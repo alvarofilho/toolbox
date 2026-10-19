@@ -10,6 +10,7 @@ import { Icon } from '../../shared/components/icon';
   imports: [ToolCard, Icon, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.html',
+  styleUrl: './home.css',
 })
 export class Home {
   protected readonly p = inject(PreferencesService);
@@ -29,6 +30,12 @@ export class Home {
     CATEGORIES.find((c) => c.id === this.params().get('id')),
   );
   protected readonly popular = TOOLS.filter((t) => t.popular);
+  protected readonly exampleInput = computed(() =>
+    this.p.locale() === 'pt' ? '{"nome":"Ana","teste":true}' : '{"name":"Ana","test":true}',
+  );
+  protected readonly exampleLines = computed(() =>
+    JSON.stringify(JSON.parse(this.exampleInput()), null, 2).split('\n'),
+  );
   protected readonly filtered = computed(() => {
     const searched = findTools(this.query());
     if (this.mode === 'favorites') return searched.filter((t) => this.p.favorites().includes(t.id));

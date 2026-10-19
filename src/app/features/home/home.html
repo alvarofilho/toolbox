@@ -1,6 +1,6 @@
 @if (mode === 'home') {
-  <section class="welcome">
-    <div class="welcome-copy">
+  <section class="home-intro" [class.is-searching]="query().length > 0">
+    <div class="intro-copy">
       <h1>
         {{ p.label('Menos abas.', 'Fewer tabs.') }}<br /><span>{{
           p.label('Mais soluções.', 'More solutions.')
@@ -14,15 +14,15 @@
           )
         }}
       </p>
-      <div class="hero-search">
+      <div class="intro-search">
         <app-icon name="search" /><input
           type="search"
           [placeholder]="p.label('O que você precisa fazer hoje?', 'What do you need to do today?')"
           [attr.aria-label]="p.label('Pesquisar ferramentas', 'Search tools')"
           (input)="search($event)"
-        /><span>↵</span>
+        />
       </div>
-      <div class="welcome-note">
+      <div class="intro-note">
         <app-icon name="check" />{{
           p.label(
             'Sem instalar. Sem cadastro. Sem enviar seus dados.',
@@ -31,25 +31,26 @@
         }}
       </div>
     </div>
-    <a
-      class="workbench-preview"
-      routerLink="/tools/json-formatter"
-      [attr.aria-label]="p.label('Abrir JSON Formatter', 'Open JSON Formatter')"
-      ><div class="preview-bar">
-        <span class="preview-dots"><i></i><i></i><i></i></span><span>hello-toolbox.json</span
-        ><app-icon name="braces" />
+    <section
+      class="example-workbench"
+      [attr.aria-label]="p.label('Exemplo de formatação JSON', 'JSON formatting example')"
+    >
+      <div class="example-heading">
+        <span><app-icon name="braces" /> JSON Formatter</span>
+        <span class="example-label">{{ p.label('Exemplo', 'Example') }}</span>
       </div>
-      <pre><span class="line-no">1</span> {{'{'}}
-<span class="line-no">2</span>   <span class="code-key">"hello"</span>: <span class="code-string">"developer"</span>,
-<span class="line-no">3</span>   <span class="code-key">"less_friction"</span>: <span class="code-value">true</span>,
-<span class="line-no">4</span>   <span class="code-key">"more_building"</span>: <span class="code-value">true</span>
-<span class="line-no">5</span> {{'}'}}</pre>
-      <div class="preview-footer">
-        <span
-          ><span class="status-dot"></span
-          >{{ p.label('Pronto para construir', 'Ready to build') }}</span
-        ><app-icon name="arrow" /></div
-    ></a>
+      <div class="example-input">
+        <span>{{ p.label('Entrada', 'Input') }}</span
+        ><code>{{ exampleInput() }}</code>
+      </div>
+      <div class="example-result">
+        <span>{{ p.label('Resultado · 2 espaços', 'Result · 2 spaces') }}</span>
+        <pre>@for(line of exampleLines();track $index){<span class="example-line"><span class="example-line-number" aria-hidden="true">{{$index+1}}</span>{{line}}</span>}</pre>
+      </div>
+      <a class="example-action" routerLink="/tools/json-formatter"
+        >{{ p.label('Formatar meu JSON', 'Format my JSON') }}<app-icon name="arrow"
+      /></a>
+    </section>
   </section>
   @if (!query()) {
     @if (p.recentTools().length) {
@@ -95,7 +96,7 @@
       </div>
       <div class="tools-grid">
         @for (tool of popular; track tool.id) {
-          <app-tool-card [tool]="tool" />
+          <app-tool-card [tool]="tool" variant="compact" />
         }
       </div>
     </section>
@@ -104,7 +105,10 @@
 <section class="catalog-section all-tools">
   <div class="section-title">
     <div>
-      <h2 [class.page-title]="mode !== 'home' || query()">
+      <h2
+        [class.page-title]="mode !== 'home' || query()"
+        [attr.aria-level]="mode !== 'home' ? 1 : 2"
+      >
         {{ query() ? p.label('Resultados da pesquisa', 'Search results') : title() }}
         <span class="total-count">{{ filtered().length }}</span>
       </h2>
@@ -133,7 +137,7 @@
       </button>
     }
   </div>
-  @if (mode !== 'home' || query()) {
+  @if (mode !== 'home') {
     <div class="catalog-search">
       <app-icon name="search" /><input
         type="search"
@@ -149,16 +153,22 @@
       />
     </div>
   }
-  @if (mode === 'home' || mode === 'all' || mode === 'category') {
+  @if ((mode === 'home' || mode === 'all' || mode === 'category') && !query()) {
     <nav
       class="category-filters"
       [attr.aria-label]="p.label('Filtrar por categoria', 'Filter by category')"
     >
-      <a routerLink="/tools" [class.selected]="mode !== 'category'"
+      <a
+        routerLink="/tools"
+        [class.selected]="mode !== 'category'"
+        [attr.aria-current]="mode !== 'category' ? 'page' : null"
         >{{ p.label('Todas', 'All') }} <span>{{ tools.length }}</span></a
       >
       @for (c of categories; track c.id) {
-        <a [routerLink]="['/category', c.id]" [class.selected]="category()?.id === c.id"
+        <a
+          [routerLink]="['/category', c.id]"
+          [class.selected]="category()?.id === c.id"
+          [attr.aria-current]="category()?.id === c.id ? 'page' : null"
           ><app-icon [name]="c.icon" />{{ p.t(c.name) }}</a
         >
       }
@@ -195,7 +205,7 @@
       </div>
     }
   </div>
-  @if (mode === 'home' && !p.favorites().length) {
+  @if (mode === 'home' && !query() && !p.favorites().length) {
     <p class="favorites-tip">
       <app-icon name="star" />{{
         p.label(

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-18T23:40:14.797Z",
+  "generatedAt": "2026-10-19T00:47:57.968Z",
   "title": "Design System: Toolbox",
   "extensions": {
     "colorMeta": {
@@ -370,13 +370,8 @@
     "shadows": [
       {
         "name": "home-search",
-        "value": "0 3px 9px #173b2410",
+        "value": "0 4px 14px #173b2409",
         "purpose": "Pesquisa principal da home."
-      },
-      {
-        "name": "home-preview",
-        "value": "5px 11px 26px #173b2410",
-        "purpose": "Prévia de código da home."
       }
     ],
     "motion": [
@@ -386,9 +381,9 @@
         "purpose": "Resposta tonal dos cards."
       },
       {
-        "name": "preview-and-drawer",
+        "name": "drawer",
         "value": "transform 0.2s ease-out",
-        "purpose": "Alinhamento da prévia e abertura da gaveta."
+        "purpose": "Abertura da navegação móvel."
       },
       {
         "name": "reduced-motion",
@@ -416,6 +411,14 @@
       {
         "name": "wide",
         "value": "1700px"
+      },
+      {
+        "name": "home-single-column",
+        "value": "1100px"
+      },
+      {
+        "name": "single-column-shortcuts",
+        "value": "600px"
       }
     ]
   },

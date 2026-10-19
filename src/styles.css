@@ -278,8 +278,8 @@ h3 {
 .main-nav a {
   display: flex;
   align-items: center;
-  gap: 11px;
-  padding: 12px;
+  gap: 9px;
+  padding: 12px 10px;
   min-height: 43px;
   border-radius: 6px;
   color: var(--muted);
@@ -438,30 +438,6 @@ main {
   padding: 46px 48px 64px;
   flex: 1;
 }
-.welcome {
-  display: grid;
-  grid-template-columns: 1.25fr 1fr;
-  align-items: center;
-  gap: 45px;
-  padding: 9px 0 46px;
-}
-.welcome h1 {
-  font-size: clamp(36px, 3.6vw, 53px);
-  line-height: 1.18;
-  letter-spacing: -0.04em;
-  font-weight: 750;
-}
-.welcome h1 span {
-  color: var(--accent);
-}
-.welcome-copy > p {
-  font-size: 13px;
-  line-height: 1.8;
-  color: var(--muted);
-  max-width: 400px;
-  margin-top: 18px;
-}
-.hero-search,
 .catalog-search {
   display: flex;
   align-items: center;
@@ -472,17 +448,11 @@ main {
   padding: 0 14px;
   margin-top: 25px;
 }
-.hero-search {
-  max-width: 440px;
-  box-shadow: 0 3px 9px #173b2410;
-}
-.hero-search app-icon,
 .catalog-search app-icon {
   width: 17px;
   height: 17px;
   color: var(--accent);
 }
-.hero-search input,
 .catalog-search input {
   background: transparent;
   width: 100%;
@@ -492,105 +462,12 @@ main {
   font: inherit;
   font-size: 12px;
 }
-.hero-search:focus-within,
 .catalog-search:focus-within {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
-.hero-search input:focus-visible,
 .catalog-search input:focus-visible {
   outline: none;
-}
-.hero-search > span {
-  color: var(--muted);
-}
-.welcome-note {
-  margin-top: 13px;
-  color: var(--muted);
-  font-size: 10px;
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-.welcome-note app-icon {
-  height: 13px;
-  width: 13px;
-  color: var(--accent);
-}
-.workbench-preview {
-  background: var(--preview);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 4px;
-  min-width: 0;
-  transform: rotate(-2deg);
-  box-shadow: 5px 11px 26px #173b2410;
-  transition: transform 0.2s ease-out;
-}
-.workbench-preview:hover {
-  transform: rotate(0);
-}
-.preview-bar {
-  padding: 15px 17px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 13%, transparent);
-  color: var(--muted);
-  font:
-    9px 'IBM Plex Mono',
-    monospace;
-}
-.preview-dots {
-  display: flex;
-  gap: 4px;
-}
-.preview-dots i {
-  height: 5px;
-  width: 5px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--accent) 30%, transparent);
-}
-.preview-bar > app-icon {
-  margin-left: auto;
-  width: 15px;
-  height: 15px;
-}
-.workbench-preview pre {
-  padding: 24px 17px 27px;
-  font:
-    10px/2.3 'IBM Plex Mono',
-    monospace;
-  overflow: hidden;
-}
-.line-no {
-  color: var(--muted);
-  padding-right: 12px;
-}
-.code-key {
-  color: var(--code-key);
-}
-.code-string {
-  color: var(--code-string);
-}
-.code-value {
-  color: var(--code-value);
-}
-.preview-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid color-mix(in srgb, var(--accent) 13%, transparent);
-  padding: 11px 16px;
-  font-size: 9px;
-  color: var(--accent);
-}
-.preview-footer .status-dot {
-  margin-right: 5px;
-}
-.preview-footer app-icon {
-  width: 14px;
-  height: 14px;
 }
 .catalog-section + .catalog-section {
   margin-top: 45px;
@@ -1139,12 +1016,6 @@ app-tool-card {
   .tool-card h3 {
     font-size: 16px;
   }
-  .welcome {
-    gap: 80px;
-  }
-  .workbench-preview pre {
-    font-size: 12px;
-  }
   .tool-card h3 {
     font-size: 15px;
   }
@@ -1165,12 +1036,6 @@ app-tool-card {
   }
   main {
     padding: 35px 30px 50px;
-  }
-  .welcome {
-    gap: 25px;
-  }
-  .welcome h1 {
-    font-size: 40px;
   }
   .header-local {
     display: none;
@@ -1200,21 +1065,6 @@ app-tool-card {
 @media (max-width: 960px) {
   .tools-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .welcome {
-    grid-template-columns: 1fr;
-  }
-  .welcome h1 {
-    font-size: 45px;
-  }
-  .workbench-preview {
-    display: none;
-  }
-  .welcome-copy > p {
-    max-width: 480px;
-  }
-  .hero-search {
-    max-width: 100%;
   }
   .page-footer {
     padding-inline: 30px;
@@ -1272,18 +1122,6 @@ app-tool-card {
   }
   main {
     padding: 30px 22px 40px;
-  }
-  .welcome {
-    padding: 5px 0 35px;
-  }
-  .welcome h1 {
-    font-size: 43px;
-  }
-  .welcome-copy > p {
-    font-size: 13px;
-  }
-  .welcome-note {
-    font-size: 10px;
   }
   .section-title {
     align-items: flex-start;
@@ -1346,9 +1184,6 @@ app-tool-card {
   }
   .card-open {
     font-size: 11px;
-  }
-  .welcome h1 {
-    font-size: 40px;
   }
   .header-actions > a {
     display: none;
