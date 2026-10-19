@@ -56,19 +56,24 @@ Pessoas: selecione quantidade (1–1.000), campos, UF e intervalo de idade (18�
 
 ```text
 src/app/
-  core/models/        contratos de ferramentas e campos
-  core/registry/      catálogo declarativo, categorias e pesquisa
-  core/services/      Signals e preferências locais validadas
-  shared/components/  SVGs, cards e bancada de entrada/resultado
-  shared/utils/       algoritmos puros e testes
-  features/home/      início, catálogo, categorias, favoritos e recentes
-  features/tools/     um módulo por ferramenta, controles e regex Worker
-  app.*               shell responsivo, configuração e rotas
+  core/models/                contratos de ferramentas e campos
+  core/services/              Signals e preferências locais validadas
+  shared/components/          ícone SVG genérico
+  features/home/              início, catálogo, categorias, favoritos e recentes
+  features/tools/
+    catalog/                  metadados, carregamento, categorias e pesquisa
+      tool-card/              cards de ferramentas
+      command-palette/        pesquisa global e navegação
+    workbench/                execução, entradas, resultados e exportação
+    json/, security/, .../    definições e auxiliares agrupados por área
+    infrastructure/schemas/   schemas Kubernetes locais
+    _shared/                  controles e algoritmos usados entre áreas
+  app.*                       shell responsivo, configuração e rotas
 ```
 
-Para adicionar uma ferramenta, crie um `*.tool.ts` exportando `definition: ToolDefinition`, registre seus metadados em `core/registry/tools.ts` e seu import dinâmico em `TOOL_LOADERS` (`app.routes.ts`). A definição descreve os controles e a função de processamento; a bancada compartilhada fornece formulário, estados e exportação. Adicione vetores e casos inválidos em `*.test.ts`; use `*.spec.ts` para integração Angular. Não adicione cards disponíveis sem uma implementação funcional.
+Para adicionar uma ferramenta, crie `features/tools/<categoria>/<id>.tool.ts` exportando `definition: ToolDefinition`. Adicione um registro no catálogo da categoria em `features/tools/catalog/`, incluindo os metadados e a função `loadDefinition`. As rotas são derivadas desses registros, portanto a nova ferramenta não exige um mapa de carregamento ou uma rota cadastrados separadamente. A definição descreve os controles e a função de processamento; a bancada fornece formulário, estados e exportação. Adicione vetores e casos inválidos em `*.test.ts`; use `*.spec.ts` para integração Angular. Não adicione cards disponíveis sem uma implementação funcional.
 
-As novas ferramentas são descritas em `core/registry/extended-tools.ts`, com implementações agrupadas em `features/tools/extended/` e imports dinâmicos em `extended/loaders.ts`. O catálogo de metadados não importa parsers ou processadores pesados. Schemas Kubernetes são locais e carregados sob demanda.
+Cada registro importa sua implementação dinamicamente. O catálogo permanece leve: parsers e processadores pesados ficam nas implementações. Mantenha auxiliares e seus testes junto da área responsável; use `_shared` para comportamentos utilizados entre áreas. Schemas Kubernetes e workers continuam locais e carregados sob demanda.
 
 Angular 22 standalone, OnPush, Signals, lazy loading, Tailwind CSS 4 e DaisyUI 5. Fontes Manrope/IBM Plex são hospedadas pelo próprio build. Parsers, formatos, imagens e PDFs usam bibliotecas específicas; as operações criptográficas usam Web Crypto.
 

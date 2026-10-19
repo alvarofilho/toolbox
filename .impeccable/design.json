@@ -1,530 +1,530 @@
 {
-  "schemaVersion": 2,
-  "generatedAt": "2026-10-19T00:47:57.968Z",
-  "title": "Design System: Toolbox",
-  "extensions": {
-    "colorMeta": {
-      "accent": {
-        "role": "primary",
-        "displayName": "Verde de trabalho",
-        "tonalRamp": [
-          "oklch(15% 0.0699 161.8)",
-          "oklch(26% 0.0699 161.8)",
-          "oklch(38% 0.0699 161.8)",
-          "oklch(49% 0.0699 161.8)",
-          "oklch(61% 0.0699 161.8)",
-          "oklch(72% 0.0699 161.8)",
-          "oklch(84% 0.0699 161.8)",
-          "oklch(95% 0.0699 161.8)"
-        ]
-      },
-      "ink": {
-        "role": "neutral",
-        "displayName": "Tinta",
-        "tonalRamp": [
-          "oklch(15% 0.0354 159.7)",
-          "oklch(26% 0.0354 159.7)",
-          "oklch(38% 0.0354 159.7)",
-          "oklch(49% 0.0354 159.7)",
-          "oklch(61% 0.0354 159.7)",
-          "oklch(72% 0.0354 159.7)",
-          "oklch(84% 0.0354 159.7)",
-          "oklch(95% 0.0354 159.7)"
-        ]
-      },
-      "muted": {
-        "role": "neutral",
-        "displayName": "Texto secundário",
-        "tonalRamp": [
-          "oklch(15% 0.0235 145.2)",
-          "oklch(26% 0.0235 145.2)",
-          "oklch(38% 0.0235 145.2)",
-          "oklch(49% 0.0235 145.2)",
-          "oklch(61% 0.0235 145.2)",
-          "oklch(72% 0.0235 145.2)",
-          "oklch(84% 0.0235 145.2)",
-          "oklch(95% 0.0235 145.2)"
-        ]
-      },
-      "paper": {
-        "role": "neutral",
-        "displayName": "Papel",
-        "tonalRamp": [
-          "oklch(15% 0.0054 117.9)",
-          "oklch(26% 0.0054 117.9)",
-          "oklch(38% 0.0054 117.9)",
-          "oklch(49% 0.0054 117.9)",
-          "oklch(61% 0.0054 117.9)",
-          "oklch(72% 0.0054 117.9)",
-          "oklch(84% 0.0054 117.9)",
-          "oklch(95% 0.0054 117.9)"
-        ]
-      },
-      "surface": {
-        "role": "neutral",
-        "displayName": "Superfície",
-        "tonalRamp": [
-          "oklch(15% 0.0000 89.9)",
-          "oklch(26% 0.0000 89.9)",
-          "oklch(38% 0.0000 89.9)",
-          "oklch(49% 0.0000 89.9)",
-          "oklch(61% 0.0000 89.9)",
-          "oklch(72% 0.0000 89.9)",
-          "oklch(84% 0.0000 89.9)",
-          "oklch(95% 0.0000 89.9)"
-        ]
-      },
-      "line": {
-        "role": "neutral",
-        "displayName": "Divisória",
-        "tonalRamp": [
-          "oklch(15% 0.0144 128.6)",
-          "oklch(26% 0.0144 128.6)",
-          "oklch(38% 0.0144 128.6)",
-          "oklch(49% 0.0144 128.6)",
-          "oklch(61% 0.0144 128.6)",
-          "oklch(72% 0.0144 128.6)",
-          "oklch(84% 0.0144 128.6)",
-          "oklch(95% 0.0144 128.6)"
-        ]
-      },
-      "wash": {
-        "role": "neutral",
-        "displayName": "Lavagem verde",
-        "tonalRamp": [
-          "oklch(15% 0.0147 132.5)",
-          "oklch(26% 0.0147 132.5)",
-          "oklch(38% 0.0147 132.5)",
-          "oklch(49% 0.0147 132.5)",
-          "oklch(61% 0.0147 132.5)",
-          "oklch(72% 0.0147 132.5)",
-          "oklch(84% 0.0147 132.5)",
-          "oklch(95% 0.0147 132.5)"
-        ]
-      },
-      "preview": {
-        "role": "neutral",
-        "displayName": "Prévia",
-        "tonalRamp": [
-          "oklch(15% 0.0159 130.4)",
-          "oklch(26% 0.0159 130.4)",
-          "oklch(38% 0.0159 130.4)",
-          "oklch(49% 0.0159 130.4)",
-          "oklch(61% 0.0159 130.4)",
-          "oklch(72% 0.0159 130.4)",
-          "oklch(84% 0.0159 130.4)",
-          "oklch(95% 0.0159 130.4)"
-        ]
-      },
-      "code-key": {
-        "role": "syntax",
-        "displayName": "Chave de código",
-        "tonalRamp": [
-          "oklch(15% 0.0462 164.2)",
-          "oklch(26% 0.0462 164.2)",
-          "oklch(38% 0.0462 164.2)",
-          "oklch(49% 0.0462 164.2)",
-          "oklch(61% 0.0462 164.2)",
-          "oklch(72% 0.0462 164.2)",
-          "oklch(84% 0.0462 164.2)",
-          "oklch(95% 0.0462 164.2)"
-        ]
-      },
-      "code-string": {
-        "role": "syntax",
-        "displayName": "String de código",
-        "tonalRamp": [
-          "oklch(15% 0.0860 74.5)",
-          "oklch(26% 0.0860 74.5)",
-          "oklch(38% 0.0860 74.5)",
-          "oklch(49% 0.0860 74.5)",
-          "oklch(61% 0.0860 74.5)",
-          "oklch(72% 0.0860 74.5)",
-          "oklch(84% 0.0860 74.5)",
-          "oklch(95% 0.0860 74.5)"
-        ]
-      },
-      "code-value": {
-        "role": "syntax",
-        "displayName": "Valor de código",
-        "tonalRamp": [
-          "oklch(15% 0.0797 244.7)",
-          "oklch(26% 0.0797 244.7)",
-          "oklch(38% 0.0797 244.7)",
-          "oklch(49% 0.0797 244.7)",
-          "oklch(61% 0.0797 244.7)",
-          "oklch(72% 0.0797 244.7)",
-          "oklch(84% 0.0797 244.7)",
-          "oklch(95% 0.0797 244.7)"
-        ]
-      },
-      "error": {
-        "role": "error",
-        "displayName": "Erro",
-        "tonalRamp": [
-          "oklch(15% 0.1432 24.1)",
-          "oklch(26% 0.1432 24.1)",
-          "oklch(38% 0.1432 24.1)",
-          "oklch(49% 0.1432 24.1)",
-          "oklch(61% 0.1432 24.1)",
-          "oklch(72% 0.1432 24.1)",
-          "oklch(84% 0.1432 24.1)",
-          "oklch(95% 0.1432 24.1)"
-        ]
-      },
-      "dark-accent": {
-        "role": "primary",
-        "displayName": "Escuro · Verde de trabalho",
-        "tonalRamp": [
-          "oklch(15% 0.0727 149.1)",
-          "oklch(26% 0.0727 149.1)",
-          "oklch(38% 0.0727 149.1)",
-          "oklch(49% 0.0727 149.1)",
-          "oklch(61% 0.0727 149.1)",
-          "oklch(72% 0.0727 149.1)",
-          "oklch(84% 0.0727 149.1)",
-          "oklch(95% 0.0727 149.1)"
-        ]
-      },
-      "dark-ink": {
-        "role": "neutral",
-        "displayName": "Escuro · Tinta",
-        "tonalRamp": [
-          "oklch(15% 0.0170 137.0)",
-          "oklch(26% 0.0170 137.0)",
-          "oklch(38% 0.0170 137.0)",
-          "oklch(49% 0.0170 137.0)",
-          "oklch(61% 0.0170 137.0)",
-          "oklch(72% 0.0170 137.0)",
-          "oklch(84% 0.0170 137.0)",
-          "oklch(95% 0.0170 137.0)"
-        ]
-      },
-      "dark-muted": {
-        "role": "neutral",
-        "displayName": "Escuro · Texto secundário",
-        "tonalRamp": [
-          "oklch(15% 0.0268 145.3)",
-          "oklch(26% 0.0268 145.3)",
-          "oklch(38% 0.0268 145.3)",
-          "oklch(49% 0.0268 145.3)",
-          "oklch(61% 0.0268 145.3)",
-          "oklch(72% 0.0268 145.3)",
-          "oklch(84% 0.0268 145.3)",
-          "oklch(95% 0.0268 145.3)"
-        ]
-      },
-      "dark-paper": {
-        "role": "neutral",
-        "displayName": "Escuro · Papel",
-        "tonalRamp": [
-          "oklch(15% 0.0217 158.5)",
-          "oklch(26% 0.0217 158.5)",
-          "oklch(38% 0.0217 158.5)",
-          "oklch(49% 0.0217 158.5)",
-          "oklch(61% 0.0217 158.5)",
-          "oklch(72% 0.0217 158.5)",
-          "oklch(84% 0.0217 158.5)",
-          "oklch(95% 0.0217 158.5)"
-        ]
-      },
-      "dark-surface": {
-        "role": "neutral",
-        "displayName": "Escuro · Superfície",
-        "tonalRamp": [
-          "oklch(15% 0.0212 164.7)",
-          "oklch(26% 0.0212 164.7)",
-          "oklch(38% 0.0212 164.7)",
-          "oklch(49% 0.0212 164.7)",
-          "oklch(61% 0.0212 164.7)",
-          "oklch(72% 0.0212 164.7)",
-          "oklch(84% 0.0212 164.7)",
-          "oklch(95% 0.0212 164.7)"
-        ]
-      },
-      "dark-line": {
-        "role": "neutral",
-        "displayName": "Escuro · Divisória",
-        "tonalRamp": [
-          "oklch(15% 0.0296 157.8)",
-          "oklch(26% 0.0296 157.8)",
-          "oklch(38% 0.0296 157.8)",
-          "oklch(49% 0.0296 157.8)",
-          "oklch(61% 0.0296 157.8)",
-          "oklch(72% 0.0296 157.8)",
-          "oklch(84% 0.0296 157.8)",
-          "oklch(95% 0.0296 157.8)"
-        ]
-      },
-      "dark-wash": {
-        "role": "neutral",
-        "displayName": "Escuro · Lavagem verde",
-        "tonalRamp": [
-          "oklch(15% 0.0393 155.1)",
-          "oklch(26% 0.0393 155.1)",
-          "oklch(38% 0.0393 155.1)",
-          "oklch(49% 0.0393 155.1)",
-          "oklch(61% 0.0393 155.1)",
-          "oklch(72% 0.0393 155.1)",
-          "oklch(84% 0.0393 155.1)",
-          "oklch(95% 0.0393 155.1)"
-        ]
-      },
-      "dark-preview": {
-        "role": "neutral",
-        "displayName": "Escuro · Prévia",
-        "tonalRamp": [
-          "oklch(15% 0.0337 157.4)",
-          "oklch(26% 0.0337 157.4)",
-          "oklch(38% 0.0337 157.4)",
-          "oklch(49% 0.0337 157.4)",
-          "oklch(61% 0.0337 157.4)",
-          "oklch(72% 0.0337 157.4)",
-          "oklch(84% 0.0337 157.4)",
-          "oklch(95% 0.0337 157.4)"
-        ]
-      },
-      "dark-code-key": {
-        "role": "syntax",
-        "displayName": "Escuro · Chave de código",
-        "tonalRamp": [
-          "oklch(15% 0.0464 149.1)",
-          "oklch(26% 0.0464 149.1)",
-          "oklch(38% 0.0464 149.1)",
-          "oklch(49% 0.0464 149.1)",
-          "oklch(61% 0.0464 149.1)",
-          "oklch(72% 0.0464 149.1)",
-          "oklch(84% 0.0464 149.1)",
-          "oklch(95% 0.0464 149.1)"
-        ]
-      },
-      "dark-code-string": {
-        "role": "syntax",
-        "displayName": "Escuro · String de código",
-        "tonalRamp": [
-          "oklch(15% 0.0822 77.8)",
-          "oklch(26% 0.0822 77.8)",
-          "oklch(38% 0.0822 77.8)",
-          "oklch(49% 0.0822 77.8)",
-          "oklch(61% 0.0822 77.8)",
-          "oklch(72% 0.0822 77.8)",
-          "oklch(84% 0.0822 77.8)",
-          "oklch(95% 0.0822 77.8)"
-        ]
-      },
-      "dark-code-value": {
-        "role": "syntax",
-        "displayName": "Escuro · Valor de código",
-        "tonalRamp": [
-          "oklch(15% 0.0530 237.9)",
-          "oklch(26% 0.0530 237.9)",
-          "oklch(38% 0.0530 237.9)",
-          "oklch(49% 0.0530 237.9)",
-          "oklch(61% 0.0530 237.9)",
-          "oklch(72% 0.0530 237.9)",
-          "oklch(84% 0.0530 237.9)",
-          "oklch(95% 0.0530 237.9)"
-        ]
-      },
-      "dark-error": {
-        "role": "error",
-        "displayName": "Escuro · Erro",
-        "tonalRamp": [
-          "oklch(15% 0.0865 27.1)",
-          "oklch(26% 0.0865 27.1)",
-          "oklch(38% 0.0865 27.1)",
-          "oklch(49% 0.0865 27.1)",
-          "oklch(61% 0.0865 27.1)",
-          "oklch(72% 0.0865 27.1)",
-          "oklch(84% 0.0865 27.1)",
-          "oklch(95% 0.0865 27.1)"
-        ]
-      }
-    },
-    "typographyMeta": {
-      "display": {
-        "displayName": "Título de apresentação",
-        "purpose": "Título principal da home."
-      },
-      "headline": {
-        "displayName": "Título de seção",
-        "purpose": "Seções do catálogo."
-      },
-      "title": {
-        "displayName": "Título de ferramenta",
-        "purpose": "Nomes nos cards."
-      },
-      "body": {
-        "displayName": "Corpo de interface",
-        "purpose": "Descrições legíveis e navegação."
-      },
-      "label": {
-        "displayName": "Rótulo",
-        "purpose": "Campos e controles."
-      },
-      "code": {
-        "displayName": "Código e dados",
-        "purpose": "Entrada e resultado técnicos."
-      }
-    },
-    "shadows": [
-      {
-        "name": "home-search",
-        "value": "0 4px 14px #173b2409",
-        "purpose": "Pesquisa principal da home."
-      }
-    ],
-    "motion": [
-      {
-        "name": "card-state",
-        "value": "border-color 0.15s ease-out, background 0.15s ease-out",
-        "purpose": "Resposta tonal dos cards."
-      },
-      {
-        "name": "drawer",
-        "value": "transform 0.2s ease-out",
-        "purpose": "Abertura da navegação móvel."
-      },
-      {
-        "name": "reduced-motion",
-        "value": "transition: none !important; animation: none !important; scroll-behavior: auto !important",
-        "purpose": "Aplicado sob prefers-reduced-motion: reduce."
-      }
-    ],
-    "breakpoints": [
-      {
-        "name": "compact-desktop",
-        "value": "1200px"
-      },
-      {
-        "name": "tablet",
-        "value": "960px"
-      },
-      {
-        "name": "mobile-drawer",
-        "value": "720px"
-      },
-      {
-        "name": "single-column-catalog",
-        "value": "420px"
-      },
-      {
-        "name": "wide",
-        "value": "1700px"
-      },
-      {
-        "name": "home-single-column",
-        "value": "1100px"
-      },
-      {
-        "name": "single-column-shortcuts",
-        "value": "600px"
-      }
-    ]
-  },
-  "components": [
-    {
-      "name": "Ação principal",
-      "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Ação de executar no painel de entrada.",
-      "html": "<button class=\"ds-btn ds-primary\">Formatar e validar <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
-      "css": ".ds-btn{font:500 13px 'IBM Plex Sans Variable',sans-serif;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 15px;border:1px solid transparent;border-radius:8px;cursor:pointer;box-shadow:none;}.ds-primary{background:var(--accent,#285d45);color:var(--color-primary-content,#fff)}.ds-primary:hover{background:color-mix(in srgb,var(--accent,#285d45) 90%,var(--ink,#22382c))}.ds-primary:active{filter:brightness(.95)}.ds-btn:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
-    },
-    {
-      "name": "Ação ghost",
-      "kind": "button",
-      "refersTo": "button-ghost",
-      "description": "Limpar, usar exemplo e ações discretas.",
-      "html": "<button class=\"ds-btn ds-ghost\">Limpar</button>",
-      "css": ".ds-btn{font:500 13px 'IBM Plex Sans Variable',sans-serif;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 15px;border:1px solid transparent;border-radius:8px;cursor:pointer;box-shadow:none;}.ds-ghost{background:transparent;color:var(--muted,#647064)}.ds-ghost:hover{color:var(--ink,#22382c);background:var(--wash,#edf3e9)}.ds-ghost:active{background:var(--line,#e1e6dc)}.ds-btn:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
-    },
-    {
-      "name": "Ação contornada",
-      "kind": "button",
-      "description": "Favoritar uma ferramenta na página de trabalho.",
-      "html": "<button class=\"ds-btn ds-outline\" aria-pressed=\"false\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z\"/></svg> Favoritar</button>",
-      "css": ".ds-btn{font:500 13px 'IBM Plex Sans Variable',sans-serif;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 15px;border:1px solid transparent;border-radius:8px;cursor:pointer;box-shadow:none;}.ds-outline{background:transparent;color:var(--ink,#22382c);border-color:var(--line,#e1e6dc)}.ds-outline:hover{background:var(--wash,#edf3e9);border-color:var(--accent,#285d45)}.ds-outline[aria-pressed=true]{color:var(--accent,#285d45);background:var(--wash,#edf3e9)}.ds-btn:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
-    },
-    {
-      "name": "Campo de entrada",
-      "kind": "input",
-      "refersTo": "field",
-      "description": "Rótulo associado e superfície de papel.",
-      "html": "<label class=\"ds-label\" for=\"ds-field\">Quantidade</label><input class=\"ds-field\" id=\"ds-field\" type=\"number\" value=\"1\" min=\"1\">",
-      "css": ".ds-label{display:block;font:500 13px 'IBM Plex Sans Variable',sans-serif;color:var(--ink,#22382c);margin-bottom:9px}.ds-field{height:42px;width:100%;padding:0 12px;border:1px solid var(--line,#e1e6dc);border-radius:8px;background:var(--paper,#f7f8f4);color:var(--ink,#22382c);font:13px 'IBM Plex Sans Variable',sans-serif}.ds-field:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:3px}.ds-field:hover{border-color:var(--accent,#285d45)}"
-    },
-    {
-      "name": "Navegação selecionada",
-      "kind": "nav",
-      "refersTo": "navigation-active",
-      "description": "Link ativo da sidebar; o estado também é anunciado.",
-      "html": "<nav aria-label=\"Navegação\"><a class=\"ds-nav\" href=\"#tools\" aria-current=\"page\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3H6v6l-3 3 3 3v6h2M16 3h2v6l3 3-3 3v6h-2\"/></svg> Todas as ferramentas <span class=\"ds-count\">18</span></a></nav>",
-      "css": ".ds-nav{display:flex;align-items:center;gap:11px;min-height:43px;padding:12px;border-radius:6px;background:var(--wash,#edf3e9);color:var(--accent,#285d45);font:600 13px/1.2 'IBM Plex Sans Variable',sans-serif;text-decoration:none}.ds-count{margin-left:auto;background:var(--surface,#fff);padding:3px 6px;border-radius:4px;font-size:10px}.ds-nav:hover{background:var(--paper,#f7f8f4)}.ds-nav:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
-    },
-    {
-      "name": "Filtro de categoria",
-      "kind": "chip",
-      "refersTo": "filter-selected",
-      "description": "Categoria selecionada no catálogo.",
-      "html": "<a class=\"ds-filter\" href=\"#all\" aria-current=\"page\">Todas <span>18</span></a>",
-      "css": ".ds-filter{display:inline-flex;align-items:center;gap:7px;padding:9px 11px;border:1px solid var(--accent,#285d45);border-radius:6px;background:var(--accent,#285d45);color:var(--paper,#f7f8f4);font:12px 'IBM Plex Sans Variable',sans-serif;text-decoration:none}.ds-filter span{font-size:9px;opacity:.8}.ds-filter:hover{filter:brightness(.95)}.ds-filter:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
-    },
-    {
-      "name": "Card de ferramenta",
-      "kind": "card",
-      "refersTo": "tool-card",
-      "description": "Link de ferramenta com favorito independente e contraste nos dois temas.",
-      "html": "<article class=\"ds-card\"><a href=\"#json\" class=\"ds-card-link\"><span class=\"ds-icon\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3H6v6l-3 3 3 3v6h2M16 3h2v6l3 3-3 3v6h-2\"/></svg></span><h3>JSON Formatter</h3><p>Formate, organize e valide seus dados JSON.</p><span class=\"ds-open\">Abrir ferramenta <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></span></a><button class=\"ds-favorite\" aria-label=\"Favoritar JSON Formatter\" aria-pressed=\"false\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z\"/></svg></button></article>",
-      "css": ".ds-card{position:relative;background:var(--surface,#fff);border:1px solid var(--line,#e1e6dc);border-radius:12px;color:var(--ink,#22382c);transition:border-color .15s ease-out,background .15s ease-out}.ds-card:hover{border-color:color-mix(in srgb,var(--accent,#285d45) 50%,var(--line,#e1e6dc));background:color-mix(in srgb,var(--surface,#fff) 93%,var(--wash,#edf3e9))}.ds-card-link{display:flex;flex-direction:column;padding:20px 20px 16px;text-decoration:none;color:inherit;border-radius:12px}.ds-icon{display:grid;place-items:center;background:var(--wash,#edf3e9);color:var(--accent,#285d45);width:36px;height:36px;border-radius:9px;margin-bottom:15px}.ds-card h3{font:700 15px/1.5 'Manrope Variable',sans-serif;letter-spacing:-.015em;margin:0 30px 7px 0}.ds-card p{font:13px/1.75 'IBM Plex Sans Variable',sans-serif;color:var(--muted,#647064);margin:0 0 19px}.ds-open{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line,#e1e6dc);padding-top:11px;font:11px 'IBM Plex Sans Variable',sans-serif;color:var(--muted,#647064)}.ds-open svg{color:var(--accent,#285d45)}.ds-favorite{position:absolute;right:13px;top:16px;width:31px;height:31px;border:0;border-radius:8px;background:transparent;color:var(--muted,#647064);cursor:pointer}.ds-favorite:hover,.ds-favorite[aria-pressed=true]{background:var(--wash,#edf3e9);color:var(--accent,#285d45)}.ds-favorite[aria-pressed=true] svg{fill:currentColor}.ds-card-link:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}.ds-favorite:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-card{transition:none}}"
-    },
-    {
-      "name": "Painel de resultado",
-      "kind": "custom",
-      "description": "Plano de trabalho com cabeçalho, código e metadados.",
-      "html": "<section class=\"ds-panel\" aria-label=\"Resultado\"><header class=\"ds-panel-heading\"><h2>Resultado</h2><button class=\"ds-copy\">Copiar</button></header><pre class=\"ds-code\" tabindex=\"0\" aria-label=\"Texto do resultado\">{\\n  \"hello\": \"developer\"\\n}</pre><div class=\"ds-meta\">28 caracteres</div></section>",
-      "css": ".ds-panel{border:1px solid var(--line,#e1e6dc);border-radius:12px;overflow:hidden;background:var(--surface,#fff);color:var(--ink,#22382c)}.ds-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;border-bottom:1px solid var(--line,#e1e6dc);min-height:67px;flex-wrap:wrap}.ds-panel h2{margin:0;font:700 14px 'Manrope Variable',sans-serif}.ds-copy{height:32px;padding:0 9px;background:transparent;border:0;border-radius:8px;color:var(--muted,#647064);font:500 12px 'IBM Plex Sans Variable',sans-serif;cursor:pointer}.ds-copy:hover{background:var(--wash,#edf3e9);color:var(--ink,#22382c)}.ds-copy:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}.ds-code{font:13px/1.8 'IBM Plex Mono',monospace;padding:22px;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}.ds-code:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}.ds-meta{padding:11px 20px;border-top:1px solid var(--line,#e1e6dc);font:10px 'IBM Plex Sans Variable',sans-serif;color:var(--muted,#647064);font-variant-numeric:tabular-nums}"
-    }
-  ],
-  "narrative": {
-    "northStar": "Bancada de trabalho",
-    "overview": "Uma bancada organizada, clara e técnica: papel suave, ferramentas reconhecíveis e espaço para trabalhar. A navegação permanece disponível em telas amplas; pesquisa, catálogo e área de entrada/resultado compartilham a mesma linguagem. A personalidade aprovada combina tons de papel, verde escuro, tipografia técnica e um modo escuro equivalente. Fontes são locais.\n\nEste documento atualiza a direção aprovada com o que foi construído em `src/styles.css`, `src/legibility.css`, no shell e nos componentes compartilhados. O contrato permanece: reconhecer a finalidade no primeiro viewport, encontrar ferramentas por nome ou palavra-chave e executar, copiar ou exportar sem cadastro. A composição específica da home não é uma obrigação para toda tela. Os valores preliminares de tinta, verde ativo e largura do seed foram resolvidos pelos tokens e medidas atuais abaixo.",
-    "keyCharacteristics": [
-      "Papel e superfícies claras, com verde como sinal de ação.",
-      "Mesmo vocabulário em carvão verde e sálvia no modo escuro.",
-      "Manrope para títulos, IBM Plex Sans para interface e IBM Plex Mono para dados.",
-      "Catálogo em cards e bancada de entrada/resultado com divisórias suaves.",
-      "Estados de teclado, erros e resultados fazem parte da experiência."
-    ],
-    "rules": [
-      {
-        "name": "The Semantic Pairing Rule",
-        "body": "Fundo, texto, borda e estado mudam juntos ao trocar o tema; use os papéis semânticos do CSS.",
-        "section": "colors"
-      },
-      {
-        "name": "The Data Type Rule",
-        "body": "Reserve a fonte monoespaçada para conteúdo técnico e preserve a fonte de interface em controles e explicações.",
-        "section": "typography"
-      },
-      {
-        "name": "The Quiet Surface Rule",
-        "body": "Use bordas e contraste tonal para organizar o trabalho; reserve a elevação observada para os elementos de apresentação da home.",
-        "section": "elevation"
-      }
-    ],
-    "dos": [
-      "Do preservar a bancada clara de papel e seu equivalente escuro em carvão verde.",
-      "Do aplicar os papéis semânticos de cor e a escala final de legibilidade.",
-      "Do manter favoritos como controles independentes dos links de ferramenta.",
-      "Do preservar foco visível, rótulos associados e anúncios de erro e resultado.",
-      "Do adaptar catálogo, navegação e bancada ao espaço disponível e aos dois idiomas."
-    ],
-    "donts": [
-      "Don't substituir o vocabulário técnico aprovado por outra identidade visual.",
-      "Don't transformar a composição da home em uma obrigação para todas as ferramentas.",
-      "Don't usar a indicação de processamento local para sugerir publicação, popularidade medida ou verificação criptográfica sem evidência.",
-      "Don't ocultar conteúdo para executar animações ou ignorar movimento reduzido."
-    ]
-  }
+	"schemaVersion": 2,
+	"generatedAt": "2026-10-19T00:47:57.968Z",
+	"title": "Design System: Toolbox",
+	"extensions": {
+		"colorMeta": {
+			"accent": {
+				"role": "primary",
+				"displayName": "Verde de trabalho",
+				"tonalRamp": [
+					"oklch(15% 0.0699 161.8)",
+					"oklch(26% 0.0699 161.8)",
+					"oklch(38% 0.0699 161.8)",
+					"oklch(49% 0.0699 161.8)",
+					"oklch(61% 0.0699 161.8)",
+					"oklch(72% 0.0699 161.8)",
+					"oklch(84% 0.0699 161.8)",
+					"oklch(95% 0.0699 161.8)"
+				]
+			},
+			"ink": {
+				"role": "neutral",
+				"displayName": "Tinta",
+				"tonalRamp": [
+					"oklch(15% 0.0354 159.7)",
+					"oklch(26% 0.0354 159.7)",
+					"oklch(38% 0.0354 159.7)",
+					"oklch(49% 0.0354 159.7)",
+					"oklch(61% 0.0354 159.7)",
+					"oklch(72% 0.0354 159.7)",
+					"oklch(84% 0.0354 159.7)",
+					"oklch(95% 0.0354 159.7)"
+				]
+			},
+			"muted": {
+				"role": "neutral",
+				"displayName": "Texto secundário",
+				"tonalRamp": [
+					"oklch(15% 0.0235 145.2)",
+					"oklch(26% 0.0235 145.2)",
+					"oklch(38% 0.0235 145.2)",
+					"oklch(49% 0.0235 145.2)",
+					"oklch(61% 0.0235 145.2)",
+					"oklch(72% 0.0235 145.2)",
+					"oklch(84% 0.0235 145.2)",
+					"oklch(95% 0.0235 145.2)"
+				]
+			},
+			"paper": {
+				"role": "neutral",
+				"displayName": "Papel",
+				"tonalRamp": [
+					"oklch(15% 0.0054 117.9)",
+					"oklch(26% 0.0054 117.9)",
+					"oklch(38% 0.0054 117.9)",
+					"oklch(49% 0.0054 117.9)",
+					"oklch(61% 0.0054 117.9)",
+					"oklch(72% 0.0054 117.9)",
+					"oklch(84% 0.0054 117.9)",
+					"oklch(95% 0.0054 117.9)"
+				]
+			},
+			"surface": {
+				"role": "neutral",
+				"displayName": "Superfície",
+				"tonalRamp": [
+					"oklch(15% 0.0000 89.9)",
+					"oklch(26% 0.0000 89.9)",
+					"oklch(38% 0.0000 89.9)",
+					"oklch(49% 0.0000 89.9)",
+					"oklch(61% 0.0000 89.9)",
+					"oklch(72% 0.0000 89.9)",
+					"oklch(84% 0.0000 89.9)",
+					"oklch(95% 0.0000 89.9)"
+				]
+			},
+			"line": {
+				"role": "neutral",
+				"displayName": "Divisória",
+				"tonalRamp": [
+					"oklch(15% 0.0144 128.6)",
+					"oklch(26% 0.0144 128.6)",
+					"oklch(38% 0.0144 128.6)",
+					"oklch(49% 0.0144 128.6)",
+					"oklch(61% 0.0144 128.6)",
+					"oklch(72% 0.0144 128.6)",
+					"oklch(84% 0.0144 128.6)",
+					"oklch(95% 0.0144 128.6)"
+				]
+			},
+			"wash": {
+				"role": "neutral",
+				"displayName": "Lavagem verde",
+				"tonalRamp": [
+					"oklch(15% 0.0147 132.5)",
+					"oklch(26% 0.0147 132.5)",
+					"oklch(38% 0.0147 132.5)",
+					"oklch(49% 0.0147 132.5)",
+					"oklch(61% 0.0147 132.5)",
+					"oklch(72% 0.0147 132.5)",
+					"oklch(84% 0.0147 132.5)",
+					"oklch(95% 0.0147 132.5)"
+				]
+			},
+			"preview": {
+				"role": "neutral",
+				"displayName": "Prévia",
+				"tonalRamp": [
+					"oklch(15% 0.0159 130.4)",
+					"oklch(26% 0.0159 130.4)",
+					"oklch(38% 0.0159 130.4)",
+					"oklch(49% 0.0159 130.4)",
+					"oklch(61% 0.0159 130.4)",
+					"oklch(72% 0.0159 130.4)",
+					"oklch(84% 0.0159 130.4)",
+					"oklch(95% 0.0159 130.4)"
+				]
+			},
+			"code-key": {
+				"role": "syntax",
+				"displayName": "Chave de código",
+				"tonalRamp": [
+					"oklch(15% 0.0462 164.2)",
+					"oklch(26% 0.0462 164.2)",
+					"oklch(38% 0.0462 164.2)",
+					"oklch(49% 0.0462 164.2)",
+					"oklch(61% 0.0462 164.2)",
+					"oklch(72% 0.0462 164.2)",
+					"oklch(84% 0.0462 164.2)",
+					"oklch(95% 0.0462 164.2)"
+				]
+			},
+			"code-string": {
+				"role": "syntax",
+				"displayName": "String de código",
+				"tonalRamp": [
+					"oklch(15% 0.0860 74.5)",
+					"oklch(26% 0.0860 74.5)",
+					"oklch(38% 0.0860 74.5)",
+					"oklch(49% 0.0860 74.5)",
+					"oklch(61% 0.0860 74.5)",
+					"oklch(72% 0.0860 74.5)",
+					"oklch(84% 0.0860 74.5)",
+					"oklch(95% 0.0860 74.5)"
+				]
+			},
+			"code-value": {
+				"role": "syntax",
+				"displayName": "Valor de código",
+				"tonalRamp": [
+					"oklch(15% 0.0797 244.7)",
+					"oklch(26% 0.0797 244.7)",
+					"oklch(38% 0.0797 244.7)",
+					"oklch(49% 0.0797 244.7)",
+					"oklch(61% 0.0797 244.7)",
+					"oklch(72% 0.0797 244.7)",
+					"oklch(84% 0.0797 244.7)",
+					"oklch(95% 0.0797 244.7)"
+				]
+			},
+			"error": {
+				"role": "error",
+				"displayName": "Erro",
+				"tonalRamp": [
+					"oklch(15% 0.1432 24.1)",
+					"oklch(26% 0.1432 24.1)",
+					"oklch(38% 0.1432 24.1)",
+					"oklch(49% 0.1432 24.1)",
+					"oklch(61% 0.1432 24.1)",
+					"oklch(72% 0.1432 24.1)",
+					"oklch(84% 0.1432 24.1)",
+					"oklch(95% 0.1432 24.1)"
+				]
+			},
+			"dark-accent": {
+				"role": "primary",
+				"displayName": "Escuro · Verde de trabalho",
+				"tonalRamp": [
+					"oklch(15% 0.0727 149.1)",
+					"oklch(26% 0.0727 149.1)",
+					"oklch(38% 0.0727 149.1)",
+					"oklch(49% 0.0727 149.1)",
+					"oklch(61% 0.0727 149.1)",
+					"oklch(72% 0.0727 149.1)",
+					"oklch(84% 0.0727 149.1)",
+					"oklch(95% 0.0727 149.1)"
+				]
+			},
+			"dark-ink": {
+				"role": "neutral",
+				"displayName": "Escuro · Tinta",
+				"tonalRamp": [
+					"oklch(15% 0.0170 137.0)",
+					"oklch(26% 0.0170 137.0)",
+					"oklch(38% 0.0170 137.0)",
+					"oklch(49% 0.0170 137.0)",
+					"oklch(61% 0.0170 137.0)",
+					"oklch(72% 0.0170 137.0)",
+					"oklch(84% 0.0170 137.0)",
+					"oklch(95% 0.0170 137.0)"
+				]
+			},
+			"dark-muted": {
+				"role": "neutral",
+				"displayName": "Escuro · Texto secundário",
+				"tonalRamp": [
+					"oklch(15% 0.0268 145.3)",
+					"oklch(26% 0.0268 145.3)",
+					"oklch(38% 0.0268 145.3)",
+					"oklch(49% 0.0268 145.3)",
+					"oklch(61% 0.0268 145.3)",
+					"oklch(72% 0.0268 145.3)",
+					"oklch(84% 0.0268 145.3)",
+					"oklch(95% 0.0268 145.3)"
+				]
+			},
+			"dark-paper": {
+				"role": "neutral",
+				"displayName": "Escuro · Papel",
+				"tonalRamp": [
+					"oklch(15% 0.0217 158.5)",
+					"oklch(26% 0.0217 158.5)",
+					"oklch(38% 0.0217 158.5)",
+					"oklch(49% 0.0217 158.5)",
+					"oklch(61% 0.0217 158.5)",
+					"oklch(72% 0.0217 158.5)",
+					"oklch(84% 0.0217 158.5)",
+					"oklch(95% 0.0217 158.5)"
+				]
+			},
+			"dark-surface": {
+				"role": "neutral",
+				"displayName": "Escuro · Superfície",
+				"tonalRamp": [
+					"oklch(15% 0.0212 164.7)",
+					"oklch(26% 0.0212 164.7)",
+					"oklch(38% 0.0212 164.7)",
+					"oklch(49% 0.0212 164.7)",
+					"oklch(61% 0.0212 164.7)",
+					"oklch(72% 0.0212 164.7)",
+					"oklch(84% 0.0212 164.7)",
+					"oklch(95% 0.0212 164.7)"
+				]
+			},
+			"dark-line": {
+				"role": "neutral",
+				"displayName": "Escuro · Divisória",
+				"tonalRamp": [
+					"oklch(15% 0.0296 157.8)",
+					"oklch(26% 0.0296 157.8)",
+					"oklch(38% 0.0296 157.8)",
+					"oklch(49% 0.0296 157.8)",
+					"oklch(61% 0.0296 157.8)",
+					"oklch(72% 0.0296 157.8)",
+					"oklch(84% 0.0296 157.8)",
+					"oklch(95% 0.0296 157.8)"
+				]
+			},
+			"dark-wash": {
+				"role": "neutral",
+				"displayName": "Escuro · Lavagem verde",
+				"tonalRamp": [
+					"oklch(15% 0.0393 155.1)",
+					"oklch(26% 0.0393 155.1)",
+					"oklch(38% 0.0393 155.1)",
+					"oklch(49% 0.0393 155.1)",
+					"oklch(61% 0.0393 155.1)",
+					"oklch(72% 0.0393 155.1)",
+					"oklch(84% 0.0393 155.1)",
+					"oklch(95% 0.0393 155.1)"
+				]
+			},
+			"dark-preview": {
+				"role": "neutral",
+				"displayName": "Escuro · Prévia",
+				"tonalRamp": [
+					"oklch(15% 0.0337 157.4)",
+					"oklch(26% 0.0337 157.4)",
+					"oklch(38% 0.0337 157.4)",
+					"oklch(49% 0.0337 157.4)",
+					"oklch(61% 0.0337 157.4)",
+					"oklch(72% 0.0337 157.4)",
+					"oklch(84% 0.0337 157.4)",
+					"oklch(95% 0.0337 157.4)"
+				]
+			},
+			"dark-code-key": {
+				"role": "syntax",
+				"displayName": "Escuro · Chave de código",
+				"tonalRamp": [
+					"oklch(15% 0.0464 149.1)",
+					"oklch(26% 0.0464 149.1)",
+					"oklch(38% 0.0464 149.1)",
+					"oklch(49% 0.0464 149.1)",
+					"oklch(61% 0.0464 149.1)",
+					"oklch(72% 0.0464 149.1)",
+					"oklch(84% 0.0464 149.1)",
+					"oklch(95% 0.0464 149.1)"
+				]
+			},
+			"dark-code-string": {
+				"role": "syntax",
+				"displayName": "Escuro · String de código",
+				"tonalRamp": [
+					"oklch(15% 0.0822 77.8)",
+					"oklch(26% 0.0822 77.8)",
+					"oklch(38% 0.0822 77.8)",
+					"oklch(49% 0.0822 77.8)",
+					"oklch(61% 0.0822 77.8)",
+					"oklch(72% 0.0822 77.8)",
+					"oklch(84% 0.0822 77.8)",
+					"oklch(95% 0.0822 77.8)"
+				]
+			},
+			"dark-code-value": {
+				"role": "syntax",
+				"displayName": "Escuro · Valor de código",
+				"tonalRamp": [
+					"oklch(15% 0.0530 237.9)",
+					"oklch(26% 0.0530 237.9)",
+					"oklch(38% 0.0530 237.9)",
+					"oklch(49% 0.0530 237.9)",
+					"oklch(61% 0.0530 237.9)",
+					"oklch(72% 0.0530 237.9)",
+					"oklch(84% 0.0530 237.9)",
+					"oklch(95% 0.0530 237.9)"
+				]
+			},
+			"dark-error": {
+				"role": "error",
+				"displayName": "Escuro · Erro",
+				"tonalRamp": [
+					"oklch(15% 0.0865 27.1)",
+					"oklch(26% 0.0865 27.1)",
+					"oklch(38% 0.0865 27.1)",
+					"oklch(49% 0.0865 27.1)",
+					"oklch(61% 0.0865 27.1)",
+					"oklch(72% 0.0865 27.1)",
+					"oklch(84% 0.0865 27.1)",
+					"oklch(95% 0.0865 27.1)"
+				]
+			}
+		},
+		"typographyMeta": {
+			"display": {
+				"displayName": "Título de apresentação",
+				"purpose": "Título principal da home."
+			},
+			"headline": {
+				"displayName": "Título de seção",
+				"purpose": "Seções do catálogo."
+			},
+			"title": {
+				"displayName": "Título de ferramenta",
+				"purpose": "Nomes nos cards."
+			},
+			"body": {
+				"displayName": "Corpo de interface",
+				"purpose": "Descrições legíveis e navegação."
+			},
+			"label": {
+				"displayName": "Rótulo",
+				"purpose": "Campos e controles."
+			},
+			"code": {
+				"displayName": "Código e dados",
+				"purpose": "Entrada e resultado técnicos."
+			}
+		},
+		"shadows": [
+			{
+				"name": "home-search",
+				"value": "0 4px 14px #173b2409",
+				"purpose": "Pesquisa principal da home."
+			}
+		],
+		"motion": [
+			{
+				"name": "card-state",
+				"value": "border-color 0.15s ease-out, background 0.15s ease-out",
+				"purpose": "Resposta tonal dos cards."
+			},
+			{
+				"name": "drawer",
+				"value": "transform 0.2s ease-out",
+				"purpose": "Abertura da navegação móvel."
+			},
+			{
+				"name": "reduced-motion",
+				"value": "transition: none !important; animation: none !important; scroll-behavior: auto !important",
+				"purpose": "Aplicado sob prefers-reduced-motion: reduce."
+			}
+		],
+		"breakpoints": [
+			{
+				"name": "compact-desktop",
+				"value": "1200px"
+			},
+			{
+				"name": "tablet",
+				"value": "960px"
+			},
+			{
+				"name": "mobile-drawer",
+				"value": "720px"
+			},
+			{
+				"name": "single-column-catalog",
+				"value": "420px"
+			},
+			{
+				"name": "wide",
+				"value": "1700px"
+			},
+			{
+				"name": "home-single-column",
+				"value": "1100px"
+			},
+			{
+				"name": "single-column-shortcuts",
+				"value": "600px"
+			}
+		]
+	},
+	"components": [
+		{
+			"name": "Ação principal",
+			"kind": "button",
+			"refersTo": "button-primary",
+			"description": "Ação de executar no painel de entrada.",
+			"html": "<button class=\"ds-btn ds-primary\">Formatar e validar <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+			"css": ".ds-btn{font:500 13px 'IBM Plex Sans Variable',sans-serif;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 15px;border:1px solid transparent;border-radius:8px;cursor:pointer;box-shadow:none;}.ds-primary{background:var(--accent,#285d45);color:var(--color-primary-content,#fff)}.ds-primary:hover{background:color-mix(in srgb,var(--accent,#285d45) 90%,var(--ink,#22382c))}.ds-primary:active{filter:brightness(.95)}.ds-btn:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
+		},
+		{
+			"name": "Ação ghost",
+			"kind": "button",
+			"refersTo": "button-ghost",
+			"description": "Limpar, usar exemplo e ações discretas.",
+			"html": "<button class=\"ds-btn ds-ghost\">Limpar</button>",
+			"css": ".ds-btn{font:500 13px 'IBM Plex Sans Variable',sans-serif;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 15px;border:1px solid transparent;border-radius:8px;cursor:pointer;box-shadow:none;}.ds-ghost{background:transparent;color:var(--muted,#647064)}.ds-ghost:hover{color:var(--ink,#22382c);background:var(--wash,#edf3e9)}.ds-ghost:active{background:var(--line,#e1e6dc)}.ds-btn:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
+		},
+		{
+			"name": "Ação contornada",
+			"kind": "button",
+			"description": "Favoritar uma ferramenta na página de trabalho.",
+			"html": "<button class=\"ds-btn ds-outline\" aria-pressed=\"false\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z\"/></svg> Favoritar</button>",
+			"css": ".ds-btn{font:500 13px 'IBM Plex Sans Variable',sans-serif;display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 15px;border:1px solid transparent;border-radius:8px;cursor:pointer;box-shadow:none;}.ds-outline{background:transparent;color:var(--ink,#22382c);border-color:var(--line,#e1e6dc)}.ds-outline:hover{background:var(--wash,#edf3e9);border-color:var(--accent,#285d45)}.ds-outline[aria-pressed=true]{color:var(--accent,#285d45);background:var(--wash,#edf3e9)}.ds-btn:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
+		},
+		{
+			"name": "Campo de entrada",
+			"kind": "input",
+			"refersTo": "field",
+			"description": "Rótulo associado e superfície de papel.",
+			"html": "<label class=\"ds-label\" for=\"ds-field\">Quantidade</label><input class=\"ds-field\" id=\"ds-field\" type=\"number\" value=\"1\" min=\"1\">",
+			"css": ".ds-label{display:block;font:500 13px 'IBM Plex Sans Variable',sans-serif;color:var(--ink,#22382c);margin-bottom:9px}.ds-field{height:42px;width:100%;padding:0 12px;border:1px solid var(--line,#e1e6dc);border-radius:8px;background:var(--paper,#f7f8f4);color:var(--ink,#22382c);font:13px 'IBM Plex Sans Variable',sans-serif}.ds-field:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:3px}.ds-field:hover{border-color:var(--accent,#285d45)}"
+		},
+		{
+			"name": "Navegação selecionada",
+			"kind": "nav",
+			"refersTo": "navigation-active",
+			"description": "Link ativo da sidebar; o estado também é anunciado.",
+			"html": "<nav aria-label=\"Navegação\"><a class=\"ds-nav\" href=\"#tools\" aria-current=\"page\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3H6v6l-3 3 3 3v6h2M16 3h2v6l3 3-3 3v6h-2\"/></svg> Todas as ferramentas <span class=\"ds-count\">18</span></a></nav>",
+			"css": ".ds-nav{display:flex;align-items:center;gap:11px;min-height:43px;padding:12px;border-radius:6px;background:var(--wash,#edf3e9);color:var(--accent,#285d45);font:600 13px/1.2 'IBM Plex Sans Variable',sans-serif;text-decoration:none}.ds-count{margin-left:auto;background:var(--surface,#fff);padding:3px 6px;border-radius:4px;font-size:10px}.ds-nav:hover{background:var(--paper,#f7f8f4)}.ds-nav:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
+		},
+		{
+			"name": "Filtro de categoria",
+			"kind": "chip",
+			"refersTo": "filter-selected",
+			"description": "Categoria selecionada no catálogo.",
+			"html": "<a class=\"ds-filter\" href=\"#all\" aria-current=\"page\">Todas <span>18</span></a>",
+			"css": ".ds-filter{display:inline-flex;align-items:center;gap:7px;padding:9px 11px;border:1px solid var(--accent,#285d45);border-radius:6px;background:var(--accent,#285d45);color:var(--paper,#f7f8f4);font:12px 'IBM Plex Sans Variable',sans-serif;text-decoration:none}.ds-filter span{font-size:9px;opacity:.8}.ds-filter:hover{filter:brightness(.95)}.ds-filter:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}"
+		},
+		{
+			"name": "Card de ferramenta",
+			"kind": "card",
+			"refersTo": "tool-card",
+			"description": "Link de ferramenta com favorito independente e contraste nos dois temas.",
+			"html": "<article class=\"ds-card\"><a href=\"#json\" class=\"ds-card-link\"><span class=\"ds-icon\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M8 3H6v6l-3 3 3 3v6h2M16 3h2v6l3 3-3 3v6h-2\"/></svg></span><h3>JSON Formatter</h3><p>Formate, organize e valide seus dados JSON.</p><span class=\"ds-open\">Abrir ferramenta <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></span></a><button class=\"ds-favorite\" aria-label=\"Favoritar JSON Formatter\" aria-pressed=\"false\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z\"/></svg></button></article>",
+			"css": ".ds-card{position:relative;background:var(--surface,#fff);border:1px solid var(--line,#e1e6dc);border-radius:12px;color:var(--ink,#22382c);transition:border-color .15s ease-out,background .15s ease-out}.ds-card:hover{border-color:color-mix(in srgb,var(--accent,#285d45) 50%,var(--line,#e1e6dc));background:color-mix(in srgb,var(--surface,#fff) 93%,var(--wash,#edf3e9))}.ds-card-link{display:flex;flex-direction:column;padding:20px 20px 16px;text-decoration:none;color:inherit;border-radius:12px}.ds-icon{display:grid;place-items:center;background:var(--wash,#edf3e9);color:var(--accent,#285d45);width:36px;height:36px;border-radius:9px;margin-bottom:15px}.ds-card h3{font:700 15px/1.5 'Manrope Variable',sans-serif;letter-spacing:-.015em;margin:0 30px 7px 0}.ds-card p{font:13px/1.75 'IBM Plex Sans Variable',sans-serif;color:var(--muted,#647064);margin:0 0 19px}.ds-open{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line,#e1e6dc);padding-top:11px;font:11px 'IBM Plex Sans Variable',sans-serif;color:var(--muted,#647064)}.ds-open svg{color:var(--accent,#285d45)}.ds-favorite{position:absolute;right:13px;top:16px;width:31px;height:31px;border:0;border-radius:8px;background:transparent;color:var(--muted,#647064);cursor:pointer}.ds-favorite:hover,.ds-favorite[aria-pressed=true]{background:var(--wash,#edf3e9);color:var(--accent,#285d45)}.ds-favorite[aria-pressed=true] svg{fill:currentColor}.ds-card-link:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}.ds-favorite:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-card{transition:none}}"
+		},
+		{
+			"name": "Painel de resultado",
+			"kind": "custom",
+			"description": "Plano de trabalho com cabeçalho, código e metadados.",
+			"html": "<section class=\"ds-panel\" aria-label=\"Resultado\"><header class=\"ds-panel-heading\"><h2>Resultado</h2><button class=\"ds-copy\">Copiar</button></header><pre class=\"ds-code\" tabindex=\"0\" aria-label=\"Texto do resultado\">{\\n  \"hello\": \"developer\"\\n}</pre><div class=\"ds-meta\">28 caracteres</div></section>",
+			"css": ".ds-panel{border:1px solid var(--line,#e1e6dc);border-radius:12px;overflow:hidden;background:var(--surface,#fff);color:var(--ink,#22382c)}.ds-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 20px;border-bottom:1px solid var(--line,#e1e6dc);min-height:67px;flex-wrap:wrap}.ds-panel h2{margin:0;font:700 14px 'Manrope Variable',sans-serif}.ds-copy{height:32px;padding:0 9px;background:transparent;border:0;border-radius:8px;color:var(--muted,#647064);font:500 12px 'IBM Plex Sans Variable',sans-serif;cursor:pointer}.ds-copy:hover{background:var(--wash,#edf3e9);color:var(--ink,#22382c)}.ds-copy:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}.ds-code{font:13px/1.8 'IBM Plex Mono',monospace;padding:22px;margin:0;white-space:pre-wrap;overflow-wrap:anywhere;tab-size:2}.ds-code:focus-visible{outline:2px solid var(--accent,#285d45);outline-offset:4px}.ds-meta{padding:11px 20px;border-top:1px solid var(--line,#e1e6dc);font:10px 'IBM Plex Sans Variable',sans-serif;color:var(--muted,#647064);font-variant-numeric:tabular-nums}"
+		}
+	],
+	"narrative": {
+		"northStar": "Bancada de trabalho",
+		"overview": "Uma bancada organizada, clara e técnica: papel suave, ferramentas reconhecíveis e espaço para trabalhar. A navegação permanece disponível em telas amplas; pesquisa, catálogo e área de entrada/resultado compartilham a mesma linguagem. A personalidade aprovada combina tons de papel, verde escuro, tipografia técnica e um modo escuro equivalente. Fontes são locais.\n\nEste documento atualiza a direção aprovada com o que foi construído em `src/styles.css`, `src/legibility.css`, no shell e nos componentes compartilhados. O contrato permanece: reconhecer a finalidade no primeiro viewport, encontrar ferramentas por nome ou palavra-chave e executar, copiar ou exportar sem cadastro. A composição específica da home não é uma obrigação para toda tela. Os valores preliminares de tinta, verde ativo e largura do seed foram resolvidos pelos tokens e medidas atuais abaixo.",
+		"keyCharacteristics": [
+			"Papel e superfícies claras, com verde como sinal de ação.",
+			"Mesmo vocabulário em carvão verde e sálvia no modo escuro.",
+			"Manrope para títulos, IBM Plex Sans para interface e IBM Plex Mono para dados.",
+			"Catálogo em cards e bancada de entrada/resultado com divisórias suaves.",
+			"Estados de teclado, erros e resultados fazem parte da experiência."
+		],
+		"rules": [
+			{
+				"name": "The Semantic Pairing Rule",
+				"body": "Fundo, texto, borda e estado mudam juntos ao trocar o tema; use os papéis semânticos do CSS.",
+				"section": "colors"
+			},
+			{
+				"name": "The Data Type Rule",
+				"body": "Reserve a fonte monoespaçada para conteúdo técnico e preserve a fonte de interface em controles e explicações.",
+				"section": "typography"
+			},
+			{
+				"name": "The Quiet Surface Rule",
+				"body": "Use bordas e contraste tonal para organizar o trabalho; reserve a elevação observada para os elementos de apresentação da home.",
+				"section": "elevation"
+			}
+		],
+		"dos": [
+			"Do preservar a bancada clara de papel e seu equivalente escuro em carvão verde.",
+			"Do aplicar os papéis semânticos de cor e a escala final de legibilidade.",
+			"Do manter favoritos como controles independentes dos links de ferramenta.",
+			"Do preservar foco visível, rótulos associados e anúncios de erro e resultado.",
+			"Do adaptar catálogo, navegação e bancada ao espaço disponível e aos dois idiomas."
+		],
+		"donts": [
+			"Don't substituir o vocabulário técnico aprovado por outra identidade visual.",
+			"Don't transformar a composição da home em uma obrigação para todas as ferramentas.",
+			"Don't usar a indicação de processamento local para sugerir publicação, popularidade medida ou verificação criptográfica sem evidência.",
+			"Don't ocultar conteúdo para executar animações ou ignorar movimento reduzido."
+		]
+	}
 }

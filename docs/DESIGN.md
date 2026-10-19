@@ -117,7 +117,7 @@ components:
 
 Uma bancada organizada, clara e técnica: papel suave, ferramentas reconhecíveis e espaço para trabalhar. A navegação permanece disponível em telas amplas; pesquisa, catálogo e área de entrada/resultado compartilham a mesma linguagem. A personalidade aprovada combina tons de papel, verde escuro, tipografia técnica e um modo escuro equivalente. Fontes são locais.
 
-Este documento atualiza a direção aprovada com o que foi construído em `src/styles.scss`, `src/legibility.scss`, `src/app/app.scss`, `src/app/features/home/home.scss` e `src/app/shared/components/tool-card.scss`, além do shell e dos componentes compartilhados. O contrato permanece: reconhecer a finalidade no primeiro viewport, encontrar ferramentas por nome ou palavra-chave e executar, copiar ou exportar sem cadastro. A composição específica da home não é uma obrigação para toda tela. Os valores preliminares de tinta, verde ativo e largura do seed foram resolvidos pelos tokens e medidas atuais abaixo.
+Este documento atualiza a direção aprovada com o que foi construído em `src/styles.scss`, `src/legibility.scss`, `src/app/app.scss`, `src/app/features/home/home.scss` e `src/app/features/tools/catalog/tool-card/tool-card.scss`, além do shell e dos componentes compartilhados. O contrato permanece: reconhecer a finalidade no primeiro viewport, encontrar ferramentas por nome ou palavra-chave e executar, copiar ou exportar sem cadastro. A composição específica da home não é uma obrigação para toda tela. Os valores preliminares de tinta, verde ativo e largura do seed foram resolvidos pelos tokens e medidas atuais abaixo.
 
 **Key Characteristics:**
 
@@ -178,7 +178,7 @@ O catálogo usa três colunas iguais com intervalo de 15px; os cards preenchem a
 - **Até 420px:** catálogo e campos passam a uma coluna. A interface suporta largura mínima de 320px.
 - **Até 600px:** atalhos essenciais passam a uma coluna.
 
-A organização deve sobreviver a português e inglês, que usam o mesmo layout. Conteúdo de resultado pode crescer; não o limite a uma imagem estática ou a uma linha sem quebra.
+A organização deve sobreviver a português, inglês e espanhol, que usam o mesmo layout. Conteúdo de resultado pode crescer; não o limite a uma imagem estática ou a uma linha sem quebra.
 
 ## Elevation & Depth
 
@@ -206,7 +206,7 @@ Filtros de categoria são links com contorno, ícone opcional e cantos de navega
 
 ### Cards / Containers
 
-Na home, os essenciais usam uma variante compacta de 90px, com nome, ícone, categoria e favorito independente. O catálogo completo conserva os cards com descrições; seus rodapés identificam a categoria e a seta indica navegação. A assinatura da home é um exemplo de transformação JSON, com entrada compacta, resultado formatado e acesso à ferramenta real. O exemplo é identificado explicitamente, usa código selecionável e não simula um editor. Durante a busca, o destaque recolhe e os filtros de categoria cedem espaço aos resultados. Esses estilos ficam em `src/app/features/home/home.scss` e `src/app/shared/components/tool-card.scss`, encapsulados nos componentes.
+Na home, os essenciais usam uma variante compacta de 90px, com nome, ícone, categoria e favorito independente. O catálogo completo conserva os cards com descrições; seus rodapés identificam a categoria e a seta indica navegação. A assinatura da home é um exemplo de transformação JSON, com entrada compacta, resultado formatado e acesso à ferramenta real. O exemplo é identificado explicitamente, usa código selecionável e não simula um editor. Durante a busca, o destaque recolhe e os filtros de categoria cedem espaço aos resultados. Esses estilos ficam em `src/app/features/home/home.scss` e `src/app/features/tools/catalog/tool-card/tool-card.scss`, encapsulados nos componentes.
 
 Cards do catálogo usam superfície, borda fina e raio de superfície. O link cobre o conteúdo principal; o favorito é um botão independente, fora do link. A estrela padrão usa texto secundário; a selecionada recebe acento, fundo tonal e preenchimento. O estado também é exposto por `aria-pressed`.
 

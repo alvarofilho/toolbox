@@ -56,19 +56,24 @@ For generated people, choose 1–1,000 records, fields, state, and an age range 
 
 ```text
 src/app/
-  core/models/        tool and field contracts
-  core/registry/      declarative catalog, categories, and search
-  core/services/      Signals and validated local preferences
-  shared/components/  SVG icons, cards, and input/result workbench
-  shared/utils/       pure algorithms and tests
-  features/home/      home, catalog, categories, favorites, and recents
-  features/tools/     one module per tool, controls, and regex Worker
-  app.*               responsive shell, configuration, and routes
+  core/models/                tool and field contracts
+  core/services/              Signals and validated local preferences
+  shared/components/          generic SVG icon
+  features/home/              home, catalog, categories, favorites, and recents
+  features/tools/
+    catalog/                  metadata, lazy loaders, categories, and search
+      tool-card/              tool cards
+      command-palette/        global tool search and navigation
+    workbench/                tool execution, inputs, results, and exports
+    json/, security/, .../    definitions and helpers grouped by area
+    infrastructure/schemas/   local Kubernetes schemas
+    _shared/                  controls and algorithms used across tool areas
+  app.*                       responsive shell, configuration, and routes
 ```
 
-To add a tool, create a `*.tool.ts` file exporting `definition: ToolDefinition`, register its metadata in `core/registry/tools.ts`, and add its dynamic import to `TOOL_LOADERS` in `app.routes.ts`. A definition describes its controls and processing function; the shared workbench provides the form, states, and export behavior. Add vectors and invalid cases in `*.test.ts`; use `*.spec.ts` for Angular integration tests. Do not add available cards without a working implementation.
+To add a tool, create `features/tools/<category>/<id>.tool.ts` exporting `definition: ToolDefinition`. Add one registration to the corresponding category catalog in `features/tools/catalog/`, including its metadata and `loadDefinition` callback. Routes derive from these registrations, so adding a tool requires no separate loader map or route entry. A definition describes its controls and processing function; the workbench provides the form, states, and export behavior. Add vectors and invalid cases in `*.test.ts`; use `*.spec.ts` for Angular integration tests. Do not add available cards without a working implementation.
 
-New tools are described in `core/registry/extended-tools.ts`, implemented under `features/tools/extended/`, and dynamically imported through `extended/loaders.ts`. The metadata catalog does not import heavy parsers or processors. Kubernetes schemas are local and loaded on demand.
+Each registration dynamically imports its tool implementation. The catalog remains lightweight: heavy parsers and processors belong in the implementations. Keep helpers and their tests in the area that owns them; use `_shared` for behavior needed by multiple areas. Kubernetes schemas and workers remain local and load on demand.
 
 The app uses Angular 22 standalone components, OnPush, Signals, lazy loading, Tailwind CSS 4, and DaisyUI 5. Manrope and IBM Plex fonts are bundled locally. Parsers, data formats, images, and PDFs use dedicated libraries; cryptographic operations use Web Crypto.
 

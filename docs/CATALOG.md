@@ -50,7 +50,7 @@ IPv4; CIDR; IPv6; Chmod; Docker Run → Compose; Compose Visualizer; `.env` Diff
 
 Docker Run aceita comandos POSIX com nome, portas, volumes, variáveis, rede, restart, usuário, diretório, hostname, entrypoint e env-file; opções não suportadas são rejeitadas. Logs suportam JSON Lines e Apache/Nginx combined. Gitignore oferece templates locais Node, Angular, .NET, Python, Rust, Windows, macOS e VS Code.
 
-Kubernetes inclui schemas estritos locais da versão 1.35.0 para Pod, Service, ConfigMap, Secret, Namespace, PersistentVolumeClaim, ServiceAccount, Deployment, StatefulSet, DaemonSet, Job, CronJob, Ingress, NetworkPolicy, Role e RoleBinding. Outras versões e CRDs aceitam schema fornecido pelo usuário. A validação de schema não substitui admission, políticas e validação no servidor. A [origem e a licença dos schemas](../src/app/features/tools/extended/schemas/SOURCE.md) ficam junto dos arquivos; o script `scripts/update-kubernetes-schemas.mjs` permite atualizar de forma revisável.
+Kubernetes inclui schemas estritos locais da versão 1.35.0 para Pod, Service, ConfigMap, Secret, Namespace, PersistentVolumeClaim, ServiceAccount, Deployment, StatefulSet, DaemonSet, Job, CronJob, Ingress, NetworkPolicy, Role e RoleBinding. Outras versões e CRDs aceitam schema fornecido pelo usuário. A validação de schema não substitui admission, políticas e validação no servidor. A [origem e a licença dos schemas](../src/app/features/tools/infrastructure/schemas/SOURCE.md) ficam junto dos arquivos; o script `scripts/update-kubernetes-schemas.mjs` permite atualizar de forma revisável.
 
 ## Texto e arquivos
 
