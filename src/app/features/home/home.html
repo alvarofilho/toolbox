@@ -1,0 +1,208 @@
+@if (mode === 'home') {
+  <section class="welcome">
+    <div class="welcome-copy">
+      <h1>
+        {{ p.label('Menos abas.', 'Fewer tabs.') }}<br /><span>{{
+          p.label('Mais soluções.', 'More solutions.')
+        }}</span>
+      </h1>
+      <p>
+        {{
+          p.label(
+            'Seu kit de ferramentas para transformar dados, testar ideias e simplificar o dia a dia.',
+            'Your toolkit to transform data, test ideas and simplify your everyday work.'
+          )
+        }}
+      </p>
+      <div class="hero-search">
+        <app-icon name="search" /><input
+          type="search"
+          [placeholder]="p.label('O que você precisa fazer hoje?', 'What do you need to do today?')"
+          [attr.aria-label]="p.label('Pesquisar ferramentas', 'Search tools')"
+          (input)="search($event)"
+        /><span>↵</span>
+      </div>
+      <div class="welcome-note">
+        <app-icon name="check" />{{
+          p.label(
+            'Sem instalar. Sem cadastro. Sem enviar seus dados.',
+            'No install. No sign-up. No uploading your data.'
+          )
+        }}
+      </div>
+    </div>
+    <a
+      class="workbench-preview"
+      routerLink="/tools/json-formatter"
+      [attr.aria-label]="p.label('Abrir JSON Formatter', 'Open JSON Formatter')"
+      ><div class="preview-bar">
+        <span class="preview-dots"><i></i><i></i><i></i></span><span>hello-toolbox.json</span
+        ><app-icon name="braces" />
+      </div>
+      <pre><span class="line-no">1</span> {{'{'}}
+<span class="line-no">2</span>   <span class="code-key">"hello"</span>: <span class="code-string">"developer"</span>,
+<span class="line-no">3</span>   <span class="code-key">"less_friction"</span>: <span class="code-value">true</span>,
+<span class="line-no">4</span>   <span class="code-key">"more_building"</span>: <span class="code-value">true</span>
+<span class="line-no">5</span> {{'}'}}</pre>
+      <div class="preview-footer">
+        <span
+          ><span class="status-dot"></span
+          >{{ p.label('Pronto para construir', 'Ready to build') }}</span
+        ><app-icon name="arrow" /></div
+    ></a>
+  </section>
+  @if (!query()) {
+    @if (p.recentTools().length) {
+      <section class="recent-strip">
+        <span
+          ><app-icon name="clock" />{{ p.label('Acessadas recentemente', 'Recently opened') }}</span
+        >
+        <div>
+          @for (tool of p.recentTools().slice(0, 3); track tool.id) {
+            <a [routerLink]="['/tools', tool.id]">{{ p.t(tool.name) }} <app-icon name="arrow" /></a>
+          }
+        </div>
+      </section>
+    }
+    @if (p.favoriteTools().length) {
+      <section class="catalog-section">
+        <div class="section-title">
+          <h2>{{ p.label('Seus favoritos', 'Your favorites') }}</h2>
+          <a routerLink="/favorites"
+            >{{ p.label('Ver favoritos', 'View favorites') }} <app-icon name="arrow"
+          /></a>
+        </div>
+        <div class="tools-grid">
+          @for (tool of p.favoriteTools().slice(0, 3); track tool.id) {
+            <app-tool-card [tool]="tool" />
+          }
+        </div>
+      </section>
+    }
+    <section class="catalog-section essentials">
+      <div class="section-title">
+        <div>
+          <h2>{{ p.label('Essenciais do dia a dia', 'Everyday essentials') }}</h2>
+          <p>
+            {{
+              p.label('Uma seleção para manter por perto.', 'A selection to keep close at hand.')
+            }}
+          </p>
+        </div>
+        <a routerLink="/tools"
+          >{{ p.label('Explorar todas', 'Explore all') }} <app-icon name="arrow"
+        /></a>
+      </div>
+      <div class="tools-grid">
+        @for (tool of popular; track tool.id) {
+          <app-tool-card [tool]="tool" />
+        }
+      </div>
+    </section>
+  }
+}
+<section class="catalog-section all-tools">
+  <div class="section-title">
+    <div>
+      <h2 [class.page-title]="mode !== 'home' || query()">
+        {{ query() ? p.label('Resultados da pesquisa', 'Search results') : title() }}
+        <span class="total-count">{{ filtered().length }}</span>
+      </h2>
+      <p>
+        {{
+          mode === 'favorites'
+            ? p.label(
+                'Seu atalho para o que importa. Use a estrela para adicionar ferramentas.',
+                'Your shortcut to what matters. Use the star to add tools.'
+              )
+            : mode === 'recent'
+              ? p.label(
+                  'Somente as ferramentas visitadas. Os dados inseridos não são salvos.',
+                  'Only visited tools. Your inputs are never saved.'
+                )
+              : p.label(
+                  'Pequenas ferramentas. Grandes atalhos. Tudo no seu navegador.',
+                  'Small tools. Big shortcuts. All in your browser.'
+                )
+        }}
+      </p>
+    </div>
+    @if (mode === 'recent' && p.recent().length) {
+      <button class="btn btn-ghost" (click)="p.clearRecent()">
+        {{ p.label('Limpar histórico', 'Clear history') }}
+      </button>
+    }
+  </div>
+  @if (mode !== 'home' || query()) {
+    <div class="catalog-search">
+      <app-icon name="search" /><input
+        type="search"
+        [value]="query()"
+        (input)="search($event)"
+        [placeholder]="
+          p.label(
+            'Pesquisar por nome, categoria ou palavra-chave…',
+            'Search by name, category or keyword…'
+          )
+        "
+        [attr.aria-label]="p.label('Filtrar ferramentas', 'Filter tools')"
+      />
+    </div>
+  }
+  @if (mode === 'home' || mode === 'all' || mode === 'category') {
+    <nav
+      class="category-filters"
+      [attr.aria-label]="p.label('Filtrar por categoria', 'Filter by category')"
+    >
+      <a routerLink="/tools" [class.selected]="mode !== 'category'"
+        >{{ p.label('Todas', 'All') }} <span>{{ tools.length }}</span></a
+      >
+      @for (c of categories; track c.id) {
+        <a [routerLink]="['/category', c.id]" [class.selected]="category()?.id === c.id"
+          ><app-icon [name]="c.icon" />{{ p.t(c.name) }}</a
+        >
+      }
+    </nav>
+  }
+  <div class="tools-grid">
+    @for (tool of filtered(); track tool.id) {
+      <app-tool-card [tool]="tool" />
+    } @empty {
+      <div class="empty-state">
+        <app-icon [name]="mode === 'favorites' ? 'star' : mode === 'recent' ? 'clock' : 'search'" />
+        <h3>{{ p.label('Nada por aqui ainda', 'Nothing here yet') }}</h3>
+        <p>
+          {{
+            query()
+              ? p.label(
+                  'Tente outro termo ou explore as categorias.',
+                  'Try another term or explore the categories.'
+                )
+              : mode === 'favorites'
+                ? p.label(
+                    'Clique na estrela de uma ferramenta para encontrá-la aqui.',
+                    'Click a tool’s star to find it here.'
+                  )
+                : p.label(
+                    'As ferramentas que você abrir vão aparecer aqui.',
+                    'Tools you open will appear here.'
+                  )
+          }}
+        </p>
+        <a class="btn btn-primary" routerLink="/tools">{{
+          p.label('Explorar ferramentas', 'Explore tools')
+        }}</a>
+      </div>
+    }
+  </div>
+  @if (mode === 'home' && !p.favorites().length) {
+    <p class="favorites-tip">
+      <app-icon name="star" />{{
+        p.label(
+          'Tem uma ferramenta que você usa sempre? Marque a estrela e deixe nos favoritos.',
+          'Have a tool you use all the time? Star it and keep it in your favorites.'
+        )
+      }}
+    </p>
+  }
+</section>

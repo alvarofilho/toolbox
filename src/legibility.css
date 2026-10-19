@@ -1,0 +1,91 @@
+/* Shared type scale keeps utility labels legible across catalog and workspace. */
+.sidebar-close {
+  display: none;
+}
+@media (max-width: 720px) {
+  .sidebar-close {
+    display: inline-flex;
+    position: absolute;
+    right: 12px;
+    top: 30px;
+  }
+}
+.main-nav {
+  font-size: 13px;
+}
+.sidebar-caption,
+.sidebar-bottom p {
+  font-size: 12px;
+}
+.sidebar-bottom strong {
+  font-size: 13px;
+}
+.local-status {
+  font-size: 10px;
+}
+.global-search input,
+.hero-search input,
+.catalog-search input {
+  font-size: 13px;
+}
+.header-local {
+  font-size: 11px;
+}
+.welcome-note {
+  font-size: 11px;
+}
+.section-title p {
+  font-size: 13px;
+}
+.section-title > a {
+  font-size: 12px;
+}
+.tool-card h3 {
+  font-size: 15px;
+}
+.tool-card p {
+  font-size: 13px;
+}
+.card-open {
+  font-size: 11px;
+}
+.category-filters a {
+  font-size: 12px;
+}
+.favorites-tip,
+.recent-strip {
+  font-size: 12px;
+}
+.page-footer {
+  font-size: 12px;
+}
+.new-label {
+  font-size: 10px;
+}
+.panel-heading h2 {
+  font-size: 14px;
+}
+.field label,
+.checkbox-field {
+  font-size: 13px;
+}
+.input,
+.select,
+.textarea,
+.result-code {
+  font-size: 13px;
+}
+@media (max-width: 720px) {
+  .sidebar:not(.is-open) {
+    visibility: hidden;
+  }
+  .global-search input {
+    font-size: 12px;
+  }
+  .section-title > a {
+    font-size: 11px;
+  }
+  .page-footer {
+    font-size: 11px;
+  }
+}

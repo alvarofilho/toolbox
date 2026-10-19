@@ -1,0 +1,184 @@
+<nav class="tool-breadcrumb" [attr.aria-label]="p.label('Caminho de navegação', 'Breadcrumb')">
+  <a routerLink="/tools">{{ p.label('Ferramentas', 'Tools') }}</a
+  ><span>/</span>
+  @if (category(); as c) {
+    <a [routerLink]="['/category', c.id]">{{ p.t(c.name) }}</a
+    ><span>/</span>
+  }
+  <span aria-current="page">{{ p.t(info().name) }}</span>
+</nav>
+<section class="tool-heading">
+  <span class="tool-icon" [attr.data-category]="info().category"
+    ><app-icon [name]="info().icon"
+  /></span>
+  <div>
+    <h1>{{ p.t(info().name) }}</h1>
+    <p>{{ p.t(info().description) }}</p>
+  </div>
+  <button
+    class="btn btn-outline tool-favorite"
+    (click)="p.toggleFavorite(info().id)"
+    [attr.aria-pressed]="p.favorites().includes(info().id)"
+  >
+    <app-icon name="star" />{{
+      p.favorites().includes(info().id)
+        ? p.label('Nos favoritos', 'Favorited')
+        : p.label('Favoritar', 'Favorite')
+    }}
+  </button>
+</section>
+@if (definition().hint; as hint) {
+  <p class="tool-hint"><app-icon name="shield" />{{ p.t(hint) }}</p>
+}
+<div class="workbench">
+  <form class="input-panel workspace-panel" (submit)="run($event)">
+    <div class="panel-heading">
+      <h2>{{ p.label('Configure sua entrada', 'Configure your input') }}</h2>
+      @if (definition().example) {
+        <button type="button" class="btn btn-ghost btn-sm" (click)="example()" [disabled]="busy()">
+          {{ p.label('Usar exemplo', 'Use example') }}
+        </button>
+      }
+    </div>
+    <fieldset [disabled]="busy()" class="tool-fields">
+      @for (control of definition().controls; track control.key) {
+        @if (control.type === 'checkbox') {
+          <label class="checkbox-field"
+            ><input
+              type="checkbox"
+              class="checkbox checkbox-sm"
+              [checked]="values()[control.key] === 'true'"
+              (change)="update(control.key, $event)"
+            />{{ p.t(control.label) }}</label
+          >
+        } @else {
+          <div class="field" [class.field-large]="control.type === 'textarea'">
+            <label [for]="'field-' + control.key">{{ p.t(control.label) }}</label>
+            @switch (control.type) {
+              @case ('textarea') {
+                <textarea
+                  class="textarea"
+                  [id]="'field-' + control.key"
+                  [value]="values()[control.key]"
+                  (input)="update(control.key, $event)"
+                  rows="10"
+                  spellcheck="false"
+                  maxlength="100001"
+                  [placeholder]="p.label('Cole ou digite aqui…', 'Paste or type here…')"
+                ></textarea>
+              }
+              @case ('select') {
+                <select
+                  class="select"
+                  [id]="'field-' + control.key"
+                  [value]="values()[control.key]"
+                  (change)="update(control.key, $event)"
+                >
+                  @for (option of control.options; track option.value) {
+                    <option [value]="option.value">{{ p.t(option.label) }}</option>
+                  }
+                </select>
+              }
+              @default {
+                <input
+                  class="input"
+                  [id]="'field-' + control.key"
+                  [type]="control.type"
+                  [value]="values()[control.key]"
+                  (input)="update(control.key, $event)"
+                  [min]="control.min ?? null"
+                  [max]="control.max ?? null"
+                  [attr.step]="control.type === 'number' ? 1 : null"
+                  autocomplete="off"
+                  spellcheck="false"
+                  maxlength="100001"
+                />
+              }
+            }
+          </div>
+        }
+      }
+    </fieldset>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary" [disabled]="busy()">
+        @if (busy()) {
+          <span class="loading loading-spinner loading-xs"></span>
+        }
+        {{ busy() ? p.label('Processando…', 'Processing…') : p.t(definition().action)
+        }}<app-icon name="arrow" /></button
+      ><button type="button" class="btn btn-ghost" (click)="reset()" [disabled]="busy()">
+        {{ p.label('Limpar', 'Clear') }}
+      </button>
+    </div>
+  </form>
+  <section
+    class="output-panel workspace-panel"
+    [attr.aria-label]="p.label('Resultado', 'Result')"
+    [attr.aria-busy]="busy()"
+  >
+    <div class="panel-heading">
+      <h2>{{ p.label('Resultado', 'Result') }}</h2>
+      <div class="output-actions">
+        <button class="btn btn-ghost btn-sm" (click)="copy()" [disabled]="!result()">
+          <app-icon name="copy" />{{ p.label('Copiar', 'Copy') }}</button
+        ><button class="btn btn-ghost btn-sm" (click)="download()" [disabled]="!result()">
+          <app-icon name="download" />{{ p.label('Exportar', 'Export') }}
+        </button>
+      </div>
+    </div>
+    @if (error()) {
+      <div class="tool-error" role="alert">
+        <strong>{{ p.label('Confira sua entrada', 'Check your input') }}</strong>
+        <p>{{ error() }}</p>
+      </div>
+    } @else if (result(); as result) {
+      @if (result.notice; as notice) {
+        <p class="result-notice">{{ p.t(notice) }}</p>
+      }
+      <pre
+        class="result-code"
+        tabindex="0"
+        [attr.aria-label]="p.label('Texto do resultado', 'Result text')"
+        >{{ result.output }}</pre>
+      <div class="result-meta">
+        {{ result.output.length.toLocaleString(p.locale() === 'pt' ? 'pt-BR' : 'en') }}
+        {{ p.label('caracteres', 'characters') }}
+      </div>
+    } @else {
+      <div class="result-empty">
+        <app-icon [name]="busy() ? 'clock' : 'code'" />
+        <h3>
+          {{
+            busy()
+              ? p.label('Preparando o resultado…', 'Preparing your result…')
+              : p.label('Seu resultado aparece aqui', 'Your result appears here')
+          }}
+        </h3>
+        <p>
+          {{
+            p.label(
+              'Preencha os campos e execute a ferramenta. Tudo acontece neste navegador.',
+              'Fill in the fields and run the tool. Everything happens in this browser.'
+            )
+          }}
+        </p>
+      </div>
+    }
+    <span class="sr-only" role="status">{{
+      busy()
+        ? p.label('Processando', 'Processing')
+        : result()
+          ? p.label('Resultado pronto', 'Result ready')
+          : ''
+    }}</span>
+    <p class="action-feedback" role="status">{{ feedback() }}</p>
+  </section>
+</div>
+<div class="tool-privacy">
+  <app-icon name="shield" /><span>{{
+    p.label(
+      'Privado por padrão. Entradas e resultados não são enviados nem salvos automaticamente.',
+      'Private by default. Inputs and results are never uploaded or saved automatically.'
+    )
+  }}</span>
+</div>
