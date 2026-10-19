@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { TOOLS } from '@app/core/registry/tools';
+import { TOOLS } from '@app/features/tools/catalog/tools';
 import { translationKey } from '@app/core/models/translation-key';
 import type { Locale, Localized } from '@app/core/models/tool';
 

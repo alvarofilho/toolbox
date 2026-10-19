@@ -24,7 +24,7 @@ const files = [
 	'role-rbac-v1',
 	'rolebinding-rbac-v1',
 ];
-const directory = new URL('../src/app/features/tools/extended/schemas/', import.meta.url);
+const directory = new URL('../src/app/features/tools/infrastructure/schemas/', import.meta.url);
 await mkdir(directory, { recursive: true });
 const base = `https://raw.githubusercontent.com/${repository}/${sha}`;
 await Promise.all(

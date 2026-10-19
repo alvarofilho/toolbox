@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PreferencesService } from '@app/core/services/preferences';
-import { CATEGORIES, findTools, TOOLS } from '@app/core/registry/tools';
+import { CATEGORIES, findTools, TOOLS } from '@app/features/tools/catalog/tools';
 import { text } from '@app/core/models/tool';
-import { ToolCard } from '@app/shared/components/tool-card';
+import { ToolCard } from '@app/features/tools/catalog/tool-card/tool-card';
 import { Icon } from '@app/shared/components/icon';
 
 @Component({

@@ -3,13 +3,16 @@ import type { TranslocoLoader } from '@jsverse/transloco';
 
 @Injectable({ providedIn: 'root' })
 export class ToolboxTranslocoLoader implements TranslocoLoader {
-	getTranslation(lang: string) {
+	async getTranslation(lang: string) {
 		if (lang === 'en') {
-			return import('@app/i18n/en.json').then((module) => module.default);
+			const module = await import('@app/i18n/en.json');
+			return module.default;
 		}
 		if (lang === 'es') {
-			return import('@app/i18n/es.json').then((module) => module.default);
+			const module_1 = await import('@app/i18n/es.json');
+			return module_1.default;
 		}
-		return import('@app/i18n/pt.json').then((module) => module.default);
+		const module_2 = await import('@app/i18n/pt.json');
+		return module_2.default;
 	}
 }

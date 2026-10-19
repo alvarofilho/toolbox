@@ -1,0 +1,506 @@
+<nav class="tool-breadcrumb" [attr.aria-label]="p.label('Caminho de navegação', 'Breadcrumb')">
+	<a routerLink="/tools">{{ p.label('Ferramentas', 'Tools') }}</a
+	><span>/</span>
+	@if (category(); as c) {
+		<a [routerLink]="['/category', c.id]">{{ p.t(c.name) }}</a
+		><span>/</span>
+	}
+	<span aria-current="page">{{ p.t(info().name) }}</span>
+</nav>
+<section class="tool-heading">
+	<span class="tool-icon" [attr.data-category]="info().category"
+		><app-icon [name]="info().icon"
+	/></span>
+	<div>
+		<h1>{{ p.t(info().name) }}</h1>
+		<p>{{ p.t(info().description) }}</p>
+	</div>
+	<button
+		class="btn btn-outline tool-favorite"
+		(click)="p.toggleFavorite(info().id)"
+		[attr.aria-pressed]="p.favorites().includes(info().id)"
+	>
+		<app-icon name="star" />{{
+			p.favorites().includes(info().id)
+				? p.label('Nos favoritos', 'Favorited')
+				: p.label('Favoritar', 'Favorite')
+		}}
+	</button>
+</section>
+@if (definition().hint; as hint) {
+	<p class="tool-hint"><app-icon name="shield" />{{ p.t(hint) }}</p>
+}
+@if (isDiffTool()) {
+	<form
+		class="meld-workbench workspace-panel"
+		[class.has-result]="!!result()"
+		(submit)="run($event)"
+	>
+		<div class="meld-toolbar">
+			<div class="meld-file-tab">
+				<span class="meld-file-index">1</span>
+				<div>
+					<strong>{{ p.label('Original', 'Original') }}</strong>
+					<span>{{ p.label('Arquivo 1', 'File 1') }}</span>
+				</div>
+				@if (definition().example) {
+					<button
+						type="button"
+						class="btn btn-ghost btn-sm"
+						(click)="example()"
+						[disabled]="busy()"
+					>
+						{{ p.label('Exemplo', 'Example') }}
+					</button>
+				}
+			</div>
+			<div class="meld-compare-action">
+				<button type="submit" class="btn btn-primary btn-sm" [disabled]="busy()">
+					@if (busy()) {
+						<span class="loading loading-spinner loading-xs"></span>
+					}
+					{{ busy() ? p.label('Comparando…', 'Comparing…') : p.t(definition().action) }}
+				</button>
+				<span class="auto-update-note">{{
+					p.label('Compara automaticamente ao editar', 'Compares automatically as you edit')
+				}}</span>
+			</div>
+			<div class="meld-file-tab meld-file-tab-right">
+				@if (result()) {
+					<button type="button" class="btn btn-ghost btn-sm" (click)="copy()">
+						<app-icon name="copy" />{{ p.label('Copiar', 'Copy') }}
+					</button>
+					<button type="button" class="btn btn-ghost btn-sm" (click)="download()">
+						<app-icon name="download" />{{ p.label('Exportar', 'Export') }}
+					</button>
+				} @else {
+					<button type="button" class="btn btn-ghost btn-sm" (click)="reset()" [disabled]="busy()">
+						{{ p.label('Limpar', 'Clear') }}
+					</button>
+				}
+				<div class="meld-file-name">
+					<strong>{{ p.label('Modificado', 'Modified') }}</strong>
+					<span>{{ p.label('Arquivo 2', 'File 2') }}</span>
+				</div>
+				<span class="meld-file-index">2</span>
+			</div>
+		</div>
+		@if (error()) {
+			<div class="tool-error" role="alert">
+				<strong>{{ p.label('Confira sua entrada', 'Check your input') }}</strong>
+				<p>{{ error() }}</p>
+			</div>
+		}
+		<div class="meld-status-banners" aria-live="polite">
+			<div class="meld-status-banner">
+				<span class="meld-status-icon" aria-hidden="true"></span>
+				<strong>{{
+					result() ? diffStatus() : p.label('Pronto para comparar', 'Ready to compare')
+				}}</strong>
+			</div>
+			<div class="meld-status-banner">
+				<span class="meld-status-icon" aria-hidden="true"></span>
+				<strong>{{
+					result() ? diffStatus() : p.label('Pronto para comparar', 'Ready to compare')
+				}}</strong>
+			</div>
+		</div>
+		@if (result()) {
+			<div class="meld-editors">
+				<div class="meld-editor-pane">
+					<label class="sr-only" for="meld-original">{{
+						p.label('Texto original', 'Original text')
+					}}</label>
+					<textarea
+						id="meld-original"
+						class="meld-editor"
+						[value]="values()['input'] ?? ''"
+						(input)="update('input', $event)"
+						spellcheck="false"
+						maxlength="100001"
+						[placeholder]="p.label('Cole o texto original', 'Paste the original text')"
+					></textarea>
+				</div>
+				<div class="meld-editor-pane">
+					<label class="sr-only" for="meld-modified">{{
+						p.label('Texto modificado', 'Modified text')
+					}}</label>
+					<textarea
+						id="meld-modified"
+						class="meld-editor"
+						[value]="values()['second'] ?? ''"
+						(input)="update('second', $event)"
+						spellcheck="false"
+						maxlength="100001"
+						[placeholder]="p.label('Cole o texto modificado', 'Paste the modified text')"
+					></textarea>
+				</div>
+			</div>
+			<div
+				class="diff-scroll meld-diff-scroll"
+				tabindex="0"
+				[attr.aria-label]="p.label('Comparação lado a lado', 'Side-by-side comparison')"
+			>
+				<table class="diff-table">
+					<caption class="sr-only">
+						{{
+							p.label(
+								'Comparação lado a lado, linhas alinhadas',
+								'Side-by-side comparison, aligned lines'
+							)
+						}}
+					</caption>
+					<thead>
+						<tr>
+							<th colspan="2" scope="colgroup">{{ p.label('Original', 'Original') }}</th>
+							<th colspan="2" scope="colgroup">{{ p.label('Modificado', 'Modified') }}</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for (row of diffRows(); track $index) {
+							<tr
+								[class.diff-row-change]="row.kind === 'change'"
+								[class.diff-row-removed]="row.kind === 'removed'"
+								[class.diff-row-added]="row.kind === 'added'"
+							>
+								<td class="diff-line-number">{{ row.leftNumber ?? '' }}</td>
+								<td class="diff-line-content">{{ row.leftText }}</td>
+								<td class="diff-line-number">{{ row.rightNumber ?? '' }}</td>
+								<td class="diff-line-content">{{ row.rightText }}</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		} @else {
+			<div class="meld-editors">
+				<div class="meld-editor-pane">
+					<label class="sr-only" for="meld-original">{{
+						p.label('Texto original', 'Original text')
+					}}</label>
+					<textarea
+						id="meld-original"
+						class="meld-editor"
+						[value]="values()['input'] ?? ''"
+						(input)="update('input', $event)"
+						[disabled]="busy()"
+						spellcheck="false"
+						maxlength="100001"
+						[placeholder]="
+							p.label('Cole ou digite o texto original…', 'Paste or type the original text…')
+						"
+					></textarea>
+				</div>
+				<div class="meld-editor-pane">
+					<label class="sr-only" for="meld-modified">{{
+						p.label('Texto modificado', 'Modified text')
+					}}</label>
+					<textarea
+						id="meld-modified"
+						class="meld-editor"
+						[value]="values()['second'] ?? ''"
+						(input)="update('second', $event)"
+						[disabled]="busy()"
+						spellcheck="false"
+						maxlength="100001"
+						[placeholder]="
+							p.label('Cole ou digite o texto modificado…', 'Paste or type the modified text…')
+						"
+					></textarea>
+				</div>
+			</div>
+		}
+		<div class="meld-status-bar">
+			<div>
+				<span>UTF-8</span
+				><span>{{
+					definition().id === 'json-diff' ? 'JSON' : p.label('Texto simples', 'Plain text')
+				}}</span
+				><span>{{ diffLineCounts().left }} {{ p.label('linhas', 'lines') }}</span>
+			</div>
+			<div>
+				<span>UTF-8</span
+				><span>{{
+					definition().id === 'json-diff' ? 'JSON' : p.label('Texto simples', 'Plain text')
+				}}</span
+				><span>{{ diffLineCounts().right }} {{ p.label('linhas', 'lines') }}</span>
+			</div>
+		</div>
+		<p class="action-feedback meld-feedback" role="status">{{ feedback() }}</p>
+	</form>
+} @else {
+	<div class="workbench">
+		<form class="input-panel workspace-panel" (submit)="run($event)">
+			<div class="panel-heading">
+				<h2>{{ p.label('Configure sua entrada', 'Configure your input') }}</h2>
+				@if (definition().example) {
+					<button
+						type="button"
+						class="btn btn-ghost btn-sm"
+						(click)="example()"
+						[disabled]="busy()"
+					>
+						{{ p.label('Usar exemplo', 'Use example') }}
+					</button>
+				}
+			</div>
+			<fieldset class="tool-fields">
+				@for (control of definition().controls; track control.key) {
+					@if (control.type === 'checkbox') {
+						<label class="checkbox-field"
+							><input
+								type="checkbox"
+								class="checkbox checkbox-sm"
+								[checked]="values()[control.key] === 'true'"
+								(change)="update(control.key, $event)"
+							/>{{ p.t(control.label) }}</label
+						>
+					} @else {
+						<div class="field" [class.field-large]="control.type === 'textarea'">
+							<label [for]="'field-' + control.key">{{ p.t(control.label) }}</label>
+							@switch (control.type) {
+								@case ('file') {
+									<input
+										class="file-input"
+										type="file"
+										#fileInput
+										[id]="'field-' + control.key"
+										[accept]="control.accept ?? ''"
+										[multiple]="control.multiple ?? false"
+										(change)="update(control.key, $event)"
+									/>
+									@if (files()[control.key]?.length) {
+										<p>
+											{{ files()[control.key]?.length }}
+											{{
+												p.label(
+													'arquivo(s) selecionado(s)',
+													'file(s)
+          selected'
+												)
+											}}
+										</p>
+									}
+								}
+								@case ('textarea') {
+									<textarea
+										class="textarea"
+										[id]="'field-' + control.key"
+										[value]="values()[control.key]"
+										(input)="update(control.key, $event)"
+										rows="10"
+										spellcheck="false"
+										maxlength="100001"
+										[placeholder]="p.label('Cole ou digite aqui…', 'Paste or type here…')"
+									></textarea>
+								}
+								@case ('select') {
+									<select
+										class="select"
+										[id]="'field-' + control.key"
+										[value]="values()[control.key]"
+										(change)="update(control.key, $event)"
+									>
+										@for (option of control.options; track option.value) {
+											<option
+												[value]="option.value"
+												[selected]="values()[control.key] === option.value"
+											>
+												{{ p.t(option.label) }}
+											</option>
+										}
+									</select>
+								}
+								@default {
+									<input
+										class="input"
+										[id]="'field-' + control.key"
+										[type]="control.type"
+										[value]="values()[control.key]"
+										(input)="update(control.key, $event)"
+										[min]="control.min ?? null"
+										[max]="control.max ?? null"
+										[attr.step]="control.type === 'number' ? 1 : null"
+										autocomplete="off"
+										spellcheck="false"
+										maxlength="100001"
+									/>
+								}
+							}
+						</div>
+					}
+				}
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary" [disabled]="busy()">
+					@if (busy()) {
+						<span class="loading loading-spinner loading-xs"></span>
+					}
+					{{ busy() ? p.label('Processando…', 'Processing…') : p.t(definition().action)
+					}}<app-icon name="arrow" /></button
+				><button type="button" class="btn btn-ghost" (click)="reset()">
+					{{ p.label('Limpar', 'Clear') }}
+				</button>
+				<span class="auto-update-note">{{
+					p.label('Atualiza automaticamente ao editar', 'Updates automatically as you edit')
+				}}</span>
+			</div>
+		</form>
+		<section
+			class="output-panel workspace-panel"
+			[attr.aria-label]="p.label('Resultado', 'Result')"
+			[attr.aria-busy]="busy()"
+		>
+			<div class="panel-heading">
+				<h2>{{ p.label('Resultado', 'Result') }}</h2>
+				<div class="output-actions">
+					<button class="btn btn-ghost btn-sm" (click)="copy()" [disabled]="!result()">
+						<app-icon name="copy" />{{ p.label('Copiar', 'Copy') }}</button
+					><button class="btn btn-ghost btn-sm" (click)="download()" [disabled]="!result()">
+						<app-icon name="download" />{{ p.label('Exportar', 'Export') }}
+					</button>
+				</div>
+			</div>
+			@if (error()) {
+				<div class="tool-error" role="alert">
+					<strong>{{ p.label('Confira sua entrada', 'Check your input') }}</strong>
+					<p>{{ error() }}</p>
+				</div>
+			} @else if (result(); as result) {
+				@if (isDiffTool()) {
+					<div class="diff-summary" aria-live="polite">
+						<span class="diff-count diff-count-removed">
+							{{ diffSummary().removals }} {{ p.label('removidas', 'removed') }}
+						</span>
+						<span class="diff-count diff-count-added">
+							{{ diffSummary().additions }} {{ p.label('adicionadas', 'added') }}
+						</span>
+					</div>
+					<div
+						class="diff-scroll"
+						tabindex="0"
+						[attr.aria-label]="p.label('Comparação lado a lado', 'Side-by-side comparison')"
+					>
+						<table class="diff-table">
+							<caption class="sr-only">
+								{{
+									p.label(
+										'Comparação lado a lado, linhas alinhadas',
+										'Side-by-side comparison, aligned lines'
+									)
+								}}
+							</caption>
+							<thead>
+								<tr>
+									<th colspan="2" scope="colgroup">{{ p.label('Original', 'Original') }}</th>
+									<th colspan="2" scope="colgroup">{{ p.label('Modificado', 'Modified') }}</th>
+								</tr>
+							</thead>
+							<tbody>
+								@for (row of diffRows(); track $index) {
+									<tr
+										[class.diff-row-change]="row.kind === 'change'"
+										[class.diff-row-removed]="row.kind === 'removed'"
+										[class.diff-row-added]="row.kind === 'added'"
+									>
+										<td class="diff-line-number">{{ row.leftNumber ?? '' }}</td>
+										<td class="diff-line-content">{{ row.leftText }}</td>
+										<td class="diff-line-number">{{ row.rightNumber ?? '' }}</td>
+										<td class="diff-line-content">{{ row.rightText }}</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				} @else if (preview(); as preview) {
+					<iframe
+						class="tool-preview"
+						sandbox=""
+						referrerpolicy="no-referrer"
+						[title]="p.label('Prévia do resultado', 'Result preview')"
+						[srcdoc]="preview"
+						style="
+							width: 100%;
+							min-height: 320px;
+							border: 1px solid var(--border-color, #ccc);
+							border-radius: 8px;
+						"
+					></iframe>
+				}
+				@for (artifact of result.artifacts; track $index) {
+					<button type="button" class="btn btn-outline btn-sm" (click)="download($index)">
+						<app-icon name="download" />{{ artifact.filename }}
+					</button>
+				}
+				@if (result.notice; as notice) {
+					<p class="result-notice">{{ p.t(notice) }}</p>
+				}
+				@if (isDiffTool()) {
+					<div class="result-meta">
+						{{
+							diffRows().length.toLocaleString(
+								p.locale() === 'pt' ? 'pt-BR' : p.locale() === 'es' ? 'es' : 'en'
+							)
+						}}
+						{{ p.label('linhas comparadas', 'lines compared') }}
+					</div>
+				} @else {
+					<pre
+						class="result-code"
+						tabindex="0"
+						[attr.aria-label]="p.label('Texto do resultado', 'Result text')"
+						>{{ result.output }}</pre>
+					<div class="result-meta">
+						{{
+							result.output.length.toLocaleString(
+								p.locale() === 'pt' ? 'pt-BR' : p.locale() === 'es' ? 'es' : 'en'
+							)
+						}}
+						{{ p.label('caracteres', 'characters') }}
+					</div>
+				}
+			} @else {
+				<div class="result-empty">
+					<app-icon [name]="busy() ? 'clock' : 'code'" />
+					<h3>
+						{{
+							busy()
+								? p.label('Preparando o resultado…', 'Preparing your result…')
+								: p.label(
+										'Seu
+        resultado aparece aqui',
+										'Your result appears here'
+									)
+						}}
+					</h3>
+					<p>
+						{{
+							p.label(
+								'Preencha os campos e execute a ferramenta. Tudo acontece neste navegador.',
+								'Fill in the fields and run the tool. Everything happens in this browser.'
+							)
+						}}
+					</p>
+				</div>
+			}
+			<span class="sr-only" role="status">{{
+				busy()
+					? p.label('Processando', 'Processing')
+					: result()
+						? p.label('Resultado pronto', 'Result ready')
+						: ''
+			}}</span>
+			<p class="action-feedback" role="status">{{ feedback() }}</p>
+		</section>
+	</div>
+}
+<div class="tool-privacy">
+	<app-icon name="shield" /><span>{{
+		p.label(
+			'Privado por padrão. Entradas e resultados não são enviados nem salvos
+    automaticamente.',
+			'Private by default. Inputs and results are never uploaded or saved
+    automatically.'
+		)
+	}}</span>
+</div>

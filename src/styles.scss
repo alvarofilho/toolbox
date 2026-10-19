@@ -881,6 +881,10 @@ app-tool-card {
 	height: 16px;
 	width: 16px;
 }
+.auto-update-note {
+	color: var(--muted);
+	font-size: 11px;
+}
 .result-empty {
 	min-height: 354px;
 	display: flex;
