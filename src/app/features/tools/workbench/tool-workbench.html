@@ -74,19 +74,33 @@
 						<label [for]="'field-' + control.key">{{ control.label | transloco }}</label>
 						@switch (control.type) {
 							@case ('file') {
-								<input
-									#fileInput
-									class="file-input"
-									type="file"
-									[id]="'field-' + control.key"
-									[accept]="control.accept ?? ''"
-									[multiple]="control.multiple ?? false"
-									(change)="update(control.key, $event)"
-									[attr.aria-describedby]="
-										fieldErrors()[control.key] ? 'error-' + control.key : null
-									"
-									[attr.aria-invalid]="fieldErrors()[control.key] ? 'true' : null"
-								/>
+								<div
+									class="file-dropzone"
+									[class.file-dropzone-active]="draggingFileKey() === control.key"
+									(dragover)="onFileDragOver(control.key, $event)"
+									(dragleave)="onFileDragLeave(control.key, $event)"
+									(drop)="onFileDrop(control.key, control.multiple ?? false, fileInput, $event)"
+								>
+									<input
+										#fileInput
+										class="file-dropzone-input"
+										type="file"
+										[id]="'field-' + control.key"
+										[accept]="control.accept ?? ''"
+										[multiple]="control.multiple ?? false"
+										(change)="update(control.key, $event)"
+										[attr.aria-describedby]="
+											fieldErrors()[control.key] ? 'error-' + control.key : null
+										"
+										[attr.aria-invalid]="fieldErrors()[control.key] ? 'true' : null"
+									/>
+									<span class="file-dropzone-copy" aria-hidden="true">
+										<span>{{ 'common.drop_files_here' | transloco }}</span>
+										<span class="file-dropzone-action">
+											{{ 'common.choose_files' | transloco }}
+										</span>
+									</span>
+								</div>
 								@if (files()[control.key]?.length) {
 									<ul class="selected-files">
 										@for (file of files()[control.key]; track $index) {

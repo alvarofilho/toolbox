@@ -56,6 +56,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	private readonly injector = inject(Injector);
 	private readonly pendingTasks = inject(PendingTasks);
 	protected readonly stale = signal(false);
+	protected readonly draggingFileKey = signal<string | null>(null);
 	protected readonly fieldErrors = signal<Readonly<Record<string, string>>>({});
 	protected readonly revealed = signal<readonly string[]>([]);
 	private readonly completedValues = signal<ToolValues>({});
@@ -252,6 +253,41 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			}
 		}
 	}
+	protected onFileDragOver(key: string, event: DragEvent): void {
+		event.preventDefault();
+		if (event.dataTransfer?.types.includes('Files')) {
+			this.draggingFileKey.set(key);
+		}
+	}
+	protected onFileDragLeave(key: string, event: DragEvent): void {
+		const container = event.currentTarget;
+		if (
+			this.draggingFileKey() === key &&
+			container instanceof HTMLElement &&
+			!(event.relatedTarget instanceof Node && container.contains(event.relatedTarget))
+		) {
+			this.draggingFileKey.set(null);
+		}
+	}
+	protected onFileDrop(
+		key: string,
+		multiple: boolean,
+		input: HTMLInputElement,
+		event: DragEvent,
+	): void {
+		event.preventDefault();
+		this.draggingFileKey.set(null);
+		const droppedFiles = Array.from(event.dataTransfer?.files ?? []);
+		if (droppedFiles.length === 0) {
+			return;
+		}
+		const transfer = new DataTransfer();
+		for (const file of multiple ? droppedFiles : droppedFiles.slice(0, 1)) {
+			transfer.items.add(file);
+		}
+		input.files = transfer.files;
+		input.dispatchEvent(new Event('change', { bubbles: true }));
+	}
 	protected reset(): void {
 		if (this.autoRunTimer) {
 			clearTimeout(this.autoRunTimer);
@@ -263,6 +299,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			input.nativeElement.value = '';
 		}
 		this.files.set({});
+		this.draggingFileKey.set(null);
 		this.values.set(Object.fromEntries(this.definition().controls.map((c) => [c.key, c.value])));
 		this.result.set(null);
 		this.error.set('');
