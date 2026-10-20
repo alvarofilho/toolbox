@@ -682,7 +682,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				this.stale.set(false);
 			}
 		} catch (error: unknown) {
-			if (id === this.runId) {
+					if (id === this.runId) {
 				if (error instanceof ToolExecutionError && error.kind === 'cancelled') {
 					this.feedback.set(
 						this.transloco.translate(
@@ -694,10 +694,15 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				} else if (!automaticRun) {
 					const message = this.errorMessage(error);
 					this.error.set(message);
-					const source = this.controls().find((control) => control.key === 'input');
-					const isInputError = !(error instanceof ToolExecutionError) || error.kind === 'input';
-					if (source && isInputError && !Object.keys(this.fieldErrors()).length) {
-						this.fieldErrors.set({ [source.key]: message });
+					if (error instanceof TranslatedToolError && error.fieldKey) {
+						this.fieldErrors.set({ [error.fieldKey]: message });
+					} else {
+						const source = this.controls().find((control) => control.key === 'input');
+						const isInputError = !(error instanceof ToolExecutionError) || error.kind === 'input';
+						if (source && isInputError && !Object.keys(this.fieldErrors()).length) {
+							this.fieldErrors.set({ [source.key]: message });
+						}
+					}
 					}
 				}
 			}

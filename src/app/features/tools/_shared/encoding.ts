@@ -1,3 +1,6 @@
+import { TranslatedToolError } from '@app/core/models/tool';
+import { json } from '@app/features/tools/_shared/data';
+
 export function base64Encode(value: string): string {
 	return btoa(Array.from(new TextEncoder().encode(value), (b) => String.fromCharCode(b)).join(''));
 }
@@ -5,7 +8,7 @@ export function base64Encode(value: string): string {
 export function base64Decode(value: string): string {
 	const compact = value.replace(/\s/g, '');
 	if (!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}(?:==)?|[A-Za-z0-9+/]{3}=?)?$/.test(compact)) {
-		throw new Error('Base64 inválido / Invalid Base64.');
+		throw new TranslatedToolError('common.invalid_base64', {}, 'input');
 	}
 	return new TextDecoder('utf-8', { fatal: true }).decode(
 		Uint8Array.from(atob(compact), (c) => c.charCodeAt(0)),
@@ -20,12 +23,12 @@ export function decodeJwt(value: string): string {
 		!parts[1] ||
 		!parts.every((p) => /^[A-Za-z0-9_-]*$/.test(p))
 	) {
-		throw new Error('JWT: header.payload.signature');
+		throw new TranslatedToolError('tools.jwt.invalid_token_format', {}, 'input');
 	}
 	const decode = (part: string): unknown => {
-		const result: unknown = JSON.parse(base64Decode(part.replace(/-/g, '+').replace(/_/g, '/')));
+		const result: unknown = json(base64Decode(part.replace(/-/g, '+').replace(/_/g, '/')));
 		if (typeof result !== 'object' || result === null || Array.isArray(result)) {
-			throw new Error('JWT: JSON object required');
+			throw new TranslatedToolError('tools.jwt.invalid_json_segment', {}, 'input');
 		}
 		return result;
 	};

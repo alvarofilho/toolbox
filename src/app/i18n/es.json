@@ -48,6 +48,12 @@
 		"preset_deleted": "Preajuste eliminado de este dispositivo.",
 		"preset_invalid_or_unavailable": "Este preajuste no es válido o no está disponible.",
 		"presets_storage_unavailable": "El almacenamiento local no está disponible. No se pudo guardar ni eliminar el preajuste.",
+		"json_object_required": "Ingresa un objeto JSON (aquí no se aceptan arreglos ni valores primitivos).",
+		"json_syntax_error": "JSON no válido cerca de la línea {{line}}, columna {{column}}. Revisa las comillas, comas y corchetes e inténtalo de nuevo.",
+		"invalid_base64": "El contenido no es Base64 válido. Revisa los caracteres y el relleno e inténtalo de nuevo.",
+		"select_files_to_continue": "Selecciona uno o más archivos compatibles para continuar.",
+		"select_one_file_to_continue": "Selecciona exactamente un archivo para continuar.",
+		"file_size_or_count_limit": "Selecciona hasta 20 archivos, de máximo 20 MB cada uno y 50 MB en total.",
 		"10": "10",
 		"15": "*/15 * * * *",
 		"255": "255",
@@ -1022,12 +1028,15 @@
 		"jsonpath": {
 			"extract_values_from_a_json_document_using_": "Extrae valores de un documento JSON con JSONPath.",
 			"jsonpath": "JSONPath",
-			"jsonpath_tester": "Probador de JSONPath"
+			"jsonpath_tester": "Probador de JSONPath",
+			"invalid_expression": "La expresión JSONPath no es compatible. Prueba una ruta como $.items[*].name."
 		},
 		"jwt": {
 			"decode_jwt": "Decodificar JWT",
 			"decoding_only_the_token_signature_and_auth": "Solo decodificación. No verifica la firma ni la autenticidad del token.",
 			"inspect_token_headers_and_claims": "Inspecciona encabezados y claims de un token.",
+			"invalid_token_format": "Un JWT debe tener tres partes Base64URL separadas por puntos: header.payload.signature.",
+			"invalid_json_segment": "El encabezado y el payload del JWT deben decodificarse como objetos JSON.",
 			"jwt_decoder": "Decodificador JWT"
 		},
 		"jwt-claims": {
@@ -1177,12 +1186,21 @@
 			"read_a_pdf_s_title_author_and_other_proper": "Lee el título, el autor y otras propiedades de un PDF."
 		},
 		"pdf-pages": {
+			"invalid_operation": "Elige una operación de PDF compatible.",
+			"select_one_pdf_for_operation": "Selecciona exactamente un PDF para esta operación. La unión admite varios archivos.",
+			"invalid_pdf": "No se pudo leer este archivo como PDF. Elige un PDF válido y sin contraseña e inténtalo de nuevo.",
+			"page_limit": "Esta operación admite hasta 300 páginas. Reduce los archivos seleccionados e inténtalo de nuevo.",
+			"invalid_page_range": "Introduce páginas como números o rangos separados por comas, por ejemplo 1,3-5.",
+			"page_out_of_range": "Hay una página fuera del rango de este PDF. Usa números desde 1 hasta la última página del documento.",
+			"pages_required": "Introduce las páginas que quieres eliminar, por ejemplo 2,4-5.",
+			"keep_one_page": "El resultado debe conservar al menos una página. Elimina menos páginas e inténtalo de nuevo.",
+			"invalid_rotation": "Elige una rotación de 90, 180 o 270 grados.",
 			"180": "180°",
 			"90_clockwise": "90° en sentido horario",
 			"90_counterclockwise": "90° en sentido antihorario",
 			"delete_pages": "Eliminar páginas",
 			"extract_pages": "Extraer páginas",
-			"merge_follows_file_selection_order_extract": "La unión respeta el orden de los archivos. La extracción y reordenación siguen la secuencia indicada (p. ej. 3,1-2). La eliminación y el giro se aplican a las páginas indicadas. Deja el campo vacío para usar todas. No admite PDF cifrados ni conserva firmas digitales.",
+			"merge_follows_file_selection_order_extract": "Ejemplo: extrae 1,3-5 de un PDF de 8 páginas para crear un PDF de 5 páginas. La unión respeta el orden de los archivos y la reordenación sigue la secuencia indicada. Deja páginas vacío para usar todas. No admite PDF cifrados ni conserva firmas digitales.",
 			"merge_pdfs": "Unir PDF",
 			"merge_pdfs_extract_pages_or_split_files_in": "Une PDF, extrae páginas o divide archivos en un ZIP.",
 			"operation": "Operación",
@@ -1194,6 +1212,14 @@
 			"split_pages_into_files": "Separar páginas en archivos"
 		},
 		"pdf-convert": {
+			"invalid_pdf": "No se pudo interpretar este archivo como PDF. Elige un PDF válido y sin contraseña e inténtalo de nuevo.",
+			"select_one_pdf": "Selecciona un archivo PDF válido para esta operación.",
+			"page_limit": "Esta operación admite hasta 100 páginas. Divide el PDF en archivos más pequeños e inténtalo de nuevo.",
+			"canvas_unavailable": "El navegador no pudo preparar una imagen. Prueba otro navegador u operación.",
+			"png_export_failed": "El navegador no pudo exportar esta página como PNG. Prueba otra página u operación.",
+			"compression_failed": "El navegador no pudo comprimir esta página. Prueba otra calidad u operación.",
+			"invalid_operation": "Elige una operación de conversión de PDF compatible.",
+			"example_workflow": "Ejemplo: convierte dos fotos PNG en un PDF de dos páginas o extrae texto de un PDF con texto a JSON, con una entrada por página. Las páginas escaneadas pueden necesitar OCR antes de extraer texto.",
 			"pdf_convert": "Convertidor de PDF",
 			"converts_images_extracts_text_renders_pages_or_rasterizes": "Convierte imágenes, extrae texto, exporta páginas como PNG o rasteriza para reducir el tamaño.",
 			"operation": "Operación",

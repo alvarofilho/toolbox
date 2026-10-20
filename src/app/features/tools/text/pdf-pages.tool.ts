@@ -2,7 +2,7 @@ import { degrees, PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import { tool, result } from '@app/features/tools/_shared/definition';
 import { input, select } from '@app/features/tools/_shared/controls';
-import { field } from '@app/core/models/tool';
+import { field, TranslatedToolError } from '@app/core/models/tool';
 import { filesFrom, file } from '@app/features/tools/_shared/files';
 
 export const definition = tool(
@@ -44,18 +44,21 @@ export const definition = tool(
 		const selected = filesFrom(files),
 			operation = field(v, 'mode');
 		if (!['merge', 'extract', 'split', 'reorder', 'delete', 'rotate'].includes(operation)) {
-			throw new Error('Selecione uma operação válida / Select a valid operation');
+			throw new TranslatedToolError('tools.pdf-pages.invalid_operation', {}, 'mode');
 		}
 		if (operation !== 'merge' && selected.length !== 1) {
-			throw new Error(
-				'Para esta operação, selecione apenas um PDF / Select exactly one PDF for this operation',
-			);
+			throw new TranslatedToolError('tools.pdf-pages.select_one_pdf_for_operation', {}, 'files');
 		}
-		const docs = await Promise.all(
-			selected.map((f) => f.arrayBuffer().then((b) => PDFDocument.load(b))),
-		);
+		let docs: PDFDocument[];
+		try {
+			docs = await Promise.all(
+				selected.map((f) => f.arrayBuffer().then((b) => PDFDocument.load(b))),
+			);
+		} catch {
+			throw new TranslatedToolError('tools.pdf-pages.invalid_pdf', {}, 'files');
+		}
 		if (docs.reduce((n, p) => n + p.getPageCount(), 0) > 300) {
-			throw new Error('Máximo 300 páginas / Maximum 300 pages');
+			throw new TranslatedToolError('tools.pdf-pages.page_limit', {}, 'files');
 		}
 		let indexes = docs[0].getPageIndices();
 		const raw = field(v, 'pages').trim();
@@ -63,12 +66,12 @@ export const definition = tool(
 			const parsed = raw.split(',').flatMap((piece) => {
 				const match = /^(\d+)(?:-(\d+))?$/.exec(piece.trim());
 				if (!match) {
-					throw new Error('Intervalo inválido / Invalid page range');
+					throw new TranslatedToolError('tools.pdf-pages.invalid_page_range', {}, 'pages');
 				}
 				const start = Number(match[1]),
 					end = Number(match[2] ?? match[1]);
 				if (start < 1 || end < start || end > docs[0].getPageCount()) {
-					throw new Error('Página fora do intervalo / Page out of range');
+					throw new TranslatedToolError('tools.pdf-pages.page_out_of_range', {}, 'pages');
 				}
 				return Array.from({ length: end - start + 1 }, (_, i) => start + i - 1);
 			});
@@ -76,18 +79,18 @@ export const definition = tool(
 		}
 		if (operation === 'delete') {
 			if (!raw) {
-				throw new Error('Informe as páginas que deseja excluir / Enter the pages to delete');
+				throw new TranslatedToolError('tools.pdf-pages.pages_required', {}, 'pages');
 			}
 			const removed = new Set(indexes);
 			indexes = docs[0].getPageIndices().filter((index) => !removed.has(index));
 			if (indexes.length === 0) {
-				throw new Error('Mantenha ao menos uma página / Keep at least one page');
+				throw new TranslatedToolError('tools.pdf-pages.keep_one_page', {}, 'pages');
 			}
 		}
 		if (operation === 'rotate') {
 			const rotation = Number(field(v, 'rotation'));
 			if (![90, 180, 270].includes(rotation)) {
-				throw new Error('Selecione uma rotação válida / Select a valid rotation');
+				throw new TranslatedToolError('tools.pdf-pages.invalid_rotation', {}, 'rotation');
 			}
 			const pages = docs[0].getPages();
 			for (const index of indexes) {

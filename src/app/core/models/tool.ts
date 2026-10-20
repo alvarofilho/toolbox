@@ -7,6 +7,7 @@ export class TranslatedToolError extends Error {
 	constructor(
 		readonly translationKey: TranslationKey,
 		readonly params: Readonly<Record<string, string | number>> = {},
+		readonly fieldKey?: string,
 	) {
 		super(translationKey);
 		this.name = 'TranslatedToolError';
