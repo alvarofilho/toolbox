@@ -1,7 +1,7 @@
 /* Shared interaction patterns for the catalog and tool workbench. */
 .auto-update-note {
 	color: var(--muted);
-	font-size: 13px;
+	font-size: var(--type-label);
 	line-height: 1.6;
 }
 .field-input-row {
@@ -20,7 +20,7 @@
 .field-error {
 	margin-top: 8px;
 	color: var(--color-error);
-	font-size: 13px;
+	font-size: var(--type-label);
 	line-height: 1.6;
 }
 [aria-invalid='true'] {
@@ -37,12 +37,66 @@
 	flex-wrap: wrap;
 	gap: 8px;
 	overflow-wrap: anywhere;
-	font-size: 13px;
+	font-size: var(--type-label);
 }
 .selected-files span,
 .artifact-list span {
 	color: var(--muted);
-	font-size: 12px;
+	font-size: var(--type-meta);
+}
+.file-dropzone {
+	position: relative;
+	display: grid;
+	min-height: 112px;
+	place-items: center;
+	border: 1px dashed var(--line);
+	border-radius: 10px;
+	background: var(--paper);
+	transition:
+		border-color 140ms ease,
+		background-color 140ms ease,
+		box-shadow 140ms ease;
+}
+.file-dropzone:hover,
+.file-dropzone-active {
+	border-color: var(--accent);
+	background: var(--wash);
+}
+.file-dropzone:focus-within {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+.file-dropzone-input {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	opacity: 0;
+}
+.file-dropzone-copy {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 9px;
+	padding: 16px;
+	color: var(--muted);
+	font-size: var(--type-label);
+	text-align: center;
+}
+.file-dropzone-action {
+	border: 1px solid var(--line);
+	border-radius: 6px;
+	background: var(--surface);
+	color: var(--ink);
+	font-weight: 600;
+	padding: 7px 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+	.file-dropzone {
+		transition: none;
+	}
 }
 .artifact-list {
 	padding: 20px;
@@ -83,7 +137,7 @@
 .text-report summary {
 	padding: 16px 20px;
 	color: var(--accent);
-	font-size: 14px;
+	font-size: var(--type-body);
 	cursor: pointer;
 }
 .text-report .result-code {
@@ -100,7 +154,7 @@
 	border-radius: 8px;
 	background: var(--paper);
 	color: var(--ink);
-	font-size: clamp(16px, 1.8vw, 20px);
+	font-size: clamp(1rem, 1.8vw, 1.25rem);
 	line-height: 1.6;
 	letter-spacing: 0.01em;
 	font-variant-ligatures: none;
@@ -143,7 +197,7 @@
 	align-items: center;
 	gap: 8px 16px;
 	margin-block: 20px;
-	font-size: 13px;
+	font-size: var(--type-label);
 	color: var(--muted);
 }
 .catalog-view {
@@ -159,7 +213,7 @@
 	margin-top: 36px;
 }
 .catalog-group > h2 {
-	font-size: 18px;
+	font-size: var(--type-section-title);
 	margin-bottom: 16px;
 	display: flex;
 	gap: 10px;
@@ -168,11 +222,6 @@
 .tools-list {
 	display: grid;
 	gap: 8px;
-}
-.section-title .page-title {
-	font-size: 30px;
-	font-weight: 700;
-	letter-spacing: -0.03em;
 }
 .category-directory-grid {
 	display: grid;
@@ -187,7 +236,7 @@
 	min-height: 64px;
 	border-bottom: 1px solid var(--line);
 	padding: 12px;
-	font-size: 14px;
+	font-size: var(--type-body);
 }
 .category-directory-grid a:hover {
 	background: var(--wash);
@@ -199,11 +248,17 @@
 	font-variant-numeric: tabular-nums;
 }
 .empty-state h2 {
-	font-size: 22px;
+	font-size: var(--type-section-title);
 	margin-bottom: 12px;
 	color: var(--ink);
 }
 @media (pointer: coarse) {
+	.main-nav a,
+	.category-filters a {
+		min-width: 44px;
+		min-height: 44px;
+	}
+
 	.btn-sm {
 		min-height: 44px;
 		height: 44px;
@@ -219,12 +274,6 @@
 	}
 	.header-actions .btn-square {
 		width: 44px;
-	}
-	.tool-privacy,
-	.tool-hint,
-	.result-notice,
-	.action-feedback {
-		font-size: 14px;
 	}
 }
 @media (max-width: 600px) {
@@ -245,7 +294,7 @@
 	.textarea,
 	.catalog-search input,
 	.intro-search input {
-		font-size: 16px;
+		font-size: var(--type-body-large);
 	}
 	.input,
 	.select {
@@ -256,18 +305,11 @@
 		grid-template-columns: minmax(0, 1fr);
 		gap: 18px;
 	}
-	.field label,
-	.checkbox-field {
-		font-size: 14px;
-	}
 	.tool-heading > div {
 		min-width: 0;
 	}
 	.tool-heading h1 {
 		overflow-wrap: anywhere;
-	}
-	.section-title .page-title {
-		font-size: 26px;
 	}
 	.section-title {
 		flex-wrap: wrap;
@@ -280,7 +322,7 @@
 	}
 	.form-actions .auto-update-note {
 		flex-basis: 100%;
-		font-size: 13px;
+		font-size: var(--type-label);
 	}
 	.output-actions {
 		flex-wrap: wrap;
@@ -289,14 +331,11 @@
 		padding-inline: 16px;
 		gap: 8px;
 	}
-	.panel-heading h2 {
-		font-size: 16px;
-	}
 	.diff-fields .textarea {
 		min-height: 200px;
 	}
 	.result-code {
-		font-size: 14px;
+		font-size: var(--type-body);
 		padding: 16px;
 	}
 	.language-control {
