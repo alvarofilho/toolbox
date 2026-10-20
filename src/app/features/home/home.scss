@@ -7,20 +7,20 @@
 	margin-bottom: 34px;
 }
 .intro-copy h1 {
-	font-size: clamp(38px, 3.7vw, 56px);
+	font-size: var(--type-display);
 	font-weight: 750;
 	line-height: 1.13;
-	letter-spacing: -0.04em;
+	letter-spacing: -0.035em;
 }
 .intro-copy h1 span {
 	color: var(--accent);
 }
 .intro-copy > p {
-	max-width: 42ch;
+	max-width: 48ch;
 	margin-top: 20px;
 	color: var(--muted);
-	font-size: 14px;
-	line-height: 1.8;
+	font-size: var(--type-body-large);
+	line-height: var(--leading-copy);
 }
 .intro-search {
 	display: flex;
@@ -45,7 +45,7 @@
 	border: 0;
 	background: transparent;
 	font: inherit;
-	font-size: 14px;
+	font-size: var(--type-body);
 }
 .intro-search:focus-within {
 	outline: 2px solid var(--accent);
@@ -59,7 +59,7 @@
 	align-items: center;
 	gap: 7px;
 	margin-top: 13px;
-	font-size: 11px;
+	font-size: var(--type-meta);
 	color: var(--muted);
 	line-height: 1.7;
 }
@@ -83,7 +83,7 @@
 	padding: 14px 20px;
 	background: var(--preview);
 	border-bottom: 1px solid var(--line);
-	font-size: 12px;
+	font-size: var(--type-label);
 	font-weight: 600;
 }
 .example-heading > span:first-child {
@@ -97,8 +97,8 @@
 	color: var(--accent);
 }
 .example-label {
-	color: var(--muted);
-	font-size: 11px;
+	color: var(--ink);
+	font-size: var(--type-meta);
 	font-weight: 400;
 }
 .example-input,
@@ -112,14 +112,12 @@
 .example-result > span {
 	display: block;
 	margin-bottom: 9px;
-	font-size: 11px;
+	font-size: var(--type-meta);
 	color: var(--muted);
 }
 .example-input code {
 	display: block;
-	font:
-		12px/1.8 'IBM Plex Mono',
-		monospace;
+	font: var(--type-code)/1.8 var(--font-code);
 	overflow-wrap: anywhere;
 	color: var(--code-key);
 }
@@ -128,9 +126,7 @@
 }
 .example-code {
 	display: block;
-	font:
-		12px/1.9 'IBM Plex Mono',
-		monospace;
+	font: var(--type-code)/1.9 var(--font-code);
 	white-space: pre-wrap;
 }
 .example-line {
@@ -149,7 +145,7 @@
 	gap: 12px;
 	border-top: 1px solid var(--line);
 	padding: 14px 20px;
-	font-size: 12px;
+	font-size: var(--type-meta);
 	font-weight: 500;
 	color: var(--accent);
 	transition: background 0.15s ease-out;
@@ -173,7 +169,7 @@
 	margin-bottom: 28px;
 }
 .is-searching h1 {
-	font-size: 32px;
+	font-size: var(--type-page-title);
 }
 .is-searching .intro-copy > p,
 .is-searching .intro-note,
@@ -192,17 +188,11 @@
 	.intro-copy {
 		max-width: 650px;
 	}
-	.intro-copy h1 {
-		font-size: 46px;
-	}
 	.example-workbench {
 		display: none;
 	}
 	.essentials .tools-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-	.is-searching h1 {
-		font-size: 32px;
 	}
 }
 @media (max-width: 600px) {
@@ -210,26 +200,16 @@
 		padding: 2px 0 28px;
 		margin-bottom: 28px;
 	}
-	.intro-copy h1 {
-		font-size: 42px;
-	}
 	.intro-copy > p {
-		font-size: 14px;
 		margin-top: 16px;
 	}
 	.intro-search {
 		margin-top: 23px;
-	}
-	.intro-search input {
-		font-size: 13px;
 	}
 	.essentials .tools-grid {
 		grid-template-columns: 1fr;
 	}
 	.essentials {
 		margin-bottom: 34px;
-	}
-	.is-searching h1 {
-		font-size: 30px;
 	}
 }

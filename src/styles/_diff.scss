@@ -9,9 +9,7 @@
 	min-width: 680px;
 	border-collapse: separate;
 	border-spacing: 0;
-	font:
-		12px/1.8 'IBM Plex Mono',
-		monospace;
+	font: var(--type-code)/1.8 var(--font-code);
 	font-variant-numeric: tabular-nums;
 }
 .diff-table thead {
@@ -25,9 +23,7 @@
 	padding: 9px 12px;
 	border-bottom: 1px solid var(--line);
 	color: var(--muted);
-	font:
-		600 11px/1.4 'IBM Plex Sans Variable',
-		sans-serif;
+	font: 600 var(--type-meta)/1.4 var(--font-ui);
 	text-align: left;
 }
 .diff-table th + th {

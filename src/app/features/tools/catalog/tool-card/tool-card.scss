@@ -27,12 +27,12 @@
 }
 .tool-card-list h3 {
 	margin: 0;
-	font-size: 15px;
+	font-size: var(--type-card-title);
 }
 .tool-card-list p {
 	margin: 0;
 	grid-column: 2;
-	font-size: 13px;
+	font-size: var(--type-label);
 	line-height: 1.6;
 }
 .tool-card-list .card-open {
@@ -57,13 +57,13 @@
 .tool-card-compact h3 {
 	grid-column: 2;
 	margin: 0;
-	font-size: 13px;
+	font-size: var(--type-card-title);
 	line-height: 1.6;
 }
 .tool-card-compact p {
 	grid-column: 2;
 	margin: 3px 0 0;
-	font-size: 12px;
+	font-size: var(--type-meta);
 	line-height: 1.5;
 	white-space: nowrap;
 	overflow: hidden;
@@ -78,10 +78,4 @@
 	right: 8px;
 }
 @media (max-width: 600px) {
-	.tool-card-compact h3 {
-		font-size: 14px;
-	}
-	.tool-card-compact p {
-		font-size: 12px;
-	}
 }

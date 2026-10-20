@@ -39,7 +39,7 @@ dialog::backdrop {
 	background: transparent;
 	color: var(--ink);
 	font: inherit;
-	font-size: 16px;
+	font-size: var(--type-body-large);
 }
 .command-search input:focus-visible {
 	outline-offset: 2px;
@@ -69,7 +69,7 @@ dialog::backdrop {
 .command-group-label {
 	padding: 12px 12px 6px;
 	color: var(--muted);
-	font-size: 12px;
+	font-size: var(--type-meta);
 	font-weight: 600;
 }
 .command-option {
@@ -101,11 +101,11 @@ dialog::backdrop {
 	flex: 1;
 }
 .command-copy strong {
-	font-size: 14px;
+	font-size: var(--type-body);
 	font-weight: 600;
 }
 .command-copy > span {
-	font-size: 12px;
+	font-size: var(--type-meta);
 	color: var(--muted);
 }
 .command-go {
@@ -125,7 +125,7 @@ dialog::backdrop {
 	border-top: 1px solid var(--line);
 	color: var(--muted);
 	background: var(--paper);
-	font-size: 12px;
+	font-size: var(--type-meta);
 	flex-shrink: 0;
 }
 .command-hints,
@@ -138,9 +138,7 @@ dialog::backdrop {
 	gap: 14px;
 }
 kbd {
-	font:
-		11px 'IBM Plex Mono',
-		monospace;
+	font: var(--type-meta) var(--font-code);
 	padding: 2px 4px;
 	border: 1px solid var(--line);
 	border-radius: 4px;
@@ -157,11 +155,11 @@ kbd {
 	color: var(--muted);
 }
 .command-empty strong {
-	font-size: 15px;
+	font-size: var(--type-body-large);
 }
 .command-empty p {
 	color: var(--muted);
-	font-size: 13px;
+	font-size: var(--type-body);
 }
 @media (max-width: 720px) {
 	dialog {
@@ -174,7 +172,7 @@ kbd {
 	}
 	.command-footer {
 		padding-inline: 12px;
-		font-size: 11px;
+		font-size: var(--type-meta);
 	}
 	.command-hints {
 		gap: 8px;

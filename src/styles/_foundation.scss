@@ -1,5 +1,21 @@
 :root {
 	color-scheme: light;
+	--font-ui: 'IBM Plex Sans Variable', sans-serif;
+	--font-display: 'Manrope Variable', sans-serif;
+	--font-code: 'IBM Plex Mono', monospace;
+	--type-meta: 0.75rem;
+	--type-label: 0.8125rem;
+	--type-body: 0.875rem;
+	--type-body-large: 1rem;
+	--type-code: 0.8125rem;
+	--type-brand: 1.8125rem;
+	--type-card-title: 0.9375rem;
+	--type-section-title: clamp(1.125rem, 1.6vw, 1.25rem);
+	--type-page-title: clamp(1.5625rem, 2.1vw, 1.875rem);
+	--type-tool-title: clamp(1.5rem, 2.5vw, 2rem);
+	--type-display: clamp(2.625rem, 3.8vw, 3.5rem);
+	--type-password-result: clamp(1rem, 1.8vw, 1.25rem);
+	--leading-copy: 1.65;
 	--ink: var(--color-base-content);
 	--muted: #647064;
 	--line: var(--color-base-300);
@@ -13,7 +29,7 @@
 	--code-value: #3b6a90;
 	--selection-background: #c9dec6;
 	--selection-ink: #163120;
-	font-family: 'IBM Plex Sans Variable', sans-serif;
+	font-family: var(--font-ui);
 	color: var(--ink);
 	background: var(--paper);
 }
@@ -95,7 +111,7 @@ h1,
 h2,
 h3,
 .brand {
-	font-family: 'Manrope Variable', sans-serif;
+	font-family: var(--font-display);
 }
 h1,
 h2,
@@ -111,7 +127,7 @@ h3 {
 .btn {
 	font-family: inherit;
 	font-weight: 500;
-	font-size: 13px;
+	font-size: var(--type-label);
 	box-shadow: none;
 	text-transform: none;
 	gap: 8px;
@@ -129,7 +145,7 @@ h3 {
 	height: 32px;
 	min-height: 32px;
 	padding-inline: 9px;
-	font-size: 12px;
+	font-size: var(--type-meta);
 }
 .btn-ghost {
 	color: var(--muted);

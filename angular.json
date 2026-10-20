@@ -50,12 +50,7 @@
 								"input": "public"
 							}
 						],
-						"styles": [
-							"src/tailwind.css",
-							"src/styles.scss",
-							"src/legibility.scss",
-							"src/usability.scss"
-						]
+						"styles": ["src/tailwind.css", "src/styles.scss", "src/usability.scss"]
 					},
 					"configurations": {
 						"production": {
