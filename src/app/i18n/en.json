@@ -50,6 +50,7 @@
 		"presets_storage_unavailable": "Local storage is unavailable. The preset could not be saved or deleted.",
 		"json_object_required": "Enter a JSON object (an array or primitive value is not accepted here).",
 		"json_syntax_error": "Invalid JSON near line {{line}}, column {{column}}. Check quotes, commas and brackets, then try again.",
+		"json_syntax_error_generic": "Invalid JSON. Check quotes, commas and brackets, then try again.",
 		"invalid_base64": "This is not valid Base64. Check the alphabet and padding, then try again.",
 		"select_files_to_continue": "Select one or more supported files to continue.",
 		"select_one_file_to_continue": "Select exactly one file to continue.",

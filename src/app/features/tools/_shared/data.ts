@@ -7,6 +7,24 @@ export function object(value: unknown): Record<string, unknown> {
 	return value as Record<string, unknown>; // Runtime guard above establishes a record.
 }
 
+export function jsonErrorLocation(
+	message: string,
+	value: string,
+): Readonly<{ line: number; column: number }> | undefined {
+	const location = /(?:position\s+(\d+)|line\s+(\d+)\s+column\s+(\d+))/i.exec(message);
+	if (location?.[2] && location[3]) {
+		return { line: Number(location[2]), column: Number(location[3]) };
+	}
+	if (location?.[1]) {
+		const position = Number(location[1]);
+		return {
+			line: value.slice(0, position).split('\n').length,
+			column: position - value.lastIndexOf('\n', position - 1),
+		};
+	}
+	return undefined;
+}
+
 export function json(value: string): unknown {
 	try {
 		return JSON.parse(value);
@@ -14,18 +32,10 @@ export function json(value: string): unknown {
 		if (!(error instanceof SyntaxError)) {
 			throw error;
 		}
-		const location = /(?:position\s+(\d+)|line\s+(\d+)\s+column\s+(\d+))/i.exec(error.message);
-		const position = location?.[1] ? Number(location[1]) : undefined;
-		const line = location?.[2]
-			? Number(location[2])
-			: position === undefined
-				? 1
-				: value.slice(0, position).split('\n').length;
-		const column = location?.[3]
-			? Number(location[3])
-			: position === undefined
-				? 1
-				: position - value.lastIndexOf('\n', position - 1);
-		throw new TranslatedToolError('common.json_syntax_error', { line, column }, 'input');
+		const location = jsonErrorLocation(error.message, value);
+		if (location) {
+			throw new TranslatedToolError('common.json_syntax_error', location, 'input');
+		}
+		throw new TranslatedToolError('common.json_syntax_error_generic', {}, 'input');
 	}
 }

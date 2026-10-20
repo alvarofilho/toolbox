@@ -6,7 +6,7 @@ import pt from '@app/i18n/pt.json';
 import en from '@app/i18n/en.json';
 import es from '@app/i18n/es.json';
 import type { TranslationKey } from '@app/core/models/tool';
-import { json } from '@app/features/tools/_shared/data';
+import { json, jsonErrorLocation } from '@app/features/tools/_shared/data';
 import { TranslatedToolError } from '@app/core/models/tool';
 
 function isTranslationObject(value: unknown): value is Readonly<Record<string, unknown>> {
@@ -151,7 +151,12 @@ describe('tool catalog', () => {
 	});
 });
 describe('JSON tools', () => {
-	it('reports localized JSON syntax locations and translates errors in every locale', () => {
+	it('reports parser-provided JSON syntax locations and translates errors in every locale', () => {
+		expect(jsonErrorLocation('Unexpected token at position 5', '{\n"a":}')).toEqual({
+			line: 2,
+			column: 4,
+		});
+		expect(jsonErrorLocation('Unexpected token near input', '{"a":}')).toBeUndefined();
 		let error: unknown;
 		try {
 			json('{\n  "name": }');
@@ -162,13 +167,18 @@ describe('JSON tools', () => {
 		if (!(error instanceof TranslatedToolError)) {
 			return;
 		}
-		expect(error.translationKey).toBe('common.json_syntax_error');
+		expect(['common.json_syntax_error', 'common.json_syntax_error_generic']).toContain(
+			error.translationKey,
+		);
 		expect(error.fieldKey).toBe('input');
-		expect(Number(error.params['line'])).toBeGreaterThan(0);
-		expect(Number(error.params['column'])).toBeGreaterThan(0);
+		if (error.translationKey === 'common.json_syntax_error') {
+			expect(Number(error.params['line'])).toBeGreaterThan(0);
+			expect(Number(error.params['column'])).toBeGreaterThan(0);
+		}
 		const errorKeys = [
 			'common.json_object_required',
 			'common.json_syntax_error',
+			'common.json_syntax_error_generic',
 			'common.invalid_base64',
 			'common.select_files_to_continue',
 			'common.select_one_file_to_continue',
@@ -197,8 +207,11 @@ describe('JSON tools', () => {
 			for (const key of errorKeys) {
 				expect(translationAt(dictionary, key), key).toEqual(expect.any(String));
 			}
-			const template = String(translationAt(dictionary, error.translationKey));
+			const template = String(translationAt(dictionary, 'common.json_syntax_error'));
 			expect(template.replace('{{line}}', '2').replace('{{column}}', '11')).toContain('2');
+			expect(String(translationAt(dictionary, 'common.json_syntax_error_generic'))).not.toContain(
+				'{{line}}',
+			);
 		}
 	});
 	it('keeps malformed JWT errors typed and file selection errors on the file field', async () => {

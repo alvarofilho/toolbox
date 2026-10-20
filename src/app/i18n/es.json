@@ -50,6 +50,7 @@
 		"presets_storage_unavailable": "El almacenamiento local no está disponible. No se pudo guardar ni eliminar el preajuste.",
 		"json_object_required": "Ingresa un objeto JSON (aquí no se aceptan arreglos ni valores primitivos).",
 		"json_syntax_error": "JSON no válido cerca de la línea {{line}}, columna {{column}}. Revisa las comillas, comas y corchetes e inténtalo de nuevo.",
+		"json_syntax_error_generic": "JSON no válido. Revisa las comillas, comas y corchetes e inténtalo de nuevo.",
 		"invalid_base64": "El contenido no es Base64 válido. Revisa los caracteres y el relleno e inténtalo de nuevo.",
 		"select_files_to_continue": "Selecciona uno o más archivos compatibles para continuar.",
 		"select_one_file_to_continue": "Selecciona exactamente un archivo para continuar.",

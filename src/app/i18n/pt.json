@@ -50,6 +50,7 @@
 		"presets_storage_unavailable": "O armazenamento local está indisponível. Não foi possível salvar ou excluir o preset.",
 		"json_object_required": "Informe um objeto JSON (arrays e valores primitivos não são aceitos aqui).",
 		"json_syntax_error": "JSON inválido próximo à linha {{line}}, coluna {{column}}. Confira aspas, vírgulas e colchetes e tente novamente.",
+		"json_syntax_error_generic": "JSON inválido. Confira aspas, vírgulas e colchetes e tente novamente.",
 		"invalid_base64": "O conteúdo não é Base64 válido. Confira os caracteres e o preenchimento e tente novamente.",
 		"select_files_to_continue": "Selecione um ou mais arquivos compatíveis para continuar.",
 		"select_one_file_to_continue": "Selecione exatamente um arquivo para continuar.",
