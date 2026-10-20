@@ -322,6 +322,8 @@
 				@if (preview(); as preview) {
 					<iframe
 						class="tool-preview"
+						[class.dns-preview]="definition().id === 'dns-lookup'"
+						[class.dns-preview-all]="definition().id === 'dns-lookup' && values()['type'] === 'ALL'"
 						sandbox=""
 						referrerpolicy="no-referrer"
 						[title]="'common.result_preview' | transloco"
@@ -357,6 +359,13 @@
 							{{ 'common.export_report' | transloco }}
 						</button>
 					</details>
+				} @else if (definition().id === 'dns-lookup' && result.preview) {
+					<details class="text-report">
+						<summary>
+							{{ 'common.view_text_report' | transloco }}
+						</summary>
+						<pre class="result-code" tabindex="0" [textContent]="result.output"></pre>
+					</details>
 				} @else {
 					<pre
 						class="result-code"
@@ -384,7 +393,11 @@
 					}}
 				</h3>
 				<p>
-					{{ 'common.fill_in_the_fields_and_run_the_tool_everyt' | transloco }}
+					{{
+						definition().id === 'dns-lookup'
+							? ('tools.dns-lookup.dns_empty_state' | transloco)
+							: ('common.fill_in_the_fields_and_run_the_tool_everyt' | transloco)
+					}}
 				</p>
 			</div>
 		}
@@ -402,5 +415,9 @@
 </div>
 <p class="tool-privacy">
 	<app-icon name="shield" />
-	{{ 'common.privacy_notice_complete' | transloco }}
+	{{
+		definition().id === 'dns-lookup'
+			? ('tools.dns-lookup.dns_network_notice' | transloco)
+			: ('common.privacy_notice_complete' | transloco)
+	}}
 </p>

@@ -2,6 +2,17 @@ import type { ToolRegistration } from '@app/features/tools/catalog/tool-registra
 
 export const INFRASTRUCTURE_TOOLS: readonly ToolRegistration[] = [
 	{
+		id: 'dns-lookup',
+		category: 'infrastructure',
+		name: 'tools.dns-lookup.dns_lookup',
+		description: 'tools.dns-lookup.query_dns_records_and_compare_public_resolvers',
+		icon: 'code',
+		keywords: 'dns domain lookup resolver records mx txt spf dmarc dkim',
+		available: true,
+		loadDefinition: () =>
+			import('../infrastructure/dns-lookup.tool').then((module) => module.definition),
+	},
+	{
 		id: 'ipv4',
 		category: 'infrastructure',
 		name: 'tools.ipv4.ipv4_subnet_calculator',

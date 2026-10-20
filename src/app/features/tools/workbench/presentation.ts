@@ -74,6 +74,7 @@ const actions: Readonly<Record<string, TranslationKey>> = {
 	'webhook-signature': 'common.generate_signature',
 	'timestamp-request': 'common.create_request',
 	'http-status': 'common.look_up_http_status',
+	'dns-lookup': 'tools.dns-lookup.dns_lookup',
 	'http-headers': 'common.inspect_headers',
 	'basic-auth': 'common.generate_basic_auth',
 	'password-strength': 'common.analyze_password',

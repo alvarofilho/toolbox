@@ -892,6 +892,16 @@
 			"calculate_ipv4_network_mask_and_address_ra": "Calcule rede, máscara e intervalo de endereços IPv4.",
 			"ipv4_subnet_calculator": "IPv4 Subnet Calculator"
 		},
+		"dns-lookup": {
+			"all_record_types": "ALL (todos os tipos)",
+			"dns_empty_state": "Execute a consulta para comparar os registros DNS nos dois resolvers.",
+			"dns_network_notice": "O domínio consultado é enviado por HTTPS à Cloudflare e ao Google DNS para resolver os registros.",
+			"dns_lookup": "Consulta DNS",
+			"query_dns_records_and_compare_public_resolvers": "Consulte registros DNS e compare as respostas dos resolvers Cloudflare e Google.",
+			"domain_name": "Domínio",
+			"record_type": "Tipo de registro",
+			"queries_use_https_and_compare_cloudflare_and_google": "A consulta é enviada por HTTPS aos resolvers públicos da Cloudflare e do Google. Registros TXT de SPF, DKIM e DMARC recebem uma explicação breve."
+		},
 		"ipv6": {
 			"expand_ipv6_addresses_and_calculate_their_": "Expanda endereços IPv6 e calcule seu prefixo de rede.",
 			"ipv6_calculator": "IPv6 Calculator"
