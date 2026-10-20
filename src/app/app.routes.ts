@@ -36,6 +36,8 @@ export const routes: Routes = [
 		title: 'Favoritos · Toolbox',
 	},
 	{ path: 'recent', loadComponent: home, data: { mode: 'recent' }, title: 'Recentes · Toolbox' },
+	{ path: 'category/brazilian', redirectTo: '/category/country-data', pathMatch: 'full' },
+	{ path: 'category/mercosur', redirectTo: '/category/country-data', pathMatch: 'full' },
 	{
 		path: 'category/:id',
 		loadComponent: home,

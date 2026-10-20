@@ -1,6 +1,12 @@
 {
 	"categories": {
-		"brazilian_tools": "Brazilian tools",
+		"country_data": "Brazil, Mercosur & more",
+		"country_data_description": "Validate Brazilian documents and generate synthetic data for testing in Brazil, Mercosur countries, and more.",
+		"brazilian_documents": "Documents and identifiers",
+		"brazilian_business_tax": "Businesses and taxes",
+		"brazilian_vehicles": "Vehicles and traffic",
+		"brazilian_payments": "Payments and financial data",
+		"synthetic_test_data": "Synthetic test data",
 		"cryptography_security": "Cryptography & security",
 		"css_frontend": "CSS & frontend",
 		"databases_sql": "Databases & SQL",
@@ -118,6 +124,8 @@
 		"descending_order": "Descending order",
 		"df": "DF",
 		"differences_found": "Differences found",
+		"drop_files_here": "Drop files here",
+		"choose_files": "Choose files",
 		"download_file": "Download file",
 		"download_image": "Download image",
 		"download_pdf": "Download PDF",
@@ -444,7 +452,7 @@
 		},
 		"aes": {
 			"aes_encrypt_decrypt": "AES Encrypt/Decrypt",
-			"authenticated_aes_256_gcm_with_random_salt": "Authenticated AES-256-GCM with random salt and IV; PBKDF2-SHA256 (310,000 iterations). Keep the password separately.",
+			"authenticated_aes_256_gcm_with_random_salt": "Authenticated AES-256-GCM with random salt and IV. Uses PBKDF2-SHA256 with 310,000 iterations. Keep the password separately.",
 			"encrypt_or_decrypt_text_with_aes_256_gcm_a": "Encrypt or decrypt text with AES-256-GCM and a password."
 		},
 		"api-proxy": {
@@ -452,7 +460,7 @@
 			"api_url": "API URL",
 			"format": "Format",
 			"generate_proxy_configuration_to_host_in_vi": "Generate proxy configuration to host in Vite or Nginx.",
-			"generates_configuration_for_you_to_host_a_": "Generates configuration for you to host. A browser cannot act as a network proxy without a server.",
+			"generates_configuration_for_you_to_host_a_": "Creates a proxy configuration for Vite or Nginx. A browser needs a server to forward network requests.",
 			"local_prefix": "Local prefix",
 			"nginx": "Nginx",
 			"vite_config": "Vite config"
@@ -553,7 +561,7 @@
 		"certificate-chain": {
 			"certificate_chain_inspector": "Certificate Chain Inspector",
 			"check_signatures_between_certificates_in_a": "Check signatures between certificates in a supplied chain.",
-			"verifies_signatures_between_supplied_certi": "Verifies signatures between supplied certificates and shows validity dates. Does not establish CA trust or check revocation."
+			"verifies_signatures_between_supplied_certi": "Checks signatures between the supplied certificates and shows their validity periods. It does not establish CA trust or check revocation."
 		},
 		"certificate-number": {
 			"certificate_record_number_generator": "Certificate Record Number Generator",
@@ -886,11 +894,11 @@
 		},
 		"image-compressor": {
 			"adjust_image_dimensions_and_quality_and_co": "Adjust image dimensions and quality and compare file sizes.",
-			"adjust_quality_and_dimensions_png_is_lossl": "Adjust quality and dimensions. PNG is lossless; reducing quality does not reduce its size. Check the final size before downloading.",
+			"adjust_quality_and_dimensions_png_is_lossl": "Adjust quality and dimensions. PNG is lossless, so lowering its quality setting will not reduce file size. Check the result before downloading.",
 			"image_compressor": "Image Compressor"
 		},
 		"image-converter": {
-			"browser_raster_conversion_animation_and_me": "Browser raster conversion; animation and metadata are not preserved. JPEG uses a white background for transparency.",
+			"browser_raster_conversion_animation_and_me": "Raster conversion runs in the browser. Animation and metadata are not preserved. Transparent areas get a white background in JPEG output.",
 			"convert_raster_images_to_webp_png_or_jpeg": "Convert raster images to WebP, PNG or JPEG.",
 			"image_converter": "Image Converter"
 		},
@@ -1049,16 +1057,18 @@
 			"country": "Country",
 			"csv": "CSV",
 			"data_type": "Data type",
-			"generate_fictional_people_and_companies_fo": "Generate fictional people and companies for Mercosur countries.",
-			"generates_fictional_test_data_foreign_form": "Generates fictional test data. Foreign formats without an implemented check-digit rule are marked as synthetic format only. No number proves registration or real existence. Venezuela is included as a suspended State Party.",
+			"generate_fictional_people_and_companies_fo": "Generate synthetic people and business data as JSON, CSV, or SQL for supported countries.",
+			"generates_fictional_test_data_foreign_form": "Generates fictional test data. Formats without an implemented check-digit rule are marked as synthetic format only. No number proves registration or real existence. Venezuela is included as a suspended State Party.",
 			"json": "JSON",
-			"mercosur_test_data_generator": "Mercosur Test Data Generator",
+			"mercosur_test_data_generator": "Country Test Data Generator",
 			"output_format": "Output format",
 			"paraguay": "Paraguay",
 			"person": "Person",
 			"sql_insert": "SQL INSERT",
 			"uruguay": "Uruguay",
-			"venezuela_suspended": "Venezuela (suspended)"
+			"venezuela_suspended": "Venezuela (suspended)",
+			"cabo_verde": "Cape Verde",
+			"united_states": "United States"
 		},
 		"meta-tags": {
 			"canonical_url": "Canonical URL",
@@ -1101,7 +1111,7 @@
 			"open_a_password_protected_p12_file_and_ins": "Open a password-protected P12 file and inspect its certificates.",
 			"p12_file_password": "P12 file password",
 			"pkcs_12_p12_explorer": "PKCS#12/P12 Explorer",
-			"the_password_is_used_locally_to_open_and_c": "The password is used locally to open and check integrity. The analysis lists certificates and whether a private key is present, but never displays private key material."
+			"the_password_is_used_locally_to_open_and_c": "The password is used in the browser to open the file and check its integrity. The analysis lists certificates and indicates whether a private key is present, without displaying its contents."
 		},
 		"p7b-bundle": {
 			"bundle_pem_certificates_into_an_unsigned_p": "Bundle PEM certificates into an unsigned P7B file.",
@@ -1152,7 +1162,7 @@
 			"90_counterclockwise": "90° counterclockwise",
 			"delete_pages": "Delete pages",
 			"extract_pages": "Extract pages",
-			"merge_follows_file_selection_order_extract": "Merge follows file selection order. Extract and reorder follow the entered order (e.g. 3,1-2). Delete removes the entered pages; rotate applies to the entered pages. Empty = all. Encrypted PDFs are rejected; digital signatures are not preserved.",
+			"merge_follows_file_selection_order_extract": "Merging follows file order. Extraction and reordering use the sequence you enter (e.g. 3,1-2). Delete and rotate apply to the listed pages. Leave the field empty to use all pages. Encrypted PDFs are rejected; digital signatures are not preserved.",
 			"merge_pdfs": "Merge PDFs",
 			"merge_pdfs_extract_pages_or_split_files_in": "Merge PDFs, extract pages or split files into a ZIP.",
 			"operation": "Operation",
@@ -1196,7 +1206,7 @@
 		},
 		"pdf-inspector": {
 			"pdf_inspector": "PDF Inspection and Cleanup",
-			"inspects_pdfa_claims_signatures_structure_metadata_and_compares_files": "Inspect structure, signature fields, and PDF/A declarations; compare files, remove metadata, or try rewriting readable PDFs.",
+			"inspects_pdfa_claims_signatures_structure_metadata_and_compares_files": "Inspects the structure, signature fields, and PDF/A declarations. You can also compare files, remove metadata, or try to rewrite readable PDFs.",
 			"operation": "Operation",
 			"inspect_validate": "Inspect and compare",
 			"remove_metadata": "Remove metadata",
@@ -1273,7 +1283,7 @@
 			"amount_optional_decimal_point": "Amount (optional; decimal point)",
 			"city": "City",
 			"generate_or_decode_static_pix_payloads_wit": "Generate or decode static PIX payloads with CRC checks.",
-			"generates_or_inspects_a_static_pix_payload": "Generates or inspects a static PIX payload and CRC. Does not look up keys or confirm ownership or payment.",
+			"generates_or_inspects_a_static_pix_payload": "Generates or inspects a static PIX payload and its CRC. It does not look up the key or confirm ownership or payment.",
 			"merchant_name": "Merchant name",
 			"pix_key": "PIX key",
 			"pix_payload_generator_decoder": "PIX Payload Generator/Decoder",
@@ -1469,7 +1479,7 @@
 		"tsr-decoder": {
 			"inspect_the_status_and_structure_of_a_tsr_": "Inspect the status and structure of a TSR response.",
 			"original_content_optional": "Original content (optional)",
-			"shows_the_status_and_structure_with_the_or": "Shows the status and structure. With the original content and trusted certificates, it verifies the token signature, imprint, and TSA chain.",
+			"shows_the_status_and_structure_with_the_or": "Shows the status and structure. To verify the token signature, imprint, and TSA chain, also provide the original content and trusted certificates.",
 			"trusted_tsa_certificates_pem_optional": "Trusted TSA certificates (PEM, optional)",
 			"tsr_response_decoder": "TSR Response Decoder",
 			"tsr_response_pem_or_base64": "TSR response (PEM or Base64)"

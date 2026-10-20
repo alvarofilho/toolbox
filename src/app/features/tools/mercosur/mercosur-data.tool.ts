@@ -24,6 +24,8 @@ const countryControl = select(
 		['PY', 'tools.mercosur-data.paraguay'],
 		['UY', 'tools.mercosur-data.uruguay'],
 		['VE', 'tools.mercosur-data.venezuela_suspended'],
+		['CV', 'tools.mercosur-data.cabo_verde'],
+		['US', 'tools.mercosur-data.united_states'],
 	],
 	undefined,
 );
@@ -110,6 +112,26 @@ const profiles = {
 		cities: ['Caracas', 'Maracaibo', 'Valencia'],
 		regions: ['Distrito Capital', 'Zulia', 'Carabobo'],
 	},
+	CV: {
+		country: 'Cabo Verde',
+		dialCode: '+238',
+		currency: 'CVE',
+		phoneDigits: 7,
+		postalCode: () => `CP-${digits(4)}`,
+		companySuffix: 'Lda.',
+		cities: ['Praia', 'Mindelo', 'Santa Maria'],
+		regions: ['Santiago', 'São Vicente', 'Sal'],
+	},
+	US: {
+		country: 'Estados Unidos',
+		dialCode: '+1',
+		currency: 'USD',
+		phoneDigits: 10,
+		postalCode: () => digits(5),
+		companySuffix: 'Inc.',
+		cities: ['New York', 'Los Angeles', 'Chicago'],
+		regions: ['NY', 'CA', 'IL'],
+	},
 } as const;
 
 type CountryCode = keyof typeof profiles;
@@ -180,6 +202,20 @@ function documentFor(
 			? { type: 'CI (formato sintético)', value: digits(8), validation: 'format-only' }
 			: { type: 'RUT (formato sintético)', value: digits(12), validation: 'format-only' };
 	}
+	if (country === 'CV') {
+		return kind === 'person'
+			? { type: 'NIF (formato sintético)', value: digits(9), validation: 'format-only' }
+			: { type: 'NIF (formato sintético)', value: digits(9), validation: 'format-only' };
+	}
+	if (country === 'US') {
+		return kind === 'person'
+			? { type: 'SSN (formato sintético)', value: digits(9), validation: 'format-only' }
+			: {
+					type: 'EIN (formato sintético)',
+					value: `${digits(2)}-${digits(7)}`,
+					validation: 'format-only',
+				};
+	}
 	return kind === 'person'
 		? { type: 'Cédula (formato sintético)', value: `V-${digits(8)}`, validation: 'format-only' }
 		: {
@@ -217,7 +253,11 @@ export const definition = tool(
 				const name = isPerson
 					? country === 'BR'
 						? faker.person.fullName()
-						: `${['Sofía', 'Mateo', 'Valentina', 'Lucas', 'Camila', 'Thiago'][randomInt(6)]} ${['García', 'González', 'Rodríguez', 'Fernández', 'Pereira', 'Silva'][randomInt(6)]}`
+						: country === 'US'
+							? `${['Avery', 'Jordan', 'Morgan', 'Taylor', 'Casey', 'Riley'][randomInt(6)]} ${['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller'][randomInt(6)]}`
+							: country === 'CV'
+								? `${['Ana', 'Maria', 'João', 'José', 'Lúcia', 'Manuel'][randomInt(6)]} ${['Lopes', 'Silva', 'Semedo', 'Tavares', 'Monteiro', 'Andrade'][randomInt(6)]}`
+								: `${['Sofía', 'Mateo', 'Valentina', 'Lucas', 'Camila', 'Thiago'][randomInt(6)]} ${['García', 'González', 'Rodríguez', 'Fernández', 'Pereira', 'Silva'][randomInt(6)]}`
 					: `${faker.company.name()} ${profile.companySuffix} TESTE`;
 				return {
 					synthetic: true,
@@ -245,9 +285,9 @@ export const definition = tool(
 			format === 'csv'
 				? Papa.unparse(rows, { escapeFormulae: true })
 				: format === 'sql'
-					? sqlInsert(rows, 'synthetic_mercosur_data')
+					? sqlInsert(rows, 'synthetic_country_data')
 					: rows;
-		return result(output, `synthetic-mercosur.${format}`);
+		return result(output, `synthetic-country-data.${format}`);
 	},
 	undefined,
 	'tools.mercosur-data.generates_fictional_test_data_foreign_form',

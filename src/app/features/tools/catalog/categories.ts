@@ -36,11 +36,10 @@ export const CATEGORIES = [
 	},
 	{ id: 'text', name: 'categories.text', icon: 'type' },
 	{
-		id: 'brazilian',
-		name: 'categories.brazilian_tools',
+		id: 'country-data',
+		name: 'categories.country_data',
 		icon: 'document',
 	},
-	{ id: 'mercosur', name: 'categories.mercosur', icon: 'document' },
 	{
 		id: 'database',
 		name: 'categories.databases_sql',
@@ -69,5 +68,42 @@ export const PDF_TOOL_GROUPS = [
 		id: 'inspection',
 		name: 'categories.pdf_inspection',
 		toolIds: ['pdf-metadata', 'pdf-inspector'],
+	},
+] as const;
+
+export const REGIONAL_TOOL_GROUPS = [
+	{
+		id: 'documents',
+		name: 'categories.brazilian_documents',
+		toolIds: [
+			'cpf',
+			'pis',
+			'pis-generator',
+			'voter',
+			'voter-generator',
+			'rg-generator',
+			'certificate-number',
+			'document-mask',
+		],
+	},
+	{
+		id: 'business',
+		name: 'categories.brazilian_business_tax',
+		toolIds: ['cnpj', 'ie-generator', 'ie', 'nfe'],
+	},
+	{
+		id: 'vehicles',
+		name: 'categories.brazilian_vehicles',
+		toolIds: ['cnh', 'cnh-generator', 'renavam', 'plate'],
+	},
+	{
+		id: 'payments',
+		name: 'categories.brazilian_payments',
+		toolIds: ['credit-card', 'bank-account', 'pix', 'boleto'],
+	},
+	{
+		id: 'synthetic-data',
+		name: 'categories.synthetic_test_data',
+		toolIds: ['person', 'mercosur-data'],
 	},
 ] as const;

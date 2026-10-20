@@ -154,6 +154,8 @@
 				<p>
 					@if (mode === 'category' && category()?.id === 'pdf' && !query()) {
 						{{ 'categories.pdf_tools_description' | transloco }}
+					} @else if (mode === 'category' && category()?.id === 'country-data' && !query()) {
+						{{ 'categories.country_data_description' | transloco }}
 					} @else {
 						{{
 							mode === 'favorites'

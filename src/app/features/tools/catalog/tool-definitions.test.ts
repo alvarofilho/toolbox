@@ -139,6 +139,41 @@ describe('data transformations and boundaries', () => {
 		}
 		await expect(run('email', { count: '1001' })).rejects.toThrow();
 	});
+	it('generates synthetic records for Cape Verde and the United States', async () => {
+		for (const [country, kind, phonePrefix, documentType] of [
+			['CV', 'person', '+238', 'NIF (formato sintético)'],
+			['CV', 'company', '+238', 'NIF (formato sintético)'],
+			['US', 'person', '+1', 'SSN (formato sintético)'],
+			['US', 'company', '+1', 'EIN (formato sintético)'],
+		] as const) {
+			const records = JSON.parse(
+				(
+					await run('mercosur-data', {
+						country,
+						kind,
+						format: 'json',
+						count: '1',
+					})
+				).output,
+			) as {
+				synthetic: boolean;
+				countryCode: string;
+				documentType: string;
+				documentValidation: string;
+				phone: string;
+				address: { postalCode: string };
+			}[];
+			expect(records).toHaveLength(1);
+			expect(records[0]).toMatchObject({
+				synthetic: true,
+				countryCode: country,
+				documentType,
+				documentValidation: 'format-only',
+			});
+			expect(records[0].phone.startsWith(phonePrefix)).toBe(true);
+			expect(records[0].address.postalCode.length).toBeGreaterThan(0);
+		}
+	});
 });
 describe('cryptography and certificates', () => {
 	it('matches the RFC 4231 HMAC SHA-256 vector', async () => {

@@ -19,7 +19,7 @@ const paths: Readonly<Record<string, string>> = {
 	link: 'm10 13 4-4 M8 16l-2 2a4 4 0 0 1-6-6l5-5a4 4 0 0 1 6 0 M16 8l2-2a4 4 0 0 1 6 6l-5 5a4 4 0 0 1-6 0',
 	fingerprint:
 		'M5 10a7 7 0 0 1 14 0v4 M8 11a4 4 0 0 1 8 0v5 M11 12v5l-2 4 M5 14v2l-2 3 M14 20l2-2 M19 17v3',
-	key: 'M14 8a5 5 0 1 1-5 5L3 19v3h4v-3h3l3-5 M17 7h.01',
+	key: 'M12 12a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z M12 12h10v4 M18 12v3',
 	hash: 'M9 3 7 21 M17 3l-2 18 M3 9h18 M2 15h18',
 	scan: 'M8 3H3v5 M16 3h5v5 M21 16v5h-5 M8 21H3v-5 M7 8h10 M7 12h10 M7 16h6',
 	regex: 'M4 17h.01 M10 5v12 M5 8l10 6 M15 8 5 14 M19 16h.01',
@@ -37,6 +37,22 @@ const paths: Readonly<Record<string, string>> = {
 	close: 'm6 6 12 12 M6 18 18 6',
 	copy: 'M8 8h13v13H8z M16 4V2H2v14h2',
 	download: 'M12 3v12 m-5-5 5 5 5-5 M4 16v5h16v-5',
+	eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
+	database:
+		'M4 5c0-1.1 3.6-2 8-2s8 .9 8 2-3.6 2-8 2-8-.9-8-2Z M4 5v14c0 1.1 3.6 2 8 2s8-.9 8-2V5 M4 12c0 1.1 3.6 2 8 2s8-.9 8-2',
+	calendar:
+		'M4 5h16v16H4z M8 3v4 M16 3v4 M4 10h16 M8 14h.01 M12 14h.01 M16 14h.01 M8 18h.01 M12 18h.01',
+	globe:
+		'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z M3 12h18 M12 3a15 15 0 0 1 0 18 M12 3a15 15 0 0 0 0 18',
+	network:
+		'M12 12 5 5 M12 12l7-7 M12 12l-7 7 M12 12l7 7 M5 3h.01 M19 3h.01 M5 21h.01 M19 21h.01 M12 12h.01',
+	terminal: 'm4 17 5-5-5-5 M12 19h8',
+	image: 'M4 4h16v16H4z M8 10h.01 M20 15l-5-5L5 20',
+	table: 'M3 4h18v16H3z M3 10h18 M9 4v16 M15 4v16',
+	lock: 'M5 10h14v11H5z M8 10V7a4 4 0 1 1 8 0v3 M12 14v3',
+	list: 'M9 6h12 M9 12h12 M9 18h12 M4 6h.01 M4 12h.01 M4 18h.01',
+	palette:
+		'M12 3a9 9 0 1 0 0 18h1a2 2 0 0 0 1.7-3.1 1.7 1.7 0 0 1 1.4-2.6H18a3 3 0 0 0 3-3c0-5.1-4-9.3-9-9.3Z M7.5 11h.01 M10 7.5h.01 M15 8h.01 M17 12h.01',
 };
 @Component({
 	selector: 'app-icon',
