@@ -10,7 +10,8 @@ import {
 	PERSON_FIELDS,
 	type PersonField,
 } from '@app/features/tools/brazilian/person';
-import { check, number, select, generate } from '@app/features/tools/_shared/controls';
+import { check, number, select, generate, input } from '@app/features/tools/_shared/controls';
+import { SYNTHETIC_SEED_VERSION } from '@app/features/tools/_shared/seeded-random';
 
 const fieldLabels: Readonly<Record<PersonField, TranslationKey>> = {
 	name: 'tools.person.name',
@@ -43,6 +44,7 @@ export const definition: ToolDefinition = {
 			],
 			undefined,
 		),
+		input('seed', 'tools.person.seed', '', 'text'),
 		...PERSON_FIELDS.map((key) => check(`include-${key}`, fieldLabels[key])),
 	],
 	action: generate,
@@ -57,11 +59,14 @@ export const definition: ToolDefinition = {
 					field(v, 'state'),
 					boundedNumber(field(v, 'minAge'), 18, 100),
 					boundedNumber(field(v, 'maxAge'), 18, 100),
+					field(v, 'seed'),
 				),
 				format,
 			),
 			filename: `synthetic-people.${format}`,
 			mime: format === 'json' ? 'application/json' : format === 'csv' ? 'text/csv' : 'text/plain',
+			notice: 'tools.person.seed_version_notice',
+			noticeParams: { version: SYNTHETIC_SEED_VERSION },
 		};
 	},
 };
