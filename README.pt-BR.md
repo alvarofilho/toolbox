@@ -33,13 +33,13 @@ O Tailwind procura classes explicitamente em `src/**/*.html`, pois todos os comp
 
 `allowedCommonJsDependencies` em `angular.json` registra as exceções CommonJS existentes, incluindo dependências transitivas de certificados, Temporal, PDF e formatação SQL. A lista desativa avisos apenas para esses módulos; não os converte para ESM nem reduz seu tamanho. Mantenha as implementações carregadas sob demanda e revise as exceções ao atualizar dependências. Novas dependências CommonJS continuam gerando avisos. O [README em inglês](README.md) detalha os módulos e seus usos.
 
-Os headers usam `Cache-Control: public, max-age=0, must-revalidate, no-transform` para preservar os arquivos publicados e impedir injeção automática de scripts pelo proxy Cloudflare, incluindo Rocket Loader e Web Analytics. O navegador revalida os recursos com o servidor; não habilite otimizações que reescrevam o HTML desta aplicação.
+Os headers usam `Cache-Control: public, max-age=0, must-revalidate` para que o navegador revalide os recursos e o Cloudflare Pages possa comprimir arquivos de texto, como SVG, CSS e JavaScript. Mantenha desativadas as otimizações que reescrevem o HTML desta aplicação.
 
 `deployUrl: "/"` mantém os caminhos de scripts, estilos e preloads ancorados na raiz. Isso evita que os Early Hints do Cloudflare resolvam um chunk relativo dentro de `/tools/` ao abrir uma ferramenta diretamente.
 
 ## Catálogo de ferramentas
 
-O catálogo foi ampliado para todas as categorias da especificação. Consulte [o catálogo implementado e os limites de cada ferramenta](docs/CATALOG.md) para geradores, JSON/dados, conversores, segurança, desenvolvimento/APIs, banco de dados/.NET, documentos brasileiros, redes, texto/arquivos e CSS/frontend. As funções que antes eram oferecidas apenas dentro de outras ferramentas também têm páginas independentes.
+O catálogo foi ampliado para todas as categorias da especificação. Consulte [o catálogo implementado e os limites de cada ferramenta](docs/CATALOG.md) para geradores, JSON/dados, conversores, segurança, desenvolvimento/APIs, banco de dados/SQL, documentos brasileiros, redes, texto/arquivos e CSS/frontend. As funções que antes eram oferecidas apenas dentro de outras ferramentas também têm páginas independentes.
 
 As ferramentas originais continuam disponíveis:
 

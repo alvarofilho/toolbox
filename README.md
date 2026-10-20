@@ -33,13 +33,13 @@ Tailwind scans `src/**/*.html` explicitly because all components use external te
 
 `allowedCommonJsDependencies` in `angular.json` records the existing CommonJS exceptions: CSV (`papaparse`), certificates (`reflect-metadata`, `pvtsutils`), QR codes (`qrcode`), ZIP files (`jszip`), versions (`semver`), JSON Schema (`jsonschema`), IP addresses (`ipaddr.js`), shell arguments (`shell-quote`), date arithmetic (`jsbi` via Temporal), PostgreSQL parsing (`node-sql-parser/build/postgresql`), cron (`cron-parser`, `cronstrue`), PDFs (`pako` via pdf-lib), and SQL formatting (`nearley`). This suppresses warnings for those specific modules; it does not convert them to ESM or reduce their size. Keep implementations lazy-loaded and review the exceptions when upgrading dependencies. New CommonJS dependencies still produce warnings.
 
-The response headers set `Cache-Control: public, max-age=0, must-revalidate, no-transform` to preserve published assets and prevent Cloudflare proxy features such as Rocket Loader and Web Analytics from injecting scripts. Browsers revalidate assets with the server. Do not enable HTML rewriting optimizations for this app.
+The response headers set `Cache-Control: public, max-age=0, must-revalidate` so browsers revalidate assets while Cloudflare Pages can compress text assets such as SVG, CSS, and JavaScript. Keep HTML rewriting optimizations disabled for this app.
 
 `deployUrl: "/"` keeps scripts, styles, and preload paths rooted at the site origin. This prevents Cloudflare Early Hints from resolving a relative chunk inside `/tools/` when a user opens a tool directly.
 
 ## Tool catalog
 
-The catalog includes independent tools across data generation, JSON and data, converters, security, development and APIs, databases and .NET, Brazilian documents, networking, text and files, and CSS/frontend. See the [implemented catalog and each tool's limitations](docs/CATALOG.md) for details. Features that used to be available only inside other tools also have their own pages.
+The catalog includes independent tools across data generation, JSON and data, converters, security, development and APIs, databases and SQL, Brazilian documents, networking, text and files, and CSS/frontend. See the [implemented catalog and each tool's limitations](docs/CATALOG.md) for details. Features that used to be available only inside other tools also have their own pages.
 
 The original tools remain available:
 
