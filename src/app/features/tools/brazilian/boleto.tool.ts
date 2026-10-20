@@ -11,7 +11,7 @@ import { source } from '@app/features/tools/_shared/controls';
 
 import { mode } from '@app/features/tools/_shared/execution-controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 export const definition = tool(
 	'boleto',
@@ -25,10 +25,5 @@ export const definition = tool(
 					: validateBoleto(field(v, 'input')),
 		),
 	{ input: BOLETO_GOLDEN_LINHA_STRIPPED },
-	text(
-		'Validação estrutural e conversão local. Não confirma beneficiário, cobrança ou pagamento.',
-		'Local structural validation and conversion. Does not confirm beneficiary, debt or payment.',
-		undefined,
-		'tools.boleto',
-	),
+	'tools.boleto.local_structural_validation_and_conversion',
 );

@@ -1,10 +1,10 @@
-import { field, text, type ToolDefinition } from '@app/core/models/tool';
+import { field, type ToolDefinition } from '@app/core/models/tool';
 import { source } from '@app/features/tools/_shared/controls';
 
 export const definition: ToolDefinition = {
 	id: 'json-minifier',
 	controls: [source],
-	action: text('Minificar JSON', 'Minify JSON', undefined, 'tools.json-minifier'),
+	action: 'tools.json-minifier.minify_json',
 	example: { input: '{\n  "project": "Toolbox",\n  "local": true\n}' },
 	run: (v) => ({
 		output: JSON.stringify(JSON.parse(field(v, 'input'))),

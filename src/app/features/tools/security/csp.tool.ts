@@ -9,17 +9,10 @@ import { field } from '@app/core/models/tool';
 export const definition = tool(
 	'csp',
 	[
-		input(
-			'script',
-			'Origens de scripts (separadas por espaço)',
-			'Script sources (space-separated)',
-			"'self'",
-			'text',
-			'tools.csp',
-		),
-		input('style', 'Origens de estilos', 'Style sources', "'self'", 'text', 'tools.csp'),
-		input('image', 'Origens de imagens', 'Image sources', "'self' data:", 'text', 'tools.csp'),
-		input('connect', 'Origens de conexões', 'Connection sources', "'self'", 'text', 'tools.csp'),
+		input('script', 'tools.csp.script_sources_space_separated', "'self'", 'text'),
+		input('style', 'tools.csp.style_sources', "'self'", 'text'),
+		input('image', 'tools.csp.image_sources', "'self' data:", 'text'),
+		input('connect', 'tools.csp.connection_sources', "'self'", 'text'),
 	],
 	(v) => {
 		const clean = (s: string) => {

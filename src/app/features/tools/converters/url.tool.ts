@@ -7,14 +7,12 @@ export const definition: ToolDefinition = {
 		source,
 		select(
 			'mode',
-			'Operação',
-			'Operation',
+			'tools.url.operation',
 			[
-				['encode', 'Codificar componente', 'Encode component'],
-				['decode', 'Decodificar componente', 'Decode component'],
+				['encode', 'tools.url.encode_component'],
+				['decode', 'tools.url.decode_component'],
 			],
 			undefined,
-			'tools.url',
 		),
 	],
 	action: transform,

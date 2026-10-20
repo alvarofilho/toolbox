@@ -26,14 +26,12 @@ export const definition: ToolDefinition = {
 		source,
 		select(
 			'mode',
-			'Direção',
-			'Direction',
+			'tools.json-yaml.direction',
 			[
-				['yaml', 'JSON → YAML', 'JSON → YAML'],
-				['json', 'YAML → JSON', 'YAML → JSON'],
+				['yaml', 'tools.json-yaml.json_to_yaml_arrow'],
+				['json', 'tools.json-yaml.yaml_json'],
 			],
 			undefined,
-			'tools.json-yaml',
 		),
 	],
 	action: transform,

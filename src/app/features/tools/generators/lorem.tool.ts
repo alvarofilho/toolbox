@@ -8,7 +8,7 @@ import { field, boundedNumber } from '@app/core/models/tool';
 
 export const definition = tool(
 	'lorem',
-	[number('count', 'Parágrafos', 'Paragraphs', 3, 1, 100, undefined, 'tools.lorem')],
+	[number('count', 'tools.lorem.paragraphs', 3, 1, 100, undefined)],
 	(v) =>
 		result(faker.lorem.paragraphs(boundedNumber(field(v, 'count'), 1, 100), '\n\n'), 'lorem.txt'),
 );

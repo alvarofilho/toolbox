@@ -1,8 +1,8 @@
-import { text, type ToolControl, type ToolFiles } from '@app/core/models/tool';
+import { type ToolControl, type ToolFiles } from '@app/core/models/tool';
 
 export const file = (accept = '', multiple = false): ToolControl => ({
 	key: 'files',
-	label: text('Arquivos locais (até 20 MB cada)', 'Local files (up to 20 MB each)'),
+	label: 'common.local_files_up_to_20_mb_each',
 	type: 'file',
 	value: '',
 	accept,

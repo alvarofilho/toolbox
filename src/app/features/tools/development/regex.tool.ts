@@ -1,27 +1,15 @@
-import { field, text, type ToolDefinition } from '@app/core/models/tool';
+import { field, type ToolDefinition } from '@app/core/models/tool';
 import { input } from '@app/features/tools/_shared/controls';
 
 export const definition: ToolDefinition = {
 	id: 'regex',
 	controls: [
-		input(
-			'pattern',
-			'Expressão (sem delimitadores / /)',
-			'Pattern (without / /)',
-			'',
-			'text',
-			'tools.regex',
-		),
-		input('flags', 'Flags', 'Flags', 'g', 'text', 'tools.regex'),
-		input('input', 'Texto de teste', 'Test text', undefined, undefined, 'tools.regex'),
+		input('pattern', 'tools.regex.pattern_without', '', 'text'),
+		input('flags', 'tools.regex.flags', 'g', 'text'),
+		input('input', 'tools.regex.test_text', undefined, undefined),
 	],
-	action: text('Testar expressão', 'Test expression', undefined, 'tools.regex'),
-	hint: text(
-		'Execução isolada com limite de 500 ms, 1.000 resultados e 100.000 caracteres.',
-		'Isolated execution, limited to 500 ms, 1,000 matches and 100,000 characters.',
-		undefined,
-		'tools.regex',
-	),
+	action: 'tools.regex.test_expression',
+	hint: 'tools.regex.isolated_execution_limited_to_500_ms_1_000',
 	example: { pattern: '[A-Z][a-z]+', flags: 'g', input: 'Ana e Bruno usam Toolbox.' },
 	run: (v) =>
 		new Promise((resolve, reject) => {

@@ -2,7 +2,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { source } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { object } from '@app/features/tools/_shared/data';
 
@@ -27,10 +27,5 @@ export const definition = tool(
 		};
 	},
 	{ input: apiExample },
-	text(
-		'Visualiza operações de OpenAPI 3.x/Swagger 2.0; referências externas não são carregadas.',
-		'Views OpenAPI 3.x/Swagger 2.0 operations; external references are not fetched.',
-		undefined,
-		'tools.openapi',
-	),
+	'tools.openapi.views_openapi_3_x_swagger_2_0_operations_e',
 );

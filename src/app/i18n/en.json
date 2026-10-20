@@ -17,8 +17,8 @@
 		"10": "10",
 		"15": "*/15 * * * *",
 		"255": "255",
-		"am": "AM",
 		"755": "755",
+		"am": "AM",
 		"100_in_your_browser": "100% in your browser",
 		"10_0_0_0_16": "10.0.0.0/16",
 		"10_5_3": "(10 + 5) / 3",
@@ -1329,7 +1329,8 @@
 		},
 		"svg-optimizer": {
 			"sanitize_and_optimize_svg_with_an_isolated": "Sanitize and optimize SVG with an isolated preview.",
-			"svg_optimizer": "SVG Optimizer"
+			"svg_optimizer": "SVG Optimizer",
+			"character_count": "{{before}} → {{after}} characters"
 		},
 		"temperature": {
 			"celsius": "Celsius",
@@ -1474,5 +1475,15 @@
 			"convert_yaml_to_json_and_inspect_its_struc": "Convert YAML to JSON and inspect its structure.",
 			"yaml_to_json": "YAML to JSON"
 		}
+	},
+	"seo": {
+		"description": "Free online tools for developers, QA and IT professionals. Format JSON, convert data and generate documents locally in your browser.",
+		"image_alt": "Toolbox, online tools for developers",
+		"tool_description_suffix": "Free tool, processed locally in your browser.",
+		"home_title": "Online tools for developers",
+		"tools_title": "All online tools",
+		"favorites_title": "Favorite tools",
+		"recent_title": "Recent tools",
+		"not_found_title": "Page not found"
 	}
 }

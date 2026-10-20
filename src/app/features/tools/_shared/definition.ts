@@ -1,5 +1,4 @@
 import {
-	text,
 	type ToolControl,
 	type ToolDefinition,
 	type ToolResult,
@@ -13,7 +12,7 @@ export function tool(
 	example?: ToolValues,
 	hint?: ToolDefinition['hint'],
 ): ToolDefinition {
-	return { id, controls, run, example, hint, action: text('Executar', 'Run') };
+	return { id, controls, run, example, hint, action: 'common.run_title' };
 }
 
 export const result = (value: unknown, filename = 'result.json'): ToolResult => ({

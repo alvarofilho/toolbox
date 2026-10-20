@@ -1,34 +1,21 @@
-import { translationKey, type TranslationNamespace } from '@app/core/models/translation-key';
+import type { TranslationKey } from '@app/core/models/translation-key';
+export type { TranslationKey } from '@app/core/models/translation-key';
 
 export type Locale = 'pt' | 'en' | 'es';
 
-export type Localized = Readonly<Record<'pt' | 'en', string> & { es?: string; key: string }>;
-
-export const text = (
-	pt: string,
-	en: string,
-	es = en,
-	namespace: TranslationNamespace = 'common',
-): Localized => ({
-	pt,
-	en,
-	es,
-	key: translationKey(en, namespace),
-});
-
 export interface ToolControl {
 	readonly key: string;
-	readonly label: Localized;
+	readonly label: TranslationKey;
 	readonly type: 'textarea' | 'text' | 'password' | 'number' | 'select' | 'checkbox' | 'file';
 	readonly accept?: string;
 	readonly multiple?: boolean;
 	readonly value: string;
-	readonly options?: readonly { readonly value: string; readonly label: Localized }[];
+	readonly options?: readonly { readonly value: string; readonly label?: TranslationKey }[];
 	readonly min?: number;
 	readonly max?: number;
 	readonly step?: number | 'any';
 	readonly inputMode?: 'text' | 'numeric' | 'decimal' | 'email' | 'url';
-	readonly placeholder?: Localized;
+	readonly placeholder?: TranslationKey;
 	readonly when?: { readonly key: string; readonly values: readonly string[] };
 }
 
@@ -45,7 +32,8 @@ export interface ToolResult {
 	readonly output: string;
 	readonly filename?: string;
 	readonly mime?: string;
-	readonly notice?: Localized;
+	readonly notice?: TranslationKey;
+	readonly noticeParams?: Readonly<Record<string, string | number>>;
 	readonly artifacts?: readonly ToolArtifact[];
 	readonly preview?: string;
 }
@@ -53,8 +41,8 @@ export interface ToolResult {
 export interface ToolDefinition {
 	readonly id: string;
 	readonly controls: readonly ToolControl[];
-	readonly action: Localized;
-	readonly hint?: Localized;
+	readonly action: TranslationKey;
+	readonly hint?: TranslationKey;
 	readonly example?: ToolValues;
 	readonly execution?: 'automatic' | 'manual';
 	readonly run: (values: ToolValues, files?: ToolFiles) => ToolResult | Promise<ToolResult>;
@@ -62,8 +50,8 @@ export interface ToolDefinition {
 
 export interface ToolInfo {
 	readonly id: string;
-	readonly name: Localized;
-	readonly description: Localized;
+	readonly name: TranslationKey;
+	readonly description: TranslationKey;
 	readonly category: string;
 	readonly icon: string;
 	readonly keywords: string;

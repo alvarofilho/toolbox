@@ -2,7 +2,7 @@ import { degrees, PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import { tool, result } from '@app/features/tools/_shared/definition';
 import { input, select } from '@app/features/tools/_shared/controls';
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 import { filesFrom, file } from '@app/features/tools/_shared/files';
 
 export const definition = tool(
@@ -11,42 +11,31 @@ export const definition = tool(
 		file('application/pdf', true),
 		select(
 			'mode',
-			'Operação',
-			'Operation',
+			'tools.pdf-pages.operation',
 			[
-				['merge', 'Unir PDFs', 'Merge PDFs'],
-				['extract', 'Extrair páginas', 'Extract pages'],
-				['split', 'Separar páginas em arquivos', 'Split pages into files'],
-				['reorder', 'Reordenar páginas', 'Reorder pages'],
-				['delete', 'Excluir páginas', 'Delete pages'],
-				['rotate', 'Girar páginas', 'Rotate pages'],
+				['merge', 'tools.pdf-pages.merge_pdfs'],
+				['extract', 'tools.pdf-pages.extract_pages'],
+				['split', 'tools.pdf-pages.split_pages_into_files'],
+				['reorder', 'tools.pdf-pages.reorder_pages'],
+				['delete', 'tools.pdf-pages.delete_pages'],
+				['rotate', 'tools.pdf-pages.rotate_pages'],
 			],
 			undefined,
-			'tools.pdf-pages',
 		),
 		{
-			...input(
-				'pages',
-				'Páginas: 1,3-5 (vazio = todas)',
-				'Pages: 1,3-5 (empty = all)',
-				'',
-				'text',
-				'tools.pdf-pages',
-			),
+			...input('pages', 'tools.pdf-pages.pages_1_3_5_empty_all', '', 'text'),
 			when: { key: 'mode', values: ['extract', 'split', 'reorder', 'delete', 'rotate'] },
 		},
 		{
 			...select(
 				'rotation',
-				'Rotação',
-				'Rotation',
+				'tools.pdf-pages.rotation',
 				[
-					['90', '90° no sentido horário', '90° clockwise'],
-					['180', '180°', '180°'],
-					['270', '90° no sentido anti-horário', '90° counterclockwise'],
+					['90', 'tools.pdf-pages.90_clockwise'],
+					['180', 'tools.pdf-pages.180'],
+					['270', 'tools.pdf-pages.90_counterclockwise'],
 				],
 				undefined,
-				'tools.pdf-pages',
 			),
 			when: { key: 'mode', values: ['rotate'] },
 		},
@@ -140,10 +129,5 @@ export const definition = tool(
 		};
 	},
 	undefined,
-	text(
-		'Unir segue a ordem dos arquivos. Extrair e reordenar seguem a ordem informada (ex.: 3,1-2). Excluir remove as páginas informadas; girar aplica a rotação às páginas informadas. Vazio = todas. PDFs criptografados são rejeitados; assinaturas digitais não são preservadas.',
-		'Merge follows file selection order. Extract and reorder follow the entered order (e.g. 3,1-2). Delete removes the entered pages; rotate applies to the entered pages. Empty = all. Encrypted PDFs are rejected; digital signatures are not preserved.',
-		undefined,
-		'tools.pdf-pages',
-	),
+	'tools.pdf-pages.merge_follows_file_selection_order_extract',
 );

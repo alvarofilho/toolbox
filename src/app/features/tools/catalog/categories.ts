@@ -1,56 +1,54 @@
-import { text } from '@app/core/models/tool';
-
 export const CATEGORIES = [
 	{
 		id: 'json',
-		name: text('JSON e dados', 'JSON & data', undefined, 'categories'),
+		name: 'categories.json_data',
 		icon: 'braces',
 	},
 	{
 		id: 'converters',
-		name: text('Conversores', 'Converters', 'Conversores', 'categories'),
+		name: 'categories.converters',
 		icon: 'arrows',
 	},
 	{
 		id: 'generators',
-		name: text('Geradores', 'Generators', undefined, 'categories'),
+		name: 'categories.generators',
 		icon: 'spark',
 	},
 	{
 		id: 'security',
-		name: text('Criptografia e segurança', 'Cryptography & security', undefined, 'categories'),
+		name: 'categories.cryptography_security',
 		icon: 'shield',
 	},
 	{
 		id: 'development',
-		name: text('Desenvolvimento', 'Development', undefined, 'categories'),
+		name: 'categories.development',
 		icon: 'code',
 	},
 	{
 		id: 'utilities',
-		name: text('Utilitários gerais', 'General utilities', undefined, 'categories'),
+		name: 'categories.general_utilities',
 		icon: 'spark',
 	},
-	{ id: 'text', name: text('Texto', 'Text', undefined, 'categories'), icon: 'type' },
+	{ id: 'text', name: 'categories.text', icon: 'type' },
 	{
 		id: 'brazilian',
-		name: text('Ferramentas brasileiras', 'Brazilian tools', undefined, 'categories'),
+		name: 'categories.brazilian_tools',
 		icon: 'document',
 	},
-	{ id: 'mercosur', name: text('Mercosul', 'Mercosur', undefined, 'categories'), icon: 'document' },
+	{ id: 'mercosur', name: 'categories.mercosur', icon: 'document' },
 	{
 		id: 'database',
-		name: text('Banco de dados e .NET', 'Databases & .NET', undefined, 'categories'),
+		name: 'categories.databases_net',
 		icon: 'building',
 	},
 	{
 		id: 'infrastructure',
-		name: text('Redes e infraestrutura', 'Networks & infrastructure', undefined, 'categories'),
+		name: 'categories.networks_infrastructure',
 		icon: 'link',
 	},
 	{
 		id: 'frontend',
-		name: text('CSS e frontend', 'CSS & frontend', undefined, 'categories'),
+		name: 'categories.css_frontend',
 		icon: 'grid',
 	},
 ] as const;

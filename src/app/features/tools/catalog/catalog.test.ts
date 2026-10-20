@@ -5,7 +5,7 @@ import { presentDefinition } from '@app/features/tools/workbench/presentation';
 import pt from '@app/i18n/pt.json';
 import en from '@app/i18n/en.json';
 import es from '@app/i18n/es.json';
-import type { Localized } from '@app/core/models/tool';
+import type { TranslationKey } from '@app/core/models/tool';
 
 function isTranslationObject(value: unknown): value is Readonly<Record<string, unknown>> {
 	return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -42,14 +42,12 @@ describe('tool catalog', () => {
 		const dictionaries: readonly Readonly<Record<string, unknown>>[] = [pt, en, es];
 		for (const category of CATEGORIES) {
 			for (const dictionary of dictionaries) {
-				expect(translationAt(dictionary, category.name.key), category.id).toEqual(
-					expect.any(String),
-				);
+				expect(translationAt(dictionary, category.name), category.id).toEqual(expect.any(String));
 			}
 		}
 		for (const info of TOOLS) {
 			const definition = presentDefinition(await info.loadDefinition(), info);
-			const localized: Localized[] = [info.name, info.description, definition.action];
+			const localized: TranslationKey[] = [info.name, info.description, definition.action];
 			if (definition.hint) {
 				localized.push(definition.hint);
 			}
@@ -58,11 +56,15 @@ describe('tool catalog', () => {
 				if (control.placeholder) {
 					localized.push(control.placeholder);
 				}
-				localized.push(...(control.options ?? []).map((option) => option.label));
+				for (const option of control.options ?? []) {
+					if (option.label) {
+						localized.push(option.label);
+					}
+				}
 			}
 			for (const value of localized) {
 				for (const dictionary of dictionaries) {
-					expect(translationAt(dictionary, value.key), `${info.id}: ${value.key}`).toEqual(
+					expect(translationAt(dictionary, value), `${info.id}: ${value}`).toEqual(
 						expect.any(String),
 					);
 				}
@@ -78,11 +80,31 @@ describe('tool catalog', () => {
 		}
 	}, 15000);
 	it('searches names, descriptions, categories and accent-insensitive keywords', () => {
-		expect(findTools('alfanumerico').map((t) => t.id)).toContain('cnpj');
-		expect(findTools('criptografia').map((t) => t.id)).toContain('sha');
-		expect(findTools('BASE64').map((t) => t.id)).toContain('base64');
-		expect(findTools('chave').map((t) => t.id)).toContain('token');
-		expect(findTools('nonsense term')).toEqual([]);
+		expect(
+			findTools('alfanumerico', (key) =>
+				[pt, en, es].map((dictionary) => translationAt(dictionary, key)).join(' '),
+			).map((t) => t.id),
+		).toContain('cnpj');
+		expect(
+			findTools('criptografia', (key) =>
+				[pt, en, es].map((dictionary) => translationAt(dictionary, key)).join(' '),
+			).map((t) => t.id),
+		).toContain('sha');
+		expect(
+			findTools('BASE64', (key) =>
+				[pt, en, es].map((dictionary) => translationAt(dictionary, key)).join(' '),
+			).map((t) => t.id),
+		).toContain('base64');
+		expect(
+			findTools('chave', (key) =>
+				[pt, en, es].map((dictionary) => translationAt(dictionary, key)).join(' '),
+			).map((t) => t.id),
+		).toContain('token');
+		expect(
+			findTools('nonsense term', (key) =>
+				[pt, en, es].map((dictionary) => translationAt(dictionary, key)).join(' '),
+			),
+		).toEqual([]);
 	});
 });
 describe('JSON tools', () => {

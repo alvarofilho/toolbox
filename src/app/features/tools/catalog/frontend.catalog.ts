@@ -1,17 +1,11 @@
-import { text } from '@app/core/models/tool';
 import type { ToolRegistration } from '@app/features/tools/catalog/tool-registration';
 
 export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'color',
 		category: 'frontend',
-		name: text('Color Converter', 'Color Converter', undefined, 'tools.color'),
-		description: text(
-			'Converta cores CSS entre hexadecimal, RGB e HSL.',
-			'Convert CSS colors between hexadecimal, RGB and HSL.',
-			'Convierte colores CSS entre hexadecimal, RGB y HSL.',
-			'tools.color',
-		),
+		name: 'tools.color.color_converter',
+		description: 'tools.color.convert_css_colors_between_hexadecimal_rgb',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -21,13 +15,8 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'gradient',
 		category: 'frontend',
-		name: text('CSS Gradient Generator', 'CSS Gradient Generator', undefined, 'tools.gradient'),
-		description: text(
-			'Crie um gradiente CSS com duas cores e um ângulo.',
-			'Build a CSS gradient with two colors and an angle.',
-			'Crea un degradado CSS con dos colores y un ángulo.',
-			'tools.gradient',
-		),
+		name: 'tools.gradient.css_gradient_generator',
+		description: 'tools.gradient.build_a_css_gradient_with_two_colors_and_a',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -37,18 +26,8 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'box-shadow',
 		category: 'frontend',
-		name: text(
-			'CSS Box Shadow Generator',
-			'CSS Box Shadow Generator',
-			undefined,
-			'tools.box-shadow',
-		),
-		description: text(
-			'Ajuste deslocamento, desfoque, expansão e cor de uma sombra CSS.',
-			"Adjust a CSS shadow's offset, blur, spread and color.",
-			'Ajusta desplazamiento, desenfoque, extensión y color de una sombra CSS.',
-			'tools.box-shadow',
-		),
+		name: 'tools.box-shadow.css_box_shadow_generator',
+		description: 'tools.box-shadow.adjust_a_css_shadow_s_offset_blur_spread_a',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -58,13 +37,8 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'clamp',
 		category: 'frontend',
-		name: text('CSS Clamp Calculator', 'CSS Clamp Calculator', undefined, 'tools.clamp'),
-		description: text(
-			'Calcule CSS clamp para variar um tamanho entre dois viewports.',
-			'Calculate CSS clamp for sizes between two viewports.',
-			'Calcula CSS clamp para variar un tamaño entre dos viewports.',
-			'tools.clamp',
-		),
+		name: 'tools.clamp.css_clamp_calculator',
+		description: 'tools.clamp.calculate_css_clamp_for_sizes_between_two_',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -74,13 +48,8 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'flexbox',
 		category: 'frontend',
-		name: text('Flexbox Playground', 'Flexbox Playground', undefined, 'tools.flexbox'),
-		description: text(
-			'Experimente alinhamento, direção e espaçamento em um layout Flexbox.',
-			'Explore alignment, direction and spacing in a Flexbox layout.',
-			'Explora alineación, dirección y espaciado en un diseño Flexbox.',
-			'tools.flexbox',
-		),
+		name: 'tools.flexbox.flexbox_playground',
+		description: 'tools.flexbox.explore_alignment_direction_and_spacing_in',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -90,13 +59,8 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'css-grid',
 		category: 'frontend',
-		name: text('CSS Grid Playground', 'CSS Grid Playground', undefined, 'tools.css-grid'),
-		description: text(
-			'Configure colunas, linhas e espaçamento de um CSS Grid.',
-			'Configure columns, rows and spacing in a CSS Grid.',
-			'Configura columnas, filas y espaciado de un CSS Grid.',
-			'tools.css-grid',
-		),
+		name: 'tools.css-grid.css_grid_playground',
+		description: 'tools.css-grid.configure_columns_rows_and_spacing_in_a_cs',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -106,13 +70,8 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'contrast',
 		category: 'frontend',
-		name: text('WCAG Contrast Checker', 'WCAG Contrast Checker', undefined, 'tools.contrast'),
-		description: text(
-			'Compare duas cores e confira as relações de contraste WCAG.',
-			'Compare two colors and check WCAG contrast ratios.',
-			'Compara dos colores y comprueba las relaciones de contraste WCAG.',
-			'tools.contrast',
-		),
+		name: 'tools.contrast.wcag_contrast_checker',
+		description: 'tools.contrast.compare_two_colors_and_check_wcag_contrast',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -122,13 +81,8 @@ export const FRONTEND_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'favicon',
 		category: 'frontend',
-		name: text('Favicon Generator', 'Favicon Generator', undefined, 'tools.favicon'),
-		description: text(
-			'Gere ícones PNG, ICO e manifest em um pacote ZIP.',
-			'Generate PNG icons, ICO and a manifest in a ZIP bundle.',
-			'Genera iconos PNG, ICO y un manifest en un paquete ZIP.',
-			'tools.favicon',
-		),
+		name: 'tools.favicon.favicon_generator',
+		description: 'tools.favicon.generate_png_icons_ico_and_a_manifest_in_a',
 		icon: 'code',
 		keywords: '',
 		available: true,

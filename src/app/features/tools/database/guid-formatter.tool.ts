@@ -10,11 +10,9 @@ export const definition = tool(
 		source,
 		select(
 			'format',
-			'Formato',
-			'Format',
-			['D', 'N', 'B', 'P', 'X'].map((s) => [s, s, s]),
+			'tools.guid-formatter.format',
+			['D', 'N', 'B', 'P', 'X'].map((s) => [s]),
 			undefined,
-			'tools.guid-formatter',
 		),
 	],
 	(v) => {

@@ -10,13 +10,11 @@ import { records } from '@app/features/tools/generators/record-generation';
 
 const state = select(
 	'state',
-	'UF',
-	'State',
+	'tools.address.state',
 	'AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO'
 		.split(' ')
-		.map((s) => [s, s, s]),
+		.map((s) => [s]),
 	'SP',
-	'tools.address',
 );
 
 export const definition = records(

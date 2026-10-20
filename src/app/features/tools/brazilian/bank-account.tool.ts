@@ -15,19 +15,17 @@ export const definition = tool(
 	[
 		select(
 			'bank',
-			'Banco',
-			'Bank',
+			'tools.bank-account.bank',
 			[
-				['001', 'Banco do Brasil', 'Banco do Brasil'],
-				['033', 'Santander', 'Santander'],
-				['104', 'Caixa', 'Caixa'],
-				['237', 'Bradesco', 'Bradesco'],
-				['341', 'Itaú', 'Itaú'],
+				['001', 'tools.bank-account.banco_do_brasil'],
+				['033', 'tools.bank-account.santander'],
+				['104', 'tools.bank-account.caixa'],
+				['237', 'tools.bank-account.bradesco'],
+				['341', 'tools.bank-account.itau'],
 			],
 			undefined,
-			'tools.bank-account',
 		),
-		number('count', 'Quantidade', 'Count', 5, 1, 100, undefined, 'tools.bank-account'),
+		number('count', 'tools.bank-account.count', 5, 1, 100, undefined),
 	],
 	(v) => {
 		const count = boundedNumber(field(v, 'count'), 1, 100);

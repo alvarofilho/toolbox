@@ -11,11 +11,11 @@ const sets = {
 export const definition: ToolDefinition = {
 	id: 'password',
 	controls: [
-		number('length', 'Comprimento', 'Length', 24, 8, 256, undefined, 'tools.password'),
-		check('upper', 'Maiúsculas', 'Uppercase', undefined, 'tools.password'),
-		check('lower', 'Minúsculas', 'Lowercase', undefined, 'tools.password'),
-		check('digits', 'Números', 'Numbers', undefined, 'tools.password'),
-		check('symbols', 'Símbolos', 'Symbols', undefined, 'tools.password'),
+		number('length', 'tools.password.length', 24, 8, 256, undefined),
+		check('upper', 'tools.password.uppercase_title', undefined),
+		check('lower', 'tools.password.lowercase_title', undefined),
+		check('digits', 'tools.password.numbers', undefined),
+		check('symbols', 'tools.password.symbols', undefined),
 	],
 	action: generate,
 	run: (v) => ({

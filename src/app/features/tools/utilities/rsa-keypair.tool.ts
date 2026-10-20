@@ -1,4 +1,4 @@
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { result, tool } from '@app/features/tools/_shared/definition';
 
@@ -9,14 +9,12 @@ export const definition = tool(
 	[
 		select(
 			'bits',
-			'Tamanho da chave',
-			'Key size',
+			'tools.rsa-keypair.key_size',
 			[
-				['2048', '2048 bits', '2048 bits'],
-				['3072', '3072 bits', '3072 bits'],
+				['2048', 'tools.rsa-keypair.2048_bits'],
+				['3072', 'tools.rsa-keypair.3072_bits'],
 			],
 			undefined,
-			'tools.rsa-keypair',
 		),
 	],
 	async (v) => {
@@ -44,10 +42,5 @@ export const definition = tool(
 		);
 	},
 	undefined,
-	text(
-		'A chave privada é secreta. O processamento ocorre no navegador; guarde o arquivo com segurança.',
-		'The private key is secret. Processing stays in the browser; store the file securely.',
-		undefined,
-		'tools.rsa-keypair',
-	),
+	'tools.rsa-keypair.the_private_key_is_secret_processing_stays',
 );

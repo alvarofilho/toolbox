@@ -68,7 +68,7 @@
 				<div>
 					@for (tool of p.recentTools().slice(0, 3); track tool.id) {
 						<a [routerLink]="['/tools', tool.id]">
-							{{ tool.name.key | transloco }}
+							{{ tool.name | transloco }}
 							<app-icon name="arrow" />
 						</a>
 					}
@@ -132,7 +132,7 @@
 			@for (category of categoryDirectory; track category.id) {
 				<a [routerLink]="['/category', category.id]">
 					<app-icon [name]="category.icon" />
-					<span>{{ category.name.key | transloco }}</span>
+					<span>{{ category.name | transloco }}</span>
 					<span class="category-count">{{ category.count }}</span>
 				</a>
 			}
@@ -230,7 +230,7 @@
 						[class.selected]="c.id === category()?.id"
 						[attr.aria-current]="c.id === category()?.id ? 'page' : null"
 					>
-						{{ c.name.key | transloco }}
+						{{ c.name | transloco }}
 					</a>
 				}
 			</nav>

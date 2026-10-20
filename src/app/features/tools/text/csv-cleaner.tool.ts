@@ -12,15 +12,13 @@ export const definition = tool(
 		source,
 		select(
 			'delimiter',
-			'Delimitador de saída',
-			'Output delimiter',
+			'tools.csv-cleaner.output_delimiter',
 			[
-				[',', 'Vírgula', 'Comma'],
-				[';', 'Ponto e vírgula', 'Semicolon'],
-				['\t', 'Tab', 'Tab'],
+				[',', 'tools.csv-cleaner.comma'],
+				[';', 'tools.csv-cleaner.semicolon'],
+				['\t', 'tools.csv-cleaner.tab'],
 			],
 			undefined,
-			'tools.csv-cleaner',
 		),
 	],
 	(v) => {

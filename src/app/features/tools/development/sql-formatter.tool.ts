@@ -8,17 +8,15 @@ import { field } from '@app/core/models/tool';
 
 const sqlDialect = select(
 	'dialect',
-	'Dialeto',
-	'Dialect',
+	'tools.sql-formatter.dialect',
 	[
-		['sql', 'SQL', 'SQL'],
-		['postgresql', 'PostgreSQL', 'PostgreSQL'],
-		['mysql', 'MySQL', 'MySQL'],
-		['transactsql', 'SQL Server', 'SQL Server'],
-		['sqlite', 'SQLite', 'SQLite'],
+		['sql', 'tools.sql-formatter.sql'],
+		['postgresql', 'tools.sql-formatter.postgresql'],
+		['mysql', 'tools.sql-formatter.mysql'],
+		['transactsql', 'tools.sql-formatter.sql_server'],
+		['sqlite', 'tools.sql-formatter.sqlite'],
 	],
 	undefined,
-	'tools.sql-formatter',
 );
 
 export const definition = tool(

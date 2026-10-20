@@ -10,18 +10,7 @@ import { field } from '@app/core/models/tool';
 
 export const definition = tool(
 	'semver',
-	[
-		source,
-		second,
-		input(
-			'range',
-			'Intervalo semver (opcional)',
-			'Semver range (optional)',
-			'^1.0.0',
-			'text',
-			'tools.semver',
-		),
-	],
+	[source, second, input('range', 'tools.semver.semver_range_optional', '^1.0.0', 'text')],
 	(v) => {
 		const a = field(v, 'input').trim(),
 			b = field(v, 'second').trim(),

@@ -6,7 +6,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { source } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { preview } from '@app/features/tools/_shared/preview';
 
@@ -37,12 +37,8 @@ export const definition = tool(
 			...result(svg, 'optimized.svg'),
 			mime: 'image/svg+xml',
 			preview: preview(svg),
-			notice: text(
-				`${input.length} → ${svg.length} caracteres`,
-				`${input.length} → ${svg.length} characters`,
-				undefined,
-				'tools.svg-optimizer',
-			),
+			notice: 'tools.svg-optimizer.character_count',
+			noticeParams: { before: input.length, after: svg.length },
 		};
 	},
 	{

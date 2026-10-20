@@ -3,8 +3,9 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PreferencesService } from '@app/core/services/preferences';
+import { TranslationSearch } from '@app/core/services/translation-search';
 import { CATEGORIES, findTools, TOOLS } from '@app/features/tools/catalog/tools';
-import { text } from '@app/core/models/tool';
+
 import { ToolCard } from '@app/features/tools/catalog/tool-card/tool-card';
 import { Icon } from '@app/shared/components/icon';
 
@@ -22,6 +23,7 @@ export class Home {
 		ready: this.p.translationsReady(),
 	}));
 	private readonly transloco = inject(TranslocoService);
+	private readonly translationSearch = inject(TranslationSearch);
 	private readonly route = inject(ActivatedRoute);
 	private readonly router = inject(Router);
 	private readonly params = toSignal(this.route.paramMap, {
@@ -52,8 +54,10 @@ export class Home {
 		JSON.stringify(JSON.parse(this.exampleInput()), null, 2).split('\n'),
 	);
 	protected readonly filtered = computed(() => {
-		const searched = findTools(this.query(), (value) =>
-			this.transloco.translate(value.key, {}, this.translationState().locale),
+		const searched = findTools(
+			this.query(),
+			(value) =>
+				`${this.translationSearch.text(value)} ${this.transloco.translate(value, {}, this.translationState().locale)}`,
 		);
 		if (this.mode === 'favorites') {
 			return searched.filter((t) => this.p.favorites().includes(t.id));
@@ -70,7 +74,7 @@ export class Home {
 		this.mode === 'all' && !this.query()
 			? CATEGORIES.map((category) => ({
 					id: category.id,
-					name: this.transloco.translate(category.name.key, {}, this.translationState().locale),
+					name: this.transloco.translate(category.name, {}, this.translationState().locale),
 					tools: this.filtered().filter((tool) => tool.category === category.id),
 				})).filter((group) => group.tools.length)
 			: [{ id: 'results', name: '', tools: this.filtered() }],
@@ -120,7 +124,7 @@ export class Home {
 					)
 				: this.mode === 'category'
 					? this.transloco.translate(
-							(this.category()?.name ?? text('Categoria não encontrada', 'Category not found')).key,
+							this.category()?.name ?? 'common.category_not_found',
 							{},
 							this.translationState().locale,
 						)

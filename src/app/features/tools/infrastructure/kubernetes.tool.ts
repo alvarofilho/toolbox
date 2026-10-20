@@ -4,27 +4,15 @@ import { tool } from '@app/features/tools/_shared/definition';
 
 import { source, input } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
-const k8sHint = text(
-	'Schemas locais estritos do Kubernetes 1.35.0 para 16 tipos comuns. Para outra versão ou CRD, forneça o JSON Schema. Não substitui validação do servidor/admission.',
-	'Bundled strict Kubernetes 1.35.0 schemas for 16 common kinds. Supply a JSON Schema for another version or CRD. Does not replace server/admission validation.',
-	undefined,
-	'tools.kubernetes',
-);
+const k8sHint = 'tools.kubernetes.bundled_strict_kubernetes_1_35_0_schemas_f';
 
 export const definition = tool(
 	'kubernetes',
 	[
 		source,
-		input(
-			'schema',
-			'JSON Schema da versão/CRD (opcional)',
-			'Version/CRD JSON Schema (optional)',
-			undefined,
-			undefined,
-			'tools.kubernetes',
-		),
+		input('schema', 'tools.kubernetes.version_crd_json_schema_optional', undefined, undefined),
 	],
 	(v) => validateKubernetes(field(v, 'input'), field(v, 'schema')),
 	{

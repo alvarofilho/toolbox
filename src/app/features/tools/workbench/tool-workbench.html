@@ -2,18 +2,18 @@
 	<a routerLink="/tools">{{ 'common.tools' | transloco }}</a>
 	<span aria-hidden="true">/</span>
 	@if (category(); as category) {
-		<a [routerLink]="['/category', category.id]">{{ category.name.key | transloco }}</a>
+		<a [routerLink]="['/category', category.id]">{{ category.name | transloco }}</a>
 		<span aria-hidden="true">/</span>
 	}
-	<span aria-current="page">{{ info().name.key | transloco }}</span>
+	<span aria-current="page">{{ info().name | transloco }}</span>
 </nav>
 <section class="tool-heading">
 	<span class="tool-icon" [attr.data-category]="info().category">
 		<app-icon [name]="info().icon" />
 	</span>
 	<div>
-		<h1>{{ info().name.key | transloco }}</h1>
-		<p>{{ info().description.key | transloco }}</p>
+		<h1>{{ info().name | transloco }}</h1>
+		<p>{{ info().description | transloco }}</p>
 	</div>
 	<button
 		type="button"
@@ -32,7 +32,7 @@
 @if (tool().hint; as hint) {
 	<p class="tool-hint">
 		<app-icon name="shield" />
-		{{ hint.key | transloco }}
+		{{ hint | transloco }}
 	</p>
 }
 <div class="workbench" [class.workbench-diff]="isDiffTool()">
@@ -64,14 +64,14 @@
 							[checked]="values()[control.key] === 'true'"
 							(change)="update(control.key, $event)"
 						/>
-						{{ control.label.key | transloco }}
+						{{ control.label | transloco }}
 					</label>
 				} @else {
 					<div
 						class="field"
 						[class.field-large]="control.type === 'textarea' || control.type === 'file'"
 					>
-						<label [for]="'field-' + control.key">{{ control.label.key | transloco }}</label>
+						<label [for]="'field-' + control.key">{{ control.label | transloco }}</label>
 						@switch (control.type) {
 							@case ('file') {
 								<input
@@ -109,7 +109,7 @@
 									maxlength="100001"
 									[placeholder]="
 										control.placeholder
-											? (control.placeholder.key | transloco)
+											? (control.placeholder | transloco)
 											: ('common.paste_or_type_here' | transloco)
 									"
 									[attr.aria-describedby]="
@@ -134,7 +134,7 @@
 											[value]="option.value"
 											[selected]="values()[control.key] === option.value"
 										>
-											{{ option.label.key | transloco }}
+											{{ option.label ? (option.label | transloco) : option.value }}
 										</option>
 									}
 								</select>
@@ -151,7 +151,7 @@
 										[max]="control.max ?? null"
 										[attr.step]="control.type === 'number' ? (control.step ?? 1) : null"
 										[attr.inputmode]="control.inputMode ?? null"
-										[placeholder]="control.placeholder ? (control.placeholder.key | transloco) : ''"
+										[placeholder]="control.placeholder ? (control.placeholder | transloco) : ''"
 										[attr.aria-describedby]="
 											fieldErrors()[control.key] ? 'error-' + control.key : null
 										"
@@ -173,7 +173,7 @@
 													? ('common.hide' | transloco)
 													: ('common.show' | transloco)
 											}}
-											<span class="sr-only">{{ control.label.key | transloco }}</span>
+											<span class="sr-only">{{ control.label | transloco }}</span>
 										</button>
 									}
 								</div>
@@ -367,7 +367,7 @@
 				}
 			}
 			@if (result.notice; as notice) {
-				<p class="result-notice">{{ notice.key | transloco }}</p>
+				<p class="result-notice">{{ notice | transloco: result.noticeParams ?? {} }}</p>
 			}
 			<div class="result-meta">
 				{{ result.output.length.toLocaleString(p.locale()) }}

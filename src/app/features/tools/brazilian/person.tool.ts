@@ -1,50 +1,52 @@
-import { field, text, boundedNumber, type ToolDefinition } from '@app/core/models/tool';
-import { people, exportPeople, PERSON_FIELDS } from '@app/features/tools/brazilian/person';
-import { check, number, select, generate, synthetic } from '@app/features/tools/_shared/controls';
+import {
+	field,
+	boundedNumber,
+	type ToolDefinition,
+	type TranslationKey,
+} from '@app/core/models/tool';
+import {
+	people,
+	exportPeople,
+	PERSON_FIELDS,
+	type PersonField,
+} from '@app/features/tools/brazilian/person';
+import { check, number, select, generate } from '@app/features/tools/_shared/controls';
+
+const fieldLabels: Readonly<Record<PersonField, TranslationKey>> = {
+	name: 'tools.person.name',
+	cpf: 'tools.person.cpf',
+	email: 'tools.person.email',
+	phone: 'tools.person.phone',
+	birthDate: 'tools.person.birth_date',
+	state: 'tools.person.state',
+};
 
 export const definition: ToolDefinition = {
 	id: 'person',
 	controls: [
-		number('count', 'Quantidade', 'Count', 5, 1, 1000, undefined, 'tools.person'),
-		number('minAge', 'Idade mínima', 'Minimum age', 18, 18, 100, undefined, 'tools.person'),
-		number('maxAge', 'Idade máxima', 'Maximum age', 65, 18, 100, undefined, 'tools.person'),
+		number('count', 'tools.person.count', 5, 1, 1000, undefined),
+		number('minAge', 'tools.person.minimum_age', 18, 18, 100, undefined),
+		number('maxAge', 'tools.person.maximum_age', 65, 18, 100, undefined),
 		select(
 			'state',
-			'UF',
-			'State',
-			['SP', 'RJ', 'MG', 'BA', 'PR', 'RS', 'PE', 'CE', 'SC', 'DF'].map((s) => [s, s, s]),
+			'tools.person.state',
+			['SP', 'RJ', 'MG', 'BA', 'PR', 'RS', 'PE', 'CE', 'SC', 'DF'].map((s) => [s]),
 			undefined,
-			'tools.person',
 		),
 		select(
 			'format',
-			'Exportar como',
-			'Export as',
+			'tools.person.export_as',
 			[
-				['json', 'JSON', 'JSON'],
-				['csv', 'CSV', 'CSV'],
-				['sql', 'SQL INSERT', 'SQL INSERT'],
+				['json', 'tools.person.json'],
+				['csv', 'tools.person.csv'],
+				['sql', 'tools.person.sql_insert'],
 			],
 			undefined,
-			'tools.person',
 		),
-		...PERSON_FIELDS.map((key, i) =>
-			check(
-				`include-${key}`,
-				['Nome', 'CPF', 'E-mail', 'Telefone', 'Nascimento', 'UF'][i],
-				['Name', 'CPF', 'Email', 'Phone', 'Birth date', 'State'][i],
-				undefined,
-				'tools.person',
-			),
-		),
+		...PERSON_FIELDS.map((key) => check(`include-${key}`, fieldLabels[key])),
 	],
 	action: generate,
-	hint: text(
-		`${synthetic.pt} E-mails usam example.com. UF é um campo independente; o DDD de teste é 11.`,
-		`${synthetic.en} Emails use example.com. State is an independent field; test phone area code is 11.`,
-		undefined,
-		'tools.person',
-	),
+	hint: 'tools.person.synthetic_test_data_notice_complete',
 	run: (v) => {
 		const format = field(v, 'format');
 		return {

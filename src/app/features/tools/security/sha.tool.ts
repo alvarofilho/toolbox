@@ -1,4 +1,4 @@
-import { field, text, type ToolDefinition } from '@app/core/models/tool';
+import { field, type ToolDefinition } from '@app/core/models/tool';
 import { hex } from '@app/features/tools/_shared/random';
 import { source, select } from '@app/features/tools/_shared/controls';
 
@@ -8,24 +8,17 @@ export const definition: ToolDefinition = {
 		source,
 		select(
 			'algorithm',
-			'Algoritmo',
-			'Algorithm',
+			'tools.sha.algorithm',
 			[
-				['SHA-256', 'SHA-256', 'SHA-256'],
-				['SHA-512', 'SHA-512', 'SHA-512'],
+				['SHA-256', 'tools.sha.sha_256'],
+				['SHA-512', 'tools.sha.sha_512'],
 			],
 			undefined,
-			'tools.sha',
 		),
 	],
-	action: text('Calcular hash', 'Calculate hash', undefined, 'tools.sha'),
+	action: 'tools.sha.calculate_hash',
 	example: { input: 'abc', algorithm: 'SHA-256' },
-	hint: text(
-		'Hash do texto UTF-8. Não é criptografia reversível.',
-		'Hash of UTF-8 text. This is not reversible encryption.',
-		undefined,
-		'tools.sha',
-	),
+	hint: 'tools.sha.hash_of_utf_8_text_this_is_not_reversible_',
 	run: async (v) => ({
 		output: hex(
 			new Uint8Array(

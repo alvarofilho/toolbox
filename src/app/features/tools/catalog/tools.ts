@@ -1,4 +1,4 @@
-import type { Localized } from '@app/core/models/tool';
+import type { TranslationKey } from '@app/core/models/tool';
 import { CATEGORIES } from '@app/features/tools/catalog/categories';
 import type { ToolRegistration } from '@app/features/tools/catalog/tool-registration';
 import { JSON_TOOLS } from '@app/features/tools/catalog/json.catalog';
@@ -33,7 +33,7 @@ export const TOOLS: readonly ToolRegistration[] = [
 
 export function findTools(
 	query: string,
-	translate: (value: Localized) => string = (value) => `${value.pt} ${value.en}`,
+	translate: (value: TranslationKey) => string,
 ): readonly ToolRegistration[] {
 	const normalize = (value: string): string =>
 		value
@@ -47,7 +47,7 @@ export function findTools(
 		}
 		const category = CATEGORIES.find((item) => item.id === tool.category);
 		const searchable = normalize(
-			`${tool.name.pt} ${tool.name.en} ${translate(tool.name)} ${tool.description.pt} ${tool.description.en} ${translate(tool.description)} ${tool.keywords} ${category?.name.pt ?? ''} ${category?.name.en ?? ''} ${category ? translate(category.name) : ''}`,
+			`${tool.id} ${translate(tool.name)} ${translate(tool.description)} ${tool.keywords} ${category ? translate(category.name) : ''}`,
 		);
 		return words.every((word) => searchable.includes(word));
 	});

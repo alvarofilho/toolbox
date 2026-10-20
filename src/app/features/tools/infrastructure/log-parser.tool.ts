@@ -12,14 +12,12 @@ export const definition = tool(
 		source,
 		select(
 			'format',
-			'Formato',
-			'Format',
+			'tools.log-parser.format',
 			[
-				['json', 'JSON Lines', 'JSON Lines'],
-				['combined', 'Apache/Nginx combined', 'Apache/Nginx combined'],
+				['json', 'tools.log-parser.json_lines'],
+				['combined', 'tools.log-parser.apache_nginx_combined'],
 			],
 			undefined,
-			'tools.log-parser',
 		),
 	],
 	(v) => {

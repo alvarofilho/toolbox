@@ -4,13 +4,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
 import { PreferencesService } from '@app/core/services/preferences';
-import type { Locale, Localized } from '@app/core/models/tool';
+import type { Locale, TranslationKey } from '@app/core/models/tool';
 import { CATEGORIES, TOOLS } from '@app/features/tools/catalog/tools';
 
 const SITE_ORIGIN = 'https://toolbox.alvaro.dev.br';
-const DEFAULT_DESCRIPTION =
-	'Ferramentas online gratuitas para desenvolvedores, QA e profissionais de TI. Formate JSON, converta dados e gere documentos com processamento local no navegador.';
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -19,6 +18,7 @@ export class SeoService {
 	private readonly meta = inject(Meta);
 	private readonly title = inject(Title);
 	private readonly preferences = inject(PreferencesService);
+	private readonly transloco = inject(TranslocoService);
 	private readonly currentUrl = signal(this.router.url);
 
 	constructor() {
@@ -29,7 +29,11 @@ export class SeoService {
 			)
 			.subscribe((event) => this.currentUrl.set(event.urlAfterRedirects));
 
-		effect(() => this.update(this.currentUrl(), this.preferences.locale()));
+		effect(() => {
+			if (this.preferences.translationsReady()) {
+				this.update(this.currentUrl(), this.preferences.locale());
+			}
+		});
 	}
 
 	private update(url: string, locale: Locale): void {
@@ -45,17 +49,12 @@ export class SeoService {
 		const title = this.routeTitle(path, locale, tool, category);
 		const description = tool
 			? `${this.localized(tool.description, locale)} ${this.localized(
-					{
-						pt: 'Ferramenta gratuita, com processamento local no navegador.',
-						en: 'Free tool, processed locally in your browser.',
-						es: 'Herramienta gratuita, procesada localmente en tu navegador.',
-						key: '',
-					},
+					'seo.tool_description_suffix',
 					locale,
 				)}`
 			: category
 				? this.localized(category.name, locale)
-				: DEFAULT_DESCRIPTION;
+				: this.localized('seo.description', locale);
 		const privateRoute =
 			path === '/favorites' ||
 			path === '/recent' ||
@@ -86,7 +85,7 @@ export class SeoService {
 		this.meta.updateTag({ property: 'og:image:type', content: 'image/png' });
 		this.meta.updateTag({
 			property: 'og:image:alt',
-			content: 'Toolbox, ferramentas online para desenvolvedores',
+			content: this.localized('seo.image_alt', locale),
 		});
 		this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
 		this.meta.updateTag({ name: 'twitter:title', content: title });
@@ -115,67 +114,22 @@ export class SeoService {
 			return `${this.localized(category.name, locale)} | Toolbox`;
 		}
 		if (path === '/') {
-			return (
-				this.localized(
-					{
-						pt: 'Ferramentas online para desenvolvedores',
-						en: 'Online tools for developers',
-						es: 'Herramientas online para desarrolladores',
-						key: '',
-					},
-					locale,
-				) + ' | Toolbox'
-			);
+			return this.localized('seo.home_title', locale) + ' | Toolbox';
 		}
 		if (path === '/tools') {
-			return (
-				this.localized(
-					{
-						pt: 'Todas as ferramentas online',
-						en: 'All online tools',
-						es: 'Todas las herramientas online',
-						key: '',
-					},
-					locale,
-				) + ' | Toolbox'
-			);
+			return this.localized('seo.tools_title', locale) + ' | Toolbox';
 		}
 		if (path === '/favorites') {
-			return (
-				this.localized(
-					{
-						pt: 'Ferramentas favoritas',
-						en: 'Favorite tools',
-						es: 'Herramientas favoritas',
-						key: '',
-					},
-					locale,
-				) + ' | Toolbox'
-			);
+			return this.localized('seo.favorites_title', locale) + ' | Toolbox';
 		}
 		if (path === '/recent') {
-			return (
-				this.localized(
-					{
-						pt: 'Ferramentas recentes',
-						en: 'Recent tools',
-						es: 'Herramientas recientes',
-						key: '',
-					},
-					locale,
-				) + ' | Toolbox'
-			);
+			return this.localized('seo.recent_title', locale) + ' | Toolbox';
 		}
-		return (
-			this.localized(
-				{ pt: 'Página não encontrada', en: 'Page not found', es: 'Página no encontrada', key: '' },
-				locale,
-			) + ' | Toolbox'
-		);
+		return this.localized('seo.not_found_title', locale) + ' | Toolbox';
 	}
 
-	private localized(value: Localized, locale: Locale): string {
-		return locale === 'pt' ? value.pt : locale === 'es' ? (value.es ?? value.en) : value.en;
+	private localized(value: TranslationKey, locale: Locale): string {
+		return this.transloco.translate(value, {}, locale);
 	}
 
 	private isKnownRoute(

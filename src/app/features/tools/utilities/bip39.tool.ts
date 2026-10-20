@@ -1,4 +1,4 @@
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { input, select } from '@app/features/tools/_shared/controls';
 
@@ -18,31 +18,27 @@ export const definition = tool(
 		mode(['generate', 'validate']),
 		select(
 			'language',
-			'Idioma',
-			'Language',
+			'tools.bip39.language',
 			[
-				['en', 'Inglês', 'English'],
-				['es', 'Espanhol', 'Spanish'],
+				['en', 'tools.bip39.english'],
+				['es', 'tools.bip39.spanish'],
 			],
 			undefined,
-			'tools.bip39',
 		),
 		select(
 			'words',
-			'Tamanho da frase',
-			'Phrase length',
+			'tools.bip39.phrase_length',
 			[
-				['12', '12 palavras', '12 words'],
-				['15', '15 palavras', '15 words'],
-				['18', '18 palavras', '18 words'],
-				['21', '21 palavras', '21 words'],
-				['24', '24 palavras', '24 words'],
+				['12', 'tools.bip39.12_words'],
+				['15', 'tools.bip39.15_words'],
+				['18', 'tools.bip39.18_words'],
+				['21', 'tools.bip39.21_words'],
+				['24', 'tools.bip39.24_words'],
 			],
 			undefined,
-			'tools.bip39',
 		),
-		input('mnemonic', 'Frase de recuperação', 'Recovery phrase', '', 'textarea', 'tools.bip39'),
-		input('passphrase', 'Passphrase opcional', 'Optional passphrase', '', 'text', 'tools.bip39'),
+		input('mnemonic', 'tools.bip39.recovery_phrase', '', 'textarea'),
+		input('passphrase', 'tools.bip39.optional_passphrase', '', 'text'),
 	],
 	async (v) => {
 		const wordlist = field(v, 'language') === 'es' ? spanishWordlist : englishWordlist;
@@ -60,10 +56,5 @@ export const definition = tool(
 		return result({ mnemonic, seedHex }, 'bip39-mnemonic.json');
 	},
 	undefined,
-	text(
-		'Uma frase BIP39 controla fundos de carteira. Use apenas para testes; nunca reutilize frases reais.',
-		'A BIP39 phrase can control wallet funds. Use for testing only; never reuse real phrases.',
-		undefined,
-		'tools.bip39',
-	),
+	'tools.bip39.a_bip39_phrase_can_control_wallet_funds_us',
 );

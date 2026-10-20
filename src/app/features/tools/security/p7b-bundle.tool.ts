@@ -8,7 +8,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { source } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { bytesBase64 } from '@app/features/tools/_shared/bytes';
 
@@ -48,10 +48,5 @@ export const definition = tool(
 		return result(`-----BEGIN PKCS7-----\n${encoded}\n-----END PKCS7-----`, 'certificates.p7b');
 	},
 	undefined,
-	text(
-		'Cria um pacote SignedData sem assinatura, contendo os certificados fornecidos. Não cria uma assinatura digital.',
-		'Creates an unsigned SignedData bundle containing the supplied certificates. It does not create a digital signature.',
-		undefined,
-		'tools.p7b-bundle',
-	),
+	'tools.p7b-bundle.creates_an_unsigned_signeddata_bundle_cont',
 );

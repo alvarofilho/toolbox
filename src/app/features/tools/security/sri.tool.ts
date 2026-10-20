@@ -16,15 +16,13 @@ export const definition = tool(
 		file(),
 		select(
 			'algorithm',
-			'Algoritmo',
-			'Algorithm',
+			'tools.sri.algorithm',
 			[
-				['SHA-256', 'SHA-256', 'SHA-256'],
-				['SHA-384', 'SHA-384', 'SHA-384'],
-				['SHA-512', 'SHA-512', 'SHA-512'],
+				['SHA-256', 'tools.sri.sha_256'],
+				['SHA-384', 'tools.sri.sha_384'],
+				['SHA-512', 'tools.sri.sha_512'],
 			],
 			undefined,
-			'tools.sri',
 		),
 	],
 	async (v, files) => {

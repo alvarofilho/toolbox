@@ -1,44 +1,35 @@
-import { text, type ToolControl } from '@app/core/models/tool';
+import type { ToolControl, TranslationKey } from '@app/core/models/tool';
 
 export const input = (
 	key: string,
-	pt: string,
-	en: string,
+	label: TranslationKey,
 	value = '',
 	type: ToolControl['type'] = 'textarea',
-	namespace?: `tools.${string}`,
-): ToolControl => ({ key, label: text(pt, en, en, namespace), value, type });
+): ToolControl => ({ key, label, value, type });
 
 export const select = (
 	key: string,
-	pt: string,
-	en: string,
-	options: readonly (readonly [string, string, string, string?])[],
+	label: TranslationKey,
+	options: readonly (readonly [value: string, label?: TranslationKey])[],
 	value = options[0][0],
-	namespace?: `tools.${string}`,
 ): ToolControl => ({
 	key,
-	label: text(pt, en, en, namespace),
+	label,
 	type: 'select',
 	value,
-	options: options.map(([value, pt, en, es]) => ({
-		value,
-		label: text(pt, en, es ?? en, namespace),
-	})),
+	options: options.map(([value, label]) => ({ value, label })),
 });
 
 export const number = (
 	key: string,
-	pt: string,
-	en: string,
+	label: TranslationKey,
 	value: number,
 	min: number,
 	max: number,
 	step: number | 'any' = 1,
-	namespace?: `tools.${string}`,
 ): ToolControl => ({
 	key,
-	label: text(pt, en, en, namespace),
+	label,
 	value: String(value),
 	type: 'number',
 	min,
@@ -47,17 +38,10 @@ export const number = (
 	inputMode: step === 'any' ? 'decimal' : 'numeric',
 });
 
-export const check = (
-	key: string,
-	pt: string,
-	en: string,
-	checked = true,
-	namespace?: `tools.${string}`,
-): ToolControl => input(key, pt, en, String(checked), 'checkbox', namespace);
-export const source = input('input', 'Entrada', 'Input');
-export const transform = text('Transformar', 'Transform');
-export const generate = text('Gerar resultado', 'Generate result');
-export const synthetic = text(
-	'Dados sintéticos para testes. Dígitos verificadores válidos não comprovam existência cadastral.',
-	'Synthetic test data. Valid check digits do not prove registration.',
-);
+export const check = (key: string, label: TranslationKey, checked = true): ToolControl =>
+	input(key, label, String(checked), 'checkbox');
+
+export const source = input('input', 'common.input');
+export const transform: TranslationKey = 'common.transform';
+export const generate: TranslationKey = 'common.generate_result';
+export const synthetic: TranslationKey = 'common.synthetic_test_data_notice_short';

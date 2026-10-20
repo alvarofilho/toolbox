@@ -57,6 +57,21 @@ describe('platform integration', () => {
 		await fixture.whenStable();
 		expect(document.documentElement.lang).toBe('es');
 	});
+	it('uses the dictionaries for catalog headings, route titles and SEO after a language change', async () => {
+		const fixture = TestBed.createComponent(App);
+		await TestBed.inject(Router).navigateByUrl('/tools/cpf');
+		await fixture.whenStable();
+		const element: HTMLElement = fixture.nativeElement;
+		expect(element.querySelector('h1')?.textContent).toContain('Gerador e validador de CPF');
+		expect(document.title).toContain('Gerador e validador de CPF');
+		TestBed.inject(PreferencesService).setLocale('en');
+		await fixture.whenStable();
+		expect(element.querySelector('h1')?.textContent).toContain('CPF Generator & Validator');
+		expect(document.title).toBe('CPF Generator & Validator | Toolbox');
+		expect(document.querySelector('meta[name="description"]')?.getAttribute('content')).toContain(
+			'Generate test CPFs and validate check digits.',
+		);
+	});
 	it('opens the command palette, finds a tool and preserves mobile menu focus', async () => {
 		const fixture = TestBed.createComponent(App);
 		await TestBed.inject(Router).navigateByUrl('/');

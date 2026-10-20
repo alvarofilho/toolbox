@@ -8,16 +8,7 @@ import { field } from '@app/core/models/tool';
 
 export const definition = tool(
 	'http-status',
-	[
-		input(
-			'input',
-			'Código HTTP (vazio para listar todos)',
-			'HTTP code (empty to list all)',
-			'200',
-			'text',
-			'tools.http-status',
-		),
-	],
+	[input('input', 'tools.http-status.http_code_empty_to_list_all', '200', 'text')],
 	(v) => {
 		const value = field(v, 'input').trim();
 		const statuses = Array.from({ length: 500 }, (_, i) => i + 100).flatMap((code) => {

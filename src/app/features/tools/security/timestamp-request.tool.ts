@@ -8,7 +8,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { source } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { utf8, bytesHex, bytesBase64 } from '@app/features/tools/_shared/bytes';
 
@@ -55,10 +55,5 @@ export const definition = tool(
 		);
 	},
 	undefined,
-	text(
-		'Gera uma solicitação RFC 3161 local. Envie-a ao serviço TSA da sua organização para obter a resposta assinada.',
-		'Generates a local RFC 3161 request. Send it to your organization’s TSA to obtain a signed response.',
-		undefined,
-		'tools.timestamp-request',
-	),
+	'tools.timestamp-request.generates_a_local_rfc_3161_request_send_it',
 );

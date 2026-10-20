@@ -12,16 +12,14 @@ export const definition = tool(
 		source,
 		select(
 			'from',
-			'Formato de entrada',
-			'Input format',
+			'tools.date.input_format',
 			[
-				['iso', 'ISO 8601', 'ISO 8601'],
-				['br', 'DD/MM/YYYY', 'DD/MM/YYYY'],
-				['us', 'MM/DD/YYYY', 'MM/DD/YYYY'],
-				['unix', 'Unix seconds', 'Unix seconds'],
+				['iso', 'tools.date.iso_8601'],
+				['br', 'tools.date.dd_mm_yyyy'],
+				['us', 'tools.date.mm_dd_yyyy'],
+				['unix', 'tools.date.unix_seconds'],
 			],
 			undefined,
-			'tools.date',
 		),
 	],
 	(v) => {

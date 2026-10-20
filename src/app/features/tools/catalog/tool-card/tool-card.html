@@ -9,8 +9,8 @@
 				<app-icon [name]="tool().icon" />
 			</span>
 		</div>
-		<h3>{{ tool().name.key | transloco }}</h3>
-		<p>{{ variant() === 'compact' ? categoryName() : (tool().description.key | transloco) }}</p>
+		<h3>{{ tool().name | transloco }}</h3>
+		<p>{{ variant() === 'compact' ? categoryName() : (tool().description | transloco) }}</p>
 		<span class="card-open">
 			{{ categoryName() }}
 			<app-icon name="arrow" />
@@ -24,7 +24,7 @@
 		[attr.aria-label]="
 			(p.favorites().includes(tool().id)
 				? ('common.remove_favorite' | transloco)
-				: ('common.favorite_colon' | transloco)) + (tool().name.key | transloco)
+				: ('common.favorite_colon' | transloco)) + (tool().name | transloco)
 		"
 	>
 		<app-icon name="star" />

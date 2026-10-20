@@ -1,4 +1,4 @@
-import { field, text, type ToolDefinition } from '@app/core/models/tool';
+import { field, type ToolDefinition } from '@app/core/models/tool';
 import { source, select } from '@app/features/tools/_shared/controls';
 
 export const definition: ToolDefinition = {
@@ -7,22 +7,20 @@ export const definition: ToolDefinition = {
 		source,
 		select(
 			'indent',
-			'Indentação',
-			'Indentation',
+			'tools.json-formatter.indentation',
 			[
-				['2', '2 espaços', '2 spaces'],
-				['4', '4 espaços', '4 spaces'],
+				['2', 'tools.json-formatter.2_spaces'],
+				['4', 'tools.json-formatter.4_spaces'],
 			],
 			undefined,
-			'tools.json-formatter',
 		),
 	],
-	action: text('Formatar e validar', 'Format and validate', undefined, 'tools.json-formatter'),
+	action: 'tools.json-formatter.format_and_validate',
 	example: { input: '{"project":"Toolbox","local":true,"tools":["JSON","CPF"]}' },
 	run: (v) => ({
 		output: JSON.stringify(JSON.parse(field(v, 'input')), null, Number(field(v, 'indent'))),
 		filename: 'formatted.json',
 		mime: 'application/json',
-		notice: text('JSON válido.', 'Valid JSON.', undefined, 'tools.json-formatter'),
+		notice: 'tools.json-formatter.valid_json',
 	}),
 };

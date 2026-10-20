@@ -85,8 +85,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			const option = this.tool()
 				.controls.find((control) => control.key === 'mode')
 				?.options?.find((option) => option.value === mode);
-			if (option) {
-				return this.transloco.translate(option.label.key, {}, this.translationState().locale);
+			if (option?.label) {
+				return this.transloco.translate(option.label, {}, this.translationState().locale);
 			}
 		}
 		if (
@@ -108,7 +108,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				? this.transloco.translate('common.verify_password', {}, this.translationState().locale)
 				: this.transloco.translate('common.generate_hash', {}, this.translationState().locale);
 		}
-		return this.transloco.translate(this.tool().action.key, {}, this.translationState().locale);
+		return this.transloco.translate(this.tool().action, {}, this.translationState().locale);
 	});
 	protected readonly downloadLabel = computed(() => {
 		const artifacts = this.result()?.artifacts ?? [];

@@ -6,7 +6,7 @@ import { source } from '@app/features/tools/_shared/controls';
 
 import { second } from '@app/features/tools/_shared/execution-controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { openApi, apiExample } from '@app/features/tools/development/openapi';
 
@@ -27,10 +27,5 @@ export const definition = tool(
 		});
 	},
 	{ input: apiExample, second: apiExample.replace('1.0.0', '1.1.0') },
-	text(
-		'Diff estrutural com operações adicionadas/removidas. Não comprova compatibilidade entre versões.',
-		'Structural diff with added/removed operations. Does not establish version compatibility.',
-		undefined,
-		'tools.openapi-diff',
-	),
+	'tools.openapi-diff.structural_diff_with_added_removed_operati',
 );

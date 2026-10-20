@@ -20,11 +20,9 @@ export const definition = tool(
 	[
 		input(
 			'input',
-			'Templates separados por vírgula: node, angular, dotnet, python, rust, windows, macos, vscode',
-			'Comma-separated templates: node, angular, dotnet, python, rust, windows, macos, vscode',
+			'tools.gitignore.comma_separated_templates_node_angular_dot',
 			'node,windows,vscode',
 			'text',
-			'tools.gitignore',
 		),
 	],
 	(v) =>

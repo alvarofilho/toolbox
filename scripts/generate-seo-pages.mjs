@@ -6,8 +6,8 @@ const root = process.cwd();
 const catalogPath = join(root, 'src/app/features/tools/catalog');
 const outputPath = join(root, 'dist/cloudflare/browser');
 const origin = 'https://toolbox.alvaro.dev.br';
-const sharedDescription =
-	'Ferramentas online gratuitas para desenvolvedores, QA e profissionais de TI. Formate JSON, converta dados e gere documentos com processamento local no navegador.';
+const dictionary = JSON.parse(await readFile(join(root, 'src/app/i18n/pt.json'), 'utf8'));
+const sharedDescription = dictionary.seo.description;
 const htmlEscape = (value) =>
 	value
 		.replaceAll('&', '&amp;')
@@ -41,8 +41,14 @@ function stringValue(initializer) {
 }
 
 function localizedValue(initializer) {
-	if (!initializer || !ts.isCallExpression(initializer)) return undefined;
-	return stringValue(initializer.arguments[0]);
+	const key = stringValue(initializer);
+	if (!key) return undefined;
+	let value = dictionary;
+	for (const part of key.split('.')) {
+		value = value && typeof value === 'object' ? value[part] : undefined;
+	}
+	if (typeof value !== 'string') throw new Error(`Missing Portuguese translation: ${key}`);
+	return value;
 }
 
 async function readTools() {
@@ -127,7 +133,7 @@ const categories = await readCategories();
 const pages = [
 	{
 		path: '/',
-		title: 'Ferramentas online para desenvolvedores | Toolbox',
+		title: `${dictionary.seo.home_title} | Toolbox`,
 		description: sharedDescription,
 	},
 	...categories.map(({ id, name }) => ({
@@ -138,7 +144,7 @@ const pages = [
 	...tools.map(({ id, name, description }) => ({
 		path: `/tools/${id}`,
 		title: `${name} online | Toolbox`,
-		description: `${description} Ferramenta gratuita, com processamento local no navegador.`,
+		description: `${description} ${dictionary.seo.tool_description_suffix}`,
 		type: 'website',
 	})),
 ];

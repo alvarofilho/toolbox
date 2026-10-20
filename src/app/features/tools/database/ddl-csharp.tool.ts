@@ -2,7 +2,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { source } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { object } from '@app/features/tools/_shared/data';
 
@@ -82,8 +82,5 @@ export const definition = tool(
 		return result(`#nullable enable\nusing System;\n\n${classes.join('\n\n')}`, 'Models.cs');
 	},
 	ddlExample,
-	text(
-		'Entrada: CREATE TABLE no dialeto PostgreSQL. Tipos sem mapeamento são informados como erro.',
-		'Input: PostgreSQL CREATE TABLE. Unmapped types are reported as errors.',
-	),
+	'common.input_postgresql_create_table_unmapped_typ',
 );

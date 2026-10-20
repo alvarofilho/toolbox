@@ -1,16 +1,10 @@
-import { text } from '@app/core/models/tool';
 import type { ToolRegistration } from '@app/features/tools/catalog/tool-registration';
 
 export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'uuid',
-		name: text('Gerador de UUID', 'UUID Generator', undefined, 'tools.uuid'),
-		description: text(
-			'Crie identificadores únicos nas versões 4 e 7.',
-			'Create unique version 4 and 7 identifiers.',
-			undefined,
-			'tools.uuid',
-		),
+		name: 'tools.uuid.uuid_generator',
+		description: 'tools.uuid.create_unique_version_4_and_7_identifiers',
 		category: 'generators',
 		icon: 'fingerprint',
 		keywords: 'guid uuidv4 uuidv7 id random',
@@ -20,13 +14,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	},
 	{
 		id: 'password',
-		name: text('Gerador de senhas', 'Password Generator', undefined, 'tools.password'),
-		description: text(
-			'Gere senhas fortes com as suas regras.',
-			'Generate strong passwords with your rules.',
-			undefined,
-			'tools.password',
-		),
+		name: 'tools.password.password_generator',
+		description: 'tools.password.generate_strong_passwords_with_your_rules',
 		category: 'generators',
 		icon: 'key',
 		keywords: 'senha password segura aleatorio secure',
@@ -36,18 +25,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	},
 	{
 		id: 'token',
-		name: text(
-			'Gerador de tokens e chaves',
-			'Secure Token and Key Generator',
-			undefined,
-			'tools.token',
-		),
-		description: text(
-			'Gere tokens, segredos e chaves com entropia criptográfica.',
-			'Generate tokens, secrets and keys with cryptographic entropy.',
-			undefined,
-			'tools.token',
-		),
+		name: 'tools.token.secure_token_and_key_generator',
+		description: 'tools.token.generate_tokens_secrets_and_keys_with_cryp',
 		category: 'generators',
 		icon: 'hash',
 		keywords: 'secret token key chave criptografica hexadecimal hex base64 random seguro',
@@ -57,13 +36,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'company',
 		category: 'generators',
-		name: text('Gerador de empresas', 'Company Generator', undefined, 'tools.company'),
-		description: text(
-			'Gere empresas fictícias com CNPJ em JSON, CSV ou SQL.',
-			'Generate fictional companies with CNPJ as JSON, CSV or SQL.',
-			'Genera empresas ficticias con CNPJ en JSON, CSV o SQL.',
-			'tools.company',
-		),
+		name: 'tools.company.company_generator',
+		description: 'tools.company.generate_fictional_companies_with_cnpj_as_',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -73,13 +47,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'address',
 		category: 'generators',
-		name: text('Gerador de endereços', 'Address Generator', undefined, 'tools.address'),
-		description: text(
-			'Gere endereços sintéticos com UF em JSON, CSV ou SQL.',
-			'Generate synthetic addresses by state as JSON, CSV or SQL.',
-			'Genera direcciones sintéticas por estado en JSON, CSV o SQL.',
-			'tools.address',
-		),
+		name: 'tools.address.address_generator',
+		description: 'tools.address.generate_synthetic_addresses_by_state_as_j',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -89,13 +58,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'email',
 		category: 'generators',
-		name: text('Gerador de e-mails', 'Email Generator', undefined, 'tools.email'),
-		description: text(
-			'Crie e-mails de teste com o domínio example.com.',
-			'Create test email addresses using example.com.',
-			'Crea correos de prueba con el dominio example.com.',
-			'tools.email',
-		),
+		name: 'tools.email.email_generator',
+		description: 'tools.email.create_test_email_addresses_using_example_',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -105,13 +69,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'phone',
 		category: 'generators',
-		name: text('Gerador de telefones', 'Phone Generator', undefined, 'tools.phone'),
-		description: text(
-			'Gere telefones fictícios com o DDD escolhido.',
-			'Generate fictional phone numbers with your chosen area code.',
-			'Genera teléfonos ficticios con el prefijo elegido.',
-			'tools.phone',
-		),
+		name: 'tools.phone.phone_generator',
+		description: 'tools.phone.generate_fictional_phone_numbers_with_your',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -121,13 +80,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'ulid',
 		category: 'generators',
-		name: text('Gerador de ULID', 'ULID Generator', undefined, 'tools.ulid'),
-		description: text(
-			'Crie identificadores ULID ordenáveis por tempo.',
-			'Create time-sortable ULID identifiers.',
-			'Crea identificadores ULID ordenables por tiempo.',
-			'tools.ulid',
-		),
+		name: 'tools.ulid.ulid_generator',
+		description: 'tools.ulid.create_time_sortable_ulid_identifiers',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -137,13 +91,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'guid',
 		category: 'generators',
-		name: text('Gerador de GUID', 'GUID Generator', undefined, 'tools.guid'),
-		description: text(
-			'Gere uma lista de identificadores GUID aleatórios.',
-			'Generate a list of random GUID identifiers.',
-			'Genera una lista de identificadores GUID aleatorios.',
-			'tools.guid',
-		),
+		name: 'tools.guid.guid_generator',
+		description: 'tools.guid.generate_a_list_of_random_guid_identifiers',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -153,18 +102,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'random-date',
 		category: 'generators',
-		name: text(
-			'Gerador de datas aleatórias',
-			'Random Date Generator',
-			undefined,
-			'tools.random-date',
-		),
-		description: text(
-			'Gere datas aleatórias dentro de um intervalo ISO.',
-			'Generate random dates within an ISO date range.',
-			'Genera fechas aleatorias dentro de un intervalo ISO.',
-			'tools.random-date',
-		),
+		name: 'tools.random-date.random_date_generator',
+		description: 'tools.random-date.generate_random_dates_within_an_iso_date_r',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -175,13 +114,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'lorem',
 		category: 'generators',
-		name: text('Gerador de Lorem Ipsum', 'Lorem Ipsum Generator', undefined, 'tools.lorem'),
-		description: text(
-			'Gere parágrafos de texto para protótipos e testes.',
-			'Generate placeholder paragraphs for prototypes and tests.',
-			'Genera párrafos de relleno para prototipos y pruebas.',
-			'tools.lorem',
-		),
+		name: 'tools.lorem.lorem_ipsum_generator',
+		description: 'tools.lorem.generate_placeholder_paragraphs_for_protot',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -191,13 +125,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'qr',
 		category: 'generators',
-		name: text('Gerador de QR Code', 'QR Code Generator', undefined, 'tools.qr'),
-		description: text(
-			'Transforme texto ou URL em um QR Code SVG.',
-			'Turn text or a URL into an SVG QR Code.',
-			'Convierte texto o una URL en un código QR SVG.',
-			'tools.qr',
-		),
+		name: 'tools.qr.qr_code_generator',
+		description: 'tools.qr.turn_text_or_a_url_into_an_svg_qr_code',
 		icon: 'spark',
 		keywords: '',
 		available: true,
@@ -207,18 +136,8 @@ export const GENERATORS_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'data-generator',
 		category: 'generators',
-		name: text(
-			'Gerador de massa de dados',
-			'Test Data Generator',
-			undefined,
-			'tools.data-generator',
-		),
-		description: text(
-			'Defina campos e tipos para gerar registros em JSON, CSV ou SQL.',
-			'Define fields and types to generate JSON, CSV or SQL records.',
-			'Define campos y tipos para generar registros JSON, CSV o SQL.',
-			'tools.data-generator',
-		),
+		name: 'tools.data-generator.test_data_generator',
+		description: 'tools.data-generator.define_fields_and_types_to_generate_json_c',
 		icon: 'spark',
 		keywords: '',
 		available: true,

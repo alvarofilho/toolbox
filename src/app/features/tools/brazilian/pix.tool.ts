@@ -10,25 +10,18 @@ import { source, input } from '@app/features/tools/_shared/controls';
 
 import { mode } from '@app/features/tools/_shared/execution-controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 export const definition = tool(
 	'pix',
 	[
 		source,
 		mode(['decode', 'generate']),
-		input('key', 'Chave PIX', 'PIX key', 'teste@example.com', 'text', 'tools.pix'),
-		input('name', 'Nome do recebedor', 'Merchant name', 'DADOS DE TESTE', 'text', 'tools.pix'),
-		input('city', 'Cidade', 'City', 'SAO PAULO', 'text', 'tools.pix'),
-		input(
-			'amount',
-			'Valor (opcional; ponto decimal)',
-			'Amount (optional; decimal point)',
-			'',
-			'text',
-			'tools.pix',
-		),
-		input('txid', 'Identificador (TXID)', 'Transaction ID', '***', 'text', 'tools.pix'),
+		input('key', 'tools.pix.pix_key', 'teste@example.com', 'text'),
+		input('name', 'tools.pix.merchant_name', 'DADOS DE TESTE', 'text'),
+		input('city', 'tools.pix.city', 'SAO PAULO', 'text'),
+		input('amount', 'tools.pix.amount_optional_decimal_point', '', 'text'),
+		input('txid', 'tools.pix.transaction_id', '***', 'text'),
 	],
 	(v) => {
 		if (field(v, 'mode') === 'decode') {
@@ -48,10 +41,5 @@ export const definition = tool(
 		return result({ payload, validation });
 	},
 	{ input: BRCODE_GOLDEN_STATIC_EMAIL },
-	text(
-		'Gera ou inspeciona um payload PIX estático e seu CRC. Não consulta a chave nem confirma titularidade ou pagamento.',
-		'Generates or inspects a static PIX payload and CRC. Does not look up keys or confirm ownership or payment.',
-		undefined,
-		'tools.pix',
-	),
+	'tools.pix.generates_or_inspects_a_static_pix_payload',
 );

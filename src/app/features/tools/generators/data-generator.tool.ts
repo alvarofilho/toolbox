@@ -25,14 +25,7 @@ import { format } from '@app/features/tools/generators/record-generation';
 export const definition = tool(
 	'data-generator',
 	[
-		input(
-			'input',
-			'Campos e tipos (JSON)',
-			'Fields and types (JSON)',
-			undefined,
-			undefined,
-			'tools.data-generator',
-		),
+		input('input', 'tools.data-generator.fields_and_types_json', undefined, undefined),
 		count,
 		format,
 	],

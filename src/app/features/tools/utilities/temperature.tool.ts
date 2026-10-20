@@ -7,39 +7,26 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'temperature',
 	[
-		number(
-			'value',
-			'Temperatura',
-			'Temperature',
-			0,
-			-1_000_000,
-			1_000_000,
-			'any',
-			'tools.temperature',
-		),
+		number('value', 'tools.temperature.temperature', 0, -1_000_000, 1_000_000, 'any'),
 		select(
 			'from',
-			'De',
-			'From',
+			'tools.temperature.from',
 			[
-				['C', 'Celsius', 'Celsius'],
-				['F', 'Fahrenheit', 'Fahrenheit'],
-				['K', 'Kelvin', 'Kelvin'],
+				['C', 'tools.temperature.celsius'],
+				['F', 'tools.temperature.fahrenheit'],
+				['K', 'tools.temperature.kelvin'],
 			],
 			undefined,
-			'tools.temperature',
 		),
 		select(
 			'to',
-			'Para',
-			'To',
+			'tools.temperature.to_title',
 			[
-				['F', 'Fahrenheit', 'Fahrenheit'],
-				['C', 'Celsius', 'Celsius'],
-				['K', 'Kelvin', 'Kelvin'],
+				['F', 'tools.temperature.fahrenheit'],
+				['C', 'tools.temperature.celsius'],
+				['K', 'tools.temperature.kelvin'],
 			],
 			undefined,
-			'tools.temperature',
 		),
 	],
 	(v) => {

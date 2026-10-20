@@ -19,7 +19,7 @@ import { digits } from '@app/features/tools/brazilian/test-numbers';
 
 export const definition = tool(
 	'ie-generator',
-	[uf, number('count', 'Quantidade', 'Count', 1, 1, 10, undefined, 'tools.ie-generator')],
+	[uf, number('count', 'tools.ie-generator.count', 1, 1, 10, undefined)],
 	(v) => {
 		const state = IE_SUPPORTED_UFS.find((s) => s === field(v, 'uf'));
 		if (!state) {

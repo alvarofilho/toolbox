@@ -1,4 +1,4 @@
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { input } from '@app/features/tools/_shared/controls';
 
@@ -54,22 +54,8 @@ export const definition = tool(
 	'otp',
 	[
 		mode(['generate', 'verify']),
-		input(
-			'secret',
-			'Segredo Base32 (vazio gera um)',
-			'Base32 secret (blank generates one)',
-			'',
-			'text',
-			'tools.otp',
-		),
-		input(
-			'code',
-			'Código de 6 dígitos (para validar)',
-			'6-digit code (to verify)',
-			'',
-			'text',
-			'tools.otp',
-		),
+		input('secret', 'tools.otp.base32_secret_blank_generates_one', '', 'text'),
+		input('code', 'tools.otp.6_digit_code_to_verify', '', 'text'),
 	],
 	async (v) => {
 		let secret = field(v, 'secret').trim().toUpperCase();
@@ -100,10 +86,5 @@ export const definition = tool(
 		});
 	},
 	undefined,
-	text(
-		'Guarde o segredo com segurança. O código depende do relógio do dispositivo.',
-		'Keep the secret secure. The code depends on the device clock.',
-		undefined,
-		'tools.otp',
-	),
+	'tools.otp.keep_the_secret_secure_the_code_depends_on',
 );

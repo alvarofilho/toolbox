@@ -11,28 +11,12 @@ export const definition = tool(
 	[
 		input(
 			'input',
-			'Data/hora local (ISO, sem offset)',
-			'Local date/time (ISO, without offset)',
+			'tools.timezone.local_date_time_iso_without_offset',
 			'2026-01-01T12:00:00',
 			'text',
-			'tools.timezone',
 		),
-		input(
-			'from',
-			'Fuso de origem (IANA)',
-			'Source timezone (IANA)',
-			'America/Sao_Paulo',
-			'text',
-			'tools.timezone',
-		),
-		input(
-			'to',
-			'Fuso de destino (IANA)',
-			'Target timezone (IANA)',
-			'Europe/Lisbon',
-			'text',
-			'tools.timezone',
-		),
+		input('from', 'tools.timezone.source_timezone_iana', 'America/Sao_Paulo', 'text'),
+		input('to', 'tools.timezone.target_timezone_iana', 'Europe/Lisbon', 'text'),
 	],
 	(v) => {
 		const local = Temporal.PlainDateTime.from(field(v, 'input'));

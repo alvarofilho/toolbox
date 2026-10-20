@@ -12,19 +12,17 @@ export const definition = tool(
 	'qr',
 	[
 		source,
-		number('size', 'Tamanho (px)', 'Size (px)', 256, 64, 1024, undefined, 'tools.qr'),
+		number('size', 'tools.qr.size_px', 256, 64, 1024, undefined),
 		select(
 			'level',
-			'Correção de erros',
-			'Error correction',
+			'tools.qr.error_correction',
 			[
-				['L', 'L', 'L'],
-				['M', 'M', 'M'],
-				['Q', 'Q', 'Q'],
-				['H', 'H', 'H'],
+				['L', 'tools.qr.l'],
+				['M', 'tools.qr.m'],
+				['Q', 'tools.qr.q'],
+				['H', 'tools.qr.h'],
 			],
 			'M',
-			'tools.qr',
 		),
 	],
 	async (v) => {

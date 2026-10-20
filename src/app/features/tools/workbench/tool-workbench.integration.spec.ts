@@ -195,6 +195,10 @@ describe('tool workbench integration', () => {
 		expect(output).toContain('<svg');
 		expect(output).not.toContain('<script');
 		expect(output).not.toContain('onload');
+		expect(root.querySelector('.result-notice')?.textContent).toMatch(/\d+ → \d+ caracteres/);
+		TestBed.inject(PreferencesService).setLocale('en');
+		await harness.fixture.whenStable();
+		expect(root.querySelector('.result-notice')?.textContent).toMatch(/\d+ → \d+ characters/);
 		await harness.navigateByUrl('/tools/markdown');
 		await harness.fixture.whenStable();
 		const next = harness.routeNativeElement;

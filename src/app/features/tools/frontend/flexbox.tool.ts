@@ -2,27 +2,29 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { select } from '@app/features/tools/_shared/controls';
 
-import { field } from '@app/core/models/tool';
+import { field, type TranslationKey } from '@app/core/models/tool';
 
 import { preview } from '@app/features/tools/_shared/preview';
 
 import { size } from '@app/features/tools/frontend/controls';
 
-const choose = (key: string, pt: string, en: string, options: readonly string[]) =>
+const choose = (key: string, label: TranslationKey, options: readonly string[]) =>
 	select(
 		key,
-		pt,
-		en,
-		options.map((s) => [s, s, s]),
-		undefined,
-		'tools.flexbox',
+		label,
+		options.map((value) => [value]),
 	);
 
 export const definition = tool(
 	'flexbox',
 	[
-		choose('direction', 'Direção', 'Direction', ['row', 'column', 'row-reverse', 'column-reverse']),
-		choose('justify', 'Alinhamento principal', 'Main-axis alignment', [
+		choose('direction', 'tools.flexbox.direction', [
+			'row',
+			'column',
+			'row-reverse',
+			'column-reverse',
+		]),
+		choose('justify', 'tools.flexbox.main_axis_alignment', [
 			'flex-start',
 			'center',
 			'flex-end',
@@ -30,16 +32,16 @@ export const definition = tool(
 			'space-around',
 			'space-evenly',
 		]),
-		choose('align', 'Alinhamento transversal', 'Cross-axis alignment', [
+		choose('align', 'tools.flexbox.cross_axis_alignment', [
 			'stretch',
 			'flex-start',
 			'center',
 			'flex-end',
 			'baseline',
 		]),
-		choose('wrap', 'Quebra de linha', 'Wrapping', ['wrap', 'nowrap']),
-		size('gap', 'Espaçamento (px)', 'Gap (px)', 16, 0, 100, 'tools.flexbox'),
-		size('count', 'Itens', 'Items', 6, 1, 30, 'tools.flexbox'),
+		choose('wrap', 'tools.flexbox.wrapping', ['wrap', 'nowrap']),
+		size('gap', 'tools.flexbox.gap_px', 16, 0, 100),
+		size('count', 'tools.flexbox.items', 6, 1, 30),
 	],
 	(v) => {
 		const allowed: Record<string, readonly string[]> = {

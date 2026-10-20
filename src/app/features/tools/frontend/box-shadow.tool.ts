@@ -13,12 +13,12 @@ import { rgb, color } from '@app/features/tools/frontend/colors';
 export const definition = tool(
 	'box-shadow',
 	[
-		size('x', 'Deslocamento X (px)', 'X offset (px)', 0, -200, 200, 'tools.box-shadow'),
-		size('y', 'Deslocamento Y (px)', 'Y offset (px)', 8, -200, 200, 'tools.box-shadow'),
-		size('blur', 'Desfoque (px)', 'Blur (px)', 24, 0, 200, 'tools.box-shadow'),
-		size('spread', 'Expansão (px)', 'Spread (px)', 0, -100, 100, 'tools.box-shadow'),
-		colorInput('color', 'Cor', 'Color', '#173d2b', 'tools.box-shadow'),
-		size('opacity', 'Opacidade (%)', 'Opacity (%)', 25, 0, 100, 'tools.box-shadow'),
+		size('x', 'tools.box-shadow.x_offset_px', 0, -200, 200),
+		size('y', 'tools.box-shadow.y_offset_px', 8, -200, 200),
+		size('blur', 'tools.box-shadow.blur_px', 24, 0, 200),
+		size('spread', 'tools.box-shadow.spread_px', 0, -100, 100),
+		colorInput('color', 'tools.box-shadow.color', '#173d2b'),
+		size('opacity', 'tools.box-shadow.opacity', 25, 0, 100),
 	],
 	(v) => {
 		const c = rgb(parse(color(field(v, 'color'))));

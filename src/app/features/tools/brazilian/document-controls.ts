@@ -4,8 +4,7 @@ import { select } from '@app/features/tools/_shared/controls';
 
 export const uf = select(
 	'uf',
-	'UF',
-	'State',
-	IE_SUPPORTED_UFS.map((s) => [s, s, s]),
+	'common.state',
+	IE_SUPPORTED_UFS.map((s) => [s]),
 	'SP',
 );

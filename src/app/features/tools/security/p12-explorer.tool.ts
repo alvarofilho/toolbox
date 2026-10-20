@@ -10,7 +10,7 @@ import { input } from '@app/features/tools/_shared/controls';
 
 import { file, firstFile } from '@app/features/tools/_shared/files';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { utf8 } from '@app/features/tools/_shared/bytes';
 
@@ -24,17 +24,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 export const definition = tool(
 	'p12-explorer',
-	[
-		file(),
-		input(
-			'password',
-			'Senha do arquivo P12',
-			'P12 file password',
-			'',
-			'password',
-			'tools.p12-explorer',
-		),
-	],
+	[file(), input('password', 'tools.p12-explorer.p12_file_password', '', 'password')],
 	async (v, files) => {
 		const selected = firstFile(files);
 		if (selected.size > 20_000_000) {
@@ -101,10 +91,5 @@ export const definition = tool(
 		});
 	},
 	undefined,
-	text(
-		'A senha é usada localmente para abrir e conferir a integridade. A análise lista certificados e a presença de chave privada, mas nunca exibe o material privado.',
-		'The password is used locally to open and check integrity. The analysis lists certificates and whether a private key is present, but never displays private key material.',
-		undefined,
-		'tools.p12-explorer',
-	),
+	'tools.p12-explorer.the_password_is_used_locally_to_open_and_c',
 );

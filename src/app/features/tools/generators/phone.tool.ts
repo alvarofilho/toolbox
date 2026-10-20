@@ -6,7 +6,7 @@ import { field } from '@app/core/models/tool';
 
 import { records } from '@app/features/tools/generators/record-generation';
 
-const ddd = input('ddd', 'DDD', 'Area code', '11', 'text');
+const ddd = input('ddd', 'common.area_code', '11', 'text');
 
 export const definition = records(
 	'phone',

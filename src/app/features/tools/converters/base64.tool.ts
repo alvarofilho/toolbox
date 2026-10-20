@@ -8,14 +8,12 @@ export const definition: ToolDefinition = {
 		source,
 		select(
 			'mode',
-			'Operação',
-			'Operation',
+			'tools.base64.operation',
 			[
-				['encode', 'Codificar', 'Encode'],
-				['decode', 'Decodificar', 'Decode'],
+				['encode', 'tools.base64.encode'],
+				['decode', 'tools.base64.decode'],
 			],
 			undefined,
-			'tools.base64',
 		),
 	],
 	action: transform,

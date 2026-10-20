@@ -6,7 +6,7 @@ import { generateDocument } from '@app/features/tools/brazilian/documents';
 
 import { randomInt } from '@app/features/tools/_shared/random';
 
-import { boundedNumber, field, text } from '@app/core/models/tool';
+import { boundedNumber, field } from '@app/core/models/tool';
 
 import { number, select } from '@app/features/tools/_shared/controls';
 
@@ -16,43 +16,37 @@ import { sqlInsert } from '@app/features/tools/json/data-utils';
 
 const countryControl = select(
 	'country',
-	'País',
-	'Country',
+	'tools.mercosur-data.country',
 	[
-		['AR', 'Argentina', 'Argentina'],
-		['BO', 'Bolívia', 'Bolivia'],
-		['BR', 'Brasil', 'Brazil'],
-		['PY', 'Paraguai', 'Paraguay'],
-		['UY', 'Uruguai', 'Uruguay'],
-		['VE', 'Venezuela (suspensa)', 'Venezuela (suspended)'],
+		['AR', 'tools.mercosur-data.argentina'],
+		['BO', 'tools.mercosur-data.bolivia'],
+		['BR', 'tools.mercosur-data.brazil'],
+		['PY', 'tools.mercosur-data.paraguay'],
+		['UY', 'tools.mercosur-data.uruguay'],
+		['VE', 'tools.mercosur-data.venezuela_suspended'],
 	],
 	undefined,
-	'tools.mercosur-data',
 );
 
 const kindControl = select(
 	'kind',
-	'Tipo de dados',
-	'Data type',
+	'tools.mercosur-data.data_type',
 	[
-		['person', 'Pessoa', 'Person'],
-		['company', 'Empresa', 'Company'],
+		['person', 'tools.mercosur-data.person'],
+		['company', 'tools.mercosur-data.company'],
 	],
 	undefined,
-	'tools.mercosur-data',
 );
 
 const formatControl = select(
 	'format',
-	'Formato de saída',
-	'Output format',
+	'tools.mercosur-data.output_format',
 	[
-		['json', 'JSON', 'JSON'],
-		['csv', 'CSV', 'CSV'],
-		['sql', 'SQL INSERT', 'SQL INSERT'],
+		['json', 'tools.mercosur-data.json'],
+		['csv', 'tools.mercosur-data.csv'],
+		['sql', 'tools.mercosur-data.sql_insert'],
 	],
 	undefined,
-	'tools.mercosur-data',
 );
 
 const profiles = {
@@ -198,7 +192,7 @@ function documentFor(
 export const definition = tool(
 	'mercosur-data',
 	[
-		number('count', 'Quantidade', 'Count', 5, 1, 1000, undefined, 'tools.mercosur-data'),
+		number('count', 'tools.mercosur-data.count', 5, 1, 1000, undefined),
 		countryControl,
 		kindControl,
 		formatControl,
@@ -256,10 +250,5 @@ export const definition = tool(
 		return result(output, `synthetic-mercosur.${format}`);
 	},
 	undefined,
-	text(
-		'Gera dados fictícios para testes. Formatos estrangeiros sem regra de dígito verificador implementada são identificados como "formato sintético". Nenhum número comprova cadastro ou existência real. A Venezuela está incluída como Estado Parte suspenso.',
-		'Generates fictional test data. Foreign formats without an implemented check-digit rule are marked as synthetic format only. No number proves registration or real existence. Venezuela is included as a suspended State Party.',
-		undefined,
-		'tools.mercosur-data',
-	),
+	'tools.mercosur-data.generates_fictional_test_data_foreign_form',
 );

@@ -12,7 +12,7 @@ import { generateByValidation } from '@app/features/tools/brazilian/test-numbers
 
 export const definition = tool(
 	'voter-generator',
-	[number('count', 'Quantidade', 'Count', 5, 1, 100, undefined, 'tools.voter-generator')],
+	[number('count', 'tools.voter-generator.count', 5, 1, 100, undefined)],
 	(v) => {
 		const count = boundedNumber(field(v, 'count'), 1, 100);
 		return result(

@@ -1,16 +1,10 @@
-import { text } from '@app/core/models/tool';
 import type { ToolRegistration } from '@app/features/tools/catalog/tool-registration';
 
 export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-formatter',
-		name: text('JSON Formatter', 'JSON Formatter', undefined, 'tools.json-formatter'),
-		description: text(
-			'Formate, organize e valide seus dados JSON.',
-			'Format, organize and validate your JSON data.',
-			undefined,
-			'tools.json-formatter',
-		),
+		name: 'tools.json-formatter.json_formatter',
+		description: 'tools.json-formatter.format_organize_and_validate_your_json_dat',
 		category: 'json',
 		icon: 'braces',
 		keywords: 'pretty print validar formatar identar objeto',
@@ -20,13 +14,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	},
 	{
 		id: 'json-minifier',
-		name: text('JSON Minifier', 'JSON Minifier', undefined, 'tools.json-minifier'),
-		description: text(
-			'Remova espaços e reduza o tamanho do JSON.',
-			'Remove whitespace and reduce JSON size.',
-			undefined,
-			'tools.json-minifier',
-		),
+		name: 'tools.json-minifier.json_minifier',
+		description: 'tools.json-minifier.remove_whitespace_and_reduce_json_size',
 		category: 'json',
 		icon: 'compress',
 		keywords: 'compactar minify comprimir',
@@ -35,13 +24,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	},
 	{
 		id: 'json-diff',
-		name: text('JSON Diff', 'JSON Diff', undefined, 'tools.json-diff'),
-		description: text(
-			'Compare estruturas e encontre o que mudou.',
-			'Compare structures and find what changed.',
-			undefined,
-			'tools.json-diff',
-		),
+		name: 'tools.json-diff.json_diff',
+		description: 'tools.json-diff.compare_structures_and_find_what_changed',
 		category: 'json',
 		icon: 'diff',
 		keywords: 'diferença comparar difference',
@@ -50,13 +34,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	},
 	{
 		id: 'json-yaml',
-		name: text('JSON ↔ YAML', 'JSON ↔ YAML', undefined, 'tools.json-yaml'),
-		description: text(
-			'Converta dados entre JSON e YAML sem esforço.',
-			'Convert data between JSON and YAML with ease.',
-			undefined,
-			'tools.json-yaml',
-		),
+		name: 'tools.json-yaml.json_yaml',
+		description: 'tools.json-yaml.convert_data_between_json_and_yaml_with_ea',
 		category: 'json',
 		icon: 'file-code',
 		keywords: 'yml converter serialize deserializar',
@@ -67,13 +46,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-validator',
 		category: 'json',
-		name: text('JSON Validator', 'JSON Validator', undefined, 'tools.json-validator'),
-		description: text(
-			'Confira se a sintaxe de um documento JSON é válida.',
-			'Check whether a JSON document has valid syntax.',
-			'Comprueba si un documento JSON tiene sintaxis válida.',
-			'tools.json-validator',
-		),
+		name: 'tools.json-validator.json_validator',
+		description: 'tools.json-validator.check_whether_a_json_document_has_valid_sy',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -83,13 +57,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-viewer',
 		category: 'json',
-		name: text('JSON Viewer', 'JSON Viewer', undefined, 'tools.json-viewer'),
-		description: text(
-			'Explore objetos e listas JSON em uma árvore expansível.',
-			'Explore JSON objects and arrays in an expandable tree.',
-			'Explora objetos y listas JSON en un árbol desplegable.',
-			'tools.json-viewer',
-		),
+		name: 'tools.json-viewer.json_viewer',
+		description: 'tools.json-viewer.explore_json_objects_and_arrays_in_an_expa',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -99,13 +68,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'jsonpath',
 		category: 'json',
-		name: text('JSONPath Tester', 'JSONPath Tester', undefined, 'tools.jsonpath'),
-		description: text(
-			'Extraia valores de um documento JSON usando JSONPath.',
-			'Extract values from a JSON document using JSONPath.',
-			'Extrae valores de un documento JSON con JSONPath.',
-			'tools.jsonpath',
-		),
+		name: 'tools.jsonpath.jsonpath_tester',
+		description: 'tools.jsonpath.extract_values_from_a_json_document_using_',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -115,13 +79,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-schema',
 		category: 'json',
-		name: text('JSON Schema Validator', 'JSON Schema Validator', undefined, 'tools.json-schema'),
-		description: text(
-			'Valide dados JSON contra um schema Draft 7.',
-			'Validate JSON data against a Draft 7 schema.',
-			'Valida datos JSON frente a un schema Draft 7.',
-			'tools.json-schema',
-		),
+		name: 'tools.json-schema.json_schema_validator',
+		description: 'tools.json-schema.validate_json_data_against_a_draft_7_schem',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -131,13 +90,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-typescript',
 		category: 'json',
-		name: text('JSON para TypeScript', 'JSON to TypeScript', undefined, 'tools.json-typescript'),
-		description: text(
-			'Transforme objetos JSON em tipos TypeScript.',
-			'Turn JSON objects into TypeScript types.',
-			'Convierte objetos JSON en tipos TypeScript.',
-			'tools.json-typescript',
-		),
+		name: 'tools.json-typescript.json_to_typescript',
+		description: 'tools.json-typescript.turn_json_objects_into_typescript_types',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -148,18 +102,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-csharp-interface',
 		category: 'json',
-		name: text(
-			'JSON para interfaces C#',
-			'JSON to C# Interfaces',
-			undefined,
-			'tools.json-csharp-interface',
-		),
-		description: text(
-			'Transforme objetos JSON em interfaces C#.',
-			'Turn JSON objects into C# interfaces.',
-			'Convierte objetos JSON en interfaces C#.',
-			'tools.json-csharp-interface',
-		),
+		name: 'tools.json-csharp-interface.json_to_c_interfaces',
+		description: 'tools.json-csharp-interface.turn_json_objects_into_c_interfaces',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -170,13 +114,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-csv',
 		category: 'json',
-		name: text('JSON para CSV', 'JSON to CSV', undefined, 'tools.json-csv'),
-		description: text(
-			'Converta uma lista de objetos JSON em uma tabela CSV.',
-			'Convert a JSON array of objects into a CSV table.',
-			'Convierte una lista de objetos JSON en una tabla CSV.',
-			'tools.json-csv',
-		),
+		name: 'tools.json-csv.json_to_csv',
+		description: 'tools.json-csv.convert_a_json_array_of_objects_into_a_csv',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -186,13 +125,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'csv-json',
 		category: 'json',
-		name: text('CSV para JSON', 'CSV to JSON', undefined, 'tools.csv-json'),
-		description: text(
-			'Transforme CSV com cabeçalho em uma lista de objetos JSON.',
-			'Turn CSV with headers into a JSON array of objects.',
-			'Convierte CSV con encabezado en una lista de objetos JSON.',
-			'tools.csv-json',
-		),
+		name: 'tools.csv-json.csv_to_json',
+		description: 'tools.csv-json.turn_csv_with_headers_into_a_json_array_of',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -202,13 +136,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-to-yaml',
 		category: 'json',
-		name: text('JSON para YAML', 'JSON to YAML', undefined, 'tools.json-to-yaml'),
-		description: text(
-			'Converta um documento JSON para YAML.',
-			'Convert a JSON document to YAML.',
-			'Convierte un documento JSON a YAML.',
-			'tools.json-to-yaml',
-		),
+		name: 'tools.json-to-yaml.json_to_yaml',
+		description: 'tools.json-to-yaml.convert_a_json_document_to_yaml',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -218,13 +147,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'yaml-to-json',
 		category: 'json',
-		name: text('YAML para JSON', 'YAML to JSON', undefined, 'tools.yaml-to-json'),
-		description: text(
-			'Converta YAML para JSON e confira a estrutura.',
-			'Convert YAML to JSON and inspect its structure.',
-			'Convierte YAML a JSON y revisa su estructura.',
-			'tools.yaml-to-json',
-		),
+		name: 'tools.yaml-to-json.yaml_to_json',
+		description: 'tools.yaml-to-json.convert_yaml_to_json_and_inspect_its_struc',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -234,13 +158,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-xml',
 		category: 'json',
-		name: text('JSON para XML', 'JSON to XML', undefined, 'tools.json-xml'),
-		description: text(
-			'Converta objetos JSON em XML com elemento raiz.',
-			'Convert JSON objects to XML with a root element.',
-			'Convierte objetos JSON a XML con un elemento raíz.',
-			'tools.json-xml',
-		),
+		name: 'tools.json-xml.json_to_xml',
+		description: 'tools.json-xml.convert_json_objects_to_xml_with_a_root_el',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -250,13 +169,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-sql',
 		category: 'json',
-		name: text('JSON para SQL INSERT', 'JSON to SQL INSERT', undefined, 'tools.json-sql'),
-		description: text(
-			'Gere comandos SQL INSERT a partir de objetos JSON.',
-			'Generate SQL INSERT statements from JSON objects.',
-			'Genera sentencias SQL INSERT a partir de objetos JSON.',
-			'tools.json-sql',
-		),
+		name: 'tools.json-sql.json_to_sql_insert',
+		description: 'tools.json-sql.generate_sql_insert_statements_from_json_o',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -266,13 +180,8 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'schema-faker',
 		category: 'json',
-		name: text('JSON Schema Faker', 'JSON Schema Faker', undefined, 'tools.schema-faker'),
-		description: text(
-			'Gere dados sintéticos que seguem um JSON Schema.',
-			'Generate synthetic data matching a JSON Schema.',
-			'Genera datos sintéticos que cumplen un JSON Schema.',
-			'tools.schema-faker',
-		),
+		name: 'tools.schema-faker.json_schema_faker',
+		description: 'tools.schema-faker.generate_synthetic_data_matching_a_json_sc',
 		icon: 'code',
 		keywords: '',
 		available: true,

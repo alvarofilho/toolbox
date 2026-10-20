@@ -6,7 +6,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { source } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 export function dockerCompose(command: string): unknown {
 	const tokens = shellParse(command, (k) => `\${${k}}`);
@@ -133,10 +133,5 @@ export const definition = tool(
 		input:
 			'docker run -d --name web -p 8080:80 -e NODE_ENV=production -v ./data:/data nginx:alpine',
 	},
-	text(
-		'Converte comandos docker run POSIX. Opções sem correspondência suportada são rejeitadas com uma mensagem.',
-		'Converts POSIX docker run commands. Options without a supported mapping are rejected with a message.',
-		undefined,
-		'tools.docker-compose',
-	),
+	'tools.docker-compose.converts_posix_docker_run_commands_options',
 );

@@ -15,15 +15,16 @@ import {
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 import { Router } from '@angular/router';
-import { text, type Localized } from '@app/core/models/tool';
+import { type TranslationKey } from '@app/core/models/tool';
 import { CATEGORIES, findTools } from '@app/features/tools/catalog/tools';
 import { PreferencesService } from '@app/core/services/preferences';
+import { TranslationSearch } from '@app/core/services/translation-search';
 import { Icon } from '@app/shared/components/icon';
 
 interface Command {
 	readonly id: string;
-	readonly name: Localized;
-	readonly description: Localized;
+	readonly name: TranslationKey;
+	readonly description: TranslationKey;
 	readonly icon: string;
 	readonly keywords: string;
 	readonly route?: string;
@@ -49,6 +50,7 @@ export class CommandPalette {
 		ready: this.p.translationsReady(),
 	}));
 	private readonly transloco = inject(TranslocoService);
+	private readonly translationSearch = inject(TranslationSearch);
 	private readonly router = inject(Router);
 	private readonly document = inject(DOCUMENT);
 	private readonly injector = inject(Injector);
@@ -63,40 +65,40 @@ export class CommandPalette {
 		const navigation: readonly Command[] = [
 			{
 				id: 'home',
-				name: text('Visão geral', 'Overview'),
+				name: 'common.overview',
 				icon: 'home',
 				route: '/',
 				keywords: 'inicio home',
-				description: text('Navegação', 'Navigation'),
+				description: 'common.navigation',
 			},
 			{
 				id: 'all',
-				name: text('Todas as ferramentas', 'All tools'),
+				name: 'common.all_tools',
 				icon: 'grid',
 				route: '/tools',
 				keywords: 'catalogo catalog',
-				description: text('Navegação', 'Navigation'),
+				description: 'common.navigation',
 			},
 			{
 				id: 'favorites',
-				name: text('Favoritos', 'Favorites'),
+				name: 'common.favorites',
 				icon: 'star',
 				route: '/favorites',
 				keywords: 'salvos saved',
-				description: text('Navegação', 'Navigation'),
+				description: 'common.navigation',
 			},
 			{
 				id: 'recent',
-				name: text('Recentes', 'Recent tools'),
+				name: 'common.recent_tools',
 				icon: 'clock',
 				route: '/recent',
 				keywords: 'historico history',
-				description: text('Navegação', 'Navigation'),
+				description: 'common.navigation',
 			},
-			...CATEGORIES.map((category) => ({
+			...CATEGORIES.map((category): Command => ({
 				id: `category-${category.id}`,
 				name: category.name,
-				description: text('Categoria', 'Category'),
+				description: 'common.category',
 				icon: category.icon,
 				route: `/category/${category.id}`,
 				keywords: category.id,
@@ -107,9 +109,9 @@ export class CommandPalette {
 				id: 'theme',
 				name:
 					this.p.theme() === 'light'
-						? text('Ativar tema escuro', 'Switch to dark theme')
-						: text('Ativar tema claro', 'Switch to light theme'),
-				description: text('Aparência', 'Appearance'),
+						? 'common.switch_to_dark_theme'
+						: 'common.switch_to_light_theme',
+				description: 'common.appearance',
 				icon: this.p.theme() === 'light' ? 'moon' : 'sun',
 				keywords: 'tema theme dark light claro escuro appearance',
 				action: 'theme',
@@ -118,11 +120,11 @@ export class CommandPalette {
 				id: 'locale',
 				name:
 					this.translationState().locale === 'pt'
-						? text('Mudar para inglês', 'Switch to English', 'Cambiar a inglés')
+						? 'common.switch_to_english'
 						: this.translationState().locale === 'en'
-							? text('Mudar para espanhol', 'Switch to Spanish', 'Cambiar a español')
-							: text('Mudar para português', 'Switch to Portuguese', 'Cambiar a portugués'),
-				description: text('Idioma', 'Language'),
+							? 'common.switch_to_spanish'
+							: 'common.switch_to_portuguese',
+				description: 'common.language',
 				icon: 'type',
 				keywords: 'idioma language locale portugues english ingles',
 				action: 'locale',
@@ -132,7 +134,7 @@ export class CommandPalette {
 		const matches = (command: Command): boolean =>
 			words.every((word) =>
 				normalize(
-					`${command.name.pt} ${command.name.en} ${command.name.es ?? ''} ${this.transloco.translate(command.name.key, {}, this.translationState().locale)} ${command.description.pt} ${command.description.en} ${command.description.es ?? ''} ${this.transloco.translate(command.description.key, {}, this.translationState().locale)} ${command.keywords}`,
+					`${this.translationSearch.text(command.name)} ${this.translationSearch.text(command.description)} ${this.transloco.translate(command.name, {}, this.translationState().locale)} ${this.transloco.translate(command.description, {}, this.translationState().locale)} ${command.keywords}`,
 				).includes(word),
 			);
 		const recent = this.p.recent();
@@ -142,8 +144,10 @@ export class CommandPalette {
 			return index >= 0 ? 100 - index : favorites.includes(id) ? 50 : 0;
 		};
 		const tools: readonly Command[] = [
-			...findTools(this.query(), (value) =>
-				this.transloco.translate(value.key, {}, this.translationState().locale),
+			...findTools(
+				this.query(),
+				(value) =>
+					`${this.translationSearch.text(value)} ${this.transloco.translate(value, {}, this.translationState().locale)}`,
 			),
 		]
 			.sort((a, b) => priority(b.id) - priority(a.id))

@@ -8,7 +8,7 @@ import { runDataTask as task } from '@app/features/tools/json/data-runner';
 
 export const definition = tool(
 	'jsonpath',
-	[source, input('path', 'JSONPath', 'JSONPath', '$.items[*].name', 'text', 'tools.jsonpath')],
+	[source, input('path', 'tools.jsonpath.jsonpath', '$.items[*].name', 'text')],
 	async (v) => result(await task('path', field(v, 'input'), field(v, 'path'))),
 	{ input: '{"items":[{"name":"Ana"},{"name":"Bruno"}]}', path: '$.items[*].name' },
 );

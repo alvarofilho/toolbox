@@ -8,7 +8,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { input } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { base64Bytes, utf8 } from '@app/features/tools/_shared/bytes';
 
@@ -17,29 +17,13 @@ import { pemBlocks } from '@app/features/tools/security/pem';
 export const definition = tool(
 	'tsr-decoder',
 	[
-		input(
-			'input',
-			'Resposta TSR (PEM ou Base64)',
-			'TSR response (PEM or Base64)',
-			undefined,
-			undefined,
-			'tools.tsr-decoder',
-		),
-		input(
-			'content',
-			'Conteúdo original (opcional)',
-			'Original content (optional)',
-			undefined,
-			undefined,
-			'tools.tsr-decoder',
-		),
+		input('input', 'tools.tsr-decoder.tsr_response_pem_or_base64', undefined, undefined),
+		input('content', 'tools.tsr-decoder.original_content_optional', undefined, undefined),
 		input(
 			'trustedCertificates',
-			'Certificados confiáveis da TSA (PEM, opcional)',
-			'Trusted TSA certificates (PEM, optional)',
+			'tools.tsr-decoder.trusted_tsa_certificates_pem_optional',
 			undefined,
 			undefined,
-			'tools.tsr-decoder',
 		),
 	],
 	async (v) => {
@@ -121,10 +105,5 @@ export const definition = tool(
 		});
 	},
 	undefined,
-	text(
-		'Mostra o status e a estrutura. Com o conteúdo original e certificados confiáveis, verifica a assinatura do token, o imprint e a cadeia da TSA.',
-		'Shows the status and structure. With the original content and trusted certificates, it verifies the token signature, imprint, and TSA chain.',
-		undefined,
-		'tools.tsr-decoder',
-	),
+	'tools.tsr-decoder.shows_the_status_and_structure_with_the_or',
 );

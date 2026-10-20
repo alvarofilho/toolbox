@@ -1,4 +1,4 @@
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { result, tool } from '@app/features/tools/_shared/definition';
 
@@ -19,10 +19,5 @@ export const definition = tool(
 		};
 	},
 	{ input: '<h1>Olá</h1><p>HTML exibido com segurança.</p>' },
-	text(
-		'Scripts e atributos perigosos são removidos antes da prévia.',
-		'Scripts and dangerous attributes are removed before preview.',
-		undefined,
-		'tools.html-editor',
-	),
+	'tools.html-editor.scripts_and_dangerous_attributes_are_remov',
 );

@@ -26,7 +26,7 @@ export class ToolCard {
 	protected readonly categoryName = computed(() => {
 		const category = CATEGORIES.find((c) => c.id === this.tool().category);
 		return category
-			? this.transloco.translate(category.name.key, {}, this.translationState().locale)
+			? this.transloco.translate(category.name, {}, this.translationState().locale)
 			: this.transloco.translate('common.tool', {}, this.translationState().locale);
 	});
 }

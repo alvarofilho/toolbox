@@ -16,7 +16,7 @@ export const definition = records(
 		return { date: new Date(min + Math.floor(n * (max - min + 1))).toISOString() };
 	},
 	[
-		input('start', 'Início ISO 8601', 'ISO start', '2020-01-01T00:00:00Z', 'text'),
-		input('end', 'Fim ISO 8601', 'ISO end', '2030-01-01T00:00:00Z', 'text'),
+		input('start', 'common.iso_start', '2020-01-01T00:00:00Z', 'text'),
+		input('end', 'common.iso_end', '2030-01-01T00:00:00Z', 'text'),
 	],
 );

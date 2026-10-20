@@ -1,17 +1,11 @@
-import { text } from '@app/core/models/tool';
 import type { ToolRegistration } from '@app/features/tools/catalog/tool-registration';
 
 export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'ddl-csharp',
 		category: 'database',
-		name: text('SQL DDL para classes C#', 'SQL DDL to C# Classes', undefined, 'tools.ddl-csharp'),
-		description: text(
-			'Transforme CREATE TABLE PostgreSQL em classes C#.',
-			'Turn PostgreSQL CREATE TABLE into C# classes.',
-			'Convierte CREATE TABLE PostgreSQL en clases C#.',
-			'tools.ddl-csharp',
-		),
+		name: 'tools.ddl-csharp.sql_ddl_to_c_classes',
+		description: 'tools.ddl-csharp.turn_postgresql_create_table_into_c_classe',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -21,13 +15,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'json-csharp',
 		category: 'database',
-		name: text('JSON para classes C#', 'JSON to C# Classes', undefined, 'tools.json-csharp'),
-		description: text(
-			'Gere classes C# a partir da estrutura de objetos JSON.',
-			'Generate C# classes from JSON object structures.',
-			'Genera clases C# a partir de estructuras de objetos JSON.',
-			'tools.json-csharp',
-		),
+		name: 'tools.json-csharp.json_to_c_classes',
+		description: 'tools.json-csharp.generate_c_classes_from_json_object_struct',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -38,13 +27,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'sql-insert',
 		category: 'database',
-		name: text('SQL INSERT Generator', 'SQL INSERT Generator', undefined, 'tools.sql-insert'),
-		description: text(
-			'Transforme registros JSON em comandos SQL INSERT.',
-			'Turn JSON records into SQL INSERT statements.',
-			'Convierte registros JSON en sentencias SQL INSERT.',
-			'tools.sql-insert',
-		),
+		name: 'tools.sql-insert.sql_insert_generator',
+		description: 'tools.sql-insert.turn_json_records_into_sql_insert_statemen',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -54,18 +38,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'database-seed',
 		category: 'database',
-		name: text(
-			'Database Seed Generator',
-			'Database Seed Generator',
-			undefined,
-			'tools.database-seed',
-		),
-		description: text(
-			'Gere registros sintéticos como comandos SQL INSERT.',
-			'Generate synthetic records as SQL INSERT statements.',
-			'Genera registros sintéticos como sentencias SQL INSERT.',
-			'tools.database-seed',
-		),
+		name: 'tools.database-seed.database_seed_generator',
+		description: 'tools.database-seed.generate_synthetic_records_as_sql_insert_s',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -76,18 +50,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'connection-string',
 		category: 'database',
-		name: text(
-			'Connection String Builder',
-			'Connection String Builder',
-			undefined,
-			'tools.connection-string',
-		),
-		description: text(
-			'Monte connection strings para SQL Server, PostgreSQL, MySQL ou SQLite.',
-			'Build connection strings for SQL Server, PostgreSQL, MySQL or SQLite.',
-			'Crea cadenas de conexión para SQL Server, PostgreSQL, MySQL o SQLite.',
-			'tools.connection-string',
-		),
+		name: 'tools.connection-string.connection_string_builder',
+		description: 'tools.connection-string.build_connection_strings_for_sql_server_po',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -98,13 +62,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'dotnet-ticks',
 		category: 'database',
-		name: text('.NET Ticks Converter', '.NET Ticks Converter', undefined, 'tools.dotnet-ticks'),
-		description: text(
-			'Converta datas ISO e ticks .NET com precisão de 100 ns.',
-			'Convert ISO dates and .NET ticks with 100 ns precision.',
-			'Convierte fechas ISO y ticks .NET con precisión de 100 ns.',
-			'tools.dotnet-ticks',
-		),
+		name: 'tools.dotnet-ticks.net_ticks_converter',
+		description: 'tools.dotnet-ticks.convert_iso_dates_and_net_ticks_with_100_n',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -115,13 +74,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'guid-formatter',
 		category: 'database',
-		name: text('GUID Formatter', 'GUID Formatter', undefined, 'tools.guid-formatter'),
-		description: text(
-			'Reformate GUIDs entre os formatos D, N, B, P e X.',
-			'Reformat GUIDs between D, N, B, P and X formats.',
-			'Reformatea GUID entre los formatos D, N, B, P y X.',
-			'tools.guid-formatter',
-		),
+		name: 'tools.guid-formatter.guid_formatter',
+		description: 'tools.guid-formatter.reformat_guids_between_d_n_b_p_and_x_forma',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -132,13 +86,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'csharp-escape',
 		category: 'database',
-		name: text('C# String Escape', 'C# String Escape', undefined, 'tools.csharp-escape'),
-		description: text(
-			'Escape texto para strings C# regulares ou verbatim.',
-			'Escape text for regular or verbatim C# strings.',
-			'Escapa texto para cadenas C# regulares o verbatim.',
-			'tools.csharp-escape',
-		),
+		name: 'tools.csharp-escape.c_string_escape',
+		description: 'tools.csharp-escape.escape_text_for_regular_or_verbatim_c_stri',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -149,18 +98,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'pascal-camel',
 		category: 'database',
-		name: text(
-			'PascalCase / camelCase Converter',
-			'PascalCase / camelCase Converter',
-			undefined,
-			'tools.pascal-camel',
-		),
-		description: text(
-			'Converta nomes entre PascalCase e camelCase.',
-			'Convert names between PascalCase and camelCase.',
-			'Convierte nombres entre PascalCase y camelCase.',
-			'tools.pascal-camel',
-		),
+		name: 'tools.pascal-camel.pascalcase_camelcase_converter',
+		description: 'tools.pascal-camel.convert_names_between_pascalcase_and_camel',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -171,13 +110,8 @@ export const DATABASE_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'sql-schema-diff',
 		category: 'database',
-		name: text('SQL Schema Diff', 'SQL Schema Diff', undefined, 'tools.sql-schema-diff'),
-		description: text(
-			'Compare estruturas CREATE TABLE PostgreSQL e veja as diferenças.',
-			'Compare PostgreSQL CREATE TABLE structures and see differences.',
-			'Compara estructuras CREATE TABLE PostgreSQL y consulta las diferencias.',
-			'tools.sql-schema-diff',
-		),
+		name: 'tools.sql-schema-diff.sql_schema_diff',
+		description: 'tools.sql-schema-diff.compare_postgresql_create_table_structures',
 		icon: 'code',
 		keywords: '',
 		available: true,

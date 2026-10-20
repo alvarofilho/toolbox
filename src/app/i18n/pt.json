@@ -17,8 +17,8 @@
 		"10": "10",
 		"15": "*/15 * * * *",
 		"255": "255",
-		"am": "AM",
 		"755": "755",
+		"am": "AM",
 		"100_in_your_browser": "100% no navegador",
 		"10_0_0_0_16": "10.0.0.0/16",
 		"10_5_3": "(10 + 5) / 3",
@@ -1329,7 +1329,8 @@
 		},
 		"svg-optimizer": {
 			"sanitize_and_optimize_svg_with_an_isolated": "Sanitize e reduza um SVG, com prévia isolada.",
-			"svg_optimizer": "SVG Optimizer"
+			"svg_optimizer": "SVG Optimizer",
+			"character_count": "{{before}} → {{after}} caracteres"
 		},
 		"temperature": {
 			"celsius": "Celsius",
@@ -1474,5 +1475,15 @@
 			"convert_yaml_to_json_and_inspect_its_struc": "Converta YAML para JSON e confira a estrutura.",
 			"yaml_to_json": "YAML para JSON"
 		}
+	},
+	"seo": {
+		"description": "Ferramentas online gratuitas para desenvolvedores, QA e profissionais de TI. Formate JSON, converta dados e gere documentos com processamento local no navegador.",
+		"image_alt": "Toolbox, ferramentas online para desenvolvedores",
+		"tool_description_suffix": "Ferramenta gratuita, com processamento local no navegador.",
+		"home_title": "Ferramentas online para desenvolvedores",
+		"tools_title": "Todas as ferramentas online",
+		"favorites_title": "Ferramentas favoritas",
+		"recent_title": "Ferramentas recentes",
+		"not_found_title": "Página não encontrada"
 	}
 }

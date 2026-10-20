@@ -8,7 +8,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { source, select } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 export const definition = tool(
 	'pem-jwk',
@@ -16,17 +16,15 @@ export const definition = tool(
 		source,
 		select(
 			'algorithm',
-			'Algoritmo JOSE',
-			'JOSE algorithm',
+			'tools.pem-jwk.jose_algorithm',
 			[
-				['RS256', 'RS256', 'RS256'],
-				['PS256', 'PS256', 'PS256'],
-				['ES256', 'ES256', 'ES256'],
-				['ES384', 'ES384', 'ES384'],
-				['EdDSA', 'EdDSA', 'EdDSA'],
+				['RS256', 'tools.pem-jwk.rs256'],
+				['PS256', 'tools.pem-jwk.ps256'],
+				['ES256', 'tools.pem-jwk.es256'],
+				['ES384', 'tools.pem-jwk.es384'],
+				['EdDSA', 'tools.pem-jwk.eddsa'],
 			],
 			undefined,
-			'tools.pem-jwk',
 		),
 	],
 	async (v) => {
@@ -48,10 +46,5 @@ export const definition = tool(
 		);
 	},
 	undefined,
-	text(
-		'Chaves privadas exportadas contêm material secreto. O processamento fica no navegador.',
-		'Exported private keys contain secret material. Processing stays in the browser.',
-		undefined,
-		'tools.pem-jwk',
-	),
+	'tools.pem-jwk.exported_private_keys_contain_secret_mater',
 );

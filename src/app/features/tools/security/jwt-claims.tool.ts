@@ -16,22 +16,8 @@ export const definition = tool(
 	'jwt-claims',
 	[
 		source,
-		input(
-			'issuer',
-			'Issuer esperado (opcional)',
-			'Expected issuer (optional)',
-			'',
-			'text',
-			'tools.jwt-claims',
-		),
-		input(
-			'audience',
-			'Audience esperada (opcional)',
-			'Expected audience (optional)',
-			'',
-			'text',
-			'tools.jwt-claims',
-		),
+		input('issuer', 'tools.jwt-claims.expected_issuer_optional', '', 'text'),
+		input('audience', 'tools.jwt-claims.expected_audience_optional', '', 'text'),
 	],
 	(v) => {
 		const decoded = object(json(decodeJwt(field(v, 'input')))),

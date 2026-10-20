@@ -1,4 +1,4 @@
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { input, select } from '@app/features/tools/_shared/controls';
 
@@ -7,18 +7,16 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'api-proxy',
 	[
-		input('target', 'URL da API', 'API URL', 'https://api.example.com', 'text', 'tools.api-proxy'),
-		input('path', 'Prefixo local', 'Local prefix', '/api', 'text', 'tools.api-proxy'),
+		input('target', 'tools.api-proxy.api_url', 'https://api.example.com', 'text'),
+		input('path', 'tools.api-proxy.local_prefix', '/api', 'text'),
 		select(
 			'format',
-			'Formato',
-			'Format',
+			'tools.api-proxy.format',
 			[
-				['vite', 'Vite config', 'Vite config'],
-				['nginx', 'Nginx', 'Nginx'],
+				['vite', 'tools.api-proxy.vite_config'],
+				['nginx', 'tools.api-proxy.nginx'],
 			],
 			undefined,
-			'tools.api-proxy',
 		),
 	],
 	(v) => {
@@ -44,10 +42,5 @@ export const definition = tool(
 		return result(body, field(v, 'format') === 'nginx' ? 'api-proxy.conf' : 'vite.proxy.ts');
 	},
 	undefined,
-	text(
-		'Gera configuração para você hospedar. O navegador não consegue agir como proxy de rede sem um servidor.',
-		'Generates configuration for you to host. A browser cannot act as a network proxy without a server.',
-		undefined,
-		'tools.api-proxy',
-	),
+	'tools.api-proxy.generates_configuration_for_you_to_host_a_',
 );

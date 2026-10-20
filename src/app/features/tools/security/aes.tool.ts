@@ -6,7 +6,7 @@ import { source } from '@app/features/tools/_shared/controls';
 
 import { mode } from '@app/features/tools/_shared/execution-controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { json, object } from '@app/features/tools/_shared/data';
 
@@ -97,10 +97,5 @@ export const definition = tool(
 		}
 	},
 	{ input: 'Mensagem para teste', secret: 'uma-senha-de-teste' },
-	text(
-		'AES-256-GCM autenticado com salt e IV aleatórios; PBKDF2-SHA256 (310.000 iterações). Guarde a senha separadamente.',
-		'Authenticated AES-256-GCM with random salt and IV; PBKDF2-SHA256 (310,000 iterations). Keep the password separately.',
-		undefined,
-		'tools.aes',
-	),
+	'tools.aes.authenticated_aes_256_gcm_with_random_salt',
 );

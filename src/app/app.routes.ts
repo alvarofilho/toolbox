@@ -1,5 +1,19 @@
-import type { Routes } from '@angular/router';
+import { inject } from '@angular/core';
+import type { ResolveFn, Routes } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { TranslocoService } from '@jsverse/transloco';
+import type { TranslationKey } from '@app/core/models/translation-key';
+import { PreferencesService } from '@app/core/services/preferences';
 import { TOOLS } from '@app/features/tools/catalog/tools';
+
+function translatedTitle(key: TranslationKey): ResolveFn<string> {
+	return async () => {
+		const transloco = inject(TranslocoService);
+		const locale = inject(PreferencesService).locale();
+		await firstValueFrom(transloco.load(locale));
+		return `${transloco.translate(key, {}, locale)} | Toolbox`;
+	};
+}
 
 const home = () => import('./features/home/home').then((m) => m.Home);
 export const routes: Routes = [
@@ -33,7 +47,7 @@ export const routes: Routes = [
 		loadComponent: () =>
 			import('./features/tools/workbench/tool-workbench').then((m) => m.ToolWorkbench),
 		resolve: { definition: tool.loadDefinition },
-		title: `${tool.name.pt} · Toolbox`,
+		title: translatedTitle(tool.name),
 	})),
 	{
 		path: '**',

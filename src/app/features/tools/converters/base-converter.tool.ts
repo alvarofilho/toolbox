@@ -10,15 +10,13 @@ export const definition = tool(
 		source,
 		select(
 			'from',
-			'Base de origem',
-			'Input base',
+			'tools.base-converter.input_base',
 			[
-				['2', '2', '2'],
-				['10', '10', '10'],
-				['16', '16', '16'],
+				['2', 'tools.base-converter.2'],
+				['10', 'tools.base-converter.10'],
+				['16', 'tools.base-converter.16'],
 			],
 			'10',
-			'tools.base-converter',
 		),
 	],
 	(v) => {

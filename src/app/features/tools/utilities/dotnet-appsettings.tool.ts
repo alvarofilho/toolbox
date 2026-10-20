@@ -1,4 +1,4 @@
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { input, number } from '@app/features/tools/_shared/controls';
 
@@ -7,19 +7,12 @@ import { result, tool } from '@app/features/tools/_shared/definition';
 export const definition = tool(
 	'dotnet-appsettings',
 	[
-		input('server', 'Servidor', 'Server', 'localhost', 'text', 'tools.dotnet-appsettings'),
-		number('port', 'Porta', 'Port', 1433, 1, 65535, undefined, 'tools.dotnet-appsettings'),
-		input('database', 'Banco de dados', 'Database', 'AppDb', 'text', 'tools.dotnet-appsettings'),
-		input('username', 'Usuário', 'Username', 'app_user', 'text', 'tools.dotnet-appsettings'),
-		input('password', 'Senha', 'Password', '', 'password', 'tools.dotnet-appsettings'),
-		input(
-			'environment',
-			'Nome da conexão',
-			'Connection name',
-			'DefaultConnection',
-			'text',
-			'tools.dotnet-appsettings',
-		),
+		input('server', 'tools.dotnet-appsettings.server', 'localhost', 'text'),
+		number('port', 'tools.dotnet-appsettings.port', 1433, 1, 65535, undefined),
+		input('database', 'tools.dotnet-appsettings.database', 'AppDb', 'text'),
+		input('username', 'tools.dotnet-appsettings.username', 'app_user', 'text'),
+		input('password', 'tools.dotnet-appsettings.password', '', 'password'),
+		input('environment', 'tools.dotnet-appsettings.connection_name', 'DefaultConnection', 'text'),
 	],
 	(v) => {
 		const connectionName = field(v, 'environment').trim();
@@ -39,10 +32,5 @@ export const definition = tool(
 		return result(settings, 'appsettings.json');
 	},
 	undefined,
-	text(
-		'Não compartilhe o arquivo se incluir uma senha real. Prefira secrets do ambiente em produção.',
-		'Do not share the file if it contains a real password. Prefer environment secrets in production.',
-		undefined,
-		'tools.dotnet-appsettings',
-	),
+	'tools.dotnet-appsettings.do_not_share_the_file_if_it_contains_a_rea',
 );

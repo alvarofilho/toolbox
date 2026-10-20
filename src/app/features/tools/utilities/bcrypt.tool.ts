@@ -1,4 +1,4 @@
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { input, select } from '@app/features/tools/_shared/controls';
 
@@ -12,26 +12,17 @@ export const definition = tool(
 	'bcrypt',
 	[
 		mode(['hash', 'verify']),
-		input('password', 'Senha', 'Password', '', 'password', 'tools.bcrypt'),
-		input(
-			'hash',
-			'Hash bcrypt (para verificar)',
-			'Bcrypt hash (to verify)',
-			'',
-			'text',
-			'tools.bcrypt',
-		),
+		input('password', 'tools.bcrypt.password', '', 'password'),
+		input('hash', 'tools.bcrypt.bcrypt_hash_to_verify', '', 'text'),
 		select(
 			'cost',
-			'Custo',
-			'Cost',
+			'tools.bcrypt.cost',
 			[
-				['10', '10 (padrão)', '10 (default)'],
-				['12', '12', '12'],
-				['14', '14', '14'],
+				['10', 'tools.bcrypt.10_default'],
+				['12', 'tools.bcrypt.12'],
+				['14', 'tools.bcrypt.14'],
 			],
 			undefined,
-			'tools.bcrypt',
 		),
 	],
 	async (v) => {
@@ -53,10 +44,5 @@ export const definition = tool(
 		return result({ hash: await bcryptHash(password, cost), cost }, 'bcrypt-hash.json');
 	},
 	undefined,
-	text(
-		'A senha e o hash são processados no navegador. O custo maior demora mais.',
-		'The password and hash are processed in your browser. Higher cost takes longer.',
-		undefined,
-		'tools.bcrypt',
-	),
+	'tools.bcrypt.the_password_and_hash_are_processed_in_you',
 );

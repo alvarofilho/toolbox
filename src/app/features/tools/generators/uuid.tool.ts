@@ -7,16 +7,14 @@ export const definition: ToolDefinition = {
 	controls: [
 		select(
 			'version',
-			'Versão',
-			'Version',
+			'tools.uuid.version',
 			[
-				['4', 'UUID v4 · aleatório', 'UUID v4 · random'],
-				['7', 'UUID v7 · ordenado por tempo', 'UUID v7 · time ordered'],
+				['4', 'tools.uuid.uuid_v4_random'],
+				['7', 'tools.uuid.uuid_v7_time_ordered'],
 			],
 			undefined,
-			'tools.uuid',
 		),
-		number('count', 'Quantidade', 'Count', 1, 1, 1000, undefined, 'tools.uuid'),
+		number('count', 'tools.uuid.count', 1, 1, 1000, undefined),
 	],
 	action: generate,
 	run: (v) => ({

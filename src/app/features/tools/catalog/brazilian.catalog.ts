@@ -1,16 +1,10 @@
-import { text } from '@app/core/models/tool';
 import type { ToolRegistration } from '@app/features/tools/catalog/tool-registration';
 
 export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'cpf',
-		name: text('Gerador e validador de CPF', 'CPF Generator & Validator', undefined, 'tools.cpf'),
-		description: text(
-			'Gere CPFs para testes e valide seus dígitos.',
-			'Generate test CPFs and validate check digits.',
-			undefined,
-			'tools.cpf',
-		),
+		name: 'tools.cpf.cpf_generator_validator',
+		description: 'tools.cpf.generate_test_cpfs_and_validate_check_digi',
 		category: 'brazilian',
 		icon: 'document',
 		keywords: 'brasil documento pessoa fisica brazil',
@@ -19,18 +13,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	},
 	{
 		id: 'cnpj',
-		name: text(
-			'Gerador e validador de CNPJ',
-			'CNPJ Generator & Validator',
-			undefined,
-			'tools.cnpj',
-		),
-		description: text(
-			'CNPJ numérico e alfanumérico, prontos para testes.',
-			'Numeric and alphanumeric CNPJ for testing.',
-			undefined,
-			'tools.cnpj',
-		),
+		name: 'tools.cnpj.cnpj_generator_validator',
+		description: 'tools.cnpj.numeric_and_alphanumeric_cnpj_for_testing',
 		category: 'brazilian',
 		icon: 'building',
 		keywords: 'brasil empresa juridica alfanumerico brazil',
@@ -40,13 +24,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	},
 	{
 		id: 'person',
-		name: text('Gerador de pessoas', 'Fake Person Generator', undefined, 'tools.person'),
-		description: text(
-			'Dados brasileiros sintéticos em JSON, CSV ou SQL.',
-			'Synthetic Brazilian data in JSON, CSV or SQL.',
-			undefined,
-			'tools.person',
-		),
+		name: 'tools.person.fake_person_generator',
+		description: 'tools.person.synthetic_brazilian_data_in_json_csv_or_sq',
 		category: 'brazilian',
 		icon: 'users',
 		keywords: 'fake faker pessoa massa seed brasileiro email telefone',
@@ -57,13 +36,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'pis',
 		category: 'brazilian',
-		name: text('Validador de PIS/PASEP', 'PIS/PASEP Validator', undefined, 'tools.pis'),
-		description: text(
-			'Confira os dígitos verificadores de um PIS/PASEP.',
-			"Check a PIS/PASEP number's check digits.",
-			'Comprueba los dígitos de control de un PIS/PASEP.',
-			'tools.pis',
-		),
+		name: 'tools.pis.pis_pasep_validator',
+		description: 'tools.pis.check_a_pis_pasep_number_s_check_digits',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -73,13 +47,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'cnh',
 		category: 'brazilian',
-		name: text('Validador de CNH', 'CNH Validator', undefined, 'tools.cnh'),
-		description: text(
-			'Confira os dígitos verificadores de uma CNH.',
-			"Check a CNH number's check digits.",
-			'Comprueba los dígitos de control de una CNH.',
-			'tools.cnh',
-		),
+		name: 'tools.cnh.cnh_validator',
+		description: 'tools.cnh.check_a_cnh_number_s_check_digits',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -89,13 +58,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'pis-generator',
 		category: 'brazilian',
-		name: text('Gerador de PIS/PASEP', 'PIS/PASEP Generator', undefined, 'tools.pis-generator'),
-		description: text(
-			'Gere números PIS/PASEP sintéticos para testes.',
-			'Generate synthetic PIS/PASEP numbers for testing.',
-			'Genera números PIS/PASEP sintéticos para pruebas.',
-			'tools.pis-generator',
-		),
+		name: 'tools.pis-generator.pis_pasep_generator',
+		description: 'tools.pis-generator.generate_synthetic_pis_pasep_numbers_for_t',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -106,13 +70,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'cnh-generator',
 		category: 'brazilian',
-		name: text('Gerador de CNH', 'CNH Generator', undefined, 'tools.cnh-generator'),
-		description: text(
-			'Gere números CNH sintéticos para testes.',
-			'Generate synthetic CNH numbers for testing.',
-			'Genera números CNH sintéticos para pruebas.',
-			'tools.cnh-generator',
-		),
+		name: 'tools.cnh-generator.cnh_generator',
+		description: 'tools.cnh-generator.generate_synthetic_cnh_numbers_for_testing',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -123,18 +82,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'voter-generator',
 		category: 'brazilian',
-		name: text(
-			'Gerador de título de eleitor',
-			'Voter Registration Generator',
-			undefined,
-			'tools.voter-generator',
-		),
-		description: text(
-			'Gere títulos eleitorais sintéticos para testes.',
-			'Generate synthetic voter registrations for testing.',
-			'Genera registros electorales sintéticos para pruebas.',
-			'tools.voter-generator',
-		),
+		name: 'tools.voter-generator.voter_registration_generator',
+		description: 'tools.voter-generator.generate_synthetic_voter_registrations_for',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -145,18 +94,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'rg-generator',
 		category: 'brazilian',
-		name: text(
-			'Gerador de RG sintético',
-			'Synthetic RG Generator',
-			undefined,
-			'tools.rg-generator',
-		),
-		description: text(
-			'Crie números RG fictícios sem comprovação cadastral.',
-			'Create fictional RG numbers without registration checks.',
-			'Crea números RG ficticios sin comprobación de registro.',
-			'tools.rg-generator',
-		),
+		name: 'tools.rg-generator.synthetic_rg_generator',
+		description: 'tools.rg-generator.create_fictional_rg_numbers_without_regist',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -167,18 +106,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'ie-generator',
 		category: 'brazilian',
-		name: text(
-			'Gerador de inscrição estadual',
-			'State Registration Generator',
-			undefined,
-			'tools.ie-generator',
-		),
-		description: text(
-			'Gere inscrições estaduais sintéticas para a UF escolhida.',
-			'Generate synthetic state registrations for your chosen state.',
-			'Genera inscripciones estatales sintéticas para el estado elegido.',
-			'tools.ie-generator',
-		),
+		name: 'tools.ie-generator.state_registration_generator',
+		description: 'tools.ie-generator.generate_synthetic_state_registrations_for',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -189,18 +118,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'renavam',
 		category: 'brazilian',
-		name: text(
-			'Gerador e validador de RENAVAM',
-			'RENAVAM Generator and Validator',
-			undefined,
-			'tools.renavam',
-		),
-		description: text(
-			'Gere RENAVAM sintético ou confira seus dígitos.',
-			'Generate synthetic RENAVAM numbers or check their digits.',
-			'Genera RENAVAM sintético o comprueba sus dígitos.',
-			'tools.renavam',
-		),
+		name: 'tools.renavam.renavam_generator_and_validator',
+		description: 'tools.renavam.generate_synthetic_renavam_numbers_or_chec',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -210,18 +129,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'plate',
 		category: 'brazilian',
-		name: text(
-			'Gerador e validador de placas',
-			'Vehicle Plate Generator and Validator',
-			undefined,
-			'tools.plate',
-		),
-		description: text(
-			'Gere placas fictícias ou confira o formato de uma placa.',
-			"Generate fictional plates or check a plate's format.",
-			'Genera matrículas ficticias o comprueba su formato.',
-			'tools.plate',
-		),
+		name: 'tools.plate.vehicle_plate_generator_and_validator',
+		description: 'tools.plate.generate_fictional_plates_or_check_a_plate',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -231,18 +140,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'credit-card',
 		category: 'brazilian',
-		name: text(
-			'Gerador e validador de cartão de teste',
-			'Test Card Generator and Validator',
-			undefined,
-			'tools.credit-card',
-		),
-		description: text(
-			'Gere cartões de teste ou confira dígitos pelo algoritmo Luhn.',
-			'Generate test card numbers or check their Luhn digits.',
-			'Genera tarjetas de prueba o comprueba sus dígitos Luhn.',
-			'tools.credit-card',
-		),
+		name: 'tools.credit-card.test_card_generator_and_validator',
+		description: 'tools.credit-card.generate_test_card_numbers_or_check_their_',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -253,18 +152,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'bank-account',
 		category: 'brazilian',
-		name: text(
-			'Gerador de conta bancária de teste',
-			'Test Bank Account Generator',
-			undefined,
-			'tools.bank-account',
-		),
-		description: text(
-			'Crie dados fictícios de conta bancária para testes.',
-			'Create fictional bank account data for testing.',
-			'Crea datos ficticios de cuentas bancarias para pruebas.',
-			'tools.bank-account',
-		),
+		name: 'tools.bank-account.test_bank_account_generator',
+		description: 'tools.bank-account.create_fictional_bank_account_data_for_tes',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -275,18 +164,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'certificate-number',
 		category: 'brazilian',
-		name: text(
-			'Gerador de matrícula de certidão',
-			'Certificate Record Number Generator',
-			undefined,
-			'tools.certificate-number',
-		),
-		description: text(
-			'Gere matrículas de certidão com formato sintético.',
-			'Generate synthetic certificate record number formats.',
-			'Genera números de registro de certificados con formato sintético.',
-			'tools.certificate-number',
-		),
+		name: 'tools.certificate-number.certificate_record_number_generator',
+		description: 'tools.certificate-number.generate_synthetic_certificate_record_numb',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -297,13 +176,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'ie',
 		category: 'brazilian',
-		name: text('Inscrição Estadual por UF', 'State Registration Validator', undefined, 'tools.ie'),
-		description: text(
-			'Confira uma inscrição estadual pelo algoritmo da UF.',
-			"Check a state registration using its state's algorithm.",
-			'Comprueba una inscripción estatal con el algoritmo de su estado.',
-			'tools.ie',
-		),
+		name: 'tools.ie.state_registration_validator',
+		description: 'tools.ie.check_a_state_registration_using_its_state',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -313,18 +187,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'voter',
 		category: 'brazilian',
-		name: text(
-			'Validador de Título de Eleitor',
-			'Voter Registration Validator',
-			undefined,
-			'tools.voter',
-		),
-		description: text(
-			'Confira os dígitos de um título de eleitor.',
-			"Check a voter registration number's check digits.",
-			'Comprueba los dígitos de un registro electoral.',
-			'tools.voter',
-		),
+		name: 'tools.voter.voter_registration_validator',
+		description: 'tools.voter.check_a_voter_registration_number_s_check_',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -334,13 +198,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'nfe',
 		category: 'brazilian',
-		name: text('Chave de acesso NF-e', 'NF-e Access Key', undefined, 'tools.nfe'),
-		description: text(
-			'Gere uma chave NF-e sintética ou confira seu dígito.',
-			'Generate a synthetic NF-e key or check its digit.',
-			'Genera una clave NF-e sintética o comprueba su dígito.',
-			'tools.nfe',
-		),
+		name: 'tools.nfe.nfe_access_key_title',
+		description: 'tools.nfe.generate_a_synthetic_nf_e_key_or_check_its',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -350,18 +209,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'pix',
 		category: 'brazilian',
-		name: text(
-			'PIX Copia e Cola Generator/Decoder',
-			'PIX Payload Generator/Decoder',
-			undefined,
-			'tools.pix',
-		),
-		description: text(
-			'Gere ou decodifique PIX estático com conferência do CRC.',
-			'Generate or decode static PIX payloads with CRC checks.',
-			'Genera o decodifica códigos PIX estáticos y comprueba su CRC.',
-			'tools.pix',
-		),
+		name: 'tools.pix.pix_payload_generator_decoder',
+		description: 'tools.pix.generate_or_decode_static_pix_payloads_wit',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -371,18 +220,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'boleto',
 		category: 'brazilian',
-		name: text(
-			'Conversor de linha digitável de boleto',
-			'Boleto Barcode Converter',
-			undefined,
-			'tools.boleto',
-		),
-		description: text(
-			'Valide e converta linha digitável e código de barras de boleto.',
-			'Validate and convert boleto payment lines and barcodes.',
-			'Valida y convierte líneas de pago y códigos de barras de boleto.',
-			'tools.boleto',
-		),
+		name: 'tools.boleto.boleto_barcode_converter',
+		description: 'tools.boleto.validate_and_convert_boleto_payment_lines_',
 		icon: 'code',
 		keywords: '',
 		available: true,
@@ -392,18 +231,8 @@ export const BRAZILIAN_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'document-mask',
 		category: 'brazilian',
-		name: text(
-			'Máscaras de documentos brasileiros',
-			'Brazilian Document Masks',
-			undefined,
-			'tools.document-mask',
-		),
-		description: text(
-			'Aplique ou remova pontuação de documentos brasileiros.',
-			'Add or remove formatting from Brazilian documents.',
-			'Aplica o elimina el formato de documentos brasileños.',
-			'tools.document-mask',
-		),
+		name: 'tools.document-mask.brazilian_document_masks',
+		description: 'tools.document-mask.add_or_remove_formatting_from_brazilian_do',
 		icon: 'code',
 		keywords: '',
 		available: true,

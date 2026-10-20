@@ -12,10 +12,10 @@ import { field, boundedNumber } from '@app/core/models/tool';
 
 import { sqlInsert } from '@app/features/tools/json/data-utils';
 
-export const format = select('format', 'Formato', 'Format', [
-	['json', 'JSON', 'JSON'],
-	['csv', 'CSV', 'CSV'],
-	['sql', 'SQL INSERT', 'SQL INSERT'],
+export const format = select('format', 'common.format', [
+	['json', 'common.json'],
+	['csv', 'common.csv'],
+	['sql', 'common.sql_insert'],
 ]);
 
 export function records(

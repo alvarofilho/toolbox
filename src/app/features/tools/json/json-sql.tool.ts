@@ -12,7 +12,7 @@ import { sample } from '@app/features/tools/json/sample-data';
 
 export const definition = tool(
 	'json-sql',
-	[source, input('table', 'Tabela', 'Table', 'data', 'text', 'tools.json-sql')],
+	[source, input('table', 'tools.json-sql.table', 'data', 'text')],
 	(v) => result(sqlInsert(rowsFrom(json(field(v, 'input'))), field(v, 'table')), 'data.sql'),
 	sample,
 );

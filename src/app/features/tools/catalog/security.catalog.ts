@@ -1,16 +1,10 @@
-import { text } from '@app/core/models/tool';
 import type { ToolRegistration } from '@app/features/tools/catalog/tool-registration';
 
 export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'jwt',
-		name: text('JWT Decoder', 'JWT Decoder', undefined, 'tools.jwt'),
-		description: text(
-			'Inspecione o header e os claims de um token.',
-			'Inspect token headers and claims.',
-			undefined,
-			'tools.jwt',
-		),
+		name: 'tools.jwt.jwt_decoder',
+		description: 'tools.jwt.inspect_token_headers_and_claims',
 		category: 'security',
 		icon: 'scan',
 		keywords: 'jwt token json web header claims auth',
@@ -20,13 +14,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	},
 	{
 		id: 'sha',
-		name: text('Gerador de hash SHA', 'SHA Hash Generator', undefined, 'tools.sha'),
-		description: text(
-			'Calcule hashes SHA-256 e SHA-512 localmente.',
-			'Calculate SHA-256 and SHA-512 hashes locally.',
-			undefined,
-			'tools.sha',
-		),
+		name: 'tools.sha.sha_hash_generator',
+		description: 'tools.sha.calculate_sha_256_and_sha_512_hashes_local',
 		category: 'security',
 		icon: 'shield',
 		keywords: 'hash digest checksum sha256 sha512',
@@ -36,13 +25,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'hmac',
 		category: 'security',
-		name: text('HMAC Generator', 'HMAC Generator', undefined, 'tools.hmac'),
-		description: text(
-			'Calcule HMAC SHA-256 ou SHA-512 com um segredo.',
-			'Compute HMAC SHA-256 or SHA-512 with a secret.',
-			'Calcula HMAC SHA-256 o SHA-512 con un secreto.',
-			'tools.hmac',
-		),
+		name: 'tools.hmac.hmac_generator',
+		description: 'tools.hmac.compute_hmac_sha_256_or_sha_512_with_a_sec',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -52,13 +36,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'aes',
 		category: 'security',
-		name: text('AES Encrypt/Decrypt', 'AES Encrypt/Decrypt', undefined, 'tools.aes'),
-		description: text(
-			'Criptografe ou descriptografe texto com AES-256-GCM e senha.',
-			'Encrypt or decrypt text with AES-256-GCM and a password.',
-			'Cifra o descifra texto con AES-256-GCM y una contraseña.',
-			'tools.aes',
-		),
+		name: 'tools.aes.aes_encrypt_decrypt',
+		description: 'tools.aes.encrypt_or_decrypt_text_with_aes_256_gcm_a',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -68,13 +47,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'jwt-claims',
 		category: 'security',
-		name: text('JWT Claims Analyzer', 'JWT Claims Analyzer', undefined, 'tools.jwt-claims'),
-		description: text(
-			'Analise claims, expiração, emissor e audiência de um JWT.',
-			'Inspect JWT claims, expiry, issuer and audience.',
-			'Analiza claims, caducidad, emisor y audiencia de un JWT.',
-			'tools.jwt-claims',
-		),
+		name: 'tools.jwt-claims.jwt_claims_analyzer',
+		description: 'tools.jwt-claims.inspect_jwt_claims_expiry_issuer_and_audie',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -84,13 +58,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'pem',
 		category: 'security',
-		name: text('PEM Decoder', 'PEM Decoder', undefined, 'tools.pem'),
-		description: text(
-			'Inspecione blocos PEM e seus dados codificados.',
-			'Inspect PEM blocks and their encoded data.',
-			'Inspecciona bloques PEM y sus datos codificados.',
-			'tools.pem',
-		),
+		name: 'tools.pem.pem_decoder',
+		description: 'tools.pem.inspect_pem_blocks_and_their_encoded_data',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -100,13 +69,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'pem-jwk',
 		category: 'security',
-		name: text('PEM para JWK', 'PEM to JWK', undefined, 'tools.pem-jwk'),
-		description: text(
-			'Converta certificado ou chave PEM em uma chave JWK.',
-			'Convert a PEM certificate or key to JWK.',
-			'Convierte un certificado o clave PEM a JWK.',
-			'tools.pem-jwk',
-		),
+		name: 'tools.pem-jwk.pem_to_jwk',
+		description: 'tools.pem-jwk.convert_a_pem_certificate_or_key_to_jwk',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -116,13 +80,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'asn1',
 		category: 'security',
-		name: text('ASN.1 Decoder', 'ASN.1 Decoder', undefined, 'tools.asn1'),
-		description: text(
-			'Explore a estrutura ASN.1 de dados DER em Base64.',
-			'Explore the ASN.1 structure of Base64 DER data.',
-			'Explora la estructura ASN.1 de datos DER en Base64.',
-			'tools.asn1',
-		),
+		name: 'tools.asn1.asn_1_decoder',
+		description: 'tools.asn1.explore_the_asn_1_structure_of_base64_der_',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -132,13 +91,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'x509',
 		category: 'security',
-		name: text('X.509 Certificate Viewer', 'X.509 Certificate Viewer', undefined, 'tools.x509'),
-		description: text(
-			'Leia emissor, validade e extensões de um certificado X.509.',
-			"Read an X.509 certificate's issuer, validity and extensions.",
-			'Lee el emisor, la validez y las extensiones de un certificado X.509.',
-			'tools.x509',
-		),
+		name: 'tools.x509.x_509_certificate_viewer',
+		description: 'tools.x509.read_an_x_509_certificate_s_issuer_validit',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -148,13 +102,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'csr',
 		category: 'security',
-		name: text('CSR Decoder', 'CSR Decoder', undefined, 'tools.csr'),
-		description: text(
-			'Inspecione uma solicitação CSR e confira sua assinatura.',
-			'Inspect a CSR request and check its signature.',
-			'Inspecciona una solicitud CSR y comprueba su firma.',
-			'tools.csr',
-		),
+		name: 'tools.csr.csr_decoder',
+		description: 'tools.csr.inspect_a_csr_request_and_check_its_signat',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -164,18 +113,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'certificate-chain',
 		category: 'security',
-		name: text(
-			'Certificate Chain Inspector',
-			'Certificate Chain Inspector',
-			undefined,
-			'tools.certificate-chain',
-		),
-		description: text(
-			'Confira assinaturas entre os certificados de uma cadeia fornecida.',
-			'Check signatures between certificates in a supplied chain.',
-			'Comprueba firmas entre certificados de una cadena proporcionada.',
-			'tools.certificate-chain',
-		),
+		name: 'tools.certificate-chain.certificate_chain_inspector',
+		description: 'tools.certificate-chain.check_signatures_between_certificates_in_a',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -186,13 +125,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'file-hash',
 		category: 'security',
-		name: text('File Hash Calculator', 'File Hash Calculator', undefined, 'tools.file-hash'),
-		description: text(
-			'Calcule o hash de um arquivo sem enviá-lo.',
-			'Compute a file hash without uploading the file.',
-			'Calcula el hash de un archivo sin enviarlo.',
-			'tools.file-hash',
-		),
+		name: 'tools.file-hash.file_hash_calculator',
+		description: 'tools.file-hash.compute_a_file_hash_without_uploading_the_',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -202,13 +136,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'csp',
 		category: 'security',
-		name: text('CSP Generator', 'CSP Generator', undefined, 'tools.csp'),
-		description: text(
-			'Monte uma política CSP a partir das origens permitidas.',
-			'Build a CSP policy from allowed resource origins.',
-			'Crea una política CSP con los orígenes permitidos.',
-			'tools.csp',
-		),
+		name: 'tools.csp.csp_generator',
+		description: 'tools.csp.build_a_csp_policy_from_allowed_resource_o',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -218,13 +147,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'sri',
 		category: 'security',
-		name: text('SRI Hash Generator', 'SRI Hash Generator', undefined, 'tools.sri'),
-		description: text(
-			'Gere um atributo integrity a partir do hash de um arquivo.',
-			'Generate an integrity attribute from a file hash.',
-			'Genera un atributo integrity a partir del hash de un archivo.',
-			'tools.sri',
-		),
+		name: 'tools.sri.sri_hash_generator',
+		description: 'tools.sri.generate_an_integrity_attribute_from_a_fil',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -234,18 +158,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'webhook-signature',
 		category: 'security',
-		name: text(
-			'Webhook Signature Generator',
-			'Webhook Signature Generator',
-			undefined,
-			'tools.webhook-signature',
-		),
-		description: text(
-			'Gere assinaturas HMAC nos formatos GitHub, Stripe ou genérico.',
-			'Generate webhook HMAC signatures for GitHub, Stripe or a generic format.',
-			'Genera firmas HMAC de webhooks para GitHub, Stripe o un formato genérico.',
-			'tools.webhook-signature',
-		),
+		name: 'tools.webhook-signature.webhook_signature_generator',
+		description: 'tools.webhook-signature.generate_webhook_hmac_signatures_for_githu',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -256,18 +170,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'p12-explorer',
 		category: 'security',
-		name: text(
-			'Explorador de PKCS#12/P12',
-			'PKCS#12/P12 Explorer',
-			undefined,
-			'tools.p12-explorer',
-		),
-		description: text(
-			'Abra um arquivo P12 com senha e inspecione seus certificados.',
-			'Open a password-protected P12 file and inspect its certificates.',
-			'Abre un archivo P12 con contraseña e inspecciona sus certificados.',
-			'tools.p12-explorer',
-		),
+		name: 'tools.p12-explorer.pkcs_12_p12_explorer',
+		description: 'tools.p12-explorer.open_a_password_protected_p12_file_and_ins',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -278,18 +182,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'p7b-bundle',
 		category: 'security',
-		name: text(
-			'Criador de pacote P7B',
-			'P7B Certificate Bundle Builder',
-			undefined,
-			'tools.p7b-bundle',
-		),
-		description: text(
-			'Empacote certificados PEM em um arquivo P7B sem assinatura.',
-			'Bundle PEM certificates into an unsigned P7B file.',
-			'Agrupa certificados PEM en un archivo P7B sin firma.',
-			'tools.p7b-bundle',
-		),
+		name: 'tools.p7b-bundle.p7b_certificate_bundle_builder',
+		description: 'tools.p7b-bundle.bundle_pem_certificates_into_an_unsigned_p',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -299,18 +193,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'p7b-explorer',
 		category: 'security',
-		name: text(
-			'Explorador de pacote P7B',
-			'P7B Certificate Bundle Explorer',
-			undefined,
-			'tools.p7b-explorer',
-		),
-		description: text(
-			'Liste os certificados presentes em um pacote P7B.',
-			'List the certificates contained in a P7B bundle.',
-			'Lista los certificados de un paquete P7B.',
-			'tools.p7b-explorer',
-		),
+		name: 'tools.p7b-explorer.p7b_certificate_bundle_explorer',
+		description: 'tools.p7b-explorer.list_the_certificates_contained_in_a_p7b_b',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -321,13 +205,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'crl-explorer',
 		category: 'security',
-		name: text('Explorador de CRL', 'CRL Explorer', undefined, 'tools.crl-explorer'),
-		description: text(
-			'Leia a estrutura e as entradas de uma lista de revogação.',
-			"Read a certificate revocation list's structure and entries.",
-			'Lee la estructura y las entradas de una lista de revocación.',
-			'tools.crl-explorer',
-		),
+		name: 'tools.crl-explorer.crl_explorer',
+		description: 'tools.crl-explorer.read_a_certificate_revocation_list_s_struc',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -338,18 +217,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'timestamp-request',
 		category: 'security',
-		name: text(
-			'Gerador de solicitação de carimbo de tempo',
-			'Timestamp Request Generator',
-			undefined,
-			'tools.timestamp-request',
-		),
-		description: text(
-			'Crie uma solicitação RFC 3161 para enviar a uma TSA.',
-			'Create an RFC 3161 request to send to a TSA.',
-			'Crea una solicitud RFC 3161 para enviar a una TSA.',
-			'tools.timestamp-request',
-		),
+		name: 'tools.timestamp-request.timestamp_request_generator',
+		description: 'tools.timestamp-request.create_an_rfc_3161_request_to_send_to_a_ts',
 		icon: 'shield',
 		keywords: '',
 		available: true,
@@ -360,18 +229,8 @@ export const SECURITY_TOOLS: readonly ToolRegistration[] = [
 	{
 		id: 'tsr-decoder',
 		category: 'security',
-		name: text(
-			'Decodificador de resposta TSR',
-			'TSR Response Decoder',
-			undefined,
-			'tools.tsr-decoder',
-		),
-		description: text(
-			'Inspecione o status e a estrutura de uma resposta TSR.',
-			'Inspect the status and structure of a TSR response.',
-			'Inspecciona el estado y la estructura de una respuesta TSR.',
-			'tools.tsr-decoder',
-		),
+		name: 'tools.tsr-decoder.tsr_response_decoder',
+		description: 'tools.tsr-decoder.inspect_the_status_and_structure_of_a_tsr_',
 		icon: 'shield',
 		keywords: '',
 		available: true,

@@ -6,7 +6,7 @@ import { tool, result } from '@app/features/tools/_shared/definition';
 
 import { source } from '@app/features/tools/_shared/controls';
 
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { certInfo } from '@app/features/tools/security/certificates';
 
@@ -68,10 +68,5 @@ export const definition = tool(
 		});
 	},
 	undefined,
-	text(
-		'Verifica assinaturas entre os certificados fornecidos e mostra validade temporal. Não estabelece confiança de uma CA nem consulta revogação.',
-		'Verifies signatures between supplied certificates and shows validity dates. Does not establish CA trust or check revocation.',
-		undefined,
-		'tools.certificate-chain',
-	),
+	'tools.certificate-chain.verifies_signatures_between_supplied_certi',
 );

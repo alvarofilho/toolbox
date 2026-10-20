@@ -1,4 +1,4 @@
-import { field, text } from '@app/core/models/tool';
+import { field } from '@app/core/models/tool';
 
 import { result, tool } from '@app/features/tools/_shared/definition';
 
@@ -37,10 +37,5 @@ export const definition = tool(
 		});
 	},
 	undefined,
-	text(
-		'Estimativa heurística local; não substitui um verificador com lista de senhas vazadas.',
-		'Local heuristic estimate; it does not replace a breached-password check.',
-		undefined,
-		'tools.password-strength',
-	),
+	'tools.password-strength.local_heuristic_estimate_it_does_not_repla',
 );
