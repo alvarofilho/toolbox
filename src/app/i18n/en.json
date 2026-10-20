@@ -21,6 +21,9 @@
 		"pdf_inspection": "Inspect and clean"
 	},
 	"common": {
+		"tool_error_generic": "Check the input format and values, then try again. If the problem continues, adjust the input and retry.",
+		"tool_error_title": "Could not complete",
+		"number_must_be_between": "Enter a number between {{min}} and {{max}}.",
 		"10": "10",
 		"15": "*/15 * * * *",
 		"255": "255",
@@ -1114,6 +1117,14 @@
 			"pascalcase_camelcase_converter": "PascalCase / camelCase Converter"
 		},
 		"password": {
+			"advanced_options": "Advanced options",
+			"avoid_ambiguous": "Avoid ambiguous characters",
+			"invalid_minimums": "Enter valid minimum counts for the selected character types.",
+			"minimums_exceed_length": "The minimum counts add up to more than the password length. Lower one or more minimums, or increase the length.",
+			"minimum_numbers": "Minimum numbers",
+			"minimum_symbols": "Minimum special characters",
+			"no_characters_after_filter": "No characters remain in one of the selected types. Turn off ambiguous character filtering or choose another type.",
+			"select_character_set": "Select at least one character type to generate a password.",
 			"copy_password": "Copy password",
 			"empty_state": "Generate a password to see it here.",
 			"generate_password": "Generate password",

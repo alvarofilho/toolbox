@@ -27,6 +27,7 @@ import type {
 	ToolResult,
 	ToolValues,
 } from '@app/core/models/tool';
+import { TranslatedToolError } from '@app/core/models/tool';
 import { presentDefinition, visibleControl } from '@app/features/tools/workbench/presentation';
 import {
 	canonicalJson,
@@ -72,6 +73,15 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	protected readonly tool = computed(() => presentDefinition(this.definition(), this.info()));
 	protected readonly controls = computed(() =>
 		this.tool().controls.filter((control) => visibleControl(control, this.values())),
+	);
+	protected readonly basicControls = computed(() =>
+		this.controls().filter((control) => !this.isPasswordAdvancedControl(control.key)),
+	);
+	protected readonly passwordAdvancedControls = computed(() =>
+		this.controls().filter((control) => this.isPasswordAdvancedControl(control.key)),
+	);
+	protected readonly passwordAdvancedErrors = computed(() =>
+		this.passwordAdvancedControls().some((control) => this.fieldErrors()[control.key]),
 	);
 	protected readonly automatic = computed(() => this.tool().execution === 'automatic');
 	protected readonly isPasswordTool = computed(() => this.tool().id === 'password');
@@ -329,8 +339,11 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 							this.translationState().locale,
 						);
 					} else if (n < (control.min ?? -Infinity) || n > (control.max ?? Infinity)) {
-						errors[control.key] =
-							`${this.transloco.translate('common.use_a_value_between', {}, this.translationState().locale)} ${control.min ?? '−∞'} ${this.transloco.translate('common.and', {}, this.translationState().locale)} ${control.max ?? '∞'}.`;
+						errors[control.key] = this.transloco.translate(
+							'common.number_must_be_between',
+							{ min: control.min ?? '−∞', max: control.max ?? '∞' },
+							this.translationState().locale,
+						);
 					}
 				}
 			}
@@ -395,7 +408,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		} catch (error: unknown) {
 			if (id === this.runId) {
 				if (!automaticRun) {
-					const message = error instanceof Error ? error.message : String(error);
+					const message = this.errorMessage(error);
 					this.error.set(message);
 					const source = this.controls().find((control) => control.key === 'input');
 					if (source && !Object.keys(this.fieldErrors()).length) {
@@ -453,6 +466,46 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.revealed.update((keys) =>
 			keys.includes(key) ? keys.filter((value) => value !== key) : [...keys, key],
 		);
+	}
+	private isPasswordAdvancedControl(key: string): boolean {
+		return this.isPasswordTool() && ['minNumbers', 'minSymbols', 'avoidAmbiguous'].includes(key);
+	}
+	private errorMessage(error: unknown): string {
+		const locale = this.translationState().locale;
+		if (error instanceof TranslatedToolError) {
+			return this.transloco.translate(error.translationKey, error.params, locale);
+		}
+
+		const rawMessage = error instanceof Error ? error.message : '';
+		const legacyMessage = this.legacyLocalizedMessage(rawMessage, locale);
+		return legacyMessage ?? this.transloco.translate('common.tool_error_generic', {}, locale);
+	}
+	private legacyLocalizedMessage(message: string, locale: 'pt' | 'en' | 'es'): string | undefined {
+		const alternatives = message.split(' / ');
+		if (alternatives.length !== 2 || locale === 'es') {
+			return undefined;
+		}
+		const [first, second] = alternatives;
+		if (!first || !second) {
+			return undefined;
+		}
+
+		const portuguesePattern =
+			/[ãáâçéêíóôõú]|\b(?:selecione|informe|inválid[oa]|obrigatóri[oa]|fora do intervalo|falha|não|máximo|mínimo|esperado|esperada|quantidade|caracteres|arquivo|página|operação|conteúdo|senha|valor|campo)\b/i;
+		const englishPattern =
+			/\b(?:select|enter|invalid|missing|required|outside|failed|maximum|minimum|expected|count|characters|file|page|operation|content|password|value|field|only|unsupported|could not|must be|should be|not allowed)\b/i;
+		const firstIsPortuguese = portuguesePattern.test(first);
+		const secondIsPortuguese = portuguesePattern.test(second);
+		const firstIsEnglish = englishPattern.test(first);
+		const secondIsEnglish = englishPattern.test(second);
+
+		if (firstIsPortuguese && secondIsEnglish && !secondIsPortuguese) {
+			return locale === 'pt' ? first : second;
+		}
+		if (secondIsPortuguese && firstIsEnglish && !firstIsPortuguese) {
+			return locale === 'pt' ? second : first;
+		}
+		return undefined;
 	}
 	protected inputType(control: ToolControl): string {
 		return control.type === 'password' && this.revealed().includes(control.key)

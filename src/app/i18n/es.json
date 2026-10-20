@@ -21,6 +21,9 @@
 		"pdf_inspection": "Inspeccionar y limpiar"
 	},
 	"common": {
+		"tool_error_generic": "Revisa el formato y los valores e inténtalo de nuevo. Si el problema continúa, ajusta los datos y vuelve a intentarlo.",
+		"tool_error_title": "No se pudo completar",
+		"number_must_be_between": "Introduce un número entre {{min}} y {{max}}.",
 		"10": "10",
 		"15": "*/15 * * * *",
 		"255": "255",
@@ -1114,6 +1117,14 @@
 			"pascalcase_camelcase_converter": "Conversor PascalCase / camelCase"
 		},
 		"password": {
+			"advanced_options": "Opciones avanzadas",
+			"avoid_ambiguous": "Evitar caracteres ambiguos",
+			"invalid_minimums": "Introduce cantidades mínimas válidas para los tipos de caracteres seleccionados.",
+			"minimums_exceed_length": "La suma de los mínimos supera la longitud de la contraseña. Reduce uno o más mínimos o aumenta la longitud.",
+			"minimum_numbers": "Mínimo de números",
+			"minimum_symbols": "Mínimo de caracteres especiales",
+			"no_characters_after_filter": "No quedan caracteres en uno de los tipos seleccionados. Desactiva el filtro de caracteres ambiguos o elige otro tipo.",
+			"select_character_set": "Selecciona al menos un tipo de carácter para generar la contraseña.",
 			"copy_password": "Copiar contraseña",
 			"empty_state": "Genera una contraseña para verla aquí.",
 			"generate_password": "Generar contraseña",

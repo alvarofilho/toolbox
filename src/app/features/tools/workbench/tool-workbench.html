@@ -55,7 +55,7 @@
 			<legend class="sr-only">
 				{{ 'common.tool_input' | transloco }}
 			</legend>
-			@for (control of controls(); track control.key) {
+			@for (control of basicControls(); track control.key) {
 				@if (control.type === 'checkbox') {
 					<label class="checkbox-field">
 						<input
@@ -186,9 +186,53 @@
 				}
 			}
 		</fieldset>
+		@if (isPasswordTool() && passwordAdvancedControls().length) {
+			<details class="password-advanced" [open]="passwordAdvancedErrors()">
+				<summary>{{ 'tools.password.advanced_options' | transloco }}</summary>
+				<fieldset class="password-advanced-fields">
+					<legend class="sr-only">{{ 'tools.password.advanced_options' | transloco }}</legend>
+					@for (control of passwordAdvancedControls(); track control.key) {
+						@if (control.type === 'checkbox') {
+							<label class="checkbox-field">
+								<input
+									type="checkbox"
+									class="checkbox checkbox-sm"
+									[checked]="values()[control.key] === 'true'"
+									(change)="update(control.key, $event)"
+								/>
+								{{ control.label | transloco }}
+							</label>
+						} @else {
+							<div class="field">
+								<label [for]="'field-' + control.key">{{ control.label | transloco }}</label>
+								<input
+									class="input"
+									[id]="'field-' + control.key"
+									type="number"
+									[value]="values()[control.key]"
+									(input)="update(control.key, $event)"
+									[min]="control.min ?? null"
+									[max]="values()['length']"
+									[attr.step]="control.step ?? 1"
+									[attr.aria-describedby]="
+										fieldErrors()[control.key] ? 'error-' + control.key : null
+									"
+									[attr.aria-invalid]="fieldErrors()[control.key] ? 'true' : null"
+									inputmode="numeric"
+									autocomplete="off"
+								/>
+								@if (fieldErrors()[control.key]; as message) {
+									<p class="field-error" [id]="'error-' + control.key">{{ message }}</p>
+								}
+							</div>
+						}
+					}
+				</fieldset>
+			</details>
+		}
 		@if (error()) {
 			<div class="tool-error" role="alert">
-				<strong>{{ 'common.check_your_input' | transloco }}</strong>
+				<strong>{{ 'common.tool_error_title' | transloco }}</strong>
 				<p>{{ error() }}</p>
 			</div>
 		}

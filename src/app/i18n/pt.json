@@ -21,6 +21,9 @@
 		"pdf_inspection": "Inspecionar e limpar"
 	},
 	"common": {
+		"tool_error_generic": "Confira o formato e os valores informados e tente novamente. Se o problema continuar, ajuste a entrada e tente outra vez.",
+		"tool_error_title": "Não foi possível concluir",
+		"number_must_be_between": "Informe um número entre {{min}} e {{max}}.",
 		"10": "10",
 		"15": "*/15 * * * *",
 		"255": "255",
@@ -1114,6 +1117,14 @@
 			"pascalcase_camelcase_converter": "PascalCase / camelCase Converter"
 		},
 		"password": {
+			"advanced_options": "Opções avançadas",
+			"avoid_ambiguous": "Evitar caracteres ambíguos",
+			"invalid_minimums": "Informe quantidades mínimas válidas para os tipos de caracteres selecionados.",
+			"minimums_exceed_length": "A soma dos mínimos é maior que o comprimento da senha. Reduza um ou mais mínimos ou aumente o comprimento.",
+			"minimum_numbers": "Mínimo de números",
+			"minimum_symbols": "Mínimo de caracteres especiais",
+			"no_characters_after_filter": "Não restaram caracteres em um dos tipos selecionados. Desative o filtro de caracteres ambíguos ou escolha outro tipo.",
+			"select_character_set": "Selecione pelo menos um tipo de caractere para gerar a senha.",
 			"copy_password": "Copiar senha",
 			"empty_state": "Gere uma senha para vê-la aqui.",
 			"generate_password": "Gerar senha",

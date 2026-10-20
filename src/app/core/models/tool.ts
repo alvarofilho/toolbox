@@ -3,6 +3,16 @@ export type { TranslationKey } from '@app/core/models/translation-key';
 
 export type Locale = 'pt' | 'en' | 'es';
 
+export class TranslatedToolError extends Error {
+	constructor(
+		readonly translationKey: TranslationKey,
+		readonly params: Readonly<Record<string, string | number>> = {},
+	) {
+		super(translationKey);
+		this.name = 'TranslatedToolError';
+	}
+}
+
 export interface ToolControl {
 	readonly key: string;
 	readonly label: TranslationKey;
@@ -67,7 +77,7 @@ export function field(values: ToolValues, key: string): string {
 export function boundedNumber(value: string, min: number, max: number): number {
 	const number = Number(value);
 	if (!value.trim() || !Number.isInteger(number) || number < min || number > max) {
-		throw new Error(`Use ${min}–${max}.`);
+		throw new TranslatedToolError('common.number_must_be_between', { min, max });
 	}
 	return number;
 }

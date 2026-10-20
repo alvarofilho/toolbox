@@ -1,4 +1,4 @@
-import { boundedNumber } from '@app/core/models/tool';
+import { boundedNumber, TranslatedToolError } from '@app/core/models/tool';
 
 export function randomInt(max: number): number {
 	if (!Number.isInteger(max) || max < 1 || max > 0x100000000) {
@@ -42,15 +42,54 @@ export function uuid(version: string): string {
 	return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
 }
 
-export function password(length: number, sets: readonly string[]): string {
+export interface PasswordOptions {
+	readonly minimums?: readonly number[];
+	readonly avoidAmbiguous?: boolean;
+}
+
+const ambiguousCharacters = new Set('0Ool1I|');
+
+export function password(
+	length: number,
+	sets: readonly string[],
+	options: PasswordOptions = {},
+): string {
 	boundedNumber(String(length), 8, 256);
 	if (!sets.length) {
-		throw new Error('Selecione caracteres / Select character sets.');
+		throw new TranslatedToolError('tools.password.select_character_set');
 	}
-	const chars = [
-		...sets.map((set) => randomString(1, set)),
-		...Array.from(randomString(length - sets.length, sets.join(''))),
-	];
+	if (options.minimums && options.minimums.length !== sets.length) {
+		throw new TranslatedToolError('tools.password.invalid_minimums');
+	}
+	const characterSets = sets.map((set) =>
+		options.avoidAmbiguous
+			? Array.from(set)
+					.filter((character) => !ambiguousCharacters.has(character))
+					.join('')
+			: set,
+	);
+	if (characterSets.some((set) => !set.length)) {
+		throw new TranslatedToolError('tools.password.no_characters_after_filter');
+	}
+	const minimums = characterSets.map((_, index) => {
+		const minimum = options.minimums ? (options.minimums[index] ?? 0) : 1;
+		if (!Number.isInteger(minimum) || minimum < 0) {
+			throw new TranslatedToolError('tools.password.invalid_minimums');
+		}
+		return minimum;
+	});
+	const requiredCount = minimums.reduce((sum, minimum) => sum + minimum, 0);
+	if (requiredCount > length) {
+		throw new TranslatedToolError('tools.password.minimums_exceed_length');
+	}
+	const chars = characterSets.flatMap((set, index) => {
+		const minimum = minimums[index] ?? 0;
+		return minimum > 0 ? Array.from(randomString(minimum, set)) : [];
+	});
+	const remainingCount = length - requiredCount;
+	if (remainingCount > 0) {
+		chars.push(...Array.from(randomString(remainingCount, characterSets.join(''))));
+	}
 	for (let i = chars.length - 1; i > 0; i--) {
 		const j = randomInt(i + 1);
 		[chars[i], chars[j]] = [chars[j], chars[i]];
