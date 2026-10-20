@@ -14,7 +14,7 @@ export const definition = tool(
 		source,
 		input('schema', 'tools.kubernetes.version_crd_json_schema_optional', undefined, undefined),
 	],
-	(v) => validateKubernetes(field(v, 'input'), field(v, 'schema')),
+	(v, _files, signal) => validateKubernetes(field(v, 'input'), field(v, 'schema'), signal),
 	{
 		input:
 			'apiVersion: v1\nkind: Pod\nmetadata:\n  name: demo\nspec:\n  containers:\n    - name: nginx\n      image: nginx:alpine',

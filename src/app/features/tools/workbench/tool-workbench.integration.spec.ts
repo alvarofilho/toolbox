@@ -4,6 +4,26 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '@app/app.routes';
 import { PreferencesService } from '@app/core/services/preferences';
 import { provideToolboxTransloco } from '@app/core/services/transloco.providers';
+import { vi } from 'vitest';
+
+class PendingWorker extends EventTarget {
+	static readonly instances: PendingWorker[] = [];
+	terminated = false;
+	lastMessage: unknown;
+
+	constructor() {
+		super();
+		PendingWorker.instances.push(this);
+	}
+
+	postMessage(message: unknown): void {
+		this.lastMessage = message;
+	}
+
+	terminate(): void {
+		this.terminated = true;
+	}
+}
 
 describe('tool workbench integration', () => {
 	beforeEach(() => {
@@ -52,6 +72,39 @@ describe('tool workbench integration', () => {
 		root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
 		await harness.fixture.whenStable();
 		expect(root.querySelector('.result-code')?.textContent?.trim().split('\n')).toHaveLength(2);
+	});
+	it('terminates pending workers on cancel and when leaving the tool', async () => {
+		PendingWorker.instances.length = 0;
+		vi.stubGlobal('Worker', PendingWorker);
+		try {
+			const harness = await RouterTestingHarness.create('/tools/regex');
+			const root = harness.routeNativeElement;
+			if (!root) {
+				throw new Error('Regex route missing');
+			}
+			root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+			await expect.poll(() => PendingWorker.instances.length).toBe(1);
+			const firstWorker = PendingWorker.instances[0];
+			if (!firstWorker) {
+				throw new Error('Regex worker missing');
+			}
+			const cancel = Array.from(root.querySelectorAll('button')).find((button) =>
+				button.textContent?.includes('Continuar editando'),
+			);
+			cancel?.click();
+			expect(firstWorker.terminated).toBe(true);
+
+			root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+			await expect.poll(() => PendingWorker.instances.length).toBe(2);
+			const secondWorker = PendingWorker.instances[1];
+			if (!secondWorker) {
+				throw new Error('Second Regex worker missing');
+			}
+			await harness.navigateByUrl('/tools/jsonpath');
+			expect(secondWorker.terminated).toBe(true);
+		} finally {
+			vi.unstubAllGlobals();
+		}
 	});
 	it('shows only the selected PIX operation and preserves hidden configuration', async () => {
 		const harness = await RouterTestingHarness.create('/tools/pix');

@@ -29,6 +29,10 @@
 	"common": {
 		"tool_error_generic": "Confira o formato e os valores informados e tente novamente. Se o problema continuar, ajuste a entrada e tente outra vez.",
 		"tool_error_title": "Não foi possível concluir",
+		"execution_cancelled": "Execução cancelada. Você já pode iniciar outra.",
+		"execution_timed_out": "A execução excedeu o tempo limite. Simplifique a entrada e tente novamente.",
+		"invalid_tool_input": "Não foi possível processar a entrada",
+		"tool_execution_failed": "A ferramenta falhou durante o processamento. Tente novamente.",
 		"number_must_be_between": "Informe um número entre {{min}} e {{max}}.",
 		"10": "10",
 		"15": "*/15 * * * *",

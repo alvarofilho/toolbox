@@ -13,6 +13,18 @@ export class TranslatedToolError extends Error {
 	}
 }
 
+export type ToolExecutionFailureKind = 'cancelled' | 'timeout' | 'input' | 'worker';
+
+export class ToolExecutionError extends Error {
+	constructor(
+		readonly kind: ToolExecutionFailureKind,
+		message: string = kind,
+	) {
+		super(message);
+		this.name = 'ToolExecutionError';
+	}
+}
+
 export interface ToolControl {
 	readonly key: string;
 	readonly label: TranslationKey;
@@ -55,7 +67,11 @@ export interface ToolDefinition {
 	readonly hint?: TranslationKey;
 	readonly example?: ToolValues;
 	readonly execution?: 'automatic' | 'manual';
-	readonly run: (values: ToolValues, files?: ToolFiles) => ToolResult | Promise<ToolResult>;
+	readonly run: (
+		values: ToolValues,
+		files?: ToolFiles,
+		signal?: AbortSignal,
+	) => ToolResult | Promise<ToolResult>;
 }
 
 export interface ToolInfo {
