@@ -35,6 +35,23 @@
 		{{ hint | transloco }}
 	</p>
 }
+@if (handoffNeedsConfirmation()) {
+	<section
+		class="handoff-notice"
+		role="group"
+		[attr.aria-label]="'handoff.confirmation' | transloco"
+	>
+		<p>{{ 'handoff.replace_existing_input' | transloco }}</p>
+		<div class="handoff-actions">
+			<button type="button" class="btn btn-primary btn-sm" (click)="acceptHandoff()">
+				{{ 'handoff.use_result' | transloco }}
+			</button>
+			<button type="button" class="btn btn-ghost btn-sm" (click)="dismissHandoff()">
+				{{ 'handoff.keep_current' | transloco }}
+			</button>
+		</div>
+	</section>
+}
 <div class="workbench" [class.workbench-diff]="isDiffTool()">
 	<form class="input-panel workspace-panel" (submit)="run($event)" novalidate>
 		<div class="panel-heading">
@@ -290,6 +307,28 @@
 		<div class="panel-heading">
 			<h2>{{ 'common.result_title' | transloco }}</h2>
 			<div class="output-actions">
+				@if (result() && !stale() && handoffTargets().length) {
+					<details class="transfer-menu">
+						<summary class="btn btn-sm btn-ghost">
+							{{ 'handoff.open_result_in' | transloco }}
+						</summary>
+						<div
+							class="transfer-options"
+							role="group"
+							[attr.aria-label]="'handoff.destinations' | transloco"
+						>
+							@for (target of handoffTargets(); track target.id) {
+								<button
+									type="button"
+									class="btn btn-ghost btn-sm"
+									(click)="openResultIn(target.id)"
+								>
+									{{ target.name | transloco }}
+								</button>
+							}
+						</div>
+					</details>
+				}
 				<button
 					type="button"
 					class="btn btn-sm"

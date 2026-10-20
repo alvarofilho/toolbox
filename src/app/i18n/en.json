@@ -1558,6 +1558,14 @@
 			"yaml_to_json": "YAML to JSON"
 		}
 	},
+	"handoff": {
+		"open_result_in": "Open result in…",
+		"destinations": "Compatible tools",
+		"confirmation": "Confirm result transfer",
+		"replace_existing_input": "This tool already contains content. Replace it with the received result?",
+		"use_result": "Use result",
+		"keep_current": "Keep current content"
+	},
 	"seo": {
 		"description": "Free online tools for developers, QA and IT professionals. Format JSON, convert data and generate documents locally in your browser.",
 		"image_alt": "Toolbox, online tools for developers",
