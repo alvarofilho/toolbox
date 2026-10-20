@@ -27,7 +27,7 @@ pnpm run build                     # ng build, production
 
 The static build is written to `dist/cloudflare/browser`. Both TypeScript `strict` mode and Angular `strictTemplates` are enabled. CI checks formatting, lint, tests, and the production build on pushes to `main` and pull requests.
 
-Theme initialization lives in `public/theme-init.js` and runs before page content to avoid a visual theme change while complying with `script-src 'self'`. Production also disables critical CSS inlining (`optimization.styles.inlineCritical: false`), since Angular's generated inline loader would be blocked by the same policy. Keep these settings aligned with the CSP in `public/_headers`.
+Theme initialization lives in `public/theme-init.js` and uses `defer` so its request does not block the first render. Production inlines critical CSS and defers the remaining styles. The CSP in `public/_headers` allows the fixed Beasties stylesheet loader by SHA-256 hash; update that hash if the loader script changes.
 
 Tailwind scans `src/**/*.html` explicitly because all components use external templates. Scanning tool definitions, schemas, and translations also generates styles for data tokens that happen to match utility or DaisyUI class names. Keep UI classes in templates; register any future inline-template sources in `src/tailwind.css`.
 

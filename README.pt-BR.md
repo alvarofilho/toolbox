@@ -27,7 +27,7 @@ pnpm run build                     # ng build, produção
 
 O build estático fica em `dist/cloudflare/browser`. A configuração mantém `strict` e `strictTemplates` habilitados. A integração contínua verifica formatação, lint, testes e build em pushes para `main` e Pull Requests.
 
-A inicialização do tema fica em `public/theme-init.js`, carregado antes do conteúdo para evitar mudança visual e permitir a CSP `script-src 'self'`. A produção também desabilita a inserção de CSS crítico (`optimization.styles.inlineCritical: false`), pois o carregador inline gerado pelo Angular seria bloqueado pela mesma política. Mantenha essas opções alinhadas à CSP em `public/_headers`.
+A inicialização do tema fica em `public/theme-init.js` e usa `defer` para não bloquear a primeira renderização. A produção insere o CSS crítico no HTML e adia o carregamento dos estilos restantes. A CSP em `public/_headers` autoriza o carregador fixo de estilos do Beasties por hash SHA-256; atualize esse hash se o script do carregador mudar.
 
 O Tailwind procura classes explicitamente em `src/**/*.html`, pois todos os componentes usam templates externos. Varrer definições de ferramentas, schemas e traduções também gera estilos para palavras dos dados que coincidem com classes do Tailwind ou DaisyUI. Mantenha as classes nos templates e registre em `src/tailwind.css` eventuais arquivos com templates inline.
 

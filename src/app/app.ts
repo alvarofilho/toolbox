@@ -21,6 +21,12 @@ import { CATEGORIES, TOOLS } from '@app/features/tools/catalog/tools';
 import { Icon } from '@app/shared/components/icon';
 import { CommandPalette } from '@app/features/tools/catalog/command-palette/command-palette';
 
+interface CommandPaletteControl {
+	isOpen(): boolean;
+	open(): void;
+	close(): void;
+}
+
 @Component({
 	selector: 'app-root',
 	imports: [RouterOutlet, RouterLink, RouterLinkActive, Icon, CommandPalette, TranslocoPipe],
@@ -36,7 +42,8 @@ export class App {
 	protected readonly categories = CATEGORIES;
 	protected readonly count = TOOLS.length;
 	protected readonly menuOpen = signal(false);
-	private readonly commands = viewChild.required(CommandPalette);
+	protected readonly commandPaletteRequested = signal(false);
+	private readonly commands = viewChild<CommandPaletteControl>('commandPalette');
 	protected readonly commandShortcut = /Mac|iPhone|iPad/.test(
 		this.document.defaultView?.navigator.platform ?? '',
 	)
@@ -55,6 +62,11 @@ export class App {
 				});
 			}
 		});
+		effect(() => {
+			if (this.commandPaletteRequested()) {
+				this.commands()?.open();
+			}
+		});
 		this.router.events
 			.pipe(
 				filter((event) => event instanceof NavigationEnd),
@@ -63,7 +75,8 @@ export class App {
 			.subscribe((event) => {
 				const path = event.urlAfterRedirects.split('?')[0];
 				this.menuOpen.set(false);
-				this.commands().close();
+				this.commandPaletteRequested.set(false);
+				this.commands()?.close();
 				if (path !== this.lastPath) {
 					this.document.getElementById('main-content')?.focus({ preventScroll: true });
 				}
@@ -72,12 +85,16 @@ export class App {
 	}
 
 	protected openCommands(): void {
-		if (this.commands().isOpen()) {
-			this.commands().close();
+		const commands = this.commands();
+		if (commands?.isOpen()) {
+			commands.close();
 			return;
 		}
 		this.menuOpen.set(false);
-		afterNextRender(() => this.commands().open(), { injector: this.injector });
+		this.commandPaletteRequested.set(true);
+		if (commands) {
+			afterNextRender(() => commands.open(), { injector: this.injector });
+		}
 	}
 	protected changeLocale(event: Event): void {
 		const target = event.target;

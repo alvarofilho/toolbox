@@ -112,7 +112,7 @@
 			type="button"
 			class="global-search"
 			aria-haspopup="dialog"
-			aria-controls="command-palette"
+			[attr.aria-controls]="commandPaletteRequested() ? 'command-palette' : null"
 			aria-keyshortcuts="Control+k Meta+k"
 			(click)="openCommands()"
 			[attr.aria-label]="'common.open_command_palette' | transloco"
@@ -179,4 +179,6 @@
 		</span>
 	</footer>
 </div>
-<app-command-palette />
+@defer (when commandPaletteRequested()) {
+	<app-command-palette #commandPalette />
+}
