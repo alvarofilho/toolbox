@@ -89,6 +89,22 @@
 .text-report .result-code {
 	min-height: 0;
 }
+.result-code.password-result {
+	min-height: 88px;
+	max-height: 360px;
+	display: flex;
+	align-items: center;
+	margin: 16px 20px;
+	padding: 18px 20px;
+	border: 1px solid var(--accent);
+	border-radius: 8px;
+	background: var(--paper);
+	color: var(--ink);
+	font-size: clamp(16px, 1.8vw, 20px);
+	line-height: 1.6;
+	letter-spacing: 0.01em;
+	font-variant-ligatures: none;
+}
 #tool-result {
 	scroll-margin-top: 16px;
 }

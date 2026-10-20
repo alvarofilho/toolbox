@@ -3,15 +3,22 @@
 		"brazilian_tools": "Brazilian tools",
 		"cryptography_security": "Cryptography & security",
 		"css_frontend": "CSS & frontend",
-		"databases_net": "Databases & .NET",
-		"development": "Development",
+		"databases_sql": "Databases & SQL",
+		"development": "Development & APIs",
 		"converters": "Converters",
 		"general_utilities": "General utilities",
 		"generators": "Generators",
 		"json_data": "JSON & data",
 		"mercosur": "Mercosur",
 		"networks_infrastructure": "Networks & infrastructure",
-		"text": "Text"
+		"text": "Text",
+		"pdf_tools": "PDF tools",
+		"pdf_tools_description": "Organize pages, convert files, and work with PDF forms in your browser.",
+		"pdf_pages": "Organize pages",
+		"pdf_conversion": "Convert and reduce",
+		"pdf_forms": "Create and fill forms",
+		"pdf_markups": "Page numbers and watermarks",
+		"pdf_inspection": "Inspect and clean"
 	},
 	"common": {
 		"10": "10",
@@ -1107,6 +1114,10 @@
 			"pascalcase_camelcase_converter": "PascalCase / camelCase Converter"
 		},
 		"password": {
+			"copy_password": "Copy password",
+			"empty_state": "Generate a password to see it here.",
+			"generate_password": "Generate password",
+			"generated_password": "Generated password",
 			"generate_strong_passwords_with_your_rules": "Generate strong passwords with your rules.",
 			"length": "Length",
 			"lowercase_title": "Lowercase",
@@ -1140,6 +1151,46 @@
 			"rotate_pages": "Rotate pages",
 			"rotation": "Rotation",
 			"split_pages_into_files": "Split pages into files"
+		},
+		"pdf-convert": {
+			"pdf_convert": "PDF Converter",
+			"converts_images_extracts_text_renders_pages_or_rasterizes": "Convert images, extract text, export pages as PNG, or rasterize to reduce file size.",
+			"operation": "Operation",
+			"images_to_pdf": "Images to PDF",
+			"extract_text": "Extract text to JSON",
+			"export_pages_as_png": "Export pages as PNG",
+			"rasterize_compress": "Reduce size (rasterize)",
+			"jpeg_quality": "JPEG quality",
+			"low": "Low",
+			"medium": "Medium",
+			"high": "High",
+			"rasterized_warning": "Compression rasterizes pages and removes selectable text, forms, links, and signatures."
+		},
+		"pdf-forms": {
+			"pdf_forms": "PDF Forms",
+			"inspect_fill_or_create_simple_acroforms": "Inspect, fill, or create simple AcroForms in your browser.",
+			"operation": "Operation",
+			"inspect_fields": "List fields",
+			"fill_existing": "Fill existing form",
+			"create_form": "Create fillable form",
+			"json_data": "Field definitions or JSON values"
+		},
+		"pdf-overlay": {
+			"pdf_annotations": "Page Numbers and Watermarks",
+			"adds_page_numbers_or_a_text_watermark": "Add page numbers or a text watermark to pages.",
+			"operation": "Operation",
+			"page_numbers": "Number pages",
+			"watermark": "Watermark",
+			"text": "Watermark text"
+		},
+		"pdf-inspector": {
+			"pdf_inspector": "PDF Inspection and Cleanup",
+			"inspects_pdfa_claims_signatures_structure_metadata_and_compares_files": "Inspect structure, signature fields, and PDF/A declarations; compare files, remove metadata, or try rewriting readable PDFs.",
+			"operation": "Operation",
+			"inspect_validate": "Inspect and compare",
+			"remove_metadata": "Remove metadata",
+			"resave_repair": "Try rewriting readable file",
+			"repair_limit": "Rewriting is a limited attempt and cannot recover arbitrary damage."
 		},
 		"pem": {
 			"inspect_pem_blocks_and_their_encoded_data": "Inspect PEM blocks and their encoded data.",

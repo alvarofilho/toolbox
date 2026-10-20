@@ -332,6 +332,58 @@ describe('network, Brazilian and file formats', () => {
 			'PDF',
 		);
 	});
+	it('creates, fills, annotates and strips metadata from PDF forms and files', async () => {
+		const source = await PDFDocument.create();
+		source.addPage([200, 300]);
+		source.setAuthor('Private author');
+		const original = new File([new Uint8Array(await source.save())], 'source.pdf', {
+			type: 'application/pdf',
+		});
+		const created = await run(
+			'pdf-forms',
+			{
+				mode: 'create',
+				data: '[{"name":"name","type":"text"},{"name":"accepted","type":"checkbox"}]',
+			},
+			{ files: [original] },
+		);
+		const formFile = created.artifacts?.[0];
+		if (!formFile) {
+			throw new Error('Form PDF missing');
+		}
+		const form = new File([await formFile.blob.arrayBuffer()], 'form.pdf', {
+			type: 'application/pdf',
+		});
+		expect(
+			JSON.parse((await run('pdf-forms', { mode: 'inspect' }, { files: [form] })).output),
+		).toHaveLength(2);
+		const filled = await run(
+			'pdf-forms',
+			{ mode: 'fill', data: '{"name":"Ada","accepted":true}' },
+			{ files: [form] },
+		);
+		const filledPdf = filled.artifacts?.[0];
+		if (!filledPdf) {
+			throw new Error('Filled PDF missing');
+		}
+		expect(
+			(await PDFDocument.load(await filledPdf.blob.arrayBuffer())).getForm().getFields(),
+		).toHaveLength(0);
+		const overlay = await run(
+			'pdf-overlay',
+			{ mode: 'number', text: 'CONFIDENTIAL' },
+			{ files: [original] },
+		);
+		expect(overlay.artifacts?.[0]?.filename).toBe('annotated.pdf');
+		const stripped = await run('pdf-inspector', { mode: 'strip' }, { files: [original] });
+		const strippedFile = stripped.artifacts?.[0];
+		if (!strippedFile) {
+			throw new Error('Stripped PDF missing');
+		}
+		expect(
+			(await PDFDocument.load(await strippedFile.blob.arrayBuffer())).getAuthor(),
+		).toBeUndefined();
+	});
 	it('checks contrast against known black/white ratio and generates fluid CSS', async () => {
 		const contrast = JSON.parse(
 			(await run('contrast', { foreground: '#000', background: '#fff' })).output,

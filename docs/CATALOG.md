@@ -28,15 +28,17 @@ AES usa AES-256-GCM, salt e IV aleatórios e PBKDF2-SHA256 com 310.000 iteraçõ
 
 ## Desenvolvimento e APIs
 
-Regex; formatadores SQL/XML/YAML/GraphQL; XML Validator; Cron Builder/Parser; HTTP Status; HTTP Headers; URL Parser; cURL; JSON Patch; OpenAPI Viewer/Diff; assinatura de webhook; Semver; Text Diff.
+Regex; formatadores SQL/XML/YAML/GraphQL; XML Validator; Cron Builder/Parser; HTTP Status; HTTP Headers; URL Parser; cURL; JSON Patch; OpenAPI Viewer/Diff; assinatura de webhook; Semver; JSON → classes C#; .NET Ticks; GUID Formatter; C# String Escape; PascalCase/camelCase; Text Diff.
 
 XML Validator verifica boa formação, sem XSD. DOCTYPE/ENTITY são rejeitados. OpenAPI aceita Swagger 2.0/3.x, mostra operações e compara estruturas; não busca referências externas nem certifica compatibilidade retroativa. Webhooks oferecem HMAC SHA-256 genérico e formatos GitHub/Stripe. Cron informa as próximas dez ocorrências com fuso IANA. cURL gera comandos POSIX e não executa requisições.
 
-## Banco de dados e .NET
+Ticks .NET preservam precisão de 100 ns com BigInt. GUID Formatter aceita os formatos D/N/B/P/X.
 
-SQL DDL → C#; JSON → classes C#; SQL INSERT; Database Seed; Connection Strings; .NET Ticks; GUID Formatter; C# String Escape; PascalCase/camelCase; SQL Schema Diff.
+## Banco de dados e SQL
 
-DDL e schema diff aceitam CREATE TABLE PostgreSQL; tipos sem mapeamento geram erro explícito. SQL usa identificadores entre aspas duplas e literais escapados. Connection strings suportam SQL Server, PostgreSQL/Npgsql, MySQL/MySqlConnector e SQLite. Ticks preservam precisão de 100 ns com BigInt. GUID Formatter aceita os formatos D/N/B/P/X.
+SQL DDL → C#; SQL INSERT; Database Seed; Connection Strings; SQL Schema Diff.
+
+DDL e schema diff aceitam CREATE TABLE PostgreSQL; tipos sem mapeamento geram erro explícito. SQL usa identificadores entre aspas duplas e literais escapados. Connection strings suportam SQL Server, PostgreSQL/Npgsql, MySQL/MySqlConnector e SQLite.
 
 ## Ferramentas brasileiras
 
@@ -54,9 +56,15 @@ Kubernetes inclui schemas estritos locais da versão 1.35.0 para Pod, Service, C
 
 ## Texto e arquivos
 
-Case Converter; contagem de palavras/caracteres; remover duplicadas; ordenar linhas; Text Diff; Slug; CSV Cleaner; SVG Optimizer; conversão/compressão de imagem; EXIF; metadados de PDF; PDF Merge/Split; inspeção de assinatura de arquivo.
+Case Converter; contagem de palavras/caracteres; remover duplicadas; ordenar linhas; Text Diff; Slug; CSV Cleaner; SVG Optimizer; conversão/compressão de imagem; EXIF; inspeção de assinatura de arquivo.
 
-Imagens raster usam os codecs do navegador, com saída PNG/JPEG/WebP; animação e metadados não são preservados. A compressão pode produzir arquivo maior e informa os tamanhos. SVG é sanitizado antes da otimização e da prévia. PDFs podem ser unidos, ter páginas extraídas ou ser divididos em ZIP; limite de 300 páginas, sem suporte a documentos criptografados ou preservação de assinaturas digitais. File Signature Inspector identifica magic bytes, sem análise de malware.
+Imagens raster usam os codecs do navegador, com saída PNG/JPEG/WebP; animação e metadados não são preservados. A compressão pode produzir arquivo maior e informa os tamanhos. SVG é sanitizado antes da otimização e da prévia. File Signature Inspector identifica magic bytes, sem análise de malware.
+
+## PDF
+
+Leitura de metadados; união, extração, divisão, reordenação, exclusão e rotação de páginas; conversão PNG/JPEG para PDF; extração de texto para JSON; exportação de páginas PNG; compressão JPEG com rasterização; criação, inspeção e preenchimento de AcroForms; numeração; marca-d’água; comparação estrutural; remoção de metadados; tentativa de regravação de PDFs legíveis.
+
+Operações de páginas limitadas a 300 páginas e sem suporte a documentos criptografados ou preservação de assinaturas digitais. Rasterizar remove texto selecionável, formulários, links e assinaturas. A comparação verifica estrutura, dimensões, metadados e campos, sem diff visual. O inspetor detecta declarações PDF/A e campos de assinatura, mas não valida conformidade ou validade criptográfica. A regravação não recupera danos arbitrários.
 
 ## CSS e frontend
 

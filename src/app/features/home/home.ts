@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PreferencesService } from '@app/core/services/preferences';
 import { TranslationSearch } from '@app/core/services/translation-search';
-import { CATEGORIES, findTools, TOOLS } from '@app/features/tools/catalog/tools';
+import { CATEGORIES, findTools, PDF_TOOL_GROUPS, TOOLS } from '@app/features/tools/catalog/tools';
 
 import { ToolCard } from '@app/features/tools/catalog/tool-card/tool-card';
 import { Icon } from '@app/shared/components/icon';
@@ -71,13 +71,21 @@ export class Home {
 		return searched;
 	});
 	protected readonly groups = computed(() =>
-		this.mode === 'all' && !this.query()
-			? CATEGORIES.map((category) => ({
-					id: category.id,
-					name: this.transloco.translate(category.name, {}, this.translationState().locale),
-					tools: this.filtered().filter((tool) => tool.category === category.id),
+		this.mode === 'category' && this.category()?.id === 'pdf' && !this.query()
+			? PDF_TOOL_GROUPS.map((group) => ({
+					id: group.id,
+					name: this.transloco.translate(group.name, {}, this.translationState().locale),
+					tools: this.filtered().filter((tool) =>
+						group.toolIds.some((toolId) => toolId === tool.id),
+					),
 				})).filter((group) => group.tools.length)
-			: [{ id: 'results', name: '', tools: this.filtered() }],
+			: this.mode === 'all' && !this.query()
+				? CATEGORIES.map((category) => ({
+						id: category.id,
+						name: this.transloco.translate(category.name, {}, this.translationState().locale),
+						tools: this.filtered().filter((tool) => tool.category === category.id),
+					})).filter((group) => group.tools.length)
+				: [{ id: 'results', name: '', tools: this.filtered() }],
 	);
 	protected readonly emptyTitle = computed(() =>
 		this.mode === 'category' && !this.category()

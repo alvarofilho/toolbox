@@ -152,13 +152,17 @@
 					</h2>
 				}
 				<p>
-					{{
-						mode === 'favorites'
-							? ('common.your_shortcut_to_what_matters_use_the_star' | transloco)
-							: mode === 'recent'
-								? ('common.only_visited_tools_your_inputs_are_never_s' | transloco)
-								: ('common.small_tools_big_shortcuts_all_in_your_brow' | transloco)
-					}}
+					@if (mode === 'category' && category()?.id === 'pdf' && !query()) {
+						{{ 'categories.pdf_tools_description' | transloco }}
+					} @else {
+						{{
+							mode === 'favorites'
+								? ('common.your_shortcut_to_what_matters_use_the_star' | transloco)
+								: mode === 'recent'
+									? ('common.only_visited_tools_your_inputs_are_never_s' | transloco)
+									: ('common.small_tools_big_shortcuts_all_in_your_brow' | transloco)
+						}}
+					}
 				</p>
 			</div>
 			@if (mode === 'recent' && p.recent().length) {

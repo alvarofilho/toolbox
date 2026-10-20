@@ -10,6 +10,11 @@ export const CATEGORIES = [
 		icon: 'arrows',
 	},
 	{
+		id: 'pdf',
+		name: 'categories.pdf_tools',
+		icon: 'document',
+	},
+	{
 		id: 'generators',
 		name: 'categories.generators',
 		icon: 'spark',
@@ -38,7 +43,7 @@ export const CATEGORIES = [
 	{ id: 'mercosur', name: 'categories.mercosur', icon: 'document' },
 	{
 		id: 'database',
-		name: 'categories.databases_net',
+		name: 'categories.databases_sql',
 		icon: 'building',
 	},
 	{
@@ -54,3 +59,15 @@ export const CATEGORIES = [
 ] as const;
 
 export type ToolCategory = (typeof CATEGORIES)[number]['id'];
+
+export const PDF_TOOL_GROUPS = [
+	{ id: 'pages', name: 'categories.pdf_pages', toolIds: ['pdf-pages'] },
+	{ id: 'conversion', name: 'categories.pdf_conversion', toolIds: ['pdf-convert'] },
+	{ id: 'forms', name: 'categories.pdf_forms', toolIds: ['pdf-forms'] },
+	{ id: 'markups', name: 'categories.pdf_markups', toolIds: ['pdf-overlay'] },
+	{
+		id: 'inspection',
+		name: 'categories.pdf_inspection',
+		toolIds: ['pdf-metadata', 'pdf-inspector'],
+	},
+] as const;

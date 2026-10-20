@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { TOOLS, findTools, CATEGORIES } from '@app/features/tools/catalog/tools';
+import { TOOLS, findTools, CATEGORIES, PDF_TOOL_GROUPS } from '@app/features/tools/catalog/tools';
 import { yamlToJson } from '@app/features/tools/json/json-yaml.tool';
 import { presentDefinition } from '@app/features/tools/workbench/presentation';
 import pt from '@app/i18n/pt.json';
@@ -79,6 +79,44 @@ describe('tool catalog', () => {
 			expect((await tool.loadDefinition()).id).toBe(tool.id);
 		}
 	}, 15000);
+	it('groups every PDF utility in its own category', () => {
+		const pdfTools = TOOLS.filter((tool) => tool.category === 'pdf');
+		expect(pdfTools.map((tool) => tool.id)).toEqual([
+			'pdf-metadata',
+			'pdf-pages',
+			'pdf-convert',
+			'pdf-forms',
+			'pdf-overlay',
+			'pdf-inspector',
+		]);
+		expect(PDF_TOOL_GROUPS.flatMap((group) => group.toolIds).sort()).toEqual(
+			pdfTools.map((tool) => tool.id).sort(),
+		);
+	});
+	it('groups SQL tools separately from C# and .NET development tools', () => {
+		const databaseTools = TOOLS.filter((tool) => tool.category === 'database').map(
+			(tool) => tool.id,
+		);
+		const developmentTools = TOOLS.filter((tool) => tool.category === 'development').map(
+			(tool) => tool.id,
+		);
+		expect(databaseTools).toEqual([
+			'ddl-csharp',
+			'sql-insert',
+			'database-seed',
+			'connection-string',
+			'sql-schema-diff',
+		]);
+		expect(developmentTools).toEqual(
+			expect.arrayContaining([
+				'json-csharp',
+				'dotnet-ticks',
+				'guid-formatter',
+				'csharp-escape',
+				'pascal-camel',
+			]),
+		);
+	});
 	it('searches names, descriptions, categories and accent-insensitive keywords', () => {
 		expect(
 			findTools('alfanumerico', (key) =>

@@ -553,6 +553,10 @@ app-tool-card {
 	background: light-dark(#f5ebe5, #3b3029);
 	color: light-dark(#956247, #e2b59b);
 }
+.tool-icon[data-category='pdf'] {
+	background: light-dark(#e9f0ed, #293a34);
+	color: light-dark(#356653, #a8d1bc);
+}
 .favorite-button {
 	position: absolute;
 	top: 8px;
@@ -799,10 +803,16 @@ app-tool-card {
 	margin-top: 2px;
 }
 .workbench {
+	container-type: inline-size;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
 	align-items: start;
 	gap: 22px;
+}
+@container (min-width: 782px) {
+	.workbench:not(.workbench-diff) .jump-result {
+		display: none;
+	}
 }
 .workspace-panel {
 	min-width: 0;

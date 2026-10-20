@@ -188,4 +188,59 @@ export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 
 		loadDefinition: () => import('../development/semver.tool').then((module) => module.definition),
 	},
+	{
+		id: 'json-csharp',
+		category: 'development',
+		name: 'tools.json-csharp.json_to_c_classes',
+		description: 'tools.json-csharp.generate_c_classes_from_json_object_struct',
+		icon: 'code',
+		keywords: '',
+		available: true,
+		loadDefinition: () =>
+			import('../database/json-csharp.tool').then((module) => module.definition),
+	},
+	{
+		id: 'dotnet-ticks',
+		category: 'development',
+		name: 'tools.dotnet-ticks.net_ticks_converter',
+		description: 'tools.dotnet-ticks.convert_iso_dates_and_net_ticks_with_100_n',
+		icon: 'code',
+		keywords: '',
+		available: true,
+		loadDefinition: () =>
+			import('../database/dotnet-ticks.tool').then((module) => module.definition),
+	},
+	{
+		id: 'guid-formatter',
+		category: 'development',
+		name: 'tools.guid-formatter.guid_formatter',
+		description: 'tools.guid-formatter.reformat_guids_between_d_n_b_p_and_x_forma',
+		icon: 'code',
+		keywords: '',
+		available: true,
+		loadDefinition: () =>
+			import('../database/guid-formatter.tool').then((module) => module.definition),
+	},
+	{
+		id: 'csharp-escape',
+		category: 'development',
+		name: 'tools.csharp-escape.c_string_escape',
+		description: 'tools.csharp-escape.escape_text_for_regular_or_verbatim_c_stri',
+		icon: 'code',
+		keywords: '',
+		available: true,
+		loadDefinition: () =>
+			import('../database/csharp-escape.tool').then((module) => module.definition),
+	},
+	{
+		id: 'pascal-camel',
+		category: 'development',
+		name: 'tools.pascal-camel.pascalcase_camelcase_converter',
+		description: 'tools.pascal-camel.convert_names_between_pascalcase_and_camel',
+		icon: 'code',
+		keywords: '',
+		available: true,
+		loadDefinition: () =>
+			import('../database/pascal-camel.tool').then((module) => module.definition),
+	},
 ];

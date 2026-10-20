@@ -14,7 +14,7 @@ import { DATABASE_TOOLS } from '@app/features/tools/catalog/database.catalog';
 import { INFRASTRUCTURE_TOOLS } from '@app/features/tools/catalog/infrastructure.catalog';
 import { FRONTEND_TOOLS } from '@app/features/tools/catalog/frontend.catalog';
 
-export { CATEGORIES } from '@app/features/tools/catalog/categories';
+export { CATEGORIES, PDF_TOOL_GROUPS } from '@app/features/tools/catalog/categories';
 
 export const TOOLS: readonly ToolRegistration[] = [
 	...JSON_TOOLS,

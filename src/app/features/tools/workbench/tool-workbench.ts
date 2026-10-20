@@ -74,8 +74,16 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.tool().controls.filter((control) => visibleControl(control, this.values())),
 	);
 	protected readonly automatic = computed(() => this.tool().execution === 'automatic');
+	protected readonly isPasswordTool = computed(() => this.tool().id === 'password');
 	protected readonly action = computed(() => {
 		const mode = this.values()['mode'];
+		if (this.isPasswordTool()) {
+			return this.transloco.translate(
+				'tools.password.generate_password',
+				{},
+				this.translationState().locale,
+			);
+		}
 		if (this.tool().id === 'aes') {
 			return mode === 'decrypt'
 				? this.transloco.translate('common.decrypt', {}, this.translationState().locale)

@@ -234,12 +234,19 @@
 			<div class="output-actions">
 				<button
 					type="button"
-					class="btn btn-ghost btn-sm"
+					class="btn btn-sm"
+					[class.btn-ghost]="!isPasswordTool()"
+					[class.btn-primary]="isPasswordTool()"
 					(click)="copy()"
 					[disabled]="!result() || stale()"
+					[attr.aria-label]="isPasswordTool() ? ('tools.password.copy_password' | transloco) : null"
 				>
 					<app-icon name="copy" />
-					{{ 'common.copy' | transloco }}
+					{{
+						isPasswordTool()
+							? ('tools.password.copy_password' | transloco)
+							: ('common.copy' | transloco)
+					}}
 				</button>
 				<button
 					type="button"
@@ -369,8 +376,13 @@
 				} @else {
 					<pre
 						class="result-code"
+						[class.password-result]="isPasswordTool()"
 						tabindex="0"
-						[attr.aria-label]="'common.result_text' | transloco"
+						[attr.aria-label]="
+							isPasswordTool()
+								? ('tools.password.generated_password' | transloco)
+								: ('common.result_text' | transloco)
+						"
 						[textContent]="result.output"
 					></pre>
 				}
@@ -396,7 +408,9 @@
 					{{
 						definition().id === 'dns-lookup'
 							? ('tools.dns-lookup.dns_empty_state' | transloco)
-							: ('common.fill_in_the_fields_and_run_the_tool_everyt' | transloco)
+							: isPasswordTool()
+								? ('tools.password.empty_state' | transloco)
+								: ('common.fill_in_the_fields_and_run_the_tool_everyt' | transloco)
 					}}
 				</p>
 			</div>

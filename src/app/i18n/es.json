@@ -3,15 +3,22 @@
 		"brazilian_tools": "Herramientas brasileñas",
 		"cryptography_security": "Criptografía y seguridad",
 		"css_frontend": "CSS y frontend",
-		"databases_net": "Bases de datos y .NET",
-		"development": "Desarrollo",
+		"databases_sql": "Bases de datos y SQL",
+		"development": "Desarrollo y APIs",
 		"converters": "Conversores",
 		"general_utilities": "Utilidades generales",
 		"generators": "Generadores",
 		"json_data": "JSON y datos",
 		"mercosur": "Mercosur",
 		"networks_infrastructure": "Redes e infraestructura",
-		"text": "Texto"
+		"text": "Texto",
+		"pdf_tools": "Herramientas de PDF",
+		"pdf_tools_description": "Organiza páginas, convierte archivos y trabaja con formularios PDF en el navegador.",
+		"pdf_pages": "Organizar páginas",
+		"pdf_conversion": "Convertir y reducir",
+		"pdf_forms": "Crear y rellenar formularios",
+		"pdf_markups": "Numeración y marca de agua",
+		"pdf_inspection": "Inspeccionar y limpiar"
 	},
 	"common": {
 		"10": "10",
@@ -1107,6 +1114,10 @@
 			"pascalcase_camelcase_converter": "Conversor PascalCase / camelCase"
 		},
 		"password": {
+			"copy_password": "Copiar contraseña",
+			"empty_state": "Genera una contraseña para verla aquí.",
+			"generate_password": "Generar contraseña",
+			"generated_password": "Contraseña generada",
 			"generate_strong_passwords_with_your_rules": "Genera contraseñas seguras con tus reglas.",
 			"length": "Longitud",
 			"lowercase_title": "Minúsculas",
@@ -1140,6 +1151,46 @@
 			"rotate_pages": "Girar páginas",
 			"rotation": "Rotación",
 			"split_pages_into_files": "Separar páginas en archivos"
+		},
+		"pdf-convert": {
+			"pdf_convert": "Convertidor de PDF",
+			"converts_images_extracts_text_renders_pages_or_rasterizes": "Convierte imágenes, extrae texto, exporta páginas como PNG o rasteriza para reducir el tamaño.",
+			"operation": "Operación",
+			"images_to_pdf": "Imágenes a PDF",
+			"extract_text": "Extraer texto a JSON",
+			"export_pages_as_png": "Exportar páginas como PNG",
+			"rasterize_compress": "Reducir tamaño (rasterizar)",
+			"jpeg_quality": "Calidad JPEG",
+			"low": "Baja",
+			"medium": "Media",
+			"high": "Alta",
+			"rasterized_warning": "La compresión rasteriza las páginas y elimina texto seleccionable, formularios, enlaces y firmas."
+		},
+		"pdf-forms": {
+			"pdf_forms": "Formularios PDF",
+			"inspect_fill_or_create_simple_acroforms": "Inspecciona, rellena o crea formularios AcroForm simples en el navegador.",
+			"operation": "Operación",
+			"inspect_fields": "Listar campos",
+			"fill_existing": "Rellenar formulario existente",
+			"create_form": "Crear formulario rellenable",
+			"json_data": "Definiciones de campos o valores JSON"
+		},
+		"pdf-overlay": {
+			"pdf_annotations": "Numeración y marca de agua",
+			"adds_page_numbers_or_a_text_watermark": "Añade numeración o una marca de agua de texto a las páginas.",
+			"operation": "Operación",
+			"page_numbers": "Numerar páginas",
+			"watermark": "Marca de agua",
+			"text": "Texto de la marca de agua"
+		},
+		"pdf-inspector": {
+			"pdf_inspector": "Inspección y limpieza de PDF",
+			"inspects_pdfa_claims_signatures_structure_metadata_and_compares_files": "Inspecciona la estructura, campos de firma y declaraciones PDF/A; compara archivos, elimina metadatos o intenta reescribir PDF legibles.",
+			"operation": "Operación",
+			"inspect_validate": "Inspeccionar y comparar",
+			"remove_metadata": "Eliminar metadatos",
+			"resave_repair": "Intentar reescribir archivo legible",
+			"repair_limit": "La reescritura es un intento limitado y no recupera daños arbitrarios."
 		},
 		"pem": {
 			"inspect_pem_blocks_and_their_encoded_data": "Inspecciona bloques PEM y sus datos codificados.",
