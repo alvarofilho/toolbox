@@ -54,7 +54,10 @@ export const definition = tool(
 		let pdf: Awaited<ReturnType<typeof getDocument>['promise']>;
 		try {
 			pdf = await getDocument({ data: new Uint8Array(await files[0].arrayBuffer()) }).promise;
-		} catch {
+		} catch (error: unknown) {
+			if (error instanceof Error && error.name === 'AbortError') {
+				throw error;
+			}
 			throw new TranslatedToolError('tools.pdf-convert.invalid_pdf', {}, 'files');
 		}
 		if (pdf.numPages > 100) {

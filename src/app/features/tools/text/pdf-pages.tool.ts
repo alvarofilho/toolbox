@@ -54,7 +54,10 @@ export const definition = tool(
 			docs = await Promise.all(
 				selected.map((f) => f.arrayBuffer().then((b) => PDFDocument.load(b))),
 			);
-		} catch {
+		} catch (error: unknown) {
+			if (error instanceof Error && error.name === 'AbortError') {
+				throw error;
+			}
 			throw new TranslatedToolError('tools.pdf-pages.invalid_pdf', {}, 'files');
 		}
 		if (docs.reduce((n, p) => n + p.getPageCount(), 0) > 300) {

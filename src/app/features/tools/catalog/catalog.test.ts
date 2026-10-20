@@ -216,6 +216,18 @@ describe('JSON tools', () => {
 			fieldKey: 'files',
 		});
 	});
+	it('preserves JSON parse errors and associates invalid JSONPath with its path field', async () => {
+		await expect(run('jsonpath', { input: '{bad', path: '$.items[*]' })).rejects.toMatchObject({
+			translationKey: 'common.json_syntax_error',
+			fieldKey: 'input',
+		});
+		await expect(
+			run('jsonpath', { input: '{"items":[]}', path: '$[?(@.a = 1)]' }),
+		).rejects.toMatchObject({
+			translationKey: 'tools.jsonpath.invalid_expression',
+			fieldKey: 'path',
+		});
+	});
 	it('formats and validates JSON', async () => {
 		expect((await run('json-formatter', { input: '{"a":1}', indent: '2' })).output).toBe(
 			'{\n  "a": 1\n}',
