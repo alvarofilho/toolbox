@@ -60,11 +60,14 @@ export class Home {
 		JSON.stringify(JSON.parse(this.exampleInput()), null, 2).split('\n'),
 	);
 	protected readonly filtered = computed(() => {
-		const searched = findTools(
-			this.query(),
-			(value) =>
-				`${this.translationSearch.text(value)} ${this.transloco.translate(value, {}, this.translationState().locale)}`,
-		);
+		const query = this.query();
+		const searched = query
+			? findTools(
+					query,
+					(value) =>
+						`${this.translationSearch.text(value)} ${this.transloco.translate(value, {}, this.translationState().locale)}`,
+				)
+			: TOOLS.filter((tool) => tool.available);
 		if (this.mode === 'favorites') {
 			return searched.filter((t) => this.p.favorites().includes(t.id));
 		}
@@ -148,8 +151,18 @@ export class Home {
 						)
 					: this.transloco.translate('common.all_tools', {}, this.translationState().locale),
 	);
+
+	constructor() {
+		if (this.query().trim()) {
+			void this.translationSearch.loadSearchIndex();
+		}
+	}
+
 	protected search(event: Event): void {
 		if (event.target instanceof HTMLInputElement) {
+			if (event.target.value.trim()) {
+				void this.translationSearch.loadSearchIndex();
+			}
 			void this.router.navigate([], {
 				relativeTo: this.route,
 				queryParams: { q: event.target.value || null },

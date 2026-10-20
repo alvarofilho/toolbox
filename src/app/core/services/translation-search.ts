@@ -28,10 +28,7 @@ function indexTranslations(
 export class TranslationSearch {
 	private readonly loader = inject(ToolboxTranslocoLoader);
 	private readonly indexes = signal<readonly ReadonlyMap<string, string>[]>([]);
-
-	constructor() {
-		void this.load();
-	}
+	private loading?: Promise<void>;
 
 	text(key: TranslationKey): string {
 		return this.indexes()
@@ -39,10 +36,14 @@ export class TranslationSearch {
 			.join(' ');
 	}
 
-	private async load(): Promise<void> {
-		const dictionaries = await Promise.all(
-			['pt', 'en', 'es'].map((locale) => this.loader.getTranslation(locale)),
-		);
-		this.indexes.set(dictionaries.map((dictionary) => indexTranslations(dictionary)));
+	loadSearchIndex(): Promise<void> {
+		if (!this.loading) {
+			this.loading = Promise.all(
+				['pt', 'en', 'es'].map((locale) => this.loader.getTranslation(locale)),
+			).then((dictionaries) => {
+				this.indexes.set(dictionaries.map((dictionary) => indexTranslations(dictionary)));
+			});
+		}
+		return this.loading;
 	}
 }
