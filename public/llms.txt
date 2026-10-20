@@ -1,0 +1,25 @@
+# Toolbox
+
+> Bancada gratuita e open source de ferramentas online para desenvolvedores, QA e profissionais de TI. O processamento acontece localmente no navegador; entradas e arquivos não são enviados a um servidor.
+
+As ferramentas incluem geradores, utilitários para JSON e dados, conversores, segurança, desenvolvimento, documentos brasileiros, redes, bancos de dados e frontend. CPF/CNPJ são validados estruturalmente, sem consulta a cadastros; dados gerados são sintéticos.
+
+## Páginas principais
+
+- [Página inicial e catálogo de ferramentas](https://toolbox.alvaro.dev.br/): pesquise ferramentas por nome, categoria ou palavra-chave.
+- [Sitemap](https://toolbox.alvaro.dev.br/sitemap.xml): lista completa das páginas públicas de categorias e ferramentas.
+
+## Categorias
+
+- [JSON e dados](https://toolbox.alvaro.dev.br/category/json)
+- [Conversores](https://toolbox.alvaro.dev.br/category/converters)
+- [Geradores](https://toolbox.alvaro.dev.br/category/generators)
+- [Criptografia e segurança](https://toolbox.alvaro.dev.br/category/security)
+- [Desenvolvimento](https://toolbox.alvaro.dev.br/category/development)
+- [Utilitários gerais](https://toolbox.alvaro.dev.br/category/utilities)
+- [Texto](https://toolbox.alvaro.dev.br/category/text)
+- [Ferramentas brasileiras](https://toolbox.alvaro.dev.br/category/brazilian)
+- [Mercosul](https://toolbox.alvaro.dev.br/category/mercosur)
+- [Banco de dados e .NET](https://toolbox.alvaro.dev.br/category/database)
+- [Redes e infraestrutura](https://toolbox.alvaro.dev.br/category/infrastructure)
+- [CSS e frontend](https://toolbox.alvaro.dev.br/category/frontend)

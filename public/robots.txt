@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://toolbox.alvaro.dev.br/sitemap.xml
+Agentmap: https://toolbox.alvaro.dev.br/.well-known/ard.json
