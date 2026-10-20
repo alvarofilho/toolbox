@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1440 900" role="img" aria-labelledby="title desc">
 <title id="title">CSV para JSON com opção de transferir resultado</title><desc id="desc">Tela ilustrativa da bancada Toolbox exibindo a conversão de CSV e o menu Abrir resultado em com JSON Formatter como destino compatível.</desc>
 <rect width="1440" height="900" fill="#f5f7fb"/><rect width="1440" height="68" fill="#fff"/><path d="M0 67.5h1440" stroke="#e4e8ef"/>
 <g font-family="Inter,Segoe UI,Arial,sans-serif" fill="#172033"><text x="48" y="43" font-size="23" font-weight="700">Toolbox</text><text x="178" y="42" font-size="14" fill="#667085">Ferramentas</text><text x="285" y="42" font-size="14" fill="#667085">Conversores</text><text x="1228" y="42" font-size="13" fill="#667085">PT　 EN　 ES</text>
@@ -8,3 +8,4 @@
 <text x="743" y="292" font-size="17" font-weight="650">Resultado</text><rect x="1152" y="266" width="192" height="40" rx="8" fill="#fff" stroke="#d4dbe6"/><text x="1248" y="291" text-anchor="middle" font-size="13" font-weight="600">Abrir resultado em…</text><rect x="1096" y="316" width="248" height="54" rx="9" fill="#fff" stroke="#dbe1ea"/><text x="1116" y="349" font-size="14">JSON Formatter</text>
 <rect x="743" y="328" width="577" height="372" rx="9" fill="#fbfcfe" stroke="#dbe1ea"/><g font-family="Consolas,monospace" font-size="16" fill="#243047"><text x="770" y="370">[</text><text x="795" y="403">{</text><text x="820" y="436">"id": "1",</text><text x="820" y="469">"name": "Ana"</text><text x="795" y="502">},</text><text x="795" y="535">{</text><text x="820" y="568">"id": "2",</text><text x="820" y="601">"name": "Bruno"</text><text x="795" y="634">}</text><text x="770" y="667">]</text></g>
 <text x="743" y="758" font-size="13" fill="#667085">Resultado processado localmente no navegador</text></g></svg>
+
