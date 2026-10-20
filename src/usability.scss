@@ -75,7 +75,7 @@
 	height: 360px;
 }
 .tool-preview.dns-preview.dns-preview-all {
-	height: 1580px;
+	height: min(80dvh, 900px);
 }
 .text-report {
 	border-top: 1px solid var(--line);
@@ -225,11 +225,6 @@
 	.result-notice,
 	.action-feedback {
 		font-size: 14px;
-	}
-}
-@media (max-width: 560px) {
-	.tool-preview.dns-preview.dns-preview-all {
-		height: 1800px;
 	}
 }
 @media (max-width: 600px) {
