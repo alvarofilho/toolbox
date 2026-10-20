@@ -127,7 +127,12 @@ function createPage(template, { path, title, description, type = 'website' }) {
 	return html;
 }
 
-const template = await readFile(join(outputPath, 'index.html'), 'utf8');
+const indexPath = join(outputPath, 'index.html');
+const template = (await readFile(indexPath, 'utf8')).replace(
+	/<script(?=[^>]*\bsrc=)(?![^>]*\bdata-cfasync=)/gi,
+	'<script data-cfasync="false"',
+);
+await writeFile(indexPath, template);
 const tools = await readTools();
 const categories = await readCategories();
 const pages = [
