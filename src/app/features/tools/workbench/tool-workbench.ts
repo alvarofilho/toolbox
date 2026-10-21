@@ -432,7 +432,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			return;
 		}
 		this.cancelPending();
-		this.values.update((values) => ({ ...values, ...preset.values }));
+		this.toolForm.patchValue(preset.values, { emitEvent: false });
+		this.syncValues();
 		this.fieldErrors.set({});
 		this.error.set('');
 		this.stale.set(!!this.result());

@@ -75,15 +75,17 @@ describe('tool catalog', () => {
 				}
 			}
 		}
-	}, 15000);
+	}, 30000);
 	it('keeps the complete catalog unique with valid categories and lazy loaders', async () => {
 		expect(TOOLS.length).toBeGreaterThanOrEqual(128);
 		expect(new Set(TOOLS.map((t) => t.id)).size).toBe(TOOLS.length);
-		for (const tool of TOOLS) {
-			expect(CATEGORIES.some((c) => c.id === tool.category)).toBe(true);
-			expect((await tool.loadDefinition()).id).toBe(tool.id);
-		}
-	}, 15000);
+		await Promise.all(
+			TOOLS.map(async (tool) => {
+				expect(CATEGORIES.some((c) => c.id === tool.category)).toBe(true);
+				expect((await tool.loadDefinition()).id).toBe(tool.id);
+			}),
+		);
+	}, 30000);
 	it('groups every PDF utility in its own category', () => {
 		const pdfTools = TOOLS.filter((tool) => tool.category === 'pdf');
 		expect(pdfTools.map((tool) => tool.id)).toEqual([

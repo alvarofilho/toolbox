@@ -443,6 +443,16 @@
 		"your_toolkit_to_transform_data_test_ideas_": "Seu kit de ferramentas para transformar dados, testar ideias e simplificar o dia a dia."
 	},
 	"tools": {
+		"batch-text": {
+			"name": "Conversor de arquivos de texto em lote",
+			"description": "Formate, compacte JSON ou converta CSV para JSON em um ZIP para baixar.",
+			"files": "Arquivos (até 20; 20 MB cada, 50 MB no total)",
+			"transformation": "Transformação",
+			"json_format": "Formatar JSON",
+			"json_minify": "Compactar JSON",
+			"csv_to_json": "CSV para JSON",
+			"process_and_download_zip": "Processar arquivos e baixar ZIP"
+		},
 		"address": {
 			"ac": "AC",
 			"address_generator": "Gerador de endereços",
