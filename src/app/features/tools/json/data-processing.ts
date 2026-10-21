@@ -2,12 +2,17 @@ import { Validator } from 'jsonschema';
 import { JSONPath } from 'jsonpath-plus';
 import { generateSync, type JsonSchema } from 'json-schema-faker';
 import { object, json } from '@app/features/tools/_shared/data';
+import { TranslatedToolError } from '@app/core/models/tool';
 
 export type DataTask = 'schema' | 'path' | 'faker' | 'kubernetes';
 export function processData(task: DataTask, input: string, second: string): unknown {
 	const value = json(input);
 	if (task === 'path') {
-		return JSONPath({ path: second, json: value as object, eval: 'safe' });
+		try {
+			return JSONPath({ path: second, json: value as object, eval: 'safe' });
+		} catch {
+			throw new TranslatedToolError('tools.jsonpath.invalid_expression', {}, 'path');
+		}
 	} // JSONPath accepts primitives at runtime as well.
 	const schema = object(task === 'schema' || task === 'kubernetes' ? json(second) : value);
 	const validator = new Validator();

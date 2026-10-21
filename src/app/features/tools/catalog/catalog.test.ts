@@ -6,6 +6,8 @@ import pt from '@app/i18n/pt.json';
 import en from '@app/i18n/en.json';
 import es from '@app/i18n/es.json';
 import type { TranslationKey } from '@app/core/models/tool';
+import { json, jsonErrorLocation } from '@app/features/tools/_shared/data';
+import { TranslatedToolError } from '@app/core/models/tool';
 
 function isTranslationObject(value: unknown): value is Readonly<Record<string, unknown>> {
 	return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -149,6 +151,96 @@ describe('tool catalog', () => {
 	});
 });
 describe('JSON tools', () => {
+	it('reports parser-provided JSON syntax locations and translates errors in every locale', () => {
+		expect(jsonErrorLocation('Unexpected token at position 5', '{\n"a":}')).toEqual({
+			line: 2,
+			column: 4,
+		});
+		expect(jsonErrorLocation('Unexpected token near input', '{"a":}')).toBeUndefined();
+		let error: unknown;
+		try {
+			json('{\n  "name": }');
+		} catch (caught: unknown) {
+			error = caught;
+		}
+		expect(error).toBeInstanceOf(TranslatedToolError);
+		if (!(error instanceof TranslatedToolError)) {
+			return;
+		}
+		expect(['common.json_syntax_error', 'common.json_syntax_error_generic']).toContain(
+			error.translationKey,
+		);
+		expect(error.fieldKey).toBe('input');
+		if (error.translationKey === 'common.json_syntax_error') {
+			expect(Number(error.params['line'])).toBeGreaterThan(0);
+			expect(Number(error.params['column'])).toBeGreaterThan(0);
+		}
+		const errorKeys = [
+			'common.json_object_required',
+			'common.json_syntax_error',
+			'common.json_syntax_error_generic',
+			'common.invalid_base64',
+			'common.select_files_to_continue',
+			'common.select_one_file_to_continue',
+			'common.file_size_or_count_limit',
+			'tools.jsonpath.invalid_expression',
+			'tools.jwt.invalid_token_format',
+			'tools.jwt.invalid_json_segment',
+			'tools.pdf-pages.invalid_operation',
+			'tools.pdf-pages.select_one_pdf_for_operation',
+			'tools.pdf-pages.invalid_pdf',
+			'tools.pdf-pages.page_limit',
+			'tools.pdf-pages.invalid_page_range',
+			'tools.pdf-pages.page_out_of_range',
+			'tools.pdf-pages.pages_required',
+			'tools.pdf-pages.keep_one_page',
+			'tools.pdf-pages.invalid_rotation',
+			'tools.pdf-convert.select_one_pdf',
+			'tools.pdf-convert.invalid_pdf',
+			'tools.pdf-convert.page_limit',
+			'tools.pdf-convert.canvas_unavailable',
+			'tools.pdf-convert.png_export_failed',
+			'tools.pdf-convert.compression_failed',
+			'tools.pdf-convert.invalid_operation',
+		] as const;
+		for (const dictionary of [pt, en, es]) {
+			for (const key of errorKeys) {
+				expect(translationAt(dictionary, key), key).toEqual(expect.any(String));
+			}
+			const template = String(translationAt(dictionary, 'common.json_syntax_error'));
+			expect(template.replace('{{line}}', '2').replace('{{column}}', '11')).toContain('2');
+			expect(String(translationAt(dictionary, 'common.json_syntax_error_generic'))).not.toContain(
+				'{{line}}',
+			);
+		}
+	});
+	it('keeps malformed JWT errors typed and file selection errors on the file field', async () => {
+		await expect(run('jwt', { input: 'not-a-jwt' })).rejects.toMatchObject({
+			translationKey: 'tools.jwt.invalid_token_format',
+			fieldKey: 'input',
+		});
+		const definition = await loadDefinition('pdf-pages');
+		await expect(
+			definition.run(
+				Object.fromEntries(definition.controls.map((control) => [control.key, control.value])),
+			),
+		).rejects.toMatchObject({
+			translationKey: 'common.select_files_to_continue',
+			fieldKey: 'files',
+		});
+	});
+	it('preserves JSON parse errors and associates invalid JSONPath with its path field', async () => {
+		await expect(run('jsonpath', { input: '{bad', path: '$.items[*]' })).rejects.toMatchObject({
+			translationKey: 'common.json_syntax_error',
+			fieldKey: 'input',
+		});
+		await expect(
+			run('jsonpath', { input: '{"items":[]}', path: '$[?(@.a = 1)]' }),
+		).rejects.toMatchObject({
+			translationKey: 'tools.jsonpath.invalid_expression',
+			fieldKey: 'path',
+		});
+	});
 	it('formats and validates JSON', async () => {
 		expect((await run('json-formatter', { input: '{"a":1}', indent: '2' })).output).toBe(
 			'{\n  "a": 1\n}',
@@ -203,15 +295,22 @@ describe('other tool definitions', () => {
 		expect((await run('text-diff', { input: 'a', second: 'b' })).output).toContain('+ b');
 	});
 	it('validates documents through tool definitions', async () => {
-		expect((await run('cpf', { mode: 'validate', input: '52998224725' })).output).toContain(
-			'Valid check',
-		);
-		expect((await run('cnpj', { mode: 'validate', input: '12ABC34501DE35' })).output).toContain(
-			'Valid check',
-		);
-		expect((await run('cpf', { mode: 'validate', input: '0' })).output).toContain(
-			'Invalid document',
-		);
+		expect(
+			JSON.parse((await run('cpf', { mode: 'validate', input: '52998224725' })).output),
+		).toEqual({
+			valid: true,
+			type: 'CPF',
+		});
+		expect(
+			JSON.parse((await run('cnpj', { mode: 'validate', input: '12ABC34501DE35' })).output),
+		).toEqual({
+			valid: true,
+			type: 'CNPJ',
+		});
+		expect(JSON.parse((await run('cpf', { mode: 'validate', input: '0' })).output)).toEqual({
+			valid: false,
+			type: 'CPF',
+		});
 	});
 	it('exports people in all three formats', async () => {
 		for (const format of ['json', 'csv', 'sql']) {

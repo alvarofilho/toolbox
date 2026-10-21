@@ -3,7 +3,7 @@ import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/legacy/build/pdf.mj
 import { tool, result } from '@app/features/tools/_shared/definition';
 import { select } from '@app/features/tools/_shared/controls';
 import { file, filesFrom } from '@app/features/tools/_shared/files';
-import { field } from '@app/core/models/tool';
+import { field, TranslatedToolError } from '@app/core/models/tool';
 
 GlobalWorkerOptions.workerSrc = new URL(
 	'pdfjs-dist/legacy/build/pdf.worker.mjs',
@@ -49,11 +49,19 @@ export const definition = tool(
 			};
 		}
 		if (files.length !== 1 || files[0].type !== 'application/pdf') {
-			throw new Error('Selecione um PDF / Select one PDF');
+			throw new TranslatedToolError('tools.pdf-convert.select_one_pdf', {}, 'files');
 		}
-		const pdf = await getDocument({ data: new Uint8Array(await files[0].arrayBuffer()) }).promise;
+		let pdf: Awaited<ReturnType<typeof getDocument>['promise']>;
+		try {
+			pdf = await getDocument({ data: new Uint8Array(await files[0].arrayBuffer()) }).promise;
+		} catch (error: unknown) {
+			if (error instanceof Error && error.name === 'AbortError') {
+				throw error;
+			}
+			throw new TranslatedToolError('tools.pdf-convert.invalid_pdf', {}, 'files');
+		}
 		if (pdf.numPages > 100) {
-			throw new Error('Máximo 100 páginas / Maximum 100 pages');
+			throw new TranslatedToolError('tools.pdf-convert.page_limit', {}, 'files');
 		}
 		if (mode === 'text') {
 			const pages: string[] = [];
@@ -78,7 +86,7 @@ export const definition = tool(
 				canvas.height = viewport.height;
 				const context = canvas.getContext('2d');
 				if (!context) {
-					throw new Error('Canvas indisponível / Canvas unavailable');
+					throw new TranslatedToolError('tools.pdf-convert.canvas_unavailable');
 				}
 				await page.render({ canvasContext: context, canvas, viewport }).promise;
 				const blob = await new Promise<Blob>((resolve, reject) =>
@@ -86,7 +94,7 @@ export const definition = tool(
 						(value) =>
 							value
 								? resolve(value)
-								: reject(new Error('Falha ao exportar PNG / PNG export failed')),
+								: reject(new TranslatedToolError('tools.pdf-convert.png_export_failed')),
 						'image/png',
 					),
 				);
@@ -104,13 +112,15 @@ export const definition = tool(
 				canvas.height = viewport.height;
 				const context = canvas.getContext('2d');
 				if (!context) {
-					throw new Error('Canvas indisponível / Canvas unavailable');
+					throw new TranslatedToolError('tools.pdf-convert.canvas_unavailable');
 				}
 				await page.render({ canvasContext: context, canvas, viewport }).promise;
 				const jpeg = await new Promise<Blob>((resolve, reject) =>
 					canvas.toBlob(
 						(value) =>
-							value ? resolve(value) : reject(new Error('Falha ao comprimir / Compression failed')),
+							value
+								? resolve(value)
+								: reject(new TranslatedToolError('tools.pdf-convert.compression_failed')),
 						'image/jpeg',
 						quality,
 					),
@@ -139,8 +149,8 @@ export const definition = tool(
 				],
 			};
 		}
-		throw new Error('Selecione uma operação válida / Select a valid operation');
+		throw new TranslatedToolError('tools.pdf-convert.invalid_operation', {}, 'mode');
 	},
 	undefined,
-	'tools.pdf-convert.converts_images_extracts_text_renders_pages_or_rasterizes',
+	'tools.pdf-convert.example_workflow',
 );

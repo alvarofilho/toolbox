@@ -1,6 +1,7 @@
 import { field, boundedNumber, type ToolDefinition } from '@app/core/models/tool';
 import { generateDocument, validDocument } from '@app/features/tools/brazilian/documents';
 import { input, select, number, check, synthetic } from '@app/features/tools/_shared/controls';
+import { result } from '@app/features/tools/_shared/definition';
 
 export function documentDefinition(kind: 'cpf' | 'cnpj'): ToolDefinition {
 	return {
@@ -25,11 +26,7 @@ export function documentDefinition(kind: 'cpf' | 'cnpj'): ToolDefinition {
 		example: { mode: 'validate', input: kind === 'cpf' ? '529.982.247-25' : '12.ABC.345/01DE-35' },
 		run: (v) =>
 			field(v, 'mode') === 'validate'
-				? {
-						output: validDocument(field(v, 'input'), kind)
-							? 'Dígitos verificadores válidos / Valid check digits'
-							: 'Documento inválido / Invalid document',
-					}
+				? result({ valid: validDocument(field(v, 'input'), kind), type: kind.toUpperCase() })
 				: {
 						output: Array.from({ length: boundedNumber(field(v, 'count'), 1, 1000) }, () =>
 							generateDocument(kind, field(v, 'alpha') === 'true', field(v, 'format') === 'true'),

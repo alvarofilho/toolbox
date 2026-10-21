@@ -1,4 +1,4 @@
-import { type ToolControl, type ToolFiles } from '@app/core/models/tool';
+import { TranslatedToolError, type ToolControl, type ToolFiles } from '@app/core/models/tool';
 
 export const file = (accept = '', multiple = false): ToolControl => ({
 	key: 'files',
@@ -12,14 +12,14 @@ export const file = (accept = '', multiple = false): ToolControl => ({
 export function filesFrom(files?: ToolFiles): readonly File[] {
 	const selected = files?.['files'] ?? [];
 	if (!selected.length) {
-		throw new Error('Selecione arquivos / Select files');
+		throw new TranslatedToolError('common.select_files_to_continue', {}, 'files');
 	}
 	if (
 		selected.length > 20 ||
 		selected.some((f) => f.size > 20 * 1024 * 1024) ||
 		selected.reduce((n, f) => n + f.size, 0) > 50 * 1024 * 1024
 	) {
-		throw new Error('Limite: 20 arquivos, 20 MB por arquivo, 50 MB no total / File limit exceeded');
+		throw new TranslatedToolError('common.file_size_or_count_limit', {}, 'files');
 	}
 	return selected;
 }
@@ -27,7 +27,7 @@ export function filesFrom(files?: ToolFiles): readonly File[] {
 export function firstFile(files?: ToolFiles): File {
 	const selected = filesFrom(files);
 	if (selected.length !== 1) {
-		throw new Error('Selecione um arquivo / Select one file');
+		throw new TranslatedToolError('common.select_one_file_to_continue', {}, 'files');
 	}
 	return selected[0];
 }

@@ -1,6 +1,7 @@
 /// <reference lib="webworker" />
 import { processData } from '@app/features/tools/json/data-processing';
 import { object } from '@app/features/tools/_shared/data';
+import { TranslatedToolError } from '@app/core/models/tool';
 
 addEventListener('message', (event: MessageEvent<unknown>) => {
 	try {
@@ -19,6 +20,15 @@ addEventListener('message', (event: MessageEvent<unknown>) => {
 		}
 		postMessage({ value: processData(task, input, second) });
 	} catch (error: unknown) {
-		postMessage({ error: error instanceof Error ? error.message : String(error) });
+		postMessage({
+			error:
+				error instanceof TranslatedToolError
+					? {
+							translationKey: error.translationKey,
+							params: error.params,
+							fieldKey: error.fieldKey,
+						}
+					: { message: error instanceof Error ? error.message : String(error) },
+		});
 	}
 });
