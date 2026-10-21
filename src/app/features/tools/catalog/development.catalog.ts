@@ -2,6 +2,17 @@ import type { ToolRegistration } from '@app/features/tools/catalog/tool-registra
 
 export const DEVELOPMENT_TOOLS: readonly ToolRegistration[] = [
 	{
+		id: 'har',
+		name: 'tools.har.har_inspector_sanitizer',
+		description: 'tools.har.inspect_and_sanitize_har_files_locally',
+		category: 'development',
+		icon: 'shield',
+		keywords: 'http archive network trace request response credentials privacy',
+		available: true,
+		isNew: true,
+		loadDefinition: () => import('../development/har.tool').then((module) => module.definition),
+	},
+	{
 		id: 'regex',
 		name: 'tools.regex.regex_tester',
 		description: 'tools.regex.test_regular_expressions_and_explore_match',

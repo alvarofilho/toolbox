@@ -915,6 +915,19 @@
 			"http_header_analyzer": "HTTP Header Analyzer",
 			"inspect_http_headers_pasted_from_a_respons": "Analise cabeçalhos HTTP colados de uma resposta."
 		},
+		"har": {
+			"additional_fields": "Nomes de campos adicionais sensíveis (separados por vírgula ou linha)",
+			"entry_limit": "O HAR excede o limite de {{limit}} entradas.",
+			"file_limit": "Selecione um HAR válido de até {{limit}}.",
+			"har_inspector_sanitizer": "Inspecionador e sanitizador de HAR",
+			"inspect_and_sanitize_har_files_locally": "Inspecione requisições e exporte uma cópia HAR sanitizada localmente.",
+			"invalid_json": "O arquivo não contém JSON válido.",
+			"invalid_structure": "A estrutura HAR 1.2 é inválida ({{path}}).",
+			"invalid_url": "Uma requisição contém uma URL inválida.",
+			"review_warning": "A sanitização não garante anonimização. Revise URLs, corpos e campos personalizados antes de compartilhar.",
+			"sanitization_scope": "Cabeçalhos de autenticação, cookies, valores de query e formulários e corpos foram ocultados quando possível. Corpos opacos e Base64 são removidos. Revise a cópia antes de compartilhar.",
+			"select_one_file": "Selecione exatamente um arquivo HAR."
+		},
 		"http-status": {
 			"http_code_empty_to_list_all": "Código HTTP (vazio para listar todos)",
 			"http_status_explorer": "HTTP Status Explorer",
@@ -1045,10 +1058,25 @@
 		"jwt": {
 			"decode_jwt": "Decodificar JWT",
 			"decoding_only_the_token_signature_and_auth": "Apenas decodificação. A assinatura e a autenticidade do token não são verificadas.",
-			"inspect_token_headers_and_claims": "Inspecione o header e os claims de um token.",
+			"ambiguous_key_id": "Mais de uma chave compatível corresponde a este token. Informe um kid único no JWKS local.",
+			"expected_audience_optional": "Audience esperada (opcional)",
+			"expected_issuer_optional": "Issuer esperado (opcional)",
+			"invalid_key_format": "Informe uma chave pública PEM, JWK ou JWKS válida. Chaves privadas não são aceitas.",
+			"inspect_token_headers_and_claims": "Decodifique JWTs, verifique assinaturas locais RS256/ES256 e avalie claims.",
+			"key_defines_trust": "Uma assinatura válida apenas indica correspondência com a chave informada. Isso não comprova a identidade nem a confiabilidade do emissor.",
+			"key_id_not_found": "Nenhuma chave compatível no JWKS local corresponde ao kid do token.",
+			"no_compatible_key": "O JWKS local não contém uma chave única compatível com este algoritmo.",
+			"public_key_or_jwks_optional": "Chave pública PEM, JWK ou JWKS (opcional)",
+			"public_key_required": "Informe uma chave pública. Material de chave privada não é aceito.",
+			"signature_invalid": "Assinatura inválida",
+			"signature_valid": "Assinatura válida",
+			"signature_unchecked": "Não verificada: nenhuma chave foi informada",
+			"unsupported_algorithm": "Apenas RS256 e ES256 são aceitos. Tokens com alg=none são rejeitados.",
+			"verification_key_required": "Informe uma chave pública local para verificar este token.",
+			"verify_or_decode": "Decodificar e verificar JWT",
 			"invalid_token_format": "Um JWT deve ter três partes Base64URL separadas por pontos: header.payload.signature.",
 			"invalid_json_segment": "O cabeçalho e o payload do JWT devem ser decodificados como objetos JSON.",
-			"jwt_decoder": "JWT Decoder"
+			"jwt_decoder": "Decodificador e verificador de assinatura JWT"
 		},
 		"jwt-claims": {
 			"expected_audience_optional": "Audience esperada (opcional)",
