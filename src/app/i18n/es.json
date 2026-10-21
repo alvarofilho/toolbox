@@ -1562,6 +1562,14 @@
 			"yaml_to_json": "YAML a JSON"
 		}
 	},
+	"handoff": {
+		"open_result_in": "Abrir resultado en…",
+		"destinations": "Herramientas compatibles",
+		"confirmation": "Confirmar transferencia del resultado",
+		"replace_existing_input": "Esta herramienta ya contiene contenido. ¿Quieres sustituirlo por el resultado recibido?",
+		"use_result": "Usar resultado",
+		"keep_current": "Mantener contenido actual"
+	},
 	"seo": {
 		"description": "Herramientas online gratuitas para desarrolladores, QA y profesionales de TI. Formatea JSON, convierte datos y genera documentos localmente en tu navegador.",
 		"image_alt": "Toolbox, herramientas online para desarrolladores",

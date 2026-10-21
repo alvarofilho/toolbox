@@ -100,6 +100,47 @@
 	align-items: center;
 	gap: 2px;
 }
+.transfer-menu {
+	position: relative;
+}
+.transfer-menu summary {
+	list-style: none;
+}
+.transfer-menu summary::-webkit-details-marker {
+	display: none;
+}
+.transfer-options {
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	top: calc(100% + 6px);
+	min-width: max-content;
+	display: grid;
+	padding: 6px;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: var(--paper);
+	box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+}
+.handoff-notice {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin: 0 0 18px;
+	padding: 14px 18px;
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	background: var(--paper);
+}
+.handoff-notice p {
+	margin: 0;
+}
+.handoff-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
 .output-actions app-icon {
 	width: 14px;
 	height: 14px;

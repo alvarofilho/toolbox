@@ -268,4 +268,188 @@ describe('tool workbench integration', () => {
 		await harness.fixture.whenStable();
 		expect(next.querySelector('iframe')?.getAttribute('sandbox')).toBe('');
 	});
+	it('transfers CSV through JSON and JSONPath into TypeScript without running destinations automatically', async () => {
+		const harness = await RouterTestingHarness.create('/tools/csv-json');
+		const submit = async (root: HTMLElement): Promise<void> => {
+			root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+			await expect.poll(() => root.querySelector('.result-code')?.textContent ?? '').not.toBe('');
+		};
+		const openFirstDestination = async (root: HTMLElement): Promise<void> => {
+			const menu = root.querySelector<HTMLDetailsElement>('.transfer-menu');
+			if (!menu) {
+				throw new Error('Compatible result destination missing');
+			}
+			menu.open = true;
+			menu.querySelector<HTMLButtonElement>('.transfer-options button')?.click();
+			await harness.fixture.whenStable();
+		};
+		const acceptTransfer = async (root: HTMLElement): Promise<void> => {
+			const accept = Array.from(root.querySelectorAll('button')).find((button) =>
+				button.textContent?.includes('Usar resultado'),
+			);
+			if (accept) {
+				accept.click();
+				await harness.fixture.whenStable();
+			}
+		};
+
+		let root = harness.routeNativeElement;
+		if (!root) {
+			throw new Error('CSV tool missing');
+		}
+		const csv = root.querySelector<HTMLTextAreaElement>('#field-input');
+		if (!csv) {
+			throw new Error('CSV input missing');
+		}
+		csv.value = 'id,name\n1,Ana';
+		csv.dispatchEvent(new Event('input'));
+		await submit(root);
+		expect(root.querySelector('.transfer-menu')?.textContent).toContain('Abrir resultado em');
+		await openFirstDestination(root);
+
+		root = harness.routeNativeElement;
+		if (!root || harness.routeNativeElement?.querySelector('.result-code')) {
+			throw new Error('JSON destination ran automatically');
+		}
+		await acceptTransfer(root);
+		expect(root.querySelector<HTMLTextAreaElement>('#field-input')?.value).toContain('"id": "1"');
+		await submit(root);
+		const jsonMenu = root.querySelector<HTMLDetailsElement>('.transfer-menu');
+		if (!jsonMenu) {
+			throw new Error('JSON destinations missing');
+		}
+		expect(jsonMenu.querySelectorAll('.transfer-options button')).toHaveLength(2);
+		jsonMenu.open = true;
+		jsonMenu.querySelector<HTMLButtonElement>('.transfer-options button')?.click();
+		await harness.fixture.whenStable();
+
+		root = harness.routeNativeElement;
+		if (!root) {
+			throw new Error('JSONPath tool missing');
+		}
+		await acceptTransfer(root);
+		const path = root.querySelector<HTMLInputElement>('#field-path');
+		if (!path) {
+			throw new Error('JSONPath expression missing');
+		}
+		path.value = '$[*].name';
+		path.dispatchEvent(new Event('input'));
+		await submit(root);
+		expect(root.querySelector('.transfer-menu')?.textContent).toContain('Abrir resultado em');
+		await openFirstDestination(root);
+
+		root = harness.routeNativeElement;
+		if (!root) {
+			throw new Error('TypeScript tool missing');
+		}
+		await acceptTransfer(root);
+		expect(root.querySelector<HTMLTextAreaElement>('#field-input')?.value).toBe('[\n  "Ana"\n]');
+		expect(root.querySelector('.result-code')).toBeNull();
+		await submit(root);
+		expect(root.querySelector('.result-code')?.textContent).toContain('string');
+	});
+	it('shows no transfer destination for invalid CSV output', async () => {
+		const harness = await RouterTestingHarness.create('/tools/csv-json');
+		const root = harness.routeNativeElement;
+		const input = root?.querySelector<HTMLTextAreaElement>('#field-input');
+		if (!root || !input) {
+			throw new Error('CSV input missing');
+		}
+		input.value = 'a,b\n1';
+		input.dispatchEvent(new Event('input'));
+		root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+		await harness.fixture.whenStable();
+		expect(root.querySelector('[role=alert]')).not.toBeNull();
+		expect(root.querySelector('.transfer-menu')).toBeNull();
+	});
+	it('does not transfer or persist data during ordinary navigation', async () => {
+		const harness = await RouterTestingHarness.create('/tools/csv-json');
+		const root = harness.routeNativeElement;
+		const input = root?.querySelector<HTMLTextAreaElement>('#field-input');
+		if (!root || !input) {
+			throw new Error('CSV input missing');
+		}
+		input.value = 'private navigation marker';
+		input.dispatchEvent(new Event('input'));
+		await harness.navigateByUrl('/tools/json-formatter');
+		await harness.fixture.whenStable();
+		const destination = harness.routeNativeElement;
+		if (!destination) {
+			throw new Error('JSON tool missing');
+		}
+		expect(destination.querySelector<HTMLTextAreaElement>('#field-input')?.value).not.toContain(
+			'private navigation marker',
+		);
+		expect(destination.querySelector('.handoff-notice')).toBeNull();
+		expect(localStorage.getItem('toolbox.preferences.v1')).not.toContain(
+			'private navigation marker',
+		);
+	});
+	it.each([
+		['Manter conteúdo atual', '{"keep":"draft"}'],
+		['Usar resultado', 'received CSV JSON'],
+	] as const)(
+		'requires an explicit choice before replacing destination work: %s',
+		async (choice, expected) => {
+			const formatter = await import('@app/features/tools/json/json-formatter.tool');
+			const existingInput = '{"keep":"draft"}';
+			const filledDefinition = {
+				...formatter.definition,
+				controls: formatter.definition.controls.map((control) =>
+					control.key === 'input' ? { ...control, value: existingInput } : control,
+				),
+			};
+			const customRoutes = routes.map((route) =>
+				route.path === 'tools/json-formatter'
+					? { ...route, resolve: { definition: () => filledDefinition } }
+					: route,
+			);
+			TestBed.resetTestingModule();
+			TestBed.configureTestingModule({
+				providers: [
+					provideRouter(customRoutes, withComponentInputBinding()),
+					...provideToolboxTransloco(),
+				],
+			});
+			const harness = await RouterTestingHarness.create('/tools/csv-json');
+			const csvRoot = harness.routeNativeElement;
+			const csv = csvRoot?.querySelector<HTMLTextAreaElement>('#field-input');
+			if (!csvRoot || !csv) {
+				throw new Error('CSV input missing');
+			}
+			csv.value = 'id,name\n1,Ana';
+			csv.dispatchEvent(new Event('input'));
+			csvRoot.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+			await expect
+				.poll(() => csvRoot.querySelector('.result-code')?.textContent ?? '')
+				.not.toBe('');
+			const menu = csvRoot.querySelector<HTMLDetailsElement>('.transfer-menu');
+			if (!menu) {
+				throw new Error('Compatible result destination missing');
+			}
+			menu.open = true;
+			menu.querySelector<HTMLButtonElement>('.transfer-options button')?.click();
+			await harness.fixture.whenStable();
+
+			const destination = harness.routeNativeElement;
+			const destinationInput = destination?.querySelector<HTMLTextAreaElement>('#field-input');
+			if (!destination || !destinationInput) {
+				throw new Error('JSON destination input missing');
+			}
+			expect(destinationInput.value).toBe(existingInput);
+			expect(destination.querySelector('.handoff-notice')).not.toBeNull();
+			expect(destination.querySelector('.result-code')).toBeNull();
+			Array.from(destination.querySelectorAll('button'))
+				.find((button) => button.textContent?.includes(choice))
+				?.click();
+			await harness.fixture.whenStable();
+			if (expected === 'received CSV JSON') {
+				expect(destinationInput.value).toContain('"name": "Ana"');
+			} else {
+				expect(destinationInput.value).toBe(existingInput);
+			}
+			expect(destination.querySelector('.handoff-notice')).toBeNull();
+			expect(destination.querySelector('.result-code')).toBeNull();
+		},
+	);
 });

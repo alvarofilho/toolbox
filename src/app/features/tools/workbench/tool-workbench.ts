@@ -17,8 +17,15 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 import { DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PreferencesService } from '@app/core/services/preferences';
+import {
+	compatibleHandoffTargets,
+	isToolHandoffTarget,
+	ToolHandoffService,
+	type ToolHandoffTarget,
+} from '@app/core/services/tool-handoff';
 import { CATEGORIES, TOOLS } from '@app/features/tools/catalog/tools';
 import type {
 	ToolControl,
@@ -50,6 +57,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		ready: this.p.translationsReady(),
 	}));
 	private readonly transloco = inject(TranslocoService);
+	private readonly router = inject(Router);
+	private readonly handoff = inject(ToolHandoffService);
 	protected readonly values = signal<ToolValues>({});
 	protected readonly files = signal<ToolFiles>({});
 	private readonly document = inject(DOCUMENT);
@@ -204,6 +213,14 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	protected readonly error = signal('');
 	protected readonly busy = signal(false);
 	protected readonly feedback = signal('');
+	protected readonly pendingHandoff = signal<string | null>(null);
+	protected readonly handoffNeedsConfirmation = signal(false);
+	protected readonly handoffTargets = computed(() => {
+		return compatibleHandoffTargets(this.definition().id).flatMap((targetId) => {
+			const tool = TOOLS.find((candidate) => candidate.id === targetId);
+			return tool ? [{ id: targetId, name: tool.name }] : [];
+		});
+	});
 	private runId = 0;
 	private activeRunController: AbortController | undefined;
 	private autoRunTimer: ReturnType<typeof setTimeout> | undefined;
@@ -219,6 +236,23 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	);
 	ngOnInit(): void {
 		this.reset();
+		const targetId = this.definition().id;
+		if (isToolHandoffTarget(targetId)) {
+			const value = this.handoff.consume(targetId);
+			if (value !== null) {
+				this.pendingHandoff.set(value);
+				const input = this.definition().controls.find((control) => control.key === 'input');
+				if (input && this.values()['input']?.trim()) {
+					this.handoffNeedsConfirmation.set(true);
+					afterNextRender(
+						() => this.document.querySelector<HTMLElement>('.handoff-actions button')?.focus(),
+						{ injector: this.injector },
+					);
+				} else {
+					this.acceptHandoff();
+				}
+			}
+		}
 		this.p.visit(this.definition().id);
 	}
 	ngOnDestroy(): void {
@@ -318,6 +352,39 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.reset();
 		this.values.update((values) => ({ ...values, ...this.definition().example }));
 		void this.run();
+	}
+	protected async openResultIn(target: ToolHandoffTarget): Promise<void> {
+		const output = this.result()?.output;
+		if (output === undefined || this.stale()) {
+			return;
+		}
+		this.handoff.offer(target, output);
+		const navigated = await this.router.navigate(['/tools', target]);
+		if (!navigated) {
+			this.handoff.clear();
+		}
+	}
+	protected acceptHandoff(): void {
+		const value = this.pendingHandoff();
+		if (value === null) {
+			return;
+		}
+		this.values.update((current) => ({ ...current, input: value }));
+		this.pendingHandoff.set(null);
+		this.handoffNeedsConfirmation.set(false);
+		this.stale.set(false);
+		this.error.set('');
+		this.feedback.set('');
+		afterNextRender(() => this.document.getElementById('field-input')?.focus(), {
+			injector: this.injector,
+		});
+	}
+	protected dismissHandoff(): void {
+		this.pendingHandoff.set(null);
+		this.handoffNeedsConfirmation.set(false);
+		afterNextRender(() => this.document.getElementById('field-input')?.focus(), {
+			injector: this.injector,
+		});
 	}
 	private scheduleRun(): void {
 		if (this.autoRunTimer) {
