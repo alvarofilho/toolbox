@@ -20,6 +20,7 @@ const PERSISTED_KEYS: Readonly<Record<string, readonly string[]>> = {
 		'maxAge',
 		'state',
 		'format',
+		'seed',
 		'include-name',
 		'include-cpf',
 		'include-email',
@@ -27,7 +28,7 @@ const PERSISTED_KEYS: Readonly<Record<string, readonly string[]>> = {
 		'include-birthDate',
 		'include-state',
 	],
-	'data-generator': ['count', 'format'],
+	'data-generator': ['count', 'format', 'seed'],
 	'json-formatter': ['indent'],
 };
 
@@ -148,6 +149,9 @@ export class ToolPresetsService {
 				number >= (control.min ?? -Infinity) &&
 				number <= (control.max ?? Infinity)
 			);
+		}
+		if (control.type === 'text') {
+			return control.key === 'seed' && value.length <= 100;
 		}
 		return false;
 	}

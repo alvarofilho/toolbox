@@ -15,6 +15,13 @@ describe('synthetic people', () => {
 	});
 	it('does not export unselected fields', () =>
 		expect(Object.keys(people(1, ['name'], 'SP', 18, 18)[0])).toEqual(['synthetic', 'name']));
+	it('reproduces every generated field for the same seed without sharing state', () => {
+		const first = people(10, PERSON_FIELDS, 'MG', 18, 65, 'qa-seed-42');
+		expect(people(10, PERSON_FIELDS, 'MG', 18, 65, 'qa-seed-42')).toEqual(first);
+		people(3, PERSON_FIELDS, 'SP', 18, 65, 'another-run');
+		expect(people(10, PERSON_FIELDS, 'MG', 18, 65, 'qa-seed-42')).toEqual(first);
+		expect(people(10, PERSON_FIELDS, 'MG', 18, 65, 'other-seed')).not.toEqual(first);
+	});
 	it.each([0, 1001, 1.5])('rejects count %s', (count) =>
 		expect(() => people(count, ['name'], 'SP', 18, 65)).toThrow(),
 	);

@@ -29,6 +29,10 @@
 	"common": {
 		"tool_error_generic": "Confira o formato e os valores informados e tente novamente. Se o problema continuar, ajuste a entrada e tente outra vez.",
 		"tool_error_title": "Não foi possível concluir",
+		"execution_cancelled": "Execução cancelada. Você já pode iniciar outra.",
+		"execution_timed_out": "A execução excedeu o tempo limite. Simplifique a entrada e tente novamente.",
+		"invalid_tool_input": "Não foi possível processar a entrada",
+		"tool_execution_failed": "A ferramenta falhou durante o processamento. Tente novamente.",
 		"number_must_be_between": "Informe um número entre {{min}} e {{max}}.",
 		"presets": "Presets locais",
 		"preset_name": "Nome do preset",
@@ -733,6 +737,8 @@
 		"data-generator": {
 			"define_fields_and_types_to_generate_json_c": "Defina campos e tipos para gerar registros em JSON, CSV ou SQL.",
 			"fields_and_types_json": "Campos e tipos (JSON)",
+			"seed": "Seed opcional",
+			"seed_version_notice": "Ao informar uma seed, a reprodução usa {{version}}. Mantenha a mesma seed, configuração e versão da Toolbox.",
 			"test_data_generator": "Gerador de massa de dados"
 		},
 		"database-seed": {
@@ -1274,6 +1280,8 @@
 			"rj": "RJ",
 			"rs": "RS",
 			"sc": "SC",
+			"seed": "Seed opcional",
+			"seed_version_notice": "Ao informar uma seed, a reprodução usa {{version}}. Mantenha a mesma seed, configuração e versão da Toolbox.",
 			"sp": "SP",
 			"sql_insert": "SQL INSERT",
 			"state": "UF",
@@ -1571,6 +1579,14 @@
 			"convert_yaml_to_json_and_inspect_its_struc": "Converta YAML para JSON e confira a estrutura.",
 			"yaml_to_json": "YAML para JSON"
 		}
+	},
+	"handoff": {
+		"open_result_in": "Abrir resultado em…",
+		"destinations": "Ferramentas compatíveis",
+		"confirmation": "Confirmar transferência do resultado",
+		"replace_existing_input": "Esta ferramenta já contém conteúdo. Deseja substituí-lo pelo resultado recebido?",
+		"use_result": "Usar resultado",
+		"keep_current": "Manter conteúdo atual"
 	},
 	"seo": {
 		"description": "Ferramentas online gratuitas para desenvolvedores, QA e profissionais de TI. Formate JSON, converta dados e gere documentos com processamento local no navegador.",

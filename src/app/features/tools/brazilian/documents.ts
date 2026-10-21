@@ -1,4 +1,4 @@
-import { randomString } from '@app/features/tools/_shared/random';
+import { randomInt } from '@app/features/tools/_shared/random';
 
 const mod11 = (sum: number): string => String(sum % 11 < 2 ? 0 : 11 - (sum % 11));
 
@@ -47,13 +47,20 @@ export function formatDocument(value: string, kind: 'cpf' | 'cnpj'): string {
 		: value.replace(/^(.{2})(.{3})(.{3})(.{4})(.{2})$/, '$1.$2.$3/$4-$5');
 }
 
-export function generateDocument(kind: 'cpf' | 'cnpj', alpha = false, formatted = true): string {
+export function generateDocument(
+	kind: 'cpf' | 'cnpj',
+	alpha = false,
+	formatted = true,
+	int: (max: number) => number = randomInt,
+): string {
 	let base: string;
 	do {
-		base = randomString(
-			kind === 'cpf' ? 9 : 12,
-			kind === 'cnpj' && alpha ? '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '0123456789',
-		);
+		const alphabet =
+			kind === 'cnpj' && alpha ? '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '0123456789';
+		base = Array.from(
+			{ length: kind === 'cpf' ? 9 : 12 },
+			() => alphabet[int(alphabet.length)],
+		).join('');
 	} while (/^(.)\1+$/.test(base));
 	const value = base + (kind === 'cpf' ? cpfDigits(base) : cnpjDigits(base));
 	return formatted ? formatDocument(value, kind) : value;

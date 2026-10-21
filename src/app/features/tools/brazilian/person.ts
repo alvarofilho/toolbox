@@ -1,5 +1,5 @@
 import { generateDocument } from '@app/features/tools/brazilian/documents';
-import { randomInt } from '@app/features/tools/_shared/random';
+import { randomSource } from '@app/features/tools/_shared/seeded-random';
 
 export const PERSON_FIELDS = ['name', 'cpf', 'email', 'phone', 'birthDate', 'state'] as const;
 export type PersonField = (typeof PERSON_FIELDS)[number];
@@ -10,6 +10,7 @@ export function people(
 	state: string,
 	minAge: number,
 	maxAge: number,
+	seed = '',
 ): Person[] {
 	if (!Number.isInteger(count) || count < 1 || count > 1000) {
 		throw new Error('Quantidade / Count: 1–1000');
@@ -31,16 +32,19 @@ export function people(
 	}
 	const first = ['Ana', 'Bruno', 'Camila', 'Diego', 'Elisa', 'Felipe', 'Helena', 'Igor'];
 	const last = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Pereira', 'Costa'];
+	const random = randomSource(seed);
 	return Array.from({ length: count }, (_, index) => {
-		const age = minAge + randomInt(maxAge - minAge + 1);
-		const birth = new Date();
-		birth.setUTCFullYear(birth.getUTCFullYear() - age);
-		birth.setUTCDate(Math.max(1, birth.getUTCDate() - randomInt(25)));
+		const age = minAge + random.int(maxAge - minAge + 1);
+		const birth = new Date(
+			Date.UTC(2020, 0, 1) -
+				age * 365 * 24 * 60 * 60 * 1000 -
+				random.int(365) * 24 * 60 * 60 * 1000,
+		);
 		const data: Record<PersonField, string> = {
-			name: `${first[randomInt(first.length)]} ${last[randomInt(last.length)]}`,
-			cpf: generateDocument('cpf'),
-			email: `teste.${index + 1}.${randomInt(1000000)}@example.com`,
-			phone: `(11) 9${String(randomInt(100000000)).padStart(8, '0')}`,
+			name: `${first[random.int(first.length)]} ${last[random.int(last.length)]}`,
+			cpf: generateDocument('cpf', false, true, random.int.bind(random)),
+			email: `teste.${index + 1}.${random.int(1000000)}@example.com`,
+			phone: `(11) 9${String(random.int(100000000)).padStart(8, '0')}`,
 			birthDate: birth.toISOString().slice(0, 10),
 			state,
 		};

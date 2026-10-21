@@ -4,7 +4,11 @@ import { kubernetesSchema } from '@app/features/tools/infrastructure/kubernetes-
 import { object, json } from '@app/features/tools/_shared/data';
 import { result } from '@app/features/tools/_shared/definition';
 
-export async function validateKubernetes(input: string, customSchema: string) {
+export async function validateKubernetes(
+	input: string,
+	customSchema: string,
+	signal?: AbortSignal,
+) {
 	const documents = parseAllDocuments(input, { uniqueKeys: true });
 	if (!documents.length || documents.some((d) => d.errors.length)) {
 		throw new Error(
@@ -28,7 +32,7 @@ export async function validateKubernetes(input: string, customSchema: string) {
 			? object(json(customSchema))
 			: await kubernetesSchema(resource['apiVersion'], resource['kind']);
 		const checked = object(
-			await runDataTask('kubernetes', JSON.stringify(resource), JSON.stringify(schema)),
+			await runDataTask('kubernetes', JSON.stringify(resource), JSON.stringify(schema), signal),
 		);
 		if (Array.isArray(checked['errors'])) {
 			for (const e of checked['errors']) {

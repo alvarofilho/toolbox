@@ -17,9 +17,16 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 import { DOCUMENT } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PreferencesService } from '@app/core/services/preferences';
 import { ToolPresetsService } from '@app/core/services/tool-presets';
+import {
+	compatibleHandoffTargets,
+	isToolHandoffTarget,
+	ToolHandoffService,
+	type ToolHandoffTarget,
+} from '@app/core/services/tool-handoff';
 import { CATEGORIES, TOOLS } from '@app/features/tools/catalog/tools';
 import type {
 	ToolControl,
@@ -28,7 +35,7 @@ import type {
 	ToolResult,
 	ToolValues,
 } from '@app/core/models/tool';
-import { TranslatedToolError } from '@app/core/models/tool';
+import { ToolExecutionError, TranslatedToolError } from '@app/core/models/tool';
 import { presentDefinition, visibleControl } from '@app/features/tools/workbench/presentation';
 import {
 	canonicalJson,
@@ -52,6 +59,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	}));
 	private readonly transloco = inject(TranslocoService);
 	private readonly presetService = inject(ToolPresetsService);
+	private readonly router = inject(Router);
+	private readonly handoff = inject(ToolHandoffService);
 	protected readonly values = signal<ToolValues>({});
 	protected readonly files = signal<ToolFiles>({});
 	private readonly document = inject(DOCUMENT);
@@ -216,7 +225,16 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		() => (this.presetRefresh(), this.presetService.list(this.tool().id, this.tool().controls)),
 	);
 	protected readonly presetStorageUnavailable = this.presetService.storageUnavailable;
+	protected readonly pendingHandoff = signal<string | null>(null);
+	protected readonly handoffNeedsConfirmation = signal(false);
+	protected readonly handoffTargets = computed(() => {
+		return compatibleHandoffTargets(this.definition().id).flatMap((targetId) => {
+			const tool = TOOLS.find((candidate) => candidate.id === targetId);
+			return tool ? [{ id: targetId, name: tool.name }] : [];
+		});
+	});
 	private runId = 0;
+	private activeRunController: AbortController | undefined;
 	private autoRunTimer: ReturnType<typeof setTimeout> | undefined;
 	protected readonly info = computed(() => {
 		const info = TOOLS.find((t) => t.id === this.definition().id);
@@ -230,6 +248,23 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	);
 	ngOnInit(): void {
 		this.reset();
+		const targetId = this.definition().id;
+		if (isToolHandoffTarget(targetId)) {
+			const value = this.handoff.consume(targetId);
+			if (value !== null) {
+				this.pendingHandoff.set(value);
+				const input = this.definition().controls.find((control) => control.key === 'input');
+				if (input && this.values()['input']?.trim()) {
+					this.handoffNeedsConfirmation.set(true);
+					afterNextRender(
+						() => this.document.querySelector<HTMLElement>('.handoff-actions button')?.focus(),
+						{ injector: this.injector },
+					);
+				} else {
+					this.acceptHandoff();
+				}
+			}
+		}
 		this.p.visit(this.definition().id);
 	}
 	ngOnDestroy(): void {
@@ -237,6 +272,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			clearTimeout(this.autoRunTimer);
 		}
 		this.runId++;
+		this.activeRunController?.abort();
+		this.activeRunController = undefined;
 	}
 	protected update(key: string, event: Event): void {
 		const target = event.target;
@@ -306,6 +343,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			this.autoRunTimer = undefined;
 		}
 		this.runId++;
+		this.activeRunController?.abort();
+		this.activeRunController = undefined;
 		this.busy.set(false);
 		for (const input of this.fileInputs()) {
 			input.nativeElement.value = '';
@@ -399,6 +438,39 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.values.update((values) => ({ ...values, ...this.definition().example }));
 		void this.run();
 	}
+	protected async openResultIn(target: ToolHandoffTarget): Promise<void> {
+		const output = this.result()?.output;
+		if (output === undefined || this.stale()) {
+			return;
+		}
+		this.handoff.offer(target, output);
+		const navigated = await this.router.navigate(['/tools', target]);
+		if (!navigated) {
+			this.handoff.clear();
+		}
+	}
+	protected acceptHandoff(): void {
+		const value = this.pendingHandoff();
+		if (value === null) {
+			return;
+		}
+		this.values.update((current) => ({ ...current, input: value }));
+		this.pendingHandoff.set(null);
+		this.handoffNeedsConfirmation.set(false);
+		this.stale.set(false);
+		this.error.set('');
+		this.feedback.set('');
+		afterNextRender(() => this.document.getElementById('field-input')?.focus(), {
+			injector: this.injector,
+		});
+	}
+	protected dismissHandoff(): void {
+		this.pendingHandoff.set(null);
+		this.handoffNeedsConfirmation.set(false);
+		afterNextRender(() => this.document.getElementById('field-input')?.focus(), {
+			injector: this.injector,
+		});
+	}
 	private scheduleRun(): void {
 		if (this.autoRunTimer) {
 			clearTimeout(this.autoRunTimer);
@@ -423,6 +495,9 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			this.autoRunTimer = undefined;
 		}
 		const id = ++this.runId;
+		const controller = new AbortController();
+		this.activeRunController?.abort();
+		this.activeRunController = controller;
 		const completeTask = this.pendingTasks.add();
 		this.busy.set(true);
 		this.error.set('');
@@ -500,7 +575,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			if (id !== this.runId) {
 				return;
 			}
-			const result = await this.definition().run(values, files);
+			const result = await this.definition().run(values, files, controller.signal);
 			if (result.output.length > 1000000) {
 				throw new Error(
 					this.transloco.translate(
@@ -522,18 +597,27 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 					),
 				);
 			}
-			if (id === this.runId) {
+			if (id === this.runId && !controller.signal.aborted) {
 				this.result.set(result);
 				this.completedValues.set(values);
 				this.stale.set(false);
 			}
 		} catch (error: unknown) {
 			if (id === this.runId) {
-				if (!automaticRun) {
+				if (error instanceof ToolExecutionError && error.kind === 'cancelled') {
+					this.feedback.set(
+						this.transloco.translate(
+							'common.execution_cancelled',
+							{},
+							this.translationState().locale,
+						),
+					);
+				} else if (!automaticRun) {
 					const message = this.errorMessage(error);
 					this.error.set(message);
 					const source = this.controls().find((control) => control.key === 'input');
-					if (source && !Object.keys(this.fieldErrors()).length) {
+					const isInputError = !(error instanceof ToolExecutionError) || error.kind === 'input';
+					if (source && isInputError && !Object.keys(this.fieldErrors()).length) {
 						this.fieldErrors.set({ [source.key]: message });
 					}
 				}
@@ -541,6 +625,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		} finally {
 			completeTask();
 			if (id === this.runId) {
+				this.activeRunController = undefined;
 				this.busy.set(false);
 				if (!automaticRun) {
 					afterNextRender(
@@ -562,16 +647,14 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		}
 		this.autoRunTimer = undefined;
 		this.runId++;
+		this.activeRunController?.abort();
+		this.activeRunController = undefined;
 		this.busy.set(false);
 	}
 	protected cancel(): void {
 		this.cancelPending();
 		this.feedback.set(
-			this.transloco.translate(
-				'common.you_can_continue_editing_this_run_will_not',
-				{},
-				this.translationState().locale,
-			),
+			this.transloco.translate('common.execution_cancelled', {}, this.translationState().locale),
 		);
 	}
 	protected showResult(): void {
@@ -594,6 +677,18 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	}
 	private errorMessage(error: unknown): string {
 		const locale = this.translationState().locale;
+		if (error instanceof ToolExecutionError) {
+			if (error.kind === 'timeout') {
+				return this.transloco.translate('common.execution_timed_out', {}, locale);
+			}
+			if (error.kind === 'input') {
+				const prefix = this.transloco.translate('common.invalid_tool_input', {}, locale);
+				return error.message ? `${prefix}: ${error.message}` : prefix;
+			}
+			if (error.kind === 'worker') {
+				return this.transloco.translate('common.tool_execution_failed', {}, locale);
+			}
+		}
 		if (error instanceof TranslatedToolError) {
 			return this.transloco.translate(error.translationKey, error.params, locale);
 		}
