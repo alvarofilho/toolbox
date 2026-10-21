@@ -1035,10 +1035,26 @@
 		"jwt": {
 			"decode_jwt": "Decode JWT",
 			"decoding_only_the_token_signature_and_auth": "Decoding only. The token signature and authenticity are not verified.",
-			"inspect_token_headers_and_claims": "Inspect token headers and claims.",
+			"ambiguous_key_id": "More than one compatible key matches this token. Provide a unique kid in the local JWKS.",
+			"audience": "Audience",
+			"expected_audience_optional": "Expected audience (optional)",
+			"expected_issuer_optional": "Expected issuer (optional)",
+			"invalid_key_format": "Provide a valid public key PEM, JWK, or JWKS. Private keys are not accepted.",
+			"inspect_token_headers_and_claims": "Decode JWTs, verify local RS256/ES256 signatures, and evaluate claims.",
+			"key_defines_trust": "A valid signature only means it matches the key you supplied. It does not establish the issuer's identity or trustworthiness.",
+			"key_id_not_found": "No compatible key in the local JWKS matches the token's kid.",
+			"no_compatible_key": "The local JWKS has no unique key compatible with this algorithm.",
+			"public_key_or_jwks_optional": "Public key PEM, JWK, or JWKS (optional)",
+			"public_key_required": "Provide a public key. Private key material is not accepted.",
+			"signature_invalid": "Invalid signature",
+			"signature_valid": "Valid signature",
+			"signature_unchecked": "Not checked: no key was provided",
+			"unsupported_algorithm": "Only RS256 and ES256 are supported. Tokens using alg=none are rejected.",
+			"verification_key_required": "Provide a local public key to verify this token.",
+			"verify_or_decode": "Decode and verify JWT",
 			"invalid_token_format": "A JWT must contain three Base64URL parts separated by dots: header.payload.signature.",
 			"invalid_json_segment": "The JWT header and payload must each decode to a JSON object.",
-			"jwt_decoder": "JWT Decoder"
+			"jwt_decoder": "JWT Decoder and Signature Verifier"
 		},
 		"jwt-claims": {
 			"expected_audience_optional": "Expected audience (optional)",
