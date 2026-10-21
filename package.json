@@ -16,9 +16,8 @@
 	},
 	"dependencies": {
 		"@angular/common": "^22.2.0",
-		"@angular/compiler": "^22.2.0",
 		"@angular/core": "^22.2.0",
-		"@angular/forms": "^22.2.0",
+		"@angular/forms": "^22.2.3",
 		"@angular/platform-browser": "^22.2.0",
 		"@angular/router": "^22.2.0",
 		"@br-validators/core": "1.10.0-data.46",
@@ -64,16 +63,16 @@
 		"svgo": "^4.1.0",
 		"tslib": "^2.3.0",
 		"ulid": "^3.0.2",
-		"yaml": "^2.9.1"
+		"yaml": "^2.9.1",
+		"zod": "^4.6.6"
 	},
 	"devDependencies": {
 		"@angular-eslint/builder": "22.6.0",
 		"@angular/build": "^22.2.3",
 		"@angular/cli": "^22.2.3",
+		"@angular/compiler": "^22.2.3",
 		"@angular/compiler-cli": "^22.2.0",
 		"@eslint/js": "^10.0.1",
-		"@fontsource-variable/ibm-plex-sans": "^5.3.0",
-		"@fontsource-variable/manrope": "^5.3.0",
 		"@fontsource/ibm-plex-mono": "^5.3.0",
 		"@tailwindcss/postcss": "^4.3.3",
 		"@types/culori": "^4.0.1",
@@ -82,7 +81,6 @@
 		"@types/punycode": "^2.1.4",
 		"@types/qrcode": "^1.5.6",
 		"@types/semver": "^7.8.0",
-		"@types/shell-quote": "^1.7.5",
 		"angular-eslint": "22.6.0",
 		"daisyui": "^5.7.50",
 		"eslint": "^10.12.0",

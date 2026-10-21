@@ -9,6 +9,7 @@ import {
 	inject,
 	Injector,
 	linkedSignal,
+	output,
 	signal,
 	viewChild,
 } from '@angular/core';
@@ -44,6 +45,7 @@ const normalize = (value: string): string =>
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommandPalette {
+	readonly closed = output<void>();
 	protected readonly p = inject(PreferencesService);
 	private readonly translationState = computed(() => ({
 		locale: this.p.locale(),
@@ -126,7 +128,7 @@ export class CommandPalette {
 							: 'common.switch_to_portuguese',
 				description: 'common.language',
 				icon: 'type',
-				keywords: 'idioma language locale portugues english ingles',
+				keywords: 'idioma language locale portugues portuguese english ingles spanish espanol',
 				action: 'locale',
 			},
 		];
@@ -215,6 +217,7 @@ export class CommandPalette {
 		this.dialog().nativeElement.close();
 		this.opened.set(false);
 		this.restoreScroll();
+		this.closed.emit();
 	}
 	protected onClose(): void {
 		if (!this.dialog().nativeElement.open) {

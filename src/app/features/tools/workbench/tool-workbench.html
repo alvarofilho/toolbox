@@ -53,7 +53,7 @@
 	</section>
 }
 <div class="workbench" [class.workbench-diff]="isDiffTool()">
-	<form class="input-panel workspace-panel" (submit)="run($event)" novalidate>
+	<form class="input-panel workspace-panel" [formGroup]="toolForm" (ngSubmit)="run()" novalidate>
 		<div class="panel-heading">
 			<h2>
 				{{
@@ -138,8 +138,7 @@
 						<input
 							type="checkbox"
 							class="checkbox checkbox-sm"
-							[checked]="values()[control.key] === 'true'"
-							(change)="update(control.key, $event)"
+							[formControl]="field(control.key)"
 						/>
 						{{ control.label | transloco }}
 					</label>
@@ -193,8 +192,7 @@
 								<textarea
 									class="textarea"
 									[id]="'field-' + control.key"
-									[value]="values()[control.key]"
-									(input)="update(control.key, $event)"
+									[formControl]="field(control.key)"
 									rows="8"
 									spellcheck="false"
 									maxlength="100001"
@@ -213,18 +211,14 @@
 								<select
 									class="select"
 									[id]="'field-' + control.key"
-									[value]="values()[control.key]"
-									(change)="update(control.key, $event)"
+									[formControl]="field(control.key)"
 									[attr.aria-describedby]="
 										fieldErrors()[control.key] ? 'error-' + control.key : null
 									"
 									[attr.aria-invalid]="fieldErrors()[control.key] ? 'true' : null"
 								>
 									@for (option of control.options; track option.value) {
-										<option
-											[value]="option.value"
-											[selected]="values()[control.key] === option.value"
-										>
+										<option [value]="option.value">
 											{{ option.label ? (option.label | transloco) : option.value }}
 										</option>
 									}
@@ -236,8 +230,7 @@
 										class="input"
 										[id]="'field-' + control.key"
 										[type]="inputType(control)"
-										[value]="values()[control.key]"
-										(input)="update(control.key, $event)"
+										[formControl]="field(control.key)"
 										[min]="control.min ?? null"
 										[max]="control.max ?? null"
 										[attr.step]="control.type === 'number' ? (control.step ?? 1) : null"
@@ -288,8 +281,7 @@
 								<input
 									type="checkbox"
 									class="checkbox checkbox-sm"
-									[checked]="values()[control.key] === 'true'"
-									(change)="update(control.key, $event)"
+									[formControl]="field(control.key)"
 								/>
 								{{ control.label | transloco }}
 							</label>
@@ -300,8 +292,7 @@
 									class="input"
 									[id]="'field-' + control.key"
 									type="number"
-									[value]="values()[control.key]"
-									(input)="update(control.key, $event)"
+									[formControl]="field(control.key)"
 									[min]="control.min ?? null"
 									[max]="values()['length']"
 									[attr.step]="control.step ?? 1"

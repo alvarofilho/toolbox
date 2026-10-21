@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { type ComponentFixture, DeferBlockState, TestBed } from '@angular/core/testing';
 import { provideRouter, Router, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { TranslocoService } from '@jsverse/transloco';
@@ -12,7 +12,13 @@ import { firstValueFrom } from 'rxjs';
 const originalMatchMediaDescriptor = Object.getOwnPropertyDescriptor(window, 'matchMedia');
 
 // jsdom does not implement the native dialog top layer. Browser QA covers focus trapping.
-function mockDialog(element: HTMLElement): HTMLDialogElement {
+async function mockDialog(fixture: ComponentFixture<App>): Promise<HTMLDialogElement> {
+	const [palette] = await fixture.getDeferBlocks();
+	if (!palette) {
+		throw new Error('Command palette defer block missing');
+	}
+	await palette.render(DeferBlockState.Complete);
+	const element: HTMLElement = fixture.nativeElement;
 	const dialog = element.querySelector('dialog');
 	if (!dialog) {
 		throw new Error('Command dialog missing');
@@ -78,7 +84,7 @@ describe('platform integration', () => {
 		await fixture.whenStable();
 		const element: HTMLElement = fixture.nativeElement;
 		expect(element.querySelector('h1')?.textContent).toContain('Menos abas');
-		const dialog = mockDialog(element);
+		const dialog = await mockDialog(fixture);
 		const trigger = element.querySelector<HTMLButtonElement>('#global-search');
 		trigger?.click();
 		await fixture.whenStable();
@@ -126,7 +132,7 @@ describe('platform integration', () => {
 		const fixture = TestBed.createComponent(App);
 		await fixture.whenStable();
 		const element: HTMLElement = fixture.nativeElement;
-		const dialog = mockDialog(element);
+		const dialog = await mockDialog(fixture);
 		document.dispatchEvent(
 			new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true }),
 		);
@@ -165,7 +171,7 @@ describe('platform integration', () => {
 		const fixture = TestBed.createComponent(App);
 		await fixture.whenStable();
 		const element: HTMLElement = fixture.nativeElement;
-		const dialog = mockDialog(element);
+		const dialog = await mockDialog(fixture);
 		const trigger = element.querySelector<HTMLButtonElement>('#global-search');
 		const search = element.querySelector<HTMLInputElement>('#command-search');
 		if (!trigger || !search) {
@@ -245,7 +251,7 @@ describe('platform integration', () => {
 		const fixture = TestBed.createComponent(App);
 		await fixture.whenStable();
 		const element: HTMLElement = fixture.nativeElement;
-		mockDialog(element);
+		await mockDialog(fixture);
 		document.body.style.overflow = 'auto';
 		element.querySelector<HTMLButtonElement>('#global-search')?.click();
 		await fixture.whenStable();

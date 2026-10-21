@@ -96,6 +96,9 @@ export class App {
 			afterNextRender(() => commands.open(), { injector: this.injector });
 		}
 	}
+	protected onCommandPaletteClosed(): void {
+		this.commandPaletteRequested.set(false);
+	}
 	protected changeLocale(event: Event): void {
 		const target = event.target;
 		if (target instanceof HTMLSelectElement) {

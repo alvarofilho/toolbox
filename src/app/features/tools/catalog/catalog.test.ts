@@ -45,8 +45,11 @@ describe('tool catalog', () => {
 				expect(translationAt(dictionary, category.name), category.id).toEqual(expect.any(String));
 			}
 		}
-		for (const info of TOOLS) {
-			const definition = presentDefinition(await info.loadDefinition(), info);
+		const definitions = await Promise.all(
+			TOOLS.map(async (info) => ({ info, definition: await info.loadDefinition() })),
+		);
+		for (const { info, definition: loadedDefinition } of definitions) {
+			const definition = presentDefinition(loadedDefinition, info);
 			const localized: TranslationKey[] = [info.name, info.description, definition.action];
 			if (definition.hint) {
 				localized.push(definition.hint);

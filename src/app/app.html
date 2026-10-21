@@ -180,5 +180,5 @@
 	</footer>
 </div>
 @defer (when commandPaletteRequested()) {
-	<app-command-palette #commandPalette />
+	<app-command-palette #commandPalette (closed)="onCommandPaletteClosed()" />
 }

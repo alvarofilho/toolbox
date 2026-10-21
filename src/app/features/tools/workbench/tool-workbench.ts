@@ -12,7 +12,10 @@ import {
 	afterNextRender,
 	Injector,
 	PendingTasks,
+	DestroyRef,
 } from '@angular/core';
+import { FormControl, FormRecord, ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 import { DOCUMENT } from '@angular/common';
@@ -43,10 +46,11 @@ import {
 	type DiffRow,
 } from '@app/features/tools/_shared/difference';
 import { Icon } from '@app/shared/components/icon';
+import * as z from 'zod';
 
 @Component({
 	selector: 'app-tool-workbench',
-	imports: [RouterLink, Icon, TranslocoPipe],
+	imports: [RouterLink, Icon, TranslocoPipe, ReactiveFormsModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './tool-workbench.html',
 })
@@ -61,6 +65,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	private readonly presetService = inject(ToolPresetsService);
 	private readonly router = inject(Router);
 	private readonly handoff = inject(ToolHandoffService);
+	private readonly destroyRef = inject(DestroyRef);
+	protected readonly toolForm = new FormRecord<FormControl<string | boolean | null>>({});
 	protected readonly values = signal<ToolValues>({});
 	protected readonly files = signal<ToolFiles>({});
 	private readonly document = inject(DOCUMENT);
@@ -247,6 +253,10 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		CATEGORIES.find((c) => c.id === this.info().category),
 	);
 	ngOnInit(): void {
+		this.toolForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+			this.syncValues();
+			this.onFieldChanged();
+		});
 		this.reset();
 		const targetId = this.definition().id;
 		if (isToolHandoffTarget(targetId)) {
@@ -277,29 +287,31 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	}
 	protected update(key: string, event: Event): void {
 		const target = event.target;
-		if (
-			target instanceof HTMLInputElement ||
-			target instanceof HTMLTextAreaElement ||
-			target instanceof HTMLSelectElement
-		) {
-			if (target instanceof HTMLInputElement && target.type === 'file') {
-				this.files.update((files) => ({ ...files, [key]: Array.from(target.files ?? []) }));
-			}
-			this.values.update((values) => ({
-				...values,
-				[key]:
-					target instanceof HTMLInputElement && target.type === 'checkbox'
-						? String(target.checked)
-						: target.value,
-			}));
-			this.stale.set(!!this.result());
-			this.error.set('');
-			this.fieldErrors.set({});
-			this.feedback.set('');
-			this.cancelPending();
-			if (this.automatic()) {
-				this.scheduleRun();
-			}
+		if (!(target instanceof HTMLInputElement) || target.type !== 'file') {
+			return;
+		}
+		this.files.update((files) => ({ ...files, [key]: Array.from(target.files ?? []) }));
+		this.toolForm.controls[key]?.setValue(target.value);
+		this.onFieldChanged();
+	}
+	protected field(key: string): FormControl<string | boolean | null> {
+		const control = this.toolForm.controls[key];
+		if (!control) {
+			throw new Error(`Missing form control: ${key}`);
+		}
+		return control;
+	}
+	protected onFieldChanged(): void {
+		this.stale.set(!!this.result());
+		this.error.set('');
+		this.fieldErrors.set({});
+		for (const control of Object.values(this.toolForm.controls)) {
+			control.setErrors(null, { emitEvent: false });
+		}
+		this.feedback.set('');
+		this.cancelPending();
+		if (this.automatic()) {
+			this.scheduleRun();
 		}
 	}
 	protected onFileDragOver(key: string, event: DragEvent): void {
@@ -351,7 +363,18 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		}
 		this.files.set({});
 		this.draggingFileKey.set(null);
-		this.values.set(Object.fromEntries(this.definition().controls.map((c) => [c.key, c.value])));
+		for (const key of Object.keys(this.toolForm.controls)) {
+			this.toolForm.removeControl(key, { emitEvent: false });
+		}
+		for (const control of this.definition().controls) {
+			const initialValue = control.type === 'checkbox' ? control.value === 'true' : control.value;
+			this.toolForm.addControl(
+				control.key,
+				new FormControl<string | boolean | null>(initialValue),
+				{ emitEvent: false },
+			);
+		}
+		this.syncValues();
 		this.result.set(null);
 		this.error.set('');
 		this.feedback.set('');
@@ -435,7 +458,14 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	}
 	protected example(): void {
 		this.reset();
-		this.values.update((values) => ({ ...values, ...this.definition().example }));
+		for (const [key, value] of Object.entries(this.definition().example ?? {})) {
+			const definition = this.definition().controls.find((control) => control.key === key);
+			this.toolForm.controls[key]?.setValue(
+				definition?.type === 'checkbox' ? value === 'true' : value,
+				{ emitEvent: false },
+			);
+		}
+		this.syncValues();
 		void this.run();
 	}
 	protected async openResultIn(target: ToolHandoffTarget): Promise<void> {
@@ -454,7 +484,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		if (value === null) {
 			return;
 		}
-		this.values.update((current) => ({ ...current, input: value }));
+		this.toolForm.controls['input']?.setValue(value);
 		this.pendingHandoff.set(null);
 		this.handoffNeedsConfirmation.set(false);
 		this.stale.set(false);
@@ -469,6 +499,69 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.handoffNeedsConfirmation.set(false);
 		afterNextRender(() => this.document.getElementById('field-input')?.focus(), {
 			injector: this.injector,
+		});
+	}
+	private syncValues(): void {
+		const values: Record<string, string> = {};
+		for (const [key, value] of Object.entries(this.toolForm.getRawValue())) {
+			values[key] = value === null ? '' : String(value);
+		}
+		this.values.set(values);
+	}
+	private valuesSchema(): z.ZodType<ToolValues> {
+		const locale = this.translationState().locale;
+		return z.record(z.string(), z.string()).superRefine((values, context) => {
+			let totalLength = 0;
+			for (const [key, value] of Object.entries(values)) {
+				totalLength += value.length;
+				if (value.length > 100_000) {
+					context.addIssue({
+						code: 'custom',
+						path: [key],
+						message: this.transloco.translate(
+							'common.limit_100_000_characters_per_field_and_200',
+							{},
+							locale,
+						),
+					});
+				}
+			}
+			if (totalLength > 200_000) {
+				context.addIssue({
+					code: 'custom',
+					path: ['input'],
+					message: this.transloco.translate(
+						'common.limit_100_000_characters_per_field_and_200',
+						{},
+						locale,
+					),
+				});
+			}
+			for (const control of this.controls()) {
+				if (control.type !== 'number') {
+					continue;
+				}
+				const raw = values[control.key] ?? '';
+				const number = raw.trim() ? Number(raw) : Number.NaN;
+				let message: string | undefined;
+				if (!Number.isFinite(number)) {
+					message = this.transloco.translate('common.enter_a_valid_number', {}, locale);
+				} else if (control.step !== 'any' && !Number.isInteger(number)) {
+					message = this.transloco.translate('common.enter_a_whole_number', {}, locale);
+				} else if (number < (control.min ?? -Infinity) || number > (control.max ?? Infinity)) {
+					message = this.transloco.translate(
+						'common.number_must_be_between',
+						{
+							min: control.min ?? '−∞',
+							max: control.max ?? '∞',
+						},
+						locale,
+					);
+				}
+				if (message) {
+					context.addIssue({ code: 'custom', path: [control.key], message });
+				}
+			}
 		});
 	}
 	private scheduleRun(): void {
@@ -506,47 +599,17 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		const values = this.values();
 		const files = this.files();
 		try {
-			if (
-				Object.values(this.values()).some((v) => v.length > 100000) ||
-				Object.values(this.values()).reduce((sum, v) => sum + v.length, 0) > 200000
-			) {
-				throw new Error(
-					this.transloco.translate(
-						'common.limit_100_000_characters_per_field_and_200',
-						{},
-						this.translationState().locale,
-					),
-				);
-			}
-			const errors: Record<string, string> = {};
-			for (const control of this.controls()) {
-				if (control.type === 'number') {
-					const value = values[control.key] ?? '';
-					const n = Number(value);
-					if (!value.trim() || !Number.isFinite(n)) {
-						errors[control.key] = this.transloco.translate(
-							'common.enter_a_valid_number',
-							{},
-							this.translationState().locale,
-						);
-					} else if (control.step !== 'any' && !Number.isInteger(n)) {
-						errors[control.key] = this.transloco.translate(
-							'common.enter_a_whole_number',
-							{},
-							this.translationState().locale,
-						);
-					} else if (n < (control.min ?? -Infinity) || n > (control.max ?? Infinity)) {
-						errors[control.key] = this.transloco.translate(
-							'common.number_must_be_between',
-							{ min: control.min ?? '−∞', max: control.max ?? '∞' },
-							this.translationState().locale,
-						);
-					}
+			const validation = this.valuesSchema().safeParse(values);
+			if (!validation.success) {
+				this.toolForm.markAllAsTouched();
+				const errors: Record<string, string> = {};
+				for (const issue of validation.error.issues) {
+					const key = String(issue.path[0] ?? 'input');
+					errors[key] ??= issue.message;
 				}
-			}
-			if (Object.keys(errors).length) {
-				if (!automaticRun) {
-					this.fieldErrors.set(errors);
+				this.fieldErrors.set(errors);
+				for (const [key, message] of Object.entries(errors)) {
+					this.toolForm.controls[key]?.setErrors({ zod: message });
 				}
 				throw new Error(
 					this.transloco.translate(
@@ -557,17 +620,33 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				);
 			}
 			const selected = Object.values(this.files()).flat();
-			if (
-				selected.length > 20 ||
-				selected.some((f) => f.size > 20 * 1024 * 1024) ||
-				selected.reduce((n, f) => n + f.size, 0) > 50 * 1024 * 1024
-			) {
+			const fileValidation = z
+				.array(z.file())
+				.superRefine((selectedFiles, context) => {
+					if (
+						selectedFiles.length > 20 ||
+						selectedFiles.some((file) => file.size > 20 * 1024 * 1024) ||
+						selectedFiles.reduce((total, file) => total + file.size, 0) > 50 * 1024 * 1024
+					) {
+						context.addIssue({
+							code: 'custom',
+							message: this.transloco.translate(
+								'common.limit_20_files_20_mb_per_file_50_mb_total',
+								{},
+								this.translationState().locale,
+							),
+						});
+					}
+				})
+				.safeParse(selected);
+			if (!fileValidation.success) {
 				throw new Error(
-					this.transloco.translate(
-						'common.limit_20_files_20_mb_per_file_50_mb_total',
-						{},
-						this.translationState().locale,
-					),
+					fileValidation.error.issues[0]?.message ??
+						this.transloco.translate(
+							'common.limit_20_files_20_mb_per_file_50_mb_total',
+							{},
+							this.translationState().locale,
+						),
 				);
 			}
 			// Yield once so loading and cancellation controls render before local processing.
