@@ -443,6 +443,16 @@
 		"your_toolkit_to_transform_data_test_ideas_": "Your toolkit to transform data, test ideas and simplify your everyday work."
 	},
 	"tools": {
+		"batch-text": {
+			"name": "Batch text file converter",
+			"description": "Format, minify JSON, or convert CSV files to JSON in a downloadable ZIP.",
+			"files": "Files (up to 20; 20 MB each, 50 MB total)",
+			"transformation": "Transformation",
+			"json_format": "Format JSON",
+			"json_minify": "Minify JSON",
+			"csv_to_json": "CSV to JSON",
+			"process_and_download_zip": "Process files and download ZIP"
+		},
 		"address": {
 			"ac": "AC",
 			"address_generator": "Address Generator",

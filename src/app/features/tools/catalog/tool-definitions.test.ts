@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import {
@@ -15,6 +15,30 @@ import { subnet } from '@app/features/tools/infrastructure/subnet';
 import { dockerCompose } from '@app/features/tools/infrastructure/docker-compose.tool';
 import { parseEnv } from '@app/features/tools/infrastructure/parse-env';
 import { clampCss } from '@app/features/tools/frontend/clamp.tool';
+import {
+	processPdfPages,
+	type PdfPagesMessage,
+} from '@app/features/tools/text/pdf-pages-processor';
+
+class PdfPagesTestWorker extends EventTarget {
+	postMessage(message: unknown): void {
+		void processPdfPages(message as PdfPagesMessage).then(
+			(data) => this.dispatchEvent(new MessageEvent('message', { data })),
+			(error: unknown) =>
+				this.dispatchEvent(
+					new MessageEvent('message', {
+						data: { error: error instanceof Error ? error.message : 'invalid_pdf' },
+					}),
+				),
+		);
+	}
+
+	terminate(): void {
+		void this;
+	}
+}
+
+afterEach(() => vi.unstubAllGlobals());
 
 async function loadDefinition(id: string) {
 	const tool = TOOLS.find((tool) => tool.id === id);
@@ -330,6 +354,7 @@ describe('network, Brazilian and file formats', () => {
 		}
 	});
 	it('merges, extracts and splits actual PDF pages and reads metadata', async () => {
+		vi.stubGlobal('Worker', PdfPagesTestWorker);
 		const doc = await PDFDocument.create();
 		doc.addPage([200, 300]);
 		doc.addPage([400, 500]);

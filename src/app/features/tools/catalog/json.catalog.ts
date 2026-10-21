@@ -188,4 +188,15 @@ export const JSON_TOOLS: readonly ToolRegistration[] = [
 
 		loadDefinition: () => import('../json/schema-faker.tool').then((module) => module.definition),
 	},
+	{
+		id: 'batch-text',
+		name: 'tools.batch-text.name',
+		description: 'tools.batch-text.description',
+		category: 'json',
+		icon: 'archive',
+		keywords: 'lote batch zip arquivos converter formatar compactar csv json',
+		available: true,
+		isNew: true,
+		loadDefinition: () => import('../json/batch-text').then((module) => module.definition),
+	},
 ];
