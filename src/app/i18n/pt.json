@@ -905,6 +905,19 @@
 			"http_header_analyzer": "HTTP Header Analyzer",
 			"inspect_http_headers_pasted_from_a_respons": "Analise cabeçalhos HTTP colados de uma resposta."
 		},
+		"har": {
+			"additional_fields": "Nomes de campos adicionais sensíveis (separados por vírgula ou linha)",
+			"entry_limit": "O HAR excede o limite de {{limit}} entradas.",
+			"file_limit": "Selecione um HAR válido de até {{limit}}.",
+			"har_inspector_sanitizer": "Inspecionador e sanitizador de HAR",
+			"inspect_and_sanitize_har_files_locally": "Inspecione requisições e exporte uma cópia HAR sanitizada localmente.",
+			"invalid_json": "O arquivo não contém JSON válido.",
+			"invalid_structure": "A estrutura HAR 1.2 é inválida ({{path}}).",
+			"invalid_url": "Uma requisição contém uma URL inválida.",
+			"review_warning": "A sanitização não garante anonimização. Revise URLs, corpos e campos personalizados antes de compartilhar.",
+			"sanitization_scope": "Cabeçalhos de autenticação, cookies, valores de query e formulários e corpos foram ocultados quando possível. Corpos opacos e Base64 são removidos. Revise a cópia antes de compartilhar.",
+			"select_one_file": "Selecione exatamente um arquivo HAR."
+		},
 		"http-status": {
 			"http_code_empty_to_list_all": "Código HTTP (vazio para listar todos)",
 			"http_status_explorer": "HTTP Status Explorer",

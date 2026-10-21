@@ -57,6 +57,7 @@ const toolIcons: Readonly<Record<string, string>> = {
 	'cron-parser': 'clock',
 	'http-status': 'shield',
 	'http-headers': 'document',
+	har: 'shield',
 	'url-parser': 'link',
 	curl: 'terminal',
 	'json-patch': 'diff',
