@@ -682,7 +682,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				this.stale.set(false);
 			}
 		} catch (error: unknown) {
-					if (id === this.runId) {
+			if (id === this.runId) {
 				if (error instanceof ToolExecutionError && error.kind === 'cancelled') {
 					this.feedback.set(
 						this.transloco.translate(
@@ -702,7 +702,6 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 						if (source && isInputError && !Object.keys(this.fieldErrors()).length) {
 							this.fieldErrors.set({ [source.key]: message });
 						}
-					}
 					}
 				}
 			}

@@ -64,11 +64,7 @@ export async function runDataTask(
 					if (isDataErrorKey(translationKey)) {
 						const fieldKey =
 							translationKey === 'tools.jsonpath.invalid_expression' ? 'path' : 'input';
-						throw new TranslatedToolError(
-							translationKey,
-							errorParams(failure['params']),
-							fieldKey,
-						);
+						throw new TranslatedToolError(translationKey, errorParams(failure['params']), fieldKey);
 					}
 					if (typeof failure['message'] === 'string') {
 						throw new ToolExecutionError('input', failure['message']);
