@@ -83,7 +83,7 @@ The app uses Angular 22 standalone components, OnPush, Signals, lazy loading, Ta
 
 ## Privacy and limits
 
-`localStorage` stores only `toolbox.preferences.v1`: theme, language, favorite IDs, and up to eight recent tool IDs. Values are validated when read. If storage is blocked, the app continues for the current session and explains that preferences cannot be saved. Inputs, results, passwords, tokens, and documents are not stored. Exporting or copying requires an explicit user action.
+`localStorage` stores `toolbox.preferences.v1` (theme, language, favorite IDs, and up to eight recent tool IDs) and `toolbox.presets.v1`. Presets are versioned and validated when read. The preset allowlist is explicit: **Synthetic people** saves count, minimum and maximum age, state, export format, included-field checkboxes, and the deterministic seed; **Test data generator** saves count, output format, and the deterministic seed; **JSON formatter** saves indentation. The JSON schema tool does not save schemas. Presets never include source content (such as the schema or field/type JSON), files, results, credentials, or generated content. If storage is blocked, the app continues for the current session and explains that presets cannot be saved. Exporting or copying requires an explicit user action.
 
 Limits: 100,000 characters per field, 200,000 characters total, output up to 1 MB of text, and generators capped at 1,000 records. Regex runs in a Web Worker terminated after 500 ms, with up to 1,000 results and patterns up to 1,000 characters. Diffs have time and complexity limits. YAML limits alias expansion and rejects duplicate keys and recursive structures. User-provided HTML is never evaluated or rendered directly.
 

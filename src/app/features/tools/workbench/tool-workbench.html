@@ -68,6 +68,66 @@
 				</button>
 			}
 		</div>
+		@if (supportsPresets()) {
+			<section class="preset-controls" [attr.aria-label]="'common.presets' | transloco">
+				<div class="field">
+					<label [for]="'preset-name-' + tool().id">{{ 'common.preset_name' | transloco }}</label>
+					<div class="field-input-row">
+						<input
+							class="input"
+							[id]="'preset-name-' + tool().id"
+							[value]="presetName()"
+							(input)="updatePresetName($event)"
+							maxlength="40"
+							autocomplete="off"
+						/>
+						<button class="btn btn-outline btn-sm" type="button" (click)="savePreset()">
+							{{ 'common.save_preset' | transloco }}
+						</button>
+					</div>
+				</div>
+				<div class="field">
+					<label [for]="'preset-select-' + tool().id">
+						{{ 'common.saved_presets' | transloco }}
+					</label>
+					<div class="field-input-row">
+						<select
+							class="select"
+							[id]="'preset-select-' + tool().id"
+							[value]="selectedPresetId()"
+							(change)="updateSelectedPreset($event)"
+						>
+							<option value="">{{ 'common.choose_preset' | transloco }}</option>
+							@for (preset of presets(); track preset.id) {
+								<option [value]="preset.id">{{ preset.name }}</option>
+							}
+						</select>
+						<button
+							class="btn btn-outline btn-sm"
+							type="button"
+							(click)="applyPreset()"
+							[disabled]="!selectedPresetId()"
+						>
+							{{ 'common.apply_preset' | transloco }}
+						</button>
+						<button
+							class="btn btn-ghost btn-sm"
+							type="button"
+							(click)="deletePreset()"
+							[disabled]="!selectedPresetId()"
+						>
+							{{ 'common.delete_preset' | transloco }}
+						</button>
+					</div>
+				</div>
+				@if (presetStorageUnavailable()) {
+					<p class="field-error" role="status">
+						{{ 'common.presets_storage_unavailable' | transloco }}
+					</p>
+				}
+				<p class="sr-only" role="status">{{ feedback() }}</p>
+			</section>
+		}
 		<fieldset class="tool-fields" [class.diff-fields]="isDiffTool()">
 			<legend class="sr-only">
 				{{ 'common.tool_input' | transloco }}

@@ -20,6 +20,7 @@ import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PreferencesService } from '@app/core/services/preferences';
+import { ToolPresetsService } from '@app/core/services/tool-presets';
 import {
 	compatibleHandoffTargets,
 	isToolHandoffTarget,
@@ -57,6 +58,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		ready: this.p.translationsReady(),
 	}));
 	private readonly transloco = inject(TranslocoService);
+	private readonly presetService = inject(ToolPresetsService);
 	private readonly router = inject(Router);
 	private readonly handoff = inject(ToolHandoffService);
 	protected readonly values = signal<ToolValues>({});
@@ -213,6 +215,16 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	protected readonly error = signal('');
 	protected readonly busy = signal(false);
 	protected readonly feedback = signal('');
+	protected readonly presetName = signal('');
+	protected readonly selectedPresetId = signal('');
+	private readonly presetRefresh = signal(0);
+	protected readonly supportsPresets = computed(() =>
+		this.presetService.supports(this.tool().id, this.tool().controls),
+	);
+	protected readonly presets = computed(
+		() => (this.presetRefresh(), this.presetService.list(this.tool().id, this.tool().controls)),
+	);
+	protected readonly presetStorageUnavailable = this.presetService.storageUnavailable;
 	protected readonly pendingHandoff = signal<string | null>(null);
 	protected readonly handoffNeedsConfirmation = signal(false);
 	protected readonly handoffTargets = computed(() => {
@@ -347,6 +359,79 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.fieldErrors.set({});
 		this.revealed.set([]);
 		this.completedValues.set({});
+		this.selectedPresetId.set('');
+	}
+	protected updatePresetName(event: Event): void {
+		if (event.target instanceof HTMLInputElement) {
+			this.presetName.set(event.target.value);
+		}
+	}
+	protected updateSelectedPreset(event: Event): void {
+		if (event.target instanceof HTMLSelectElement) {
+			this.selectedPresetId.set(event.target.value);
+		}
+	}
+	protected savePreset(): void {
+		const outcome = this.presetService.save(
+			this.tool().id,
+			this.tool().controls,
+			this.presetName(),
+			this.values(),
+		);
+		const key =
+			outcome === 'saved'
+				? 'common.preset_saved'
+				: outcome === 'duplicate'
+					? 'common.preset_name_already_exists'
+					: outcome === 'unavailable'
+						? 'common.presets_storage_unavailable'
+						: 'common.preset_name_required';
+		this.feedback.set(this.transloco.translate(key, {}, this.translationState().locale));
+		this.presetRefresh.update((revision) => revision + 1);
+		if (outcome === 'saved') {
+			this.presetName.set('');
+		}
+	}
+	protected applyPreset(): void {
+		const preset = this.presetService.find(
+			this.tool().id,
+			this.tool().controls,
+			this.selectedPresetId(),
+		);
+		if (!preset) {
+			this.feedback.set(
+				this.transloco.translate(
+					'common.preset_invalid_or_unavailable',
+					{},
+					this.translationState().locale,
+				),
+			);
+			return;
+		}
+		this.cancelPending();
+		this.values.update((values) => ({ ...values, ...preset.values }));
+		this.fieldErrors.set({});
+		this.error.set('');
+		this.stale.set(!!this.result());
+		this.feedback.set(
+			this.transloco.translate('common.preset_applied', {}, this.translationState().locale),
+		);
+	}
+	protected deletePreset(): void {
+		const removed = this.presetService.remove(
+			this.tool().id,
+			this.tool().controls,
+			this.selectedPresetId(),
+		);
+		this.selectedPresetId.set('');
+		this.presetRefresh.update((revision) => revision + 1);
+		this.feedback.set(
+			this.transloco.translate(
+				removed ? 'common.preset_deleted' : 'common.preset_invalid_or_unavailable',
+				{},
+				this.translationState().locale,
+			),
+		);
 	}
 	protected example(): void {
 		this.reset();

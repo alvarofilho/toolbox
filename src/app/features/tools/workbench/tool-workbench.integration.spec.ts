@@ -73,6 +73,75 @@ describe('tool workbench integration', () => {
 		await harness.fixture.whenStable();
 		expect(root.querySelector('.result-code')?.textContent?.trim().split('\n')).toHaveLength(2);
 	});
+	it('saves only allowed data-generator options and applies them without processing input', async () => {
+		const harness = await RouterTestingHarness.create('/tools/data-generator');
+		const root = harness.routeNativeElement;
+		const input = root?.querySelector<HTMLTextAreaElement>('#field-input');
+		const count = root?.querySelector<HTMLInputElement>('#field-count');
+		const format = root?.querySelector<HTMLSelectElement>('#field-format');
+		const seed = root?.querySelector<HTMLInputElement>('#field-seed');
+		if (!root || !input || !count || !format || !seed) {
+			throw new Error('Data generator controls missing');
+		}
+		input.value = '{"name":"string"}';
+		input.dispatchEvent(new Event('input'));
+		count.value = '3';
+		count.dispatchEvent(new Event('input'));
+		format.value = 'csv';
+		format.dispatchEvent(new Event('change'));
+		seed.value = 'reproducible-42';
+		seed.dispatchEvent(new Event('input'));
+		const name = root.querySelector<HTMLInputElement>('[id="preset-name-data-generator"]');
+		if (!name) {
+			throw new Error('Preset name missing');
+		}
+		name.value = 'CSV pequeno';
+		name.dispatchEvent(new Event('input'));
+		Array.from(root.querySelectorAll('button'))
+			.find((button) => button.textContent?.includes('Salvar preset'))
+			?.click();
+		await harness.fixture.whenStable();
+		const stored = localStorage.getItem('toolbox.presets.v1');
+		expect(stored).toContain('"count":"3"');
+		expect(stored).toContain('"format":"csv"');
+		expect(stored).toContain('"seed":"reproducible-42"');
+		expect(stored).not.toContain('"name":"string"');
+		name.value = 'CSV pequeno';
+		name.dispatchEvent(new Event('input'));
+		Array.from(root.querySelectorAll('button'))
+			.find((button) => button.textContent?.includes('Salvar preset'))
+			?.click();
+		await harness.fixture.whenStable();
+		expect(root.textContent).toContain('Já existe um preset com esse nome');
+		count.value = '7';
+		count.dispatchEvent(new Event('input'));
+		input.value = '{"kept":"integer"}';
+		input.dispatchEvent(new Event('input'));
+		seed.value = 'another-seed';
+		seed.dispatchEvent(new Event('input'));
+		const select = root.querySelector<HTMLSelectElement>('[id="preset-select-data-generator"]');
+		if (!select) {
+			throw new Error('Preset selector missing');
+		}
+		expect(select.options).toHaveLength(2);
+		select.value = select.options[1]?.value ?? '';
+		select.dispatchEvent(new Event('change'));
+		harness.fixture.detectChanges();
+		expect(select.value).not.toBe('');
+		Array.from(root.querySelectorAll('button'))
+			.find((button) => button.textContent?.trim() === 'Aplicar')
+			?.click();
+		await harness.fixture.whenStable();
+		expect(count.value).toBe('3');
+		expect(seed.value).toBe('reproducible-42');
+		expect(input.value).toBe('{"kept":"integer"}');
+		expect(root.querySelector('.result-code')).toBeNull();
+		Array.from(root.querySelectorAll('button'))
+			.find((button) => button.textContent?.includes('Excluir'))
+			?.click();
+		await harness.fixture.whenStable();
+		expect(localStorage.getItem('toolbox.presets.v1')).not.toContain('CSV pequeno');
+	});
 	it('terminates pending workers on cancel and when leaving the tool', async () => {
 		PendingWorker.instances.length = 0;
 		vi.stubGlobal('Worker', PendingWorker);
