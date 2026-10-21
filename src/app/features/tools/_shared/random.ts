@@ -23,8 +23,17 @@ export function randomString(length: number, alphabet: string): string {
 export const hex = (bytes: Uint8Array): string =>
 	Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
 
-export function uuid(version: string): string {
+export function uuid(version: string, int: (max: number) => number = randomInt): string {
 	if (version === '4') {
+		if (int !== randomInt) {
+			const hex = Array.from({ length: 32 }, () => int(16).toString(16))
+				.join('')
+				.split('');
+			hex[12] = '4';
+			hex[16] = ((Number.parseInt(hex[16] ?? '0', 16) & 3) | 8).toString(16);
+			const value = hex.join('');
+			return `${value.slice(0, 8)}-${value.slice(8, 12)}-${value.slice(12, 16)}-${value.slice(16, 20)}-${value.slice(20)}`;
+		}
 		return crypto.randomUUID();
 	}
 	if (version !== '7') {

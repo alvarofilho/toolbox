@@ -723,6 +723,8 @@
 		"data-generator": {
 			"define_fields_and_types_to_generate_json_c": "Define fields and types to generate JSON, CSV or SQL records.",
 			"fields_and_types_json": "Fields and types (JSON)",
+			"seed": "Optional seed",
+			"seed_version_notice": "When you provide a seed, reproduction uses {{version}}. Keep the same seed, configuration, and Toolbox version.",
 			"test_data_generator": "Test Data Generator"
 		},
 		"database-seed": {
@@ -1264,6 +1266,8 @@
 			"rj": "RJ",
 			"rs": "RS",
 			"sc": "SC",
+			"seed": "Optional seed",
+			"seed_version_notice": "When you provide a seed, reproduction uses {{version}}. Keep the same seed, configuration, and Toolbox version.",
 			"sp": "SP",
 			"sql_insert": "SQL INSERT",
 			"state": "State",
