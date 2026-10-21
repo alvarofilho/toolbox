@@ -27,7 +27,7 @@ import type {
 	ToolResult,
 	ToolValues,
 } from '@app/core/models/tool';
-import { TranslatedToolError } from '@app/core/models/tool';
+import { ToolExecutionError, TranslatedToolError } from '@app/core/models/tool';
 import { presentDefinition, visibleControl } from '@app/features/tools/workbench/presentation';
 import {
 	canonicalJson,
@@ -205,6 +205,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	protected readonly busy = signal(false);
 	protected readonly feedback = signal('');
 	private runId = 0;
+	private activeRunController: AbortController | undefined;
 	private autoRunTimer: ReturnType<typeof setTimeout> | undefined;
 	protected readonly info = computed(() => {
 		const info = TOOLS.find((t) => t.id === this.definition().id);
@@ -225,6 +226,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			clearTimeout(this.autoRunTimer);
 		}
 		this.runId++;
+		this.activeRunController?.abort();
+		this.activeRunController = undefined;
 	}
 	protected update(key: string, event: Event): void {
 		const target = event.target;
@@ -294,6 +297,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			this.autoRunTimer = undefined;
 		}
 		this.runId++;
+		this.activeRunController?.abort();
+		this.activeRunController = undefined;
 		this.busy.set(false);
 		for (const input of this.fileInputs()) {
 			input.nativeElement.value = '';
@@ -338,6 +343,9 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			this.autoRunTimer = undefined;
 		}
 		const id = ++this.runId;
+		const controller = new AbortController();
+		this.activeRunController?.abort();
+		this.activeRunController = controller;
 		const completeTask = this.pendingTasks.add();
 		this.busy.set(true);
 		this.error.set('');
@@ -415,7 +423,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			if (id !== this.runId) {
 				return;
 			}
-			const result = await this.definition().run(values, files);
+			const result = await this.definition().run(values, files, controller.signal);
 			if (result.output.length > 1000000) {
 				throw new Error(
 					this.transloco.translate(
@@ -437,18 +445,27 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 					),
 				);
 			}
-			if (id === this.runId) {
+			if (id === this.runId && !controller.signal.aborted) {
 				this.result.set(result);
 				this.completedValues.set(values);
 				this.stale.set(false);
 			}
 		} catch (error: unknown) {
 			if (id === this.runId) {
-				if (!automaticRun) {
+				if (error instanceof ToolExecutionError && error.kind === 'cancelled') {
+					this.feedback.set(
+						this.transloco.translate(
+							'common.execution_cancelled',
+							{},
+							this.translationState().locale,
+						),
+					);
+				} else if (!automaticRun) {
 					const message = this.errorMessage(error);
 					this.error.set(message);
 					const source = this.controls().find((control) => control.key === 'input');
-					if (source && !Object.keys(this.fieldErrors()).length) {
+					const isInputError = !(error instanceof ToolExecutionError) || error.kind === 'input';
+					if (source && isInputError && !Object.keys(this.fieldErrors()).length) {
 						this.fieldErrors.set({ [source.key]: message });
 					}
 				}
@@ -456,6 +473,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		} finally {
 			completeTask();
 			if (id === this.runId) {
+				this.activeRunController = undefined;
 				this.busy.set(false);
 				if (!automaticRun) {
 					afterNextRender(
@@ -477,16 +495,14 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		}
 		this.autoRunTimer = undefined;
 		this.runId++;
+		this.activeRunController?.abort();
+		this.activeRunController = undefined;
 		this.busy.set(false);
 	}
 	protected cancel(): void {
 		this.cancelPending();
 		this.feedback.set(
-			this.transloco.translate(
-				'common.you_can_continue_editing_this_run_will_not',
-				{},
-				this.translationState().locale,
-			),
+			this.transloco.translate('common.execution_cancelled', {}, this.translationState().locale),
 		);
 	}
 	protected showResult(): void {
@@ -509,6 +525,18 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	}
 	private errorMessage(error: unknown): string {
 		const locale = this.translationState().locale;
+		if (error instanceof ToolExecutionError) {
+			if (error.kind === 'timeout') {
+				return this.transloco.translate('common.execution_timed_out', {}, locale);
+			}
+			if (error.kind === 'input') {
+				const prefix = this.transloco.translate('common.invalid_tool_input', {}, locale);
+				return error.message ? `${prefix}: ${error.message}` : prefix;
+			}
+			if (error.kind === 'worker') {
+				return this.transloco.translate('common.tool_execution_failed', {}, locale);
+			}
+		}
 		if (error instanceof TranslatedToolError) {
 			return this.transloco.translate(error.translationKey, error.params, locale);
 		}

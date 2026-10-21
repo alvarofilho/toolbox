@@ -1,37 +1,40 @@
+import { ToolExecutionError } from '@app/core/models/tool';
 import type { DataTask } from '@app/features/tools/json/data-processing';
 import { object } from '@app/features/tools/_shared/data';
+import { runWorkerTask } from '@app/features/tools/_shared/worker-task';
 
-export async function runDataTask(name: DataTask, input: string, second = ''): Promise<unknown> {
-	if (typeof Worker === 'undefined') {
-		return (await import('./data-processing')).processData(name, input, second);
+export async function runDataTask(
+	name: DataTask,
+	input: string,
+	second = '',
+	signal?: AbortSignal,
+): Promise<unknown> {
+	if (signal?.aborted) {
+		throw new ToolExecutionError('cancelled');
 	}
-	return new Promise((resolve, reject) => {
-		const worker = new Worker(new URL('./data.worker', import.meta.url), { type: 'module' });
-		const timer = setTimeout(() => {
-			worker.terminate();
-			reject(new Error('Tempo limite: 2 segundos / Time limit: 2 seconds'));
-		}, 2000);
-		worker.onmessage = (event: MessageEvent<unknown>) => {
-			clearTimeout(timer);
-			worker.terminate();
-			try {
-				const data = object(event.data);
+	if (typeof Worker === 'undefined') {
+		const result = (await import('./data-processing')).processData(name, input, second);
+		if (signal?.aborted) {
+			throw new ToolExecutionError('cancelled');
+		}
+		return result;
+	}
+	return runWorkerTask(
+		() => new Worker(new URL('./data.worker', import.meta.url), { type: 'module' }),
+		{ task: name, input, second },
+		{
+			signal,
+			timeoutMs: 2000,
+			parse: (value) => {
+				const data = object(value);
 				if (typeof data['error'] === 'string') {
-					reject(new Error(data['error']));
-				} else if (Object.hasOwn(data, 'value')) {
-					resolve(data['value']);
-				} else {
-					reject(new Error('Resposta inválida / Invalid response'));
+					throw new ToolExecutionError('input', data['error']);
 				}
-			} catch (error: unknown) {
-				reject(error);
-			}
-		};
-		worker.onerror = () => {
-			clearTimeout(timer);
-			worker.terminate();
-			reject(new Error('Falha no processamento / Processing failed'));
-		};
-		worker.postMessage({ task: name, input, second });
-	});
+				if (Object.hasOwn(data, 'value')) {
+					return data['value'];
+				}
+				throw new ToolExecutionError('worker');
+			},
+		},
+	);
 }
