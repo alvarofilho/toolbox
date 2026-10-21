@@ -37,8 +37,8 @@ describe('tool definitions', () => {
 		async (id) => {
 			const definition = await loadDefinition(id);
 			expect(new Set(definition.controls.map((c) => c.key)).size).toBe(definition.controls.length);
-			// Sanitizer previews need a real DOM and regex needs a browser Worker.
-			if (definition.example && !['svg-optimizer', 'html-editor', 'regex'].includes(id)) {
+			// Sanitizer previews need a real DOM; regex and bcrypt need browser Workers.
+			if (definition.example && !['svg-optimizer', 'html-editor', 'regex', 'bcrypt'].includes(id)) {
 				const output = await run(id, definition.example);
 				expect(output.output.length).toBeGreaterThan(0);
 				expect(output.output).not.toContain('[object Object]');

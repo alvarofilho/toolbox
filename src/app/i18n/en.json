@@ -905,6 +905,19 @@
 			"http_header_analyzer": "HTTP Header Analyzer",
 			"inspect_http_headers_pasted_from_a_respons": "Inspect HTTP headers pasted from a response."
 		},
+		"har": {
+			"additional_fields": "Additional sensitive field names (comma or line separated)",
+			"entry_limit": "The HAR exceeds the limit of {{limit}} entries.",
+			"file_limit": "Select a valid HAR file up to {{limit}}.",
+			"har_inspector_sanitizer": "HAR Inspector and Sanitizer",
+			"inspect_and_sanitize_har_files_locally": "Inspect requests and export a sanitized HAR copy locally.",
+			"invalid_json": "The file does not contain valid JSON.",
+			"invalid_structure": "The HAR 1.2 structure is invalid ({{path}}).",
+			"invalid_url": "A request contains an invalid URL.",
+			"review_warning": "Sanitization does not guarantee anonymization. Review URLs, bodies, and custom fields before sharing.",
+			"sanitization_scope": "Authentication headers, cookies, query and form values, and bodies are hidden where possible. Opaque and Base64 bodies are removed. Review the copy before sharing.",
+			"select_one_file": "Select exactly one HAR file."
+		},
 		"http-status": {
 			"http_code_empty_to_list_all": "HTTP code (empty to list all)",
 			"http_status_explorer": "HTTP Status Explorer",
