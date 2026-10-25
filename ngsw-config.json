@@ -1,0 +1,33 @@
+{
+	"$schema": "./node_modules/@angular/service-worker/config/schema.json",
+	"index": "/index.html",
+	"assetGroups": [
+		{
+			"name": "app-shell",
+			"installMode": "prefetch",
+			"updateMode": "prefetch",
+			"resources": {
+				"files": [
+					"/index.html",
+					"/styles-*.css",
+					"/main-*.js",
+					"/theme-init.js",
+					"/manifest.webmanifest",
+					"/favicon.*",
+					"/icons/*.svg",
+					"/icons/*.png",
+					"/fonts/*.woff2",
+					"/media/*.woff2"
+				]
+			}
+		},
+		{
+			"name": "lazy-tool-modules",
+			"installMode": "lazy",
+			"updateMode": "prefetch",
+			"resources": {
+				"files": ["/chunk-*.js", "/worker-*.js"]
+			}
+		}
+	]
+}

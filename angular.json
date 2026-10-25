@@ -42,6 +42,7 @@
 						"deployUrl": "/",
 						"browser": "src/main.ts",
 						"tsConfig": "tsconfig.app.json",
+						"serviceWorker": "ngsw-config.json",
 						"webWorkerTsConfig": "tsconfig.worker.json",
 						"inlineStyleLanguage": "scss",
 						"assets": [

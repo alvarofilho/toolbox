@@ -114,7 +114,11 @@ function setLink(html, rel, href) {
 
 function createPage(template, { path, title, description, type = 'website' }) {
 	const canonical = `${origin}${path}`;
-	let html = template.replace(/<title>[^<]*<\/title>/i, `<title>${htmlEscape(title)}</title>`);
+	let html = template.replace(
+		/<script(?=[^>]*\bsrc=)(?![^>]*\bdata-cfasync=)/gi,
+		'<script data-cfasync="false"',
+	);
+	html = html.replace(/<title>[^<]*<\/title>/i, `<title>${htmlEscape(title)}</title>`);
 	html = setMeta(html, 'description', description);
 	html = setMeta(html, 'robots', 'index, follow, max-image-preview:large');
 	html = setMeta(html, 'og:type', type, 'property');
@@ -128,11 +132,7 @@ function createPage(template, { path, title, description, type = 'website' }) {
 }
 
 const indexPath = join(outputPath, 'index.html');
-const template = (await readFile(indexPath, 'utf8')).replace(
-	/<script(?=[^>]*\bsrc=)(?![^>]*\bdata-cfasync=)/gi,
-	'<script data-cfasync="false"',
-);
-await writeFile(indexPath, template);
+const template = await readFile(indexPath, 'utf8');
 const tools = await readTools();
 const categories = await readCategories();
 const pages = [

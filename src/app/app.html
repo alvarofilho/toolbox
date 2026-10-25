@@ -155,6 +155,84 @@
 			>
 				<app-icon name="github" />
 			</a>
+			<details class="offline-menu">
+				<summary
+					class="btn btn-ghost offline-trigger"
+					[attr.aria-label]="'common.offline_tools' | transloco"
+				>
+					<app-icon name="download" />
+					<span>{{ 'common.offline_tools' | transloco }}</span>
+				</summary>
+				<section class="offline-panel" [attr.aria-label]="'common.offline_tools' | transloco">
+					<h2>{{ 'common.offline_tools' | transloco }}</h2>
+					<p>{{ 'common.offline_description' | transloco }}</p>
+					<p class="offline-status" role="status" aria-live="polite">
+						@if (!offline.supported()) {
+							{{ 'common.offline_unsupported' | transloco }}
+						} @else if (offline.updateAvailable()) {
+							{{ 'common.offline_update_ready' | transloco }}
+						} @else if (offline.state() === 'preparing') {
+							{{ 'common.offline_preparing' | transloco }}
+						} @else if (offline.state() === 'failed') {
+							{{ 'common.offline_failed' | transloco }}
+						} @else if (offline.state() === 'ready' && offline.online()) {
+							{{ 'common.offline_ready' | transloco }}
+						} @else if (offline.state() === 'ready') {
+							{{ 'common.offline_ready_and_disconnected' | transloco }}
+						} @else if (!offline.online()) {
+							{{ 'common.offline_connect_to_prepare' | transloco }}
+						} @else {
+							{{ 'common.offline_not_prepared' | transloco }}
+						}
+					</p>
+					<ul class="offline-tools">
+						@for (tool of offline.tools(); track tool.id) {
+							<li>
+								<span>{{ tool.name | transloco }}</span>
+								<span [class.is-ready]="tool.ready">
+									{{
+										(tool.ready ? 'common.offline_available' : 'common.offline_not_downloaded')
+											| transloco
+									}}
+								</span>
+							</li>
+						}
+					</ul>
+					<div class="offline-actions">
+						@if (offline.installAvailable()) {
+							<button class="btn btn-secondary" type="button" (click)="offline.install()">
+								{{ 'common.install_app' | transloco }}
+							</button>
+						}
+						@if (offline.updateAvailable()) {
+							<button class="btn btn-secondary" type="button" (click)="offline.applyUpdate()">
+								{{ 'common.reload_for_update' | transloco }}
+							</button>
+						}
+						<button
+							class="btn btn-primary"
+							type="button"
+							[disabled]="
+								!offline.supported() ||
+								!offline.online() ||
+								offline.state() === 'preparing' ||
+								offline.updateAvailable()
+							"
+							(click)="offline.prepare()"
+						>
+							{{ 'common.prepare_offline' | transloco }}
+						</button>
+						<button
+							class="btn btn-ghost"
+							type="button"
+							[disabled]="!offline.supported()"
+							(click)="offline.clear()"
+						>
+							{{ 'common.clear_offline' | transloco }}
+						</button>
+					</div>
+				</section>
+			</details>
 		</div>
 	</header>
 	<main id="main-content" tabindex="-1">

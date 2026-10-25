@@ -27,6 +27,7 @@ const mimeTypes = {
 	'.svg': 'image/svg+xml',
 	'.txt': 'text/plain; charset=utf-8',
 	'.webp': 'image/webp',
+	'.webmanifest': 'application/manifest+json; charset=utf-8',
 	'.woff2': 'font/woff2',
 };
 
@@ -41,7 +42,7 @@ const server = createServer((request, response) => {
 
 	response.writeHead(200, {
 		...securityHeaders,
-		'Cache-Control': 'no-store',
+		'Cache-Control': securityHeaders['Cache-Control'] ?? 'no-store',
 		'Content-Type': mimeTypes[extname(requestedFile)] ?? 'application/octet-stream',
 	});
 	createReadStream(requestedFile).pipe(response);
