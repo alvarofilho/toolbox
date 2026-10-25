@@ -1,5 +1,10 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
+import {
+	provideRouter,
+	withAutoCleanupInjectors,
+	withComponentInputBinding,
+	withInMemoryScrolling,
+} from '@angular/router';
 import { routes } from '@app/app.routes';
 import { provideToolboxTransloco } from '@app/core/services/transloco.providers';
 
@@ -11,6 +16,7 @@ export const appConfig: ApplicationConfig = {
 			routes,
 			withComponentInputBinding(),
 			withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+			withAutoCleanupInjectors(),
 		),
 	],
 };

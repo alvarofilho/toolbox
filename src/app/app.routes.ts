@@ -5,6 +5,13 @@ import { TranslocoService } from '@jsverse/transloco';
 import type { TranslationKey } from '@app/core/models/translation-key';
 import { PreferencesService } from '@app/core/services/preferences';
 import { TOOLS } from '@app/features/tools/catalog/tools';
+import { provideWebMcpTool } from '@app/features/tools/workbench/webmcp-tools';
+
+const WEBMCP_TOOL_IDS = ['json-formatter', 'base64', 'uuid'] as const;
+
+function webMcpToolId(id: string): (typeof WEBMCP_TOOL_IDS)[number] | undefined {
+	return WEBMCP_TOOL_IDS.find((toolId) => toolId === id);
+}
 
 function translatedTitle(key: TranslationKey): ResolveFn<string> {
 	return async () => {
@@ -44,13 +51,17 @@ export const routes: Routes = [
 		data: { mode: 'category' },
 		title: 'Categorias · Toolbox',
 	},
-	...TOOLS.map((tool) => ({
-		path: `tools/${tool.id}`,
-		loadComponent: () =>
-			import('./features/tools/workbench/tool-workbench').then((m) => m.ToolWorkbench),
-		resolve: { definition: tool.loadDefinition },
-		title: translatedTitle(tool.name),
-	})),
+	...TOOLS.map((tool) => {
+		const webMcpId = webMcpToolId(tool.id);
+		return {
+			path: `tools/${tool.id}`,
+			loadComponent: () =>
+				import('./features/tools/workbench/tool-workbench').then((m) => m.ToolWorkbench),
+			resolve: { definition: tool.loadDefinition },
+			...(webMcpId ? { providers: [provideWebMcpTool(webMcpId)] } : {}),
+			title: translatedTitle(tool.name),
+		};
+	}),
 	{
 		path: '**',
 		loadComponent: () => import('./features/not-found').then((m) => m.NotFound),
