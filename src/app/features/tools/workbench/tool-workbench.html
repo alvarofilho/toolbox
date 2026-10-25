@@ -29,6 +29,9 @@
 		}}
 	</button>
 </section>
+@if (isWebMcpPilot()) {
+	<p class="tool-hint">{{ 'common.webmcp_provider_notice' | transloco }}</p>
+}
 @if (tool().hint; as hint) {
 	<p class="tool-hint">
 		<app-icon name="shield" />

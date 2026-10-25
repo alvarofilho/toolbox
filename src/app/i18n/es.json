@@ -335,6 +335,8 @@
 		"pr": "PR",
 		"preparing_your_result": "Preparando el resultado…",
 		"privacy_notice_complete": "Privado por defecto. Las entradas y los resultados no se envían ni se guardan automáticamente.",
+		"webmcp_provider_notice": "Si un agente de IA usa esta herramienta, puede reenviar el resultado a su proveedor según su propia configuración.",
+		"webmcp_existing_work": "La bancada contiene entradas o un resultado. Reinicia la herramienta antes de llamarla desde un agente.",
 		"processing": "Procesando",
 		"processing_ellipsis": "Procesando…",
 		"protected_link": "Enlace protegido",

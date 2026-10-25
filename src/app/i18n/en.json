@@ -335,6 +335,8 @@
 		"pr": "PR",
 		"preparing_your_result": "Preparing your result…",
 		"privacy_notice_complete": "Private by default. Inputs and results are never uploaded or saved automatically.",
+		"webmcp_provider_notice": "If an AI agent uses this tool, it may forward the result to its provider according to the agent's own settings.",
+		"webmcp_existing_work": "The workbench contains existing input or a result. Reset the tool before calling it through an agent.",
 		"processing": "Processing",
 		"processing_ellipsis": "Processing…",
 		"protected_link": "Protected link",

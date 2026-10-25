@@ -39,6 +39,7 @@ import type {
 	ToolValues,
 } from '@app/core/models/tool';
 import { ToolExecutionError, TranslatedToolError } from '@app/core/models/tool';
+import { WebMcpWorkbench } from '@app/core/services/webmcp-workbench';
 import { presentDefinition, visibleControl } from '@app/features/tools/workbench/presentation';
 import {
 	canonicalJson,
@@ -65,6 +66,8 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	private readonly presetService = inject(ToolPresetsService);
 	private readonly router = inject(Router);
 	private readonly handoff = inject(ToolHandoffService);
+	private readonly webMcpWorkbench = inject(WebMcpWorkbench);
+	private unregisterWebMcp: (() => void) | undefined;
 	private readonly destroyRef = inject(DestroyRef);
 	protected readonly toolForm = new FormRecord<FormControl<string | boolean | null>>({});
 	protected readonly values = signal<ToolValues>({});
@@ -252,7 +255,41 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 	protected readonly category = computed(() =>
 		CATEGORIES.find((c) => c.id === this.info().category),
 	);
+	protected readonly isWebMcpPilot = computed(() =>
+		['json-formatter', 'base64', 'uuid'].includes(this.definition().id),
+	);
 	ngOnInit(): void {
+		const webMcpToolId = this.definition().id;
+		if (webMcpToolId === 'json-formatter' || webMcpToolId === 'base64' || webMcpToolId === 'uuid') {
+			this.unregisterWebMcp = this.webMcpWorkbench.register(
+				webMcpToolId,
+				async (request) => {
+					if (this.toolForm.dirty || this.selectedPresetId() || this.result()) {
+						throw new Error(
+							this.transloco.translate(
+								'common.webmcp_existing_work',
+								{},
+								this.translationState().locale,
+							),
+						);
+					}
+					if (request.signal.aborted) {
+						throw new Error('Tool execution was cancelled.');
+					}
+					for (const [key, value] of Object.entries(request.values)) {
+						this.toolForm.controls[key]?.setValue(value, { emitEvent: false });
+					}
+					this.toolForm.markAsPristine();
+					this.syncValues();
+					const result = await this.run(undefined, false, request.signal);
+					if (!result) {
+						throw new Error(this.error() || 'Tool execution failed.');
+					}
+					return result;
+				},
+				(message) => this.error.set(message),
+			);
+		}
 		this.toolForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
 			this.syncValues();
 			this.onFieldChanged();
@@ -278,6 +315,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		this.p.visit(this.definition().id);
 	}
 	ngOnDestroy(): void {
+		this.unregisterWebMcp?.();
 		if (this.autoRunTimer) {
 			clearTimeout(this.autoRunTimer);
 		}
@@ -591,7 +629,11 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			void this.run(undefined, true);
 		}, 450);
 	}
-	protected async run(event?: Event, automaticRun = false): Promise<void> {
+	protected async run(
+		event?: Event,
+		automaticRun = false,
+		externalSignal?: AbortSignal,
+	): Promise<ToolResult | null> {
 		event?.preventDefault();
 		if (this.autoRunTimer) {
 			clearTimeout(this.autoRunTimer);
@@ -599,6 +641,11 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 		}
 		const id = ++this.runId;
 		const controller = new AbortController();
+		const abortFromClient = (): void => controller.abort();
+		externalSignal?.addEventListener('abort', abortFromClient, { once: true });
+		if (externalSignal?.aborted) {
+			controller.abort();
+		}
 		this.activeRunController?.abort();
 		this.activeRunController = controller;
 		const completeTask = this.pendingTasks.add();
@@ -662,7 +709,10 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 			// Yield once so loading and cancellation controls render before local processing.
 			await new Promise<void>((resolve) => setTimeout(resolve, 0));
 			if (id !== this.runId) {
-				return;
+				return null;
+			}
+			if (controller.signal.aborted) {
+				return null;
 			}
 			const result = await this.definition().run(values, files, controller.signal);
 			if (result.output.length > 1000000) {
@@ -690,7 +740,9 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				this.result.set(result);
 				this.completedValues.set(values);
 				this.stale.set(false);
+				return result;
 			}
+			return null;
 		} catch (error: unknown) {
 			if (id === this.runId) {
 				if (error instanceof ToolExecutionError && error.kind === 'cancelled') {
@@ -716,6 +768,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				}
 			}
 		} finally {
+			externalSignal?.removeEventListener('abort', abortFromClient);
 			completeTask();
 			if (id === this.runId) {
 				this.activeRunController = undefined;
@@ -733,6 +786,7 @@ export class ToolWorkbench implements OnInit, OnDestroy {
 				}
 			}
 		}
+		return null;
 	}
 	private cancelPending(): void {
 		if (this.autoRunTimer) {
