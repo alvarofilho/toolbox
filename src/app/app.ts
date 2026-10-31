@@ -16,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { PreferencesService } from '@app/core/services/preferences';
+import { OfflineService } from '@app/core/services/offline';
 import { SeoService } from '@app/core/services/seo';
 import { CATEGORIES, TOOLS } from '@app/features/tools/catalog/tools';
 import { Icon } from '@app/shared/components/icon';
@@ -36,6 +37,7 @@ interface CommandPaletteControl {
 })
 export class App {
 	protected readonly p = inject(PreferencesService);
+	protected readonly offline = inject(OfflineService);
 	private readonly router = inject(Router);
 	private readonly document = inject(DOCUMENT);
 	private readonly injector = inject(Injector);
